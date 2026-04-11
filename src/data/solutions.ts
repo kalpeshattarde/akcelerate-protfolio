@@ -254,9 +254,9 @@ export const solutions: Solution[] = [
     slug: "cloud-devops",
     title: "Cloud & DevOps",
     shortTitle: "Cloud",
-    heroTitle: "Scale Without Limits.",
-    heroSubtitle: "Deploy Without Fear.",
-    description: "Build resilient, auto-scaling cloud infrastructure with modern DevOps practices. From cloud migration and Kubernetes to CI/CD pipelines and cost optimization — we handle the complexity so you can focus on growth.",
+    heroTitle: "Infrastructure That",
+    heroSubtitle: "Never Sleeps.",
+    description: "Design, migrate, and optimise cloud infrastructure that is secure, scalable, and cost-effective. From multi-cloud architecture to full CI/CD automation — we build the foundation your applications need to perform at scale.",
     icon: "Cloud",
     tags: ["AWS", "Azure", "GCP", "Kubernetes", "Docker", "CI/CD", "Terraform"],
     stats: [
