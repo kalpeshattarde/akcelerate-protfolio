@@ -12,7 +12,7 @@ export function SectionHeader({ label, title, description, className = "" }: Sec
     <div className={`text-center mb-16 ${className}`}>
       {label && <span className="section-label">{label}</span>}
       <h2 className="font-poppins font-bold text-3xl lg:text-4xl mb-4">{title}</h2>
-      {description && <p className="text-muted-foreground max-w-2xl mx-auto">{description}</p>}
+      {description && <p className="max-w-2xl mx-auto" style={{ color: "#64748B" }}>{description}</p>}
     </div>
   );
 }

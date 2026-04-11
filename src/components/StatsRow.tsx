@@ -18,9 +18,9 @@ export default function StatsRow({ stats }: { stats: StatItem[] }) {
   return (
     <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-5">
       {stats.map((s, i) => (
-        <div key={i} className={`text-center p-6 glass-card transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: `${i * 100}ms` }}>
+        <div key={i} className={`text-center p-6 hero-stat-card transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: `${i * 100}ms` }}>
           <div className="stat-number mb-1">{s.value}</div>
-          <div className="text-sm text-muted-foreground">{s.label}</div>
+          <div className="text-sm" style={{ color: "#64748B" }}>{s.label}</div>
         </div>
       ))}
     </div>
