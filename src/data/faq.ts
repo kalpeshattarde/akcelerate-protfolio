@@ -32,34 +32,50 @@ export const generalFAQ: FAQItem[] = [
 
 export const pricingFAQ: FAQItem[] = [
   {
-    question: "Can I switch plans later?",
-    answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. We'll help you choose the right plan based on your evolving needs.",
+    question: "Can I start with one module and add more later?",
+    answer: "Yes. Our platform is completely modular. Start with one AI use case, then add more without migration complexity or data re-integration.",
   },
   {
-    question: "Is there a free trial?",
-    answer: "Yes, we offer a free AI readiness audit and a 14-day trial of our Growth plan. This gives you full access to our platform and a dedicated consultation to identify quick wins for your business.",
+    question: "Is there a free trial or pilot?",
+    answer: "We offer a 30-day pilot on the Professional plan — we connect to your real data and demonstrate measurable results. If you don't see value, you pay nothing.",
   },
   {
-    question: "What's included in the free audit?",
-    answer: "Our free audit includes: a 60-minute discovery call, assessment of your current data infrastructure, identification of 3-5 high-impact AI opportunities, a preliminary ROI estimate, and a recommended action plan.",
+    question: "What counts as a 'monitored asset'?",
+    answer: "Each monitored machine, production line, or equipment tag counts as one asset. A compressor, CNC machine, conveyor, or transformer each counts as one asset.",
   },
   {
-    question: "Do you offer custom pricing for large teams?",
-    answer: "Absolutely. Our Enterprise plan is fully customizable based on your team size, project scope, and specific requirements. Contact us for a tailored proposal that fits your budget and goals.",
+    question: "Are prices in INR or USD?",
+    answer: "Standard pricing is in INR for Indian customers. USD-denominated Enterprise contracts are available for international deployments or MNCs.",
+  },
+  {
+    question: "What are the contract terms?",
+    answer: "Monthly plans can be cancelled with 30 days' notice. Annual plans (20% discount) are 12-month commitments. Enterprise contracts are typically 24–36 months with SLAs.",
   },
 ];
 
 export const auditFAQ: FAQItem[] = [
   {
-    question: "What happens during the free audit?",
-    answer: "We conduct a comprehensive 60-minute assessment covering your data infrastructure, current analytics capabilities, AI readiness, and business goals. You'll receive a detailed report with prioritized recommendations within 48 hours.",
+    question: "Is the audit really free?",
+    answer: "Yes — completely free. There is no hidden cost, no trial, and no obligation to hire us afterwards. We offer this because a detailed, honest audit is the best way to demonstrate our expertise. If we're a good fit, you'll know by the end of the session. If not, you still leave with a valuable roadmap.",
   },
   {
-    question: "Is there any obligation after the audit?",
-    answer: "None at all. The audit is completely free with no strings attached. We believe in demonstrating value upfront. If our recommendations resonate, we'll discuss next steps together.",
+    question: "How long is the session and what do I receive?",
+    answer: "The session runs for exactly 60 minutes over a Google Meet or Zoom call. Afterwards, you'll receive your full written audit report and roadmap within 48 hours as a PDF.",
   },
   {
-    question: "How do I prepare for the audit?",
-    answer: "Have a general understanding of your current data sources, key business challenges, and goals for the next 6-12 months. We'll guide the conversation — no technical preparation needed.",
+    question: "Who conducts the audit?",
+    answer: "Every audit is conducted by Kalpesh Attarde (Founder) or a senior consultant with at least 5 years of AI/automation experience. You will not be speaking with a sales representative or a junior team member.",
+  },
+  {
+    question: "What size companies do you work with?",
+    answer: "We work with businesses of all sizes — from early-stage startups to mid-market enterprises. The audit is particularly valuable for companies with ₹1 Crore+ revenue that are experiencing growth friction, operational bottlenecks, or data chaos.",
+  },
+  {
+    question: "Do I need to prepare anything?",
+    answer: "Nothing formal is required. Just come with a clear idea of your top 2-3 business challenges and a basic understanding of your current systems. If you have data on costs, headcount, or volumes — bring that too.",
+  },
+  {
+    question: "Will I be pressured to buy after the audit?",
+    answer: "No. The audit session is 100% focused on your business. After you've received your report, if you'd like to explore working together, we'll schedule a separate proposal call. We never pressure clients — our work speaks for itself.",
   },
 ];

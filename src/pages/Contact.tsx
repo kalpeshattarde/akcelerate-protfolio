@@ -1,5 +1,6 @@
 import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";
+import { SectionHeader } from "@/components/SectionHeader";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";
@@ -9,8 +10,8 @@ export default function ContactPage() {
     <>
       <HeroPage
         label="Contact"
-        title={<>Let's Build Something <span className="gradient-text">Great Together</span></>}
-        description="Tell us about your project and we'll get back to you within 24 hours."
+        title={<>Let's Transform Your <span className="gradient-text">Business Together</span></>}
+        description="Discuss how our AI and automation solutions can eliminate inefficiencies, unlock insights, and create measurable ROI for your business."
       />
 
       <section className="py-20 lg:py-28">
@@ -18,11 +19,11 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             <RevealSection>
               <div>
-                <h2 className="font-poppins font-bold text-2xl mb-6">Get in Touch</h2>
+                <h2 className="font-poppins font-bold text-2xl mb-6">Contact Information</h2>
                 <div className="space-y-5 mb-10">
                   {[
                     { icon: Mail, label: "Email", value: "akceleratehq@gmail.com", href: "mailto:akceleratehq@gmail.com" },
-                    { icon: Phone, label: "Phone", value: "+91-8208555380", href: "tel:+918208555380" },
+                    { icon: Phone, label: "Phone", value: "+91 8208555380", href: "tel:+918208555380" },
                     { icon: MapPin, label: "Location", value: "Mumbai, Maharashtra, India" },
                     { icon: Clock, label: "Response Time", value: "Within 24 hours" },
                   ].map((c, i) => (
@@ -40,9 +41,9 @@ export default function ContactPage() {
                   ))}
                 </div>
                 <div className="glass-card p-6">
-                  <h3 className="font-poppins font-semibold mb-3">Why Partner With Us?</h3>
+                  <h3 className="font-poppins font-semibold mb-3">What to Expect</h3>
                   <ul className="space-y-2">
-                    {["50+ projects delivered across 13+ industries", "315% average client ROI", "92% client retention rate", "2-4 week prototype delivery"].map((v, i) => (
+                    {["Response within 24 hours", "Free initial consultation", "No-obligation discussion", "Expert-led, not sales-led"].map((v, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
                         <svg className="w-4 h-4 text-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
                         {v}
@@ -53,7 +54,11 @@ export default function ContactPage() {
               </div>
             </RevealSection>
             <RevealSection delay={200}>
-              <ContactForm />
+              <div>
+                <h2 className="font-poppins font-bold text-2xl mb-6">Send Us a Message</h2>
+                <p className="text-muted-foreground text-sm mb-6">Tell us about your manufacturing challenges and we'll show you how AKcelerate can help.</p>
+                <ContactForm />
+              </div>
             </RevealSection>
           </div>
         </div>
