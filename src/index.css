@@ -164,8 +164,7 @@
     animation: grain 8s steps(10) infinite;
   }
 
-  .dark body::before,
-  body.dark::before {
+  .dark body::before {
     opacity: 0.04;
   }
 
