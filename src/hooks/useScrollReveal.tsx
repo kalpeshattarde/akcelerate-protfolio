@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react";
 
+function isInViewport(el: HTMLElement) {
+  const rect = el.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options?: IntersectionObserverInit
 ) {
@@ -49,6 +54,12 @@ export function RevealSection({
     const el = ref.current;
     if (!el) return;
 
+    // If already in viewport, reveal immediately (no hide/show flash)
+    if (isInViewport(el)) {
+      // Don't hide — just leave visible
+      return;
+    }
+
     // Apply hidden state from JS (progressive enhancement)
     el.style.opacity = "0";
     el.style.transform = "translateY(24px)";
@@ -64,14 +75,15 @@ export function RevealSection({
         if (entry.isIntersecting) {
           setTimeout(reveal, delay);
           observer.unobserve(el);
+          clearTimeout(fallback);
         }
       },
-      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0, rootMargin: '0px 0px -20px 0px' }
     );
     observer.observe(el);
 
-    // Fallback: reveal after 3 seconds regardless
-    const fallback = setTimeout(reveal, 3000);
+    // Fallback: reveal after 2 seconds regardless
+    const fallback = setTimeout(reveal, 2000);
 
     return () => {
       observer.disconnect();
@@ -102,8 +114,23 @@ export function RevealGrid({
     if (!el) return;
 
     const items = el.querySelectorAll<HTMLElement>(".reveal-item");
+    if (items.length === 0) return;
 
-    // Apply hidden state from JS (progressive enhancement)
+    // If already in viewport, reveal immediately with stagger (no initial hide)
+    if (isInViewport(el)) {
+      items.forEach((item, i) => {
+        item.style.transition = "opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1), transform 0.7s cubic-bezier(0.33, 1, 0.68, 1)";
+        item.style.opacity = "0";
+        item.style.transform = "translateY(24px)";
+        setTimeout(() => {
+          item.style.opacity = "1";
+          item.style.transform = "translateY(0)";
+        }, 100 + i * stagger);
+      });
+      return;
+    }
+
+    // Apply hidden state from JS
     items.forEach((item) => {
       item.style.opacity = "0";
       item.style.transform = "translateY(24px)";
@@ -124,14 +151,15 @@ export function RevealGrid({
         if (entry.isIntersecting) {
           revealAll();
           observer.unobserve(el);
+          clearTimeout(fallback);
         }
       },
-      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0, rootMargin: '0px 0px -20px 0px' }
     );
     observer.observe(el);
 
-    // Fallback: reveal after 3 seconds regardless
-    const fallback = setTimeout(revealAll, 3000);
+    // Fallback: reveal after 2 seconds regardless
+    const fallback = setTimeout(revealAll, 2000);
 
     return () => {
       observer.disconnect();
