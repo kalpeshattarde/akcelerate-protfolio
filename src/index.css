@@ -761,6 +761,64 @@
   transform: translateY(0);
 }
 
+/* Floating orbs animation */
+@keyframes akOrbFloat {
+  0% { transform: translateY(0) translateX(0) scale(1); }
+  33% { transform: translateY(-20px) translateX(15px) scale(1.05); }
+  66% { transform: translateY(10px) translateX(-10px) scale(0.97); }
+  100% { transform: translateY(0) translateX(0) scale(1); }
+}
+
+.animate-orb-float {
+  animation: akOrbFloat ease-in-out infinite alternate;
+}
+
+/* Gradient shimmer text */
+@keyframes akShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #2563EB, #06B6D4, #8B5CF6, #06B6D4, #2563EB);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: akShimmer 4s ease-in-out infinite;
+}
+
+/* Button ripple */
+@keyframes akRipple {
+  to { transform: scale(2.5); opacity: 0; }
+}
+
+/* Pulse glow for CTAs */
+@keyframes akPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(37,99,235,0); }
+}
+
+.animate-pulse-glow {
+  animation: akPulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Form focus glow */
+.form-input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1), 0 0 20px rgba(37,99,235,0.08);
+}
+
+/* Dark mode glass card glow */
+.dark .glass-card:hover {
+  box-shadow: 0 20px 50px hsl(217 91% 60% / 0.15), 0 0 30px hsl(217 91% 60% / 0.05);
+}
+
+/* Dark mode floating orbs stronger */
+.dark .animate-orb-float {
+  opacity: 0.8;
+}
+
 /* Footer */
 .footer-gradient {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
