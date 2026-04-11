@@ -17,7 +17,6 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       setShowSkeleton(true);
       setIsTransitioning(true);
       window.scrollTo(0, 0);
-      // Show skeleton briefly, then fade in real content
       const skeletonTimer = setTimeout(() => setShowSkeleton(false), 250);
       const fadeTimer = setTimeout(() => setIsTransitioning(false), 300);
       prevPathname.current = pathname;
@@ -28,8 +27,15 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
-  // ... keep existing code
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
       <main className="flex-1 relative">
         {showSkeleton && (
           <div className="absolute inset-0 z-10">
