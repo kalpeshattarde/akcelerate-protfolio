@@ -70,7 +70,6 @@ export default function HomePage() {
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
                 Increase Revenue & Profit<br />with{" "}
                 <TypingCycle texts={["AI Solutions", "Data Science", "Digital Growth", "Smart Analytics"]} className="shimmer-text" />
-                </h1>
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
