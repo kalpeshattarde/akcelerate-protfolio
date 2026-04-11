@@ -4,6 +4,9 @@ import { blogPosts } from "@/data/blog";
 import { BlogCard } from "@/components/Cards";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { SectionHeader } from "@/components/SectionHeader";
+import { TiltCard } from "@/hooks/useTiltCard";
+import HeroParticles from "@/components/HeroParticles";
+import FloatingOrbs from "@/components/FloatingOrbs";
 
 const insightCards = [
   { slug: "generative-ai-operations", label: "Featured", title: "Generative AI in Business Operations: Beyond the Hype", desc: "Most companies are still in the experimentation phase with generative AI. We break down exactly how to move from pilots to production — with real-world examples from manufacturing, retail, and FinTech." },
@@ -18,9 +21,9 @@ export default function InsightsPage() {
   return (
     <>
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs count={2} />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
             <div className="hero-badge mb-5">
@@ -29,7 +32,7 @@ export default function InsightsPage() {
             </div>
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
               Ideas That Move<br />
-              <span className="hero-gradient-text">Business Forward</span>
+              <span className="shimmer-text">Business Forward</span>
             </h1>
             <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
               Expert perspectives on AI adoption, automation strategy, data infrastructure, and digital transformation — from practitioners who've built real systems.
@@ -42,11 +45,13 @@ export default function InsightsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {insightCards.map((card) => (
-              <Link key={card.slug} to={`/blog/${card.slug}`} className="reveal-item glass-card p-6 block hover:border-primary/30 transition-all">
-                <span className="tag-pill mb-3 block w-fit">{card.label}</span>
-                <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
-              </Link>
+              <TiltCard key={card.slug} className="reveal-item">
+                <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all">
+                  <span className="tag-pill mb-3 block w-fit">{card.label}</span>
+                  <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
+                </Link>
+              </TiltCard>
             ))}
           </RevealGrid>
           <div className="text-center mt-10">

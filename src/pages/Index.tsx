@@ -329,7 +329,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <div key={i} className="reveal-item glass-card p-7">
+              <TiltCard key={i} className="reveal-item glass-card p-7">
                 <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
@@ -337,7 +337,7 @@ export default function HomePage() {
                   <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
                   <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

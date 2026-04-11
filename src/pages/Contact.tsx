@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";
+import FloatingOrbs from "@/components/FloatingOrbs";
 
 export default function ContactPage() {
   return (
@@ -14,8 +15,9 @@ export default function ContactPage() {
         description="Discuss how our AI and automation solutions can eliminate inefficiencies, unlock insights, and create measurable ROI for your business."
       />
 
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+        <FloatingOrbs count={2} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12">
             <RevealSection>
               <div>

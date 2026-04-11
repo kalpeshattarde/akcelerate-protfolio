@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
@@ -7,6 +6,9 @@ import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
 import { ArrowRight, CheckCircle, Phone } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import HeroParticles from "@/components/HeroParticles";
+import FloatingOrbs from "@/components/FloatingOrbs";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -29,9 +31,9 @@ export default function SolutionDetailPage() {
     <>
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
             <div className="hero-badge mb-5">
@@ -40,7 +42,7 @@ export default function SolutionDetailPage() {
             </div>
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
               {solution.heroTitle}<br />
-              <span className="hero-gradient-text">{solution.heroSubtitle}</span>
+              <span className="shimmer-text">{solution.heroSubtitle}</span>
             </h1>
             <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
               {solution.description}
@@ -79,7 +81,7 @@ export default function SolutionDetailPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {solution.services.map((s, i) => (
-              <div key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
                   background: `linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))`,
                   border: "1px solid rgba(37,99,235,0.2)"
@@ -88,7 +90,7 @@ export default function SolutionDetailPage() {
                 </div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{s.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -127,7 +129,7 @@ export default function SolutionDetailPage() {
           </RevealSection>
           <div className="flex flex-wrap justify-center gap-3">
             {solution.industries.map((ind) => (
-              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card">{ind}</span>
+              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card hover:border-primary/30 transition-all cursor-default">{ind}</span>
             ))}
           </div>
         </div>
