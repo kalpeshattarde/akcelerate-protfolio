@@ -33,7 +33,6 @@ function HeroGlows({ offset = 0 }: { offset?: number }) {
         className="hero-glow hero-glow-2"
         style={{ transform: `translateY(${offset * 0.6}px)` }}
       />
-      <div className="hero-glow-3" />
     </>
   );
 }
