@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
