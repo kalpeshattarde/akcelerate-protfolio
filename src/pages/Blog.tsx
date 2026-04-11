@@ -4,7 +4,7 @@ import { blogPosts } from "@/data/blog";
 import { RevealGrid } from "@/hooks/useScrollReveal";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
-import { TiltCard } from "@/hooks/useTiltCard";
+
 
 export default function BlogPage() {
   return (

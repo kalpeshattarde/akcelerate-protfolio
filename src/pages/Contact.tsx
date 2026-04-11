@@ -1,6 +1,5 @@
 import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";
-import { SectionHeader } from "@/components/SectionHeader";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";

@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
-import { HeroPage } from "@/components/Hero";
-import { blogPosts } from "@/data/blog";
-import { BlogCard } from "@/components/Cards";
-import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-import { SectionHeader } from "@/components/SectionHeader";
+import { RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
 import HeroParticles from "@/components/HeroParticles";
+import FloatingOrbs from "@/components/FloatingOrbs";
 import FloatingOrbs from "@/components/FloatingOrbs";
 
 const insightCards = [
