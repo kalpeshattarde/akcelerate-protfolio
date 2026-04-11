@@ -30,13 +30,11 @@ export default function CareersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <RevealGrid className="grid md:grid-cols-3 gap-6 mb-16" stagger={100}>
             {perks.map((p, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-7 text-center h-full">
-                  <div className="feature-icon mx-auto"><p.icon className="w-6 h-6 text-accent" /></div>
-                  <h3 className="font-poppins font-semibold mb-2">{p.title}</h3>
-                  <p className="text-muted-foreground text-sm">{p.desc}</p>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-7 text-center">
+                <div className="feature-icon mx-auto"><p.icon className="w-6 h-6 text-accent" /></div>
+                <h3 className="font-poppins font-semibold mb-2">{p.title}</h3>
+                <p className="text-muted-foreground text-sm">{p.desc}</p>
+              </TiltCard>
             ))}
           </RevealGrid>
 

@@ -3,7 +3,6 @@ import { RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
-import VizCanvas from "@/components/viz/VizCanvas";
 
 const insightCards = [
   { slug: "generative-ai-operations", label: "Featured", title: "Generative AI in Business Operations: Beyond the Hype", desc: "Most companies are still in the experimentation phase with generative AI. We break down exactly how to move from pilots to production — with real-world examples from manufacturing, retail, and FinTech." },
@@ -20,7 +19,6 @@ export default function InsightsPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs count={2} />
-        <VizCanvas mode="insights" className="opacity-40" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
@@ -43,15 +41,13 @@ export default function InsightsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {insightCards.map((card) => (
-              <div key={card.slug} className="reveal-item">
-                <TiltCard className="h-full">
-                  <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all h-full">
-                    <span className="tag-pill mb-3 block w-fit">{card.label}</span>
-                    <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
-                  </Link>
-                </TiltCard>
-              </div>
+              <TiltCard key={card.slug} className="reveal-item">
+                <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all">
+                  <span className="tag-pill mb-3 block w-fit">{card.label}</span>
+                  <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
+                </Link>
+              </TiltCard>
             ))}
           </RevealGrid>
           <div className="text-center mt-10">

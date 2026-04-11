@@ -16,7 +16,7 @@ const competencies = [
 export default function FounderPage() {
   return (
     <>
-      <HeroPage vizMode="founder" label="Founder" title={<><span className="gradient-text">Kalpesh Attarde</span></>} description="AI, Data & Consulting practitioner with 5+ years building intelligence systems and driving digital transformation across 13+ industries." />
+      <HeroPage label="Founder" title={<><span className="gradient-text">Kalpesh Attarde</span></>} description="AI, Data & Consulting practitioner with 5+ years building intelligence systems and driving digital transformation across 13+ industries." />
 
       <section className="py-20 lg:py-28 relative overflow-hidden">
         <FloatingOrbs count={2} />

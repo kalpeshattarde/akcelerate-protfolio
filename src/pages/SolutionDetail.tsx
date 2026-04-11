@@ -9,18 +9,6 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
 import { TiltCard } from "@/hooks/useTiltCard";
-import VizCanvas from "@/components/viz/VizCanvas";
-
-const slugToVizMode: Record<string, string> = {
-  "business-automation": "flow",
-  "ai-ml": "neural",
-  "business-consulting": "strategy",
-  "saas-dev": "saas",
-  "automated-analytics": "analytics",
-  "data-visualization": "dataviz",
-  "cloud-devops": "cloud",
-  "mlops": "mlops",
-};
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -38,7 +26,6 @@ export default function SolutionDetailPage() {
   }
 
   const related = solutions.filter(s => s.slug !== solution.slug).slice(0, 7);
-  const vizMode = slugToVizMode[solution.slug] || "neural";
 
   return (
     <>
@@ -46,7 +33,6 @@ export default function SolutionDetailPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs />
-        <VizCanvas mode={vizMode} className="opacity-50" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
@@ -95,18 +81,16 @@ export default function SolutionDetailPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {solution.services.map((s, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-6 h-full">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
-                    background: `linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))`,
-                    border: "1px solid rgba(37,99,235,0.2)"
-                  }}>
-                    <CheckCircle className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
+                  background: `linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))`,
+                  border: "1px solid rgba(37,99,235,0.2)"
+                }}>
+                  <CheckCircle className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-poppins font-semibold text-lg mb-2">{s.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

@@ -8,7 +8,6 @@ import { Database, BarChart3, Monitor, Settings, ArrowRight, Phone } from "lucid
 import FloatingOrbs from "@/components/FloatingOrbs";
 import HeroParticles from "@/components/HeroParticles";
 import { TiltCard } from "@/hooks/useTiltCard";
-import VizCanvas from "@/components/viz/VizCanvas";
 
 const coreCapabilities = [
   { icon: Database, title: "Data Integration", desc: "Connect and harmonize data from every business system into a unified data layer without disrupting operations." },
@@ -39,7 +38,6 @@ export default function ServicesPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs />
-        <VizCanvas mode="services" className="opacity-40" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
@@ -70,18 +68,16 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {coreCapabilities.map((c, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-8 h-full">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
-                    background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
-                    border: "1px solid rgba(37,99,235,0.2)"
-                  }}>
-                    <c.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
+                  background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
+                  border: "1px solid rgba(37,99,235,0.2)"
+                }}>
+                  <c.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -111,16 +107,14 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {techCategories.map((c, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-8 h-full">
-                  <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {c.items.map(t => (
-                      <span key={t} className="tag-pill">{t}</span>
-                    ))}
-                  </div>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-6">
+                <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {c.items.map(t => (
+                    <span key={t} className="tag-pill">{t}</span>
+                  ))}
+                </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

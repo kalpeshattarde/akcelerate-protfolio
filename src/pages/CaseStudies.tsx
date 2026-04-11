@@ -11,7 +11,7 @@ import StatRing from "@/components/StatRing";
 export default function CaseStudiesPage() {
   return (
     <>
-      <HeroPage vizMode="casestudies" label="Case Studies" title={<>Real Clients. <span className="gradient-text">Real Outcomes.</span></>} description="From automotive to pharma — discover how manufacturers across India are transforming operations with AKcelerate's AI analytics platform." />
+      <HeroPage label="Case Studies" title={<>Real Clients. <span className="gradient-text">Real Outcomes.</span></>} description="From automotive to pharma — discover how manufacturers across India are transforming operations with AKcelerate's AI analytics platform." />
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,21 +31,19 @@ export default function CaseStudiesPage() {
 
           <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={120}>
             {caseStudies.map((c, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-7 h-full">
-                  <span className="text-xs font-medium text-accent mb-2 block">{c.industry}</span>
-                  <h3 className="font-poppins font-semibold text-lg mb-3">{c.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-5">{c.description}</p>
-                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
-                    {c.metrics.map((m, j) => (
-                      <div key={j} className="text-center">
-                        <div className="stat-number text-lg">{m.value}</div>
-                        <div className="text-[10px] text-muted-foreground">{m.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-7">
+                <span className="text-xs font-medium text-accent mb-2 block">{c.industry}</span>
+                <h3 className="font-poppins font-semibold text-lg mb-3">{c.title}</h3>
+                <p className="text-muted-foreground text-sm mb-5">{c.description}</p>
+                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
+                  {c.metrics.map((m, j) => (
+                    <div key={j} className="text-center">
+                      <div className="stat-number text-lg">{m.value}</div>
+                      <div className="text-[10px] text-muted-foreground">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </TiltCard>
             ))}
           </RevealGrid>
           <div className="text-center mt-8">
@@ -66,15 +64,13 @@ export default function CaseStudiesPage() {
               { title: "Manufacturing AI Maturity Model 2025", desc: "Benchmark your AI maturity against 200+ manufacturers and discover the highest-ROI digital transformation investments." },
               { title: "Industry 4.0 Transformation Roadmap", desc: "A practical framework for manufacturing leaders to plan and execute a successful Industry 4.0 digital transformation." },
             ].map((r, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-7 flex items-start gap-4 h-full">
-                  <div className="feature-icon !mb-0"><Download className="w-6 h-6 text-accent" /></div>
-                  <div>
-                    <h3 className="font-poppins font-semibold mb-1">{r.title}</h3>
-                    <p className="text-muted-foreground text-sm">{r.desc}</p>
-                  </div>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-7 flex items-start gap-4">
+                <div className="feature-icon !mb-0"><Download className="w-6 h-6 text-accent" /></div>
+                <div>
+                  <h3 className="font-poppins font-semibold mb-1">{r.title}</h3>
+                  <p className="text-muted-foreground text-sm">{r.desc}</p>
+                </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

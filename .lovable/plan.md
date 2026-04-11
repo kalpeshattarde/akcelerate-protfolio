@@ -1,99 +1,141 @@
 
 
-# Advanced Visual Upgrade Plan
+# UI & Animation Upgrade Plan
 
 ## Summary
-The source repo's `viz.js` contains **16 unique animated canvas visualizations** (1,628 lines) that are completely missing from the React rebuild. These are the biggest differentiator — each page in the original has a unique, animated canvas illustration in its hero area. Additionally, Chart.js data charts and a dark/light theme toggle are missing.
+Port all 10 premium visual effects from the source repo's `visual.js` and `main.js` into React hooks/components, add proper dark/light mode support across all pages, and enhance every page with interactive elements.
 
 ---
 
-## What's Missing (from the repo)
+## Phase 1: Animation Infrastructure
 
-### 1. Page-Specific Canvas Visualizations (viz.js — 16 modes)
-Each page has a unique animated canvas in the hero section:
+### 1A. New CSS Keyframes & Utilities (`src/index.css`)
+Add missing keyframes from source:
+- `akOrbFloat` — floating orb drift animation
+- `akRipple` — button click ripple expand
+- `akShimmer` — gradient text shimmer (background-position shift)
+- `akPulseGlow` — pulsing blue glow for CTAs
+- `akFadeSlideUp/Down/Left/Right` — directional scroll reveal
+- `akRingFill` — SVG circular progress stroke animation
 
-| Mode | Page | Visual |
-|------|------|--------|
-| `neural` | AI/ML Solution | Neural network with pulsing nodes and edge signals |
-| `flow` | Business Automation | Animated flowchart with data pulses |
-| `analytics` | Automated Analytics | Bar chart with trend line overlay |
-| `dataviz` | Data Visualization | Donut chart + live line chart dashboard |
-| `cloud` | Cloud & DevOps | Server cluster topology with packets |
-| `mlops` | MLOps | Rotating lifecycle wheel + pipeline stages |
-| `saas` | SaaS Dev | Build pipeline with terminal output |
-| `strategy` | Business Consulting | KPI gauges + milestone timeline |
-| `industries` | Industries | Rotating orbital hub with 12 industry nodes |
-| `about` | About | Growth line chart + stat cards |
-| `casestudies` | Case Studies | ROI bar chart dashboard with rotating highlights |
-| `contact` | Contact | Globe with city nodes and connection pulses |
-| `services` | Services | Radial service hub with orbiting nodes |
-| `pricing` | Pricing | Radar chart comparing plans |
-| `insights` | Insights/Blog | Category trend bars + sparklines |
-| `founder` | Founder | Expertise rings with orbiting dots |
-
-### 2. Chart.js Interactive Charts (main.js)
-- **Hero Chart**: Units Produced line chart (Mon-Sun)
-- **OEE Comparison Chart**: Before vs After AKcelerate (12 months)
-- **ROI Bar Chart**: Investment vs Returns over 3 years
-
-### 3. Dark/Light Theme Toggle
-- Toggle button in navbar
-- `data-theme` attribute on `<html>`
-- localStorage persistence as `ak-theme`
-- All canvas visualizations read theme per-frame via `getTC()` function
-
-### 4. Button Ripple Effect
-- Material-design ripple on all CTA buttons (already in visual.js, not yet in React)
+### 1B. New Tailwind Config Additions (`tailwind.config.ts`)
+Add keyframes and animation utilities for `float-slow`, `float-delayed`, `shimmer`, `pulse-glow`, `spin-slow`.
 
 ---
 
-## Implementation Plan
+## Phase 2: React Hooks & Components (New Files)
 
-### Phase 1: Canvas Visualization Engine
-Create a shared `SolutionViz` component with canvas utilities (`roundRect`, `roundRectFill`, `drawMetrics`, `drawVizFrame`, `getTC`) ported directly from viz.js. Then create 16 mode-specific render functions as separate files:
+### 2A. `src/hooks/useTiltCard.tsx`
+Mouse-follow 3D perspective tilt (6deg max, perspective 800px, scale 1.02). Attach to any card ref.
 
-```
-src/components/viz/
-  utils.ts         — shared helpers (roundRect, drawMetrics, getTC, lerp, etc.)
-  VizCanvas.tsx    — shared canvas wrapper with resize handling
-  NeuralViz.tsx    — neural network mode
-  FlowViz.tsx      — automation flowchart mode
-  AnalyticsViz.tsx — bar chart mode
-  DatavizViz.tsx   — dashboard mode
-  CloudViz.tsx     — server topology mode
-  MLOpsViz.tsx     — lifecycle wheel mode
-  SaaSViz.tsx      — build pipeline mode
-  StrategyViz.tsx  — KPI gauges mode
-  IndustriesViz.tsx— orbital hub mode
-  AboutViz.tsx     — growth chart mode
-  CaseStudiesViz.tsx — ROI dashboard mode
-  ContactViz.tsx   — globe connections mode
-  ServicesViz.tsx  — radial hub mode
-  PricingViz.tsx   — radar chart mode
-  InsightsViz.tsx  — trends dashboard mode
-  FounderViz.tsx   — expertise rings mode
-```
+### 2B. `src/hooks/useScrollReveal.tsx` (upgrade existing)
+Replace current basic version with IntersectionObserver-based directional reveals (up/down/left/right, staggered delays).
 
-### Phase 2: Integrate Canvases Into Pages
-Add the matching `<VizCanvas mode="..." />` component to each page's hero section, positioned behind content with `absolute inset-0 z-0`.
+### 2C. `src/components/HeroParticles.tsx`
+Canvas constellation effect — 55 floating dots connected by lines. Theme-aware colors (blue dots in light, cyan in dark).
 
-### Phase 3: Chart.js Charts
-Install `chart.js` + `react-chartjs-2`. Create `HeroChart`, `OEEChart`, `ROIChart` components with exact data/styling from main.js. Add to homepage hero and case studies page.
+### 2D. `src/components/TypingCycle.tsx`
+Typewriter effect cycling through phrases: "AI Solutions", "Data Science", "Digital Growth", "Smart Analytics". Character-by-character with cursor blink.
 
-### Phase 4: Dark/Light Theme Toggle
-- Add theme context with toggle in Navbar
-- Wire `document.documentElement.classList.toggle('dark')` + localStorage
-- All viz canvas components already use `getTC()` which reads theme per-frame
+### 2E. `src/components/FloatingOrbs.tsx`
+3 gradient orbs (blue, cyan, purple) with blur and float animation. Theme-aware opacity.
 
-### Phase 5: Button Ripple
-Create `useRipple` hook, apply to all `.btn-primary` and `.btn-secondary` buttons site-wide.
+### 2F. `src/components/StatRing.tsx`
+SVG circular progress ring with animated stroke-dashoffset on scroll into view. Theme-aware colors.
+
+### 2G. `src/components/ButtonRipple.tsx`
+Wrapper that adds material-design ripple on click to any button.
+
+### 2H. `src/components/GradientShimmer.tsx`
+Animated gradient shimmer on `.gradient-text` elements — background-size 200%, position shift animation.
+
+---
+
+## Phase 3: Page-by-Page Enhancements
+
+### Homepage (`Index.tsx`)
+- Add `<HeroParticles />` canvas behind hero
+- Add `<TypingCycle />` in hero subtitle
+- Add `<FloatingOrbs />` in hero and CTA sections
+- Apply `useTiltCard` to solution cards, benefit cards
+- Add staggered scroll reveal to all sections
+- Apply gradient shimmer to hero heading
+
+### Solutions (`Solutions.tsx`, `SolutionDetail.tsx`)
+- Tilt cards on all solution cards
+- Scroll reveal with stagger on grid items
+- Floating orbs in hero area
+- StatRings for metrics in detail pages
+
+### Services (`Services.tsx`, `ServiceDetail.tsx`)
+- Tilt cards, scroll reveal
+- Progress bars with animated fill on scroll
+- Floating orbs in hero
+
+### Case Studies (`CaseStudies.tsx`)
+- StatRings for KPI metrics (95% accuracy, 87% OEE, etc.)
+- Tilt cards on case study cards
+- Scroll reveal
+
+### About (`About.tsx`)
+- Team card tilt effect
+- Timeline scroll reveal (staggered left/right)
+- StatRings for company metrics
+
+### Industries (`Industries.tsx`)
+- Card tilt, scroll reveal
+- Floating orbs
+
+### Contact (`Contact.tsx`)
+- Button ripple on submit
+- Form input focus glow animation
+
+### Blog/Insights (`Blog.tsx`, `Insights.tsx`, `BlogArticle.tsx`)
+- Card tilt, scroll reveal
+- Gradient shimmer on article headings
+
+### Pricing (`Pricing.tsx`)
+- Card tilt with enhanced glow on "recommended" card
+- Scroll reveal
+
+### All Other Pages (Careers, Gallery, Founder, FreeAudit, Privacy, Terms)
+- Scroll reveal on all sections
+- Floating orbs in hero areas where appropriate
+
+---
+
+## Phase 4: Dark/Light Mode Parity
+
+### 4A. Theme Context Enhancement
+- Ensure `document.documentElement.classList` toggle works with all new components
+- All canvas components read theme class and adjust colors per frame
+- HeroParticles: light → `rgba(37,99,235,0.45)`, dark → `rgba(6,182,212,0.45)`
+- FloatingOrbs: light → lower opacity, dark → slightly higher
+- StatRings: light → blue stroke on white, dark → cyan stroke on dark surface
+- Glass cards: dark mode border glow uses `hsl(var(--primary) / 0.2)`
+
+### 4B. CSS Variable Additions for Dark Mode
+- `--shadow-glow-dark` for dark mode card hover
+- Ensure all gradient backgrounds adapt (hero, CTA sections)
+- Navbar blur effect adjusts opacity for dark mode
+
+---
+
+## Phase 5: Micro-Interactions
+
+- Button hover: scale(1.02) + shadow increase
+- Nav links: underline slide-in animation (already partially done)
+- Card hover: border-color transition to primary
+- Page transitions: keep existing fade+slide but add slight scale
+- Scroll progress indicator bar at top of page (thin gradient line)
+- Back-to-top button: rotate arrow icon on hover
 
 ---
 
 ## Technical Notes
-- All 16 canvas modes are self-contained and use `requestAnimationFrame` with cleanup
-- The shared `getTC()` function provides theme-aware colors (reads DOM state each frame)
-- Shared helpers (`roundRect`, `roundRectFill`, `roundRectStroke`, `drawMetrics`, `drawVizFrame`) are used across all modes — port once, reuse everywhere
-- Total code: ~1,628 lines of viz.js to port into modular React components
-- Chart.js adds ~60KB gzipped to bundle
+- All canvas animations use `requestAnimationFrame` with cleanup in `useEffect` return
+- `useTiltCard` uses passive event listeners for performance
+- Scroll reveal uses `IntersectionObserver` with `threshold: 0.15` and `once: true`
+- No external animation libraries — all vanilla Canvas API + CSS
+- Bundle impact: minimal (hooks + small components, no heavy deps)
 

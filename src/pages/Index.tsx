@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -79,7 +78,7 @@ export default function HomePage() {
             </div>
 
             <div className="hidden lg:block animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-              <div className="dashboard-mockup-wrap float-anim">
+              <div className="float-anim">
                 <div className="dashboard-mockup">
                   <div className="flex items-center gap-1.5 px-3 py-2.5" style={{ background: "#0F172A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#EF4444" }} />
@@ -153,27 +152,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Hero capability cards — matching original */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full" style={{ marginTop: "-2rem" }}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { emoji: "🤖", title: "AI / ML Solutions", desc: "Custom models & predictions", stroke: "#06B6D4" },
-            { emoji: "📊", title: "Business Automation", desc: "Eliminate manual workflows", stroke: "#2563EB" },
-            { emoji: "💻", title: "SaaS Development", desc: "MVPs to full platforms", stroke: "#0FCCCE" },
-            { emoji: "📈", title: "Data Analytics", desc: "Insights & dashboards", stroke: "#06B6D4" },
-          ].map((c, i) => (
-            <div key={i} className="glass-card p-4 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.08))", border: "1px solid rgba(37,99,235,0.2)" }}>
-                <span className="text-lg">{c.emoji}</span>
-              </div>
-              <div>
-                <div className="text-sm font-semibold font-poppins">{c.title}</div>
-                <div className="text-xs text-muted-foreground">{c.desc}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* ═══════════════════ INTEGRATION STRIP ═══════════════════ */}
       <div className="py-8 border-y" style={{ background: "hsl(var(--ak-section-alt))" }}>
         <div className="max-w-7xl mx-auto px-4 mb-5">
           <p className="text-center text-muted-foreground text-sm">Integrates with your existing business systems & tools</p>
@@ -266,27 +245,18 @@ export default function HomePage() {
             />
           </RevealSection>
 
-          <div className="flex flex-col md:flex-row items-start md:items-start gap-0 mb-16">
+          <RevealGrid className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-2 mb-16" stagger={120}>
             {processSteps.map((s, i) => (
-              <React.Fragment key={s.num}>
-                <div className="flex-1 flex flex-col items-center text-center relative px-4">
-                  <div className="process-number mb-4">{s.num}</div>
-                  <div className="process-step-icon">
-                    {[
-                      <svg key="s" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
-                      <svg key="d" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
-                      <svg key="b" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
-                      <svg key="p" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
-                      <svg key="m" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>,
-                    ][i]}
-                  </div>
-                  <div className="process-step-title">{s.title}</div>
-                  <div className="process-step-desc max-w-[180px]">{s.desc}</div>
+              <div key={s.num} className="reveal-item flex items-start md:items-center md:flex-col gap-4 md:gap-0 flex-1 text-center relative">
+                <div className="process-number mx-auto mb-3">{s.num}</div>
+                <div className="md:text-center">
+                  <h3 className="font-poppins font-semibold text-sm mb-1">{s.title}</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed max-w-[180px]">{s.desc}</p>
                 </div>
-                {i < processSteps.length - 1 && <div className="process-step-connector" />}
-              </React.Fragment>
+                {i < 4 && <div className="hidden md:block absolute top-6 left-[calc(50%+30px)] w-[calc(100%-60px)] h-[2px]" style={{ background: "linear-gradient(90deg, rgba(37,99,235,0.3), rgba(6,182,212,0.3))" }} />}
+              </div>
             ))}
-          </div>
+          </RevealGrid>
 
           <RevealGrid className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16" stagger={100}>
             {[
@@ -359,33 +329,15 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-8 h-full">
-                  <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
-                  <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
-                    <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
-                  </div>
-                  <div className="benefit-mini-chart">
-                    {i % 2 === 0 ? (
-                      <>
-                        <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 0 ? "Before AI" : i === 2 ? "Downtime Risk" : "Defect Rate"}</span><span>{i === 0 ? "After AI" : i === 2 ? "Uptime" : "Quality Score"}</span></div>
-                        <svg className="sparkline-svg" viewBox="0 0 200 36" preserveAspectRatio="none">
-                          <polyline points="0,30 20,28 40,26 60,22 80,18 100,20 120,14 140,10 160,8 180,5 200,3" fill="none" stroke="url(#sparkGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
-                        </svg>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 1 ? "Cost Index" : i === 3 ? "Inventory Efficiency" : "Productivity"}</span><span>{i === 1 ? "Savings" : "Optimized"}</span></div>
-                        <div className="benefit-bar-track"><div className="benefit-bar" style={{ width: `${[0, 77, 0, 85, 72, 90][i]}%` }} /></div>
-                      </>
-                    )}
-                  </div>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-7">
+                <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
+                <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
+                <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
+                  <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
+                </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -425,7 +377,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-5" stagger={80}>
             {industries.slice(0, 8).map((ind, i) => (
-              <div key={i} className="reveal-item glass-card p-7 h-full">
+              <div key={i} className="reveal-item glass-card p-6">
                 <h3 className="font-poppins font-semibold mb-2">{ind.name}</h3>
                 <p className="text-xs leading-relaxed mb-3 text-muted-foreground">{ind.description}</p>
                 <div className="flex flex-wrap gap-1.5">
@@ -484,10 +436,10 @@ export default function HomePage() {
               { title: "E-commerce Growth Engine", metric: "35%", label: "Revenue Increase", desc: "Personalization engine and demand forecasting system that increased revenue by 35% and reduced inventory waste by 28%.", stats: [{ v: "35%", l: "Revenue ↑" }, { v: "28%", l: "Waste ↓" }, { v: "95%", l: "Accuracy" }] },
               { title: "Fintech Risk Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection system processing 10M+ transactions daily with 99.7% accuracy.", stats: [{ v: "99.7%", l: "Accuracy" }, { v: "10M+", l: "Daily Txns" }, { v: "₹8Cr", l: "Fraud Stopped" }] },
             ].map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-8 h-full flex flex-col">
+              <div key={i} className="reveal-item glass-card p-7">
                 <span className="tag-pill mb-4 block w-fit">{c.label}</span>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
-                <p className="text-sm mb-5 text-muted-foreground flex-1">{c.desc}</p>
+                <p className="text-sm mb-5 text-muted-foreground">{c.desc}</p>
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
                   {c.stats.map((s, j) => (
                     <div key={j} className="text-center">
@@ -523,7 +475,7 @@ export default function HomePage() {
               { quote: "Our sales grew 60% after AKcelerate built us a personalised recommendation engine and marketing automation system. They understood our business before writing a single line of code.", name: "Ananya Shah", role: "CEO, StyleBazaar Ecommerce", initials: "AS", gradient: "linear-gradient(135deg, #7C3AED, #06B6D4)" },
               { quote: "The BI dashboard AKcelerate built replaced three different reporting tools. Now every department has real-time data. Claims processing dropped from 8 days to under 4. Phenomenal work.", name: "Prateek Mehta", role: "COO, BrightShield Insurance", initials: "PM", gradient: "linear-gradient(135deg, #059669, #06B6D4)" },
             ].map((t, i) => (
-              <div key={i} className="reveal-item glass-card p-8 h-full flex flex-col">
+              <div key={i} className="reveal-item glass-card p-8">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(5)].map((_, j) => (
                     <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>

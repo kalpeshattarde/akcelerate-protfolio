@@ -26,8 +26,8 @@ export default function FAQAccordion({ items, title }: { items: FAQItem[]; title
                   +
                 </span>
               </button>
-              <div className={`overflow-hidden transition-[max-height,padding] duration-[400ms] ease-in-out ${open === i ? "max-h-[300px] pb-5" : "max-h-0"}`}>
-                <p className="text-[0.9375rem] leading-[1.7] text-muted-foreground">{item.answer}</p>
+              <div className={`overflow-hidden transition-all duration-400 ${open === i ? "max-h-96 pb-5" : "max-h-0"}`}>
+                <p className="text-sm leading-[1.7]" style={{ color: "#64748B" }}>{item.answer}</p>
               </div>
             </div>
           ))}

@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import VizCanvas from "./viz/VizCanvas";
 
 function useParallax(speed = 0.3) {
   const [offset, setOffset] = useState(0);
@@ -21,24 +20,7 @@ function useParallax(speed = 0.3) {
   return { ref, offset };
 }
 
-// Source-faithful hero glow orbs with drift animations
-function HeroGlows({ offset = 0 }: { offset?: number }) {
-  return (
-    <>
-      <div
-        className="hero-glow hero-glow-1"
-        style={{ transform: `translateY(${offset * 0.8}px)` }}
-      />
-      <div
-        className="hero-glow hero-glow-2"
-        style={{ transform: `translateY(${offset * 0.6}px)` }}
-      />
-      <div className="hero-glow-3" />
-    </>
-  );
-}
-
-// Floating particles — source: particle-rise animation
+// Floating particles with parallax
 function ParallaxParticles() {
   const particles = [
     { top: "15%", left: "10%", size: 6, delay: 0, speed: 0.4 },
@@ -89,13 +71,21 @@ export function HeroPrimary({ badge, title, description, primaryCta, secondaryCt
     <section
       ref={ref}
       className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden"
-      style={{ background: "var(--gradient-hero)" }}
+      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
     >
+      {/* Parallax background layers */}
       <div
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.5}px)` }}
       />
-      <HeroGlows offset={offset} />
+      <div
+        className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
+        style={{ background: "rgba(37,99,235,0.07)", transform: `translateY(${offset * 0.8}px)` }}
+      />
+      <div
+        className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
+        style={{ background: "rgba(6,182,212,0.07)", transform: `translateY(${offset * 0.6}px)` }}
+      />
       <ParallaxParticles />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -119,32 +109,29 @@ interface HeroPageProps {
   label?: string;
   title: ReactNode;
   description: string;
-  vizMode?: string;
 }
 
-export function HeroPage({ label, title, description, vizMode }: HeroPageProps) {
+export function HeroPage({ label, title, description }: HeroPageProps) {
   const { ref, offset } = useParallax(0.25);
 
   return (
     <section
       ref={ref}
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ background: "var(--gradient-hero)" }}
+      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
     >
-      {vizMode && (
-        <div className="absolute inset-0 z-0 opacity-25 pointer-events-none">
-          <VizCanvas mode={vizMode} />
-        </div>
-      )}
       <div
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.4}px)` }}
       />
-      <HeroGlows offset={offset} />
+      <div
+        className="absolute -top-[150px] -left-[150px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
+        style={{ background: "rgba(37,99,235,0.06)", transform: `translateY(${offset * 0.7}px)` }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {label && <span className="section-label">{label}</span>}
         <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5">{title}</h1>
-        <p className="text-lg max-w-2xl mx-auto text-muted-foreground">{description}</p>
+        <p className="text-lg max-w-2xl mx-auto" style={{ color: "#64748B" }}>{description}</p>
       </div>
     </section>
   );

@@ -9,7 +9,7 @@ import FloatingOrbs from "@/components/FloatingOrbs";
 export default function IndustriesPage() {
   return (
     <>
-      <HeroPage vizMode="industries" label="Industries" title={<>AI Solutions for <span className="gradient-text">Every Industry</span></>} description="We bring the same world-class AI, automation, and data expertise to every vertical — tailored to the unique challenges and opportunities of your industry." />
+      <HeroPage label="Industries" title={<>AI Solutions for <span className="gradient-text">Every Industry</span></>} description="We bring the same world-class AI, automation, and data expertise to every vertical — tailored to the unique challenges and opportunities of your industry." />
 
       <section className="py-20 lg:py-28 relative overflow-hidden">
         <FloatingOrbs count={2} />
@@ -19,13 +19,11 @@ export default function IndustriesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {industries.map((ind, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard className="glass-card p-8 h-full">
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{ind.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{ind.description}</p>
-                  <div className="flex flex-wrap gap-2">{ind.useCases.map((u, j) => <span key={j} className="tag-pill">{u}</span>)}</div>
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item glass-card p-7">
+                <h3 className="font-poppins font-semibold text-lg mb-2">{ind.name}</h3>
+                <p className="text-muted-foreground text-sm mb-4">{ind.description}</p>
+                <div className="flex flex-wrap gap-2">{ind.useCases.map((u, j) => <span key={j} className="tag-pill">{u}</span>)}</div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

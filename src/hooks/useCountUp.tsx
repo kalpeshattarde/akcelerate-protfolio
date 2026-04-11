@@ -15,7 +15,7 @@ function parseStatValue(val: string): { prefix: string; number: number; decimals
 export function useCountUp(
   target: number,
   decimals: number = 0,
-  duration: number = 1800,
+  duration: number = 2000,
   trigger: boolean = true
 ): number {
   const [value, setValue] = useState(0);
@@ -58,7 +58,7 @@ export function AnimatedStat({ value, className = "" }: { value: string; classNa
     return () => observer.disconnect();
   }, []);
 
-  const count = useCountUp(number, decimals, 1800, visible);
+  const count = useCountUp(number, decimals, 2000, visible);
 
   return (
     <span ref={ref} className={className}>

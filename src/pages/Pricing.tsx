@@ -16,7 +16,6 @@ export default function PricingPage() {
   return (
     <>
       <HeroPage
-        vizMode="pricing"
         label="Pricing"
         title={<>Transparent <span className="gradient-text">Pricing Plans</span></>}
         description="Choose the engagement model that fits your business. No hidden fees, no surprises."
@@ -42,18 +41,16 @@ export default function PricingPage() {
 
           <RevealGrid className="grid md:grid-cols-3 gap-6 items-start" stagger={150}>
             {pricingPlans.map((plan, i) => (
-              <div key={i} className="reveal-item">
-                <TiltCard>
-                  <PricingCard
-                    name={plan.name}
-                    description={plan.description}
-                    price={annual ? plan.annualPrice : plan.monthlyPrice}
-                    features={plan.features}
-                    highlighted={plan.highlighted}
-                    cta={plan.cta}
-                  />
-                </TiltCard>
-              </div>
+              <TiltCard key={i} className="reveal-item">
+                <PricingCard
+                  name={plan.name}
+                  description={plan.description}
+                  price={annual ? plan.annualPrice : plan.monthlyPrice}
+                  features={plan.features}
+                  highlighted={plan.highlighted}
+                  cta={plan.cta}
+                />
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
