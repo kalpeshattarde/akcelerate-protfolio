@@ -48,17 +48,6 @@ export default function HomePage() {
         <HeroParticles />
         <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        {[
-          { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
-          { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
-          { size: 5, color: "rgba(139,92,246,0.6)", left: "35%", top: "85%", dur: "7s", delay: "0.5s" },
-          { size: 3, color: "rgba(37,99,235,0.6)", left: "55%", top: "78%", dur: "9s", delay: "2s" },
-          { size: 4, color: "rgba(6,182,212,0.7)", left: "68%", top: "82%", dur: "6.5s", delay: "0.8s" },
-          { size: 3, color: "rgba(139,92,246,0.7)", left: "78%", top: "76%", dur: "7.5s", delay: "1.8s" },
-          { size: 4, color: "rgba(37,99,235,0.5)", left: "88%", top: "88%", dur: "5.5s", delay: "3s" },
-        ].map((p, i) => (
-          <div key={i} className="hero-particle" style={{ width: p.size, height: p.size, background: p.color, left: p.left, top: p.top, animationDuration: p.dur, animationDelay: p.delay }} />
-        ))}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

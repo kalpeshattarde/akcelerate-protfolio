@@ -5,6 +5,8 @@ import CTASection from "@/components/CTASection";
 import { caseStudies } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { Download } from "lucide-react";
+import { TiltCard } from "@/hooks/useTiltCard";
+import StatRing from "@/components/StatRing";
 
 export default function CaseStudiesPage() {
   return (
@@ -16,9 +18,20 @@ export default function CaseStudiesPage() {
           <RevealSection>
             <SectionHeader label="Results" title={<>Real Manufacturing <span className="gradient-text">Transformations</span></>} description="See how data science and AI helped our clients optimize production, reduce downtime, and unlock new operational intelligence." />
           </RevealSection>
+
+          {/* KPI Stat Rings */}
+          <RevealSection delay={100}>
+            <div className="flex flex-wrap justify-center gap-8 mb-12">
+              <StatRing value={95} size={90} label="Model Accuracy" />
+              <StatRing value={87} size={90} label="OEE Achieved" />
+              <StatRing value={42} size={90} label="Downtime Reduced" />
+              <StatRing value={92} size={90} label="Client Retention" />
+            </div>
+          </RevealSection>
+
           <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={120}>
             {caseStudies.map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-7">
+              <TiltCard key={i} className="reveal-item glass-card p-7">
                 <span className="text-xs font-medium text-accent mb-2 block">{c.industry}</span>
                 <h3 className="font-poppins font-semibold text-lg mb-3">{c.title}</h3>
                 <p className="text-muted-foreground text-sm mb-5">{c.description}</p>
@@ -30,7 +43,7 @@ export default function CaseStudiesPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
           <div className="text-center mt-8">
@@ -51,13 +64,13 @@ export default function CaseStudiesPage() {
               { title: "Manufacturing AI Maturity Model 2025", desc: "Benchmark your AI maturity against 200+ manufacturers and discover the highest-ROI digital transformation investments." },
               { title: "Industry 4.0 Transformation Roadmap", desc: "A practical framework for manufacturing leaders to plan and execute a successful Industry 4.0 digital transformation." },
             ].map((r, i) => (
-              <div key={i} className="reveal-item glass-card p-7 flex items-start gap-4">
+              <TiltCard key={i} className="reveal-item glass-card p-7 flex items-start gap-4">
                 <div className="feature-icon !mb-0"><Download className="w-6 h-6 text-accent" /></div>
                 <div>
                   <h3 className="font-poppins font-semibold mb-1">{r.title}</h3>
                   <p className="text-muted-foreground text-sm">{r.desc}</p>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

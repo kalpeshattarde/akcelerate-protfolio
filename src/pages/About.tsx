@@ -3,6 +3,8 @@ import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { TiltCard } from "@/hooks/useTiltCard";
+import FloatingOrbs from "@/components/FloatingOrbs";
 
 const team = [
   { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with deep expertise in machine learning, data engineering, business automation, and enterprise software.", img: "/images/kalpesh-attarde.jpeg" },
@@ -23,8 +25,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 relative overflow-hidden">
+        <FloatingOrbs count={2} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <RevealSection>
             <SectionHeader label="Who We Are" title={<>AI & Automation: Technology That <span className="gradient-text">Drives Growth</span></>} description="AKcelerate partners with businesses across 13+ industries to design, build, and deploy AI systems, automation workflows, analytics platforms, and software products that create measurable ROI." />
           </RevealSection>
@@ -43,12 +46,12 @@ export default function AboutPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={120}>
             {team.map((t, i) => (
-              <div key={i} className="reveal-item glass-card p-7 text-center">
+              <TiltCard key={i} className="reveal-item glass-card p-7 text-center">
                 <img src={t.img} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover object-top" style={{ boxShadow: "0 4px 16px rgba(37,99,235,0.18)" }} />
                 <h3 className="font-poppins font-semibold text-lg">{t.name}</h3>
                 <div className="text-accent text-sm font-medium mb-3">{t.role}</div>
                 <p className="text-muted-foreground text-sm">{t.desc}</p>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
