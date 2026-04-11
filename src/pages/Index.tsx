@@ -191,7 +191,7 @@ export default function HomePage() {
               { val: "92%", label: "Client retention & repeat engagement", bg: "rgba(124,58,237,0.06)", border: "rgba(124,58,237,0.15)" },
             ].map((s, i) => (
               <div key={i} className="reveal-item impact-stat" style={{ background: s.bg, borderColor: s.border }}>
-                <div className="impact-stat-num">{s.val}</div>
+                <div className="impact-stat-num"><AnimatedStat value={s.val} /></div>
                 <div className="impact-stat-label">{s.label}</div>
               </div>
             ))}
