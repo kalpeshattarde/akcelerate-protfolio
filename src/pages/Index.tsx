@@ -159,6 +159,88 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══════════════════ INTEGRATION STRIP ═══════════════════ */}
+      <div className="py-8 border-y" style={{ background: "hsl(var(--ak-section-alt))" }}>
+        <div className="max-w-7xl mx-auto px-4 mb-5">
+          <p className="text-center text-muted-foreground text-sm">Integrates with your existing business systems & tools</p>
+        </div>
+        <div className="relative overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to right, hsl(var(--background)), transparent)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to left, hsl(var(--background)), transparent)" }} />
+          <div className="integration-track">
+            {[...["SAP ERP", "HubSpot CRM", "Google Analytics", "Stripe Payments", "PostgreSQL", "Salesforce CRM", "Microsoft Azure", "AWS Cloud"], ...["SAP ERP", "HubSpot CRM", "Google Analytics", "Stripe Payments", "PostgreSQL", "Salesforce CRM", "Microsoft Azure", "AWS Cloud"]].map((t, i) => (
+              <span key={i} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-card border border-border text-muted-foreground" style={{ boxShadow: "var(--shadow-sm)" }}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════ ABOUT / OVERVIEW ═══════════════════ */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <RevealSection>
+              <span className="section-label">Overview</span>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+                We Turn Data Into<br />
+                <span className="gradient-text">Measurable Business Results</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                We are a data-driven growth company specializing in AI, machine learning, and digital solutions that help businesses scale faster and smarter.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Our AI solutions continuously learn from your business data, surfacing insights invisible to the human eye — enabling proactive decisions before problems escalate into costly mistakes.
+              </p>
+              <div className="space-y-3">
+                {[
+                  "Automate manual workflows saving 40–60% operational time",
+                  "Machine learning and AI model development for smarter growth",
+                  "Custom web development for modern digital products",
+                  "Growth strategy and performance optimization tied to revenue",
+                ].map((text, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)" }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <span className="text-sm text-muted-foreground">{text}</span>
+                  </div>
+                ))}
+              </div>
+            </RevealSection>
+            <RevealSection delay={200}>
+              <div className="glass-card p-6" style={{ borderRadius: 20 }}>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="font-poppins font-semibold">Business Performance Over Time</p>
+                    <p className="text-xs text-muted-foreground">After AKcelerate AI engagement</p>
+                  </div>
+                  <span className="tag-pill">+18.3%</span>
+                </div>
+                <div className="h-[200px] flex items-end gap-1.5 p-4 rounded-xl" style={{ background: "hsl(var(--muted))" }}>
+                  {[20, 30, 25, 40, 35, 50, 45, 55, 60, 52, 65, 70, 62, 75, 80, 72, 85, 90, 82, 95].map((h, i) => (
+                    <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h}%`, background: `linear-gradient(180deg, ${i < 12 ? '#2563EB' : '#06B6D4'}, rgba(37,99,235,0.2))`, opacity: 0.5 + (i / 40) }} />
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div className="rounded-xl p-4" style={{ background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.15)" }}>
+                    <div className="stat-number text-2xl mb-1">500+</div>
+                    <div className="text-xs text-muted-foreground">Data Sources Integrated</div>
+                  </div>
+                  <div className="rounded-xl p-4" style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)" }}>
+                    <div className="stat-number text-2xl mb-1">50ms</div>
+                    <div className="text-xs text-muted-foreground">Real-time Latency</div>
+                  </div>
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
       {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
