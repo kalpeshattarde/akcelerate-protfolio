@@ -62,7 +62,7 @@ export default function Navbar() {
             {/* Solutions Dropdown */}
             <div className="nav-dropdown relative group">
               <Link to="/solutions" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/solutions") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Solutions <ChevronDown className="w-3 h-3" />
+                Solutions <ChevronDown className="w-3 h-3 chevron-icon" />
               </Link>
               <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[340px]">
                 <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
@@ -84,7 +84,7 @@ export default function Navbar() {
             {/* Services Dropdown */}
             <div className="nav-dropdown relative group">
               <Link to="/services" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/services") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Services <ChevronDown className="w-3 h-3" />
+                Services <ChevronDown className="w-3 h-3 chevron-icon" />
               </Link>
               <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
                 <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
