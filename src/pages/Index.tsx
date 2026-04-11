@@ -464,6 +464,125 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="section-divider" />
+
+      {/* ═══════════════════ TESTIMONIALS ═══════════════════ */}
+      <section className="py-20 lg:py-28 section-alt">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealSection>
+            <SectionHeader
+              label="Client Stories"
+              title={<>What Our <span className="gradient-text">Clients Say</span></>}
+              description="Real business owners and leaders sharing how AKcelerate changed their operations and growth trajectory."
+            />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={100}>
+            {[
+              { quote: "AKcelerate deployed a predictive maintenance system that cut our unplanned downtime by 42% in just three months. The ROI was clear within the first quarter. Exceptional team and delivery.", name: "Rohit Kapoor", role: "VP Operations, AutoTech Industries", initials: "RK", gradient: "linear-gradient(135deg, #2563EB, #06B6D4)" },
+              { quote: "Our sales grew 60% after AKcelerate built us a personalised recommendation engine and marketing automation system. They understood our business before writing a single line of code.", name: "Ananya Shah", role: "CEO, StyleBazaar Ecommerce", initials: "AS", gradient: "linear-gradient(135deg, #7C3AED, #06B6D4)" },
+              { quote: "The BI dashboard AKcelerate built replaced three different reporting tools. Now every department has real-time data. Claims processing dropped from 8 days to under 4. Phenomenal work.", name: "Prateek Mehta", role: "COO, BrightShield Insurance", initials: "PM", gradient: "linear-gradient(135deg, #059669, #06B6D4)" },
+            ].map((t, i) => (
+              <div key={i} className="reveal-item glass-card p-8">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6 italic">"{t.quote}"</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-border">
+                  <div className="w-11 h-11 rounded-full flex items-center justify-center font-poppins font-bold text-white text-sm flex-shrink-0" style={{ background: t.gradient }}>{t.initials}</div>
+                  <div>
+                    <div className="font-poppins font-semibold text-sm">{t.name}</div>
+                    <div className="text-muted-foreground text-xs">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </RevealGrid>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════ FREE AUDIT CTA ═══════════════════ */}
+      <section className="py-20 lg:py-24 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 50%, #ECFEFF 100%)" }}>
+        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <RevealSection>
+              <div className="hero-badge mb-5">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                FREE — No Obligation — 60 Minutes
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 leading-tight">
+                Book Your Free<br /><span className="gradient-text">Business Audit</span>
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                In 60 minutes, our experts map your systems, identify automation opportunities, assess your AI readiness, and deliver a written roadmap — at zero cost.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                {["Systems & process audit", "Data infrastructure review", "AI readiness assessment", "Automation opportunity map", "ROI potential analysis", "Custom roadmap (48-hr delivery)"].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/free-audit" className="btn-primary text-base px-8 py-4">Book My Free Audit</Link>
+                <Link to="/contact" className="btn-secondary text-base px-7 py-4">Talk to Us First</Link>
+              </div>
+            </RevealSection>
+            <RevealSection delay={200}>
+              <div className="chart-card" style={{ borderRadius: 24, overflow: "hidden", padding: 0 }}>
+                <div style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)", padding: "28px 28px 24px" }}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                    </div>
+                    <div>
+                      <p className="font-poppins font-semibold text-white">Free Business Audit</p>
+                      <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>60-min session + written report</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[{ val: "60", label: "Min Session" }, { val: "48h", label: "Report ETA" }, { val: "₹0", label: "Cost" }].map((s, i) => (
+                      <div key={i} className="rounded-xl p-3.5 text-center" style={{ background: "rgba(255,255,255,0.15)" }}>
+                        <p className="text-[22px] font-bold text-white leading-none">{s.val}</p>
+                        <p className="text-[10px] mt-1" style={{ color: "rgba(255,255,255,0.75)" }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-7">
+                  <p className="font-poppins font-semibold text-sm mb-4">What past clients discovered</p>
+                  <div className="space-y-3">
+                    {[
+                      { label: "Avg automation opportunities found", value: "7+ per business", width: 72, color: "#2563EB" },
+                      { label: "Avg annual savings identified", value: "₹28L+", width: 84, color: "#06B6D4" },
+                      { label: "Clients found it \"very valuable\"", value: "94%", width: 94, color: "#10B981" },
+                    ].map((bar, i) => (
+                      <div key={i}>
+                        <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                          <span>{bar.label}</span>
+                          <span className="font-semibold" style={{ color: bar.color }}>{bar.value}</span>
+                        </div>
+                        <div className="skill-bar-track">
+                          <div className="skill-bar-fill" style={{ width: `${bar.width}%`, background: `linear-gradient(90deg, ${bar.color}, ${bar.color}88)` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <Link to="/free-audit" className="btn-primary w-full justify-center mt-6">Claim My Free Slot</Link>
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
 
       <CTASection
