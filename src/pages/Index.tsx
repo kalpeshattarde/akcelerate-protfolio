@@ -8,6 +8,7 @@ import { solutions } from "@/data/solutions";
 import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { AnimatedStat } from "@/hooks/useCountUp";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -76,7 +77,7 @@ export default function HomePage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {heroStats.map((s, i) => (
                   <div key={i} className="hero-stat-card text-center">
-                    <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}>{s.value}</div>
+                    <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}><AnimatedStat value={s.value} /></div>
                     <div className="text-xs mt-1 text-muted-foreground">{s.label}</div>
                   </div>
                 ))}
@@ -190,7 +191,7 @@ export default function HomePage() {
               { val: "92%", label: "Client retention & repeat engagement", bg: "rgba(124,58,237,0.06)", border: "rgba(124,58,237,0.15)" },
             ].map((s, i) => (
               <div key={i} className="reveal-item impact-stat" style={{ background: s.bg, borderColor: s.border }}>
-                <div className="impact-stat-num">{s.val}</div>
+                <div className="impact-stat-num"><AnimatedStat value={s.val} /></div>
                 <div className="impact-stat-label">{s.label}</div>
               </div>
             ))}
@@ -258,7 +259,7 @@ export default function HomePage() {
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl font-bold font-poppins gradient-text">{b.metric}</span>
+                  <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
                   <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
                 </div>
               </div>
@@ -367,7 +368,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
                   {c.stats.map((s, j) => (
                     <div key={j} className="text-center">
-                      <div className="font-poppins font-bold text-lg gradient-text">{s.v}</div>
+                      <div className="font-poppins font-bold text-lg gradient-text"><AnimatedStat value={s.v} /></div>
                       <div className="text-[10px] text-muted-foreground">{s.l}</div>
                     </div>
                   ))}
