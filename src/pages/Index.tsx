@@ -10,6 +10,7 @@ import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
 import HeroDashboard from "@/components/HeroDashboard";
+import MagneticButton from "@/components/MagneticButton";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
