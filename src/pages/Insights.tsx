@@ -3,7 +3,6 @@ import { RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
-import FloatingOrbs from "@/components/FloatingOrbs";
 
 const insightCards = [
   { slug: "generative-ai-operations", label: "Featured", title: "Generative AI in Business Operations: Beyond the Hype", desc: "Most companies are still in the experimentation phase with generative AI. We break down exactly how to move from pilots to production — with real-world examples from manufacturing, retail, and FinTech." },
