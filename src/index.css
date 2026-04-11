@@ -796,8 +796,22 @@
     border-color: #2563EB; box-shadow: 0 20px 60px hsl(var(--primary) / 0.14);
     background: linear-gradient(160deg, hsl(var(--card)) 0%, hsl(var(--ak-section-alt)) 100%);
   }
+  .pricing-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.5;
+  }
+  .pricing-feature svg {
+    color: hsl(var(--ak-accent));
+    margin-top: 2px;
+  }
+  .pricing-card.featured .pricing-feature svg {
+    color: #2563EB;
+  }
 
-  /* ══════════════════════════════════════════════
      STATS BAND — source
   ══════════════════════════════════════════════ */
   .stats-band {
