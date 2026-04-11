@@ -14,9 +14,13 @@ export default function Footer() {
               </div>
               <span className="font-poppins font-bold text-xl text-white">AK<span className="gradient-text">celerate</span></span>
             </Link>
-            <p className="text-sm leading-relaxed text-slate-500 mb-5">
-              Helping businesses increase revenue and profit using AI, data science, and digital solutions. We turn data into measurable business results.
+            <p className="text-sm leading-relaxed text-slate-500 mb-4">
+              Premium AI, Data, Automation and Business Consulting firm — delivering digital transformation across 13+ industries.
             </p>
+            <div className="flex items-center gap-2 text-sm text-slate-500 mb-5">
+              <MapPin className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#06B6D4" }} />
+              Mumbai, India
+            </div>
             <div className="flex gap-3">
               {[
                 { icon: Linkedin, href: "https://www.linkedin.com/company/akceleratehq/" },
@@ -30,6 +34,21 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Company */}
+          <div>
+            <h4 className="font-poppins font-semibold text-white mb-5 text-sm tracking-wide">Company</h4>
+            <div className="space-y-2.5">
+              {[
+                { to: "/about", label: "About" },
+                { to: "/careers", label: "Careers" },
+                { to: "/blog", label: "Blog" },
+                { to: "/contact", label: "Contact" },
+              ].map(l => (
+                <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
+              ))}
+            </div>
+          </div>
+
           {/* Solutions */}
           <div>
             <h4 className="font-poppins font-semibold text-white mb-5 text-sm tracking-wide">Solutions</h4>
@@ -39,29 +58,7 @@ export default function Footer() {
                 { to: "/solutions/ai-ml", label: "AI / ML Solutions" },
                 { to: "/solutions/business-consulting", label: "Business Consulting" },
                 { to: "/solutions/saas-dev", label: "SaaS Development" },
-                { to: "/solutions/automated-analytics", label: "Automated Analytics" },
-                { to: "/solutions/data-visualization", label: "Data Visualization" },
                 { to: "/solutions/cloud-devops", label: "Cloud & DevOps" },
-                { to: "/solutions/mlops", label: "MLOps" },
-              ].map(l => (
-                <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-poppins font-semibold text-white mb-5 text-sm tracking-wide">Company</h4>
-            <div className="space-y-2.5">
-              {[
-                { to: "/about", label: "About Us" },
-                { to: "/founder", label: "Founder" },
-                { to: "/case-studies", label: "Case Studies" },
-                { to: "/blog", label: "Blog" },
-                { to: "/careers", label: "Careers" },
-                { to: "/pricing", label: "Pricing" },
-                { to: "/contact", label: "Contact" },
-                { to: "/free-audit", label: "Free Audit" },
               ].map(l => (
                 <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
               ))}
@@ -76,10 +73,10 @@ export default function Footer() {
                 <Mail className="w-4 h-4 flex-shrink-0" style={{ color: "#06B6D4" }} /> akceleratehq@gmail.com
               </a>
               <a href="tel:+918208555380" className="flex items-center gap-3 text-sm text-slate-500 hover:text-cyan-400 transition-colors">
-                <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "#06B6D4" }} /> +91-8208555380
+                <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "#06B6D4" }} /> +91 8208555380
               </a>
               <div className="flex items-start gap-3 text-sm text-slate-500">
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#06B6D4" }} /> Mumbai, Maharashtra, India
+                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#06B6D4" }} /> Mumbai, India
               </div>
             </div>
           </div>
