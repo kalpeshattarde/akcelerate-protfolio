@@ -152,13 +152,18 @@
   }
 
   /* Animated gradient text for hero */
-  .hero-gradient-text {
-    background: linear-gradient(90deg, #2563EB, #06B6D4, #8B5CF6, #2563EB);
+  .hero-gradient-text,
+  .hero-anim-gradient {
+    background: linear-gradient(90deg, #2563EB, #06B6D4, #8B5CF6, #06B6D4, #2563EB);
     background-size: 300% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradient-shift 4s ease-in-out infinite;
+    animation: gradient-flow 5s linear infinite;
+  }
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
   }
 
   /* Section label */
@@ -187,7 +192,7 @@
     box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
   }
 
-  /* Buttons — pill shape with gradient */
+  /* Buttons — pill shape with gradient + shimmer sweep */
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -204,11 +209,29 @@
     transition: all 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: skewX(-20deg);
+    animation: btn-shimmer 3.5s ease infinite;
+  }
+  @keyframes btn-shimmer {
+    0% { left: -100%; }
+    35%, 100% { left: 150%; }
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(37,99,235,0.35);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 16px 48px rgba(37,99,235,0.4), 0 0 0 4px rgba(37,99,235,0.08);
   }
 
   .btn-secondary {
