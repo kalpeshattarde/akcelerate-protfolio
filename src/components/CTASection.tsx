@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { RevealSection } from "@/hooks/useScrollReveal";
 
 interface CTASectionProps {
   title: string;
@@ -19,22 +20,24 @@ export default function CTASection({ title, description, primaryCta, secondaryCt
           <div className="absolute -bottom-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.08)" }} />
         </>
       )}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : ""}`}>{title}</h2>
-        <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : ""}`} style={!dark ? { color: "#64748B" } : undefined}>{description}</p>
-        <div className="flex flex-wrap justify-center gap-4">
-          {primaryCta && (
-            <Link to={primaryCta.to} className="btn-primary">
-              {primaryCta.label} <ArrowRight className="w-4 h-4" />
-            </Link>
-          )}
-          {secondaryCta && (
-            <Link to={secondaryCta.to} className={`btn-secondary ${dark ? "!text-slate-300 !border-slate-600 hover:!bg-white/5" : ""}`}>
-              {secondaryCta.label}
-            </Link>
-          )}
+      <RevealSection>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : ""}`}>{title}</h2>
+          <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : ""}`} style={!dark ? { color: "#64748B" } : undefined}>{description}</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {primaryCta && (
+              <Link to={primaryCta.to} className="btn-primary">
+                {primaryCta.label} <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
+            {secondaryCta && (
+              <Link to={secondaryCta.to} className={`btn-secondary ${dark ? "!text-slate-300 !border-slate-600 hover:!bg-white/5" : ""}`}>
+                {secondaryCta.label}
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
+      </RevealSection>
     </section>
   );
 }

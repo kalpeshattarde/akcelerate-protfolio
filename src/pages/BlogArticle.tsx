@@ -1,10 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";
 import { getBlogPost, blogPosts } from "@/data/blog";
 import { BlogCard } from "@/components/Cards";
 import { ArrowLeft, List } from "lucide-react";
+import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 function TableOfContents({ sections }: { sections: { heading: string }[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -75,17 +76,21 @@ export default function BlogArticlePage() {
               <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-8"><ArrowLeft className="w-4 h-4" /> Back to Blog</Link>
               <article className="prose prose-slate max-w-none">
                 {post.sections.map((s, i) => (
-                  <div key={i} className="mb-10 scroll-mt-24" data-section-index={i}>
-                    <h2 className="font-poppins font-bold text-2xl mb-4">{s.heading}</h2>
-                    <p className="text-muted-foreground leading-relaxed">{s.content}</p>
-                  </div>
+                  <RevealSection key={i} delay={i * 80}>
+                    <div className="mb-10 scroll-mt-24" data-section-index={i}>
+                      <h2 className="font-poppins font-bold text-2xl mb-4">{s.heading}</h2>
+                      <p className="text-muted-foreground leading-relaxed">{s.content}</p>
+                    </div>
+                  </RevealSection>
                 ))}
               </article>
-              <div className="glass-card p-8 mt-12 text-center">
-                <h3 className="font-poppins font-bold text-xl mb-3">Want to implement these strategies?</h3>
-                <p className="text-muted-foreground mb-5">Let's discuss how to apply these insights to your business.</p>
-                <Link to="/free-audit" className="btn-primary">Book Free Audit</Link>
-              </div>
+              <RevealSection delay={200}>
+                <div className="glass-card p-8 mt-12 text-center">
+                  <h3 className="font-poppins font-bold text-xl mb-3">Want to implement these strategies?</h3>
+                  <p className="text-muted-foreground mb-5">Let's discuss how to apply these insights to your business.</p>
+                  <Link to="/free-audit" className="btn-primary">Book Free Audit</Link>
+                </div>
+              </RevealSection>
             </div>
             <aside className="hidden lg:block">
               <TableOfContents sections={post.sections} />
@@ -94,10 +99,20 @@ export default function BlogArticlePage() {
         </div>
       </section>
       {related.length > 0 && (
-        <section className="py-20 section-alt"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-poppins font-bold text-2xl mb-8 text-center">Related Articles</h2>
-          <div className="grid md:grid-cols-3 gap-6">{related.map(p => <BlogCard key={p.slug} {...p} />)}</div>
-        </div></section>
+        <section className="py-20 section-alt">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <RevealSection>
+              <h2 className="font-poppins font-bold text-2xl mb-8 text-center">Related Articles</h2>
+            </RevealSection>
+            <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={100}>
+              {related.map(p => (
+                <div key={p.slug} className="reveal-item">
+                  <BlogCard {...p} />
+                </div>
+              ))}
+            </RevealGrid>
+          </div>
+        </section>
       )}
       <CTASection title="Ready to Turn Insights Into Action?" description="Book a free consultation to discuss strategies for your business." primaryCta={{ label: "Contact Us", to: "/contact" }} dark />
     </>
