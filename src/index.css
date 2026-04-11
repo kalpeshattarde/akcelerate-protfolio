@@ -412,6 +412,8 @@
     background: rgba(255,255,255,0.06);
     border-radius: 99px;
     overflow: hidden;
+  }
+
   /* Industry image card */
   .industry-img-card {
     border-radius: 16px;
