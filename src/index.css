@@ -194,16 +194,16 @@
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
     border-radius: 16px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow: 0 2px 12px hsla(222, 47%, 11%, 0.05);
   }
   .glass-card:hover {
     border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px hsl(var(--primary) / 0.15);
   }
   .dark .glass-card:hover {
-    box-shadow: 0 20px 50px hsl(217 91% 60% / 0.15), 0 0 30px hsl(217 91% 60% / 0.05);
+    box-shadow: 0 24px 60px hsl(217 91% 60% / 0.18), 0 0 30px hsl(217 91% 60% / 0.05);
   }
 
   /* ══════════════════════════════════════════════
@@ -620,13 +620,13 @@
     border: 1px solid hsl(var(--border));
     border-radius: 16px;
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow: var(--shadow-sm);
   }
   .case-card:hover {
     border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px hsl(var(--primary) / 0.15);
   }
 
   /* ══════════════════════════════════════════════
@@ -638,13 +638,13 @@
     border: 1px solid hsl(var(--border));
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-decoration: none;
   }
   .insight-card:hover {
     border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px hsl(var(--primary) / 0.08);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px hsl(var(--primary) / 0.15);
   }
 
   /* ══════════════════════════════════════════════
@@ -655,13 +655,13 @@
     border: 1px solid hsl(var(--border));
     border-radius: 20px;
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow: 0 2px 12px hsla(222,47%,11%,0.04);
   }
   .industry-card:hover {
     border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px hsl(var(--primary) / 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px hsl(var(--primary) / 0.15);
   }
 
   /* ══════════════════════════════════════════════
@@ -803,13 +803,14 @@
   }
   .pricing-card {
     background: hsl(var(--card)); border: 1.5px solid hsl(var(--border)); border-radius: 20px;
-    padding: 2rem; position: relative; transition: all 0.28s ease;
+    padding: 2rem; position: relative; transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   }
   .pricing-card:hover {
-    transform: translateY(-4px); box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
+    transform: translateY(-6px); box-shadow: 0 24px 60px hsl(var(--primary) / 0.15);
   }
   .pricing-card.featured {
     border-color: #2563EB; box-shadow: 0 20px 60px hsl(var(--primary) / 0.14);
+    background: linear-gradient(160deg, hsl(var(--card)) 0%, hsl(var(--ak-section-alt)) 100%);
   }
 
   /* ══════════════════════════════════════════════

@@ -87,7 +87,7 @@ export default function SolutionsPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {whyCards.map((c, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
                 <div className="feature-icon mb-4"><c.icon className="w-5 h-5 text-accent" /></div>
                 <h3 className="font-poppins font-semibold mb-2">{c.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>

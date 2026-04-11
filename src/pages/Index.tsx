@@ -359,7 +359,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-7">
+              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
                 <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
@@ -424,7 +424,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-5" stagger={80}>
             {industries.slice(0, 8).map((ind, i) => (
-              <div key={i} className="reveal-item glass-card p-6">
+              <div key={i} className="reveal-item glass-card p-7 h-full">
                 <h3 className="font-poppins font-semibold mb-2">{ind.name}</h3>
                 <p className="text-xs leading-relaxed mb-3 text-muted-foreground">{ind.description}</p>
                 <div className="flex flex-wrap gap-1.5">
@@ -483,10 +483,10 @@ export default function HomePage() {
               { title: "E-commerce Growth Engine", metric: "35%", label: "Revenue Increase", desc: "Personalization engine and demand forecasting system that increased revenue by 35% and reduced inventory waste by 28%.", stats: [{ v: "35%", l: "Revenue ↑" }, { v: "28%", l: "Waste ↓" }, { v: "95%", l: "Accuracy" }] },
               { title: "Fintech Risk Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection system processing 10M+ transactions daily with 99.7% accuracy.", stats: [{ v: "99.7%", l: "Accuracy" }, { v: "10M+", l: "Daily Txns" }, { v: "₹8Cr", l: "Fraud Stopped" }] },
             ].map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-7">
+              <div key={i} className="reveal-item glass-card p-8 h-full flex flex-col">
                 <span className="tag-pill mb-4 block w-fit">{c.label}</span>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
-                <p className="text-sm mb-5 text-muted-foreground">{c.desc}</p>
+                <p className="text-sm mb-5 text-muted-foreground flex-1">{c.desc}</p>
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
                   {c.stats.map((s, j) => (
                     <div key={j} className="text-center">
@@ -522,7 +522,7 @@ export default function HomePage() {
               { quote: "Our sales grew 60% after AKcelerate built us a personalised recommendation engine and marketing automation system. They understood our business before writing a single line of code.", name: "Ananya Shah", role: "CEO, StyleBazaar Ecommerce", initials: "AS", gradient: "linear-gradient(135deg, #7C3AED, #06B6D4)" },
               { quote: "The BI dashboard AKcelerate built replaced three different reporting tools. Now every department has real-time data. Claims processing dropped from 8 days to under 4. Phenomenal work.", name: "Prateek Mehta", role: "COO, BrightShield Insurance", initials: "PM", gradient: "linear-gradient(135deg, #059669, #06B6D4)" },
             ].map((t, i) => (
-              <div key={i} className="reveal-item glass-card p-8">
+              <div key={i} className="reveal-item glass-card p-8 h-full flex flex-col">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(5)].map((_, j) => (
                     <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>

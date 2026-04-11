@@ -70,7 +70,7 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {coreCapabilities.map((c, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
                   background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
                   border: "1px solid rgba(37,99,235,0.2)"
@@ -109,7 +109,7 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {techCategories.map((c, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
                 <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
                 <div className="flex flex-wrap gap-2">
                   {c.items.map(t => (
