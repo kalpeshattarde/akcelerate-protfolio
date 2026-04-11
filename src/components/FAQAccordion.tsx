@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import type { FAQItem } from "@/data/faq";
 
 export default function FAQAccordion({ items, title }: { items: FAQItem[]; title?: string }) {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-20">
+    <section className="py-20 lg:py-28">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {title && (
           <div className="text-center mb-12">
@@ -14,18 +13,21 @@ export default function FAQAccordion({ items, title }: { items: FAQItem[]; title
             <h2 className="font-poppins font-bold text-3xl lg:text-4xl">{title}</h2>
           </div>
         )}
-        <div className="space-y-3">
+        <div>
           {items.map((item, i) => (
-            <div key={i} className="glass-card overflow-hidden">
+            <div key={i} className={`border-b transition-colors ${open === i ? "border-primary/20" : ""}`} style={{ borderColor: open === i ? undefined : "hsl(var(--border))" }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-left"
+                className="w-full flex items-center justify-between py-5 text-left group"
               >
-                <span className="font-poppins font-medium text-foreground pr-4">{item.question}</span>
-                <ChevronDown className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
+                <span className="font-poppins font-medium pr-4 group-hover:text-primary transition-colors" style={{ color: open === i ? "#2563EB" : "hsl(var(--ak-navy))" }}>{item.question}</span>
+                <span className={`w-[26px] h-[26px] rounded-full flex items-center justify-center flex-shrink-0 text-lg font-light transition-all duration-300 ${open === i ? "rotate-45" : ""}`}
+                  style={{ background: open === i ? "rgba(37,99,235,0.15)" : "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", color: "#2563EB" }}>
+                  +
+                </span>
               </button>
-              <div className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-96 pb-5 px-5" : "max-h-0"}`}>
-                <p className="text-muted-foreground text-sm leading-relaxed">{item.answer}</p>
+              <div className={`overflow-hidden transition-all duration-400 ${open === i ? "max-h-96 pb-5" : "max-h-0"}`}>
+                <p className="text-sm leading-[1.7]" style={{ color: "#64748B" }}>{item.answer}</p>
               </div>
             </div>
           ))}

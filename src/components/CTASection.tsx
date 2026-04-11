@@ -11,10 +11,17 @@ interface CTASectionProps {
 
 export default function CTASection({ title, description, primaryCta, secondaryCta, dark = false }: CTASectionProps) {
   return (
-    <section className={`py-20 lg:py-28 ${dark ? "bg-foreground text-background" : "section-alt"}`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className={`py-20 lg:py-28 relative overflow-hidden ${dark ? "" : "section-alt"}`}
+      style={dark ? { background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)" } : undefined}>
+      {dark && (
+        <>
+          <div className="absolute -top-[150px] -right-[150px] w-[400px] h-[400px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.12)" }} />
+          <div className="absolute -bottom-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.08)" }} />
+        </>
+      )}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : ""}`}>{title}</h2>
-        <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-background/70" : "text-muted-foreground"}`}>{description}</p>
+        <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : ""}`} style={!dark ? { color: "#64748B" } : undefined}>{description}</p>
         <div className="flex flex-wrap justify-center gap-4">
           {primaryCta && (
             <Link to={primaryCta.to} className="btn-primary">
@@ -22,7 +29,7 @@ export default function CTASection({ title, description, primaryCta, secondaryCt
             </Link>
           )}
           {secondaryCta && (
-            <Link to={secondaryCta.to} className={`btn-secondary ${dark ? "!text-white !border-white/30 hover:!bg-white/10" : ""}`}>
+            <Link to={secondaryCta.to} className={`btn-secondary ${dark ? "!text-slate-300 !border-slate-600 hover:!bg-white/5" : ""}`}>
               {secondaryCta.label}
             </Link>
           )}
