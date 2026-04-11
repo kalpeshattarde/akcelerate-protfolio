@@ -27,11 +27,11 @@ const processSteps = [
 
 const benefits = [
   { icon: TrendingUp, title: "Transform Raw Data into Insights", desc: "Unify disparate business data streams into a single intelligent analytics layer that surfaces actionable intelligence instantly.", metric: "10x", metricLabel: "faster insights vs. manual reporting" },
-  { icon: Shield, title: "Enterprise-Grade Security", desc: "SOC 2 compliant infrastructure with end-to-end encryption, RBAC, and audit trails for complete data governance.", metric: "100%", metricLabel: "data security compliance" },
-  { icon: Zap, title: "Accelerate Time to Market", desc: "Go from concept to production in weeks, not months, with our proven rapid delivery methodology.", metric: "3x", metricLabel: "faster time to market" },
-  { icon: BarChart3, title: "Measurable Business Impact", desc: "Every engagement starts with clear KPIs tied to revenue growth, cost reduction, or operational efficiency.", metric: "315%", metricLabel: "average 3-year client ROI" },
-  { icon: Users, title: "Dedicated Expert Teams", desc: "Cross-functional teams of data scientists, ML engineers, full-stack developers, and business strategists.", metric: "50+", metricLabel: "projects delivered" },
-  { icon: Globe, title: "Cross-Industry Expertise", desc: "Deep domain knowledge across manufacturing, fintech, healthcare, retail, logistics, energy, and more.", metric: "13+", metricLabel: "industries served" },
+  { icon: Shield, title: "Reduce Operational Costs", desc: "Eliminate waste, reduce energy consumption, and optimize labor allocation through AI-driven operational intelligence.", metric: "23%", metricLabel: "average operational cost reduction" },
+  { icon: Zap, title: "Increase Equipment Uptime", desc: "Predict failures before they occur. Our AI models detect anomalies weeks in advance, enabling planned maintenance.", metric: "35%", metricLabel: "downtime reduction achieved" },
+  { icon: BarChart3, title: "Optimize Supply Chains", desc: "Gain end-to-end supply chain visibility with demand forecasting and inventory optimization powered by ML models.", metric: "28%", metricLabel: "inventory turnover improvement" },
+  { icon: Users, title: "Improve Product Quality", desc: "Apply statistical process control and ML-based anomaly detection to reduce defect rates and improve yield.", metric: "40%", metricLabel: "defect reduction on average" },
+  { icon: Globe, title: "Boost Team Productivity", desc: "Empower operators with real-time guidance and AI-augmented workflows that boost throughput without capital expenditure.", metric: "315%", metricLabel: "average ROI over 3 years" },
 ];
 
 const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
