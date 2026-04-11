@@ -1,10 +1,10 @@
-import { HeroPage } from "@/components/Hero";
+import { Link } from "react-router-dom";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
-import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
-import FloatingOrbs from "@/components/FloatingOrbs";
+import { AnimatedStat } from "@/hooks/useCountUp";
+import VizCanvas from "@/components/viz/VizCanvas";
 
 const team = [
   { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with deep expertise in machine learning, data engineering, business automation, and enterprise software.", img: "/images/kalpesh-attarde.jpeg" },
@@ -15,18 +15,52 @@ const team = [
 export default function AboutPage() {
   return (
     <>
-      <HeroPage vizMode="about" label="About" title={<>Built by Problem-Solvers, <span className="gradient-text">For Real Businesses</span></>} description="AKcelerate was founded with a simple mission: make powerful AI and automation accessible to every business in India — turning data and technology into measurable competitive advantage." />
-
-      <section className="py-16 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <StatsRow stats={[{ value: "50+", label: "Projects" }, { value: "13+", label: "Industries" }, { value: "315%", label: "Avg ROI" }, { value: "2024", label: "Founded" }]} />
-          </RevealSection>
+      {/* PAGE HERO — 2-column layout matching source */}
+      <section className="relative pt-[5.5rem] pb-14 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <div className="absolute inset-0 z-0 opacity-80">
+          <VizCanvas mode="about" />
+        </div>
+        <div className="absolute inset-0 hero-grid-bg z-[1]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="section-label">Our Story</span>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-5 leading-tight font-poppins">
+                Built by Problem-Solvers,<br /><span className="gradient-text">For Real Businesses</span>
+              </h1>
+              <p className="text-lg mb-8 max-w-lg" style={{ color: "hsl(var(--ak-body))" }}>
+                AKcelerate was founded with a simple mission: make powerful AI and automation accessible to every business in India — turning data and technology into measurable competitive advantage.
+              </p>
+              <div className="flex flex-wrap gap-4 mb-8">
+                <Link to="/contact" className="btn-primary text-base px-7 py-3.5">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                  Get in Touch
+                </Link>
+                <Link to="/case-studies" className="btn-secondary text-base px-7 py-3.5">See Our Work</Link>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center"><div className="text-2xl font-bold gradient-text font-poppins"><AnimatedStat value="50+" /></div><div className="text-xs text-muted-foreground mt-1">Clients</div></div>
+                <div className="text-center"><div className="text-2xl font-bold gradient-text font-poppins"><AnimatedStat value="13+" /></div><div className="text-xs text-muted-foreground mt-1">Industries</div></div>
+                <div className="text-center"><div className="text-2xl font-bold gradient-text font-poppins"><AnimatedStat value="315%" /></div><div className="text-xs text-muted-foreground mt-1">Avg ROI</div></div>
+              </div>
+            </div>
+            <div className="hidden lg:block">
+              <div className="ak-dark-card" style={{ minHeight: 380, position: "relative", overflow: "hidden" }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#22C55E" }} />
+                  <span className="text-xs text-slate-400">Business Impact Over Time</span>
+                  <span className="ml-auto text-[10px] font-bold" style={{ color: "#22C55E" }}>LIVE</span>
+                </div>
+                <div style={{ position: "absolute", inset: "40px 0 0 0" }}>
+                  <VizCanvas mode="about" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="py-20 relative overflow-hidden">
-        <FloatingOrbs count={2} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <RevealSection>
             <SectionHeader label="Who We Are" title={<>AI & Automation: Technology That <span className="gradient-text">Drives Growth</span></>} description="AKcelerate partners with businesses across 13+ industries to design, build, and deploy AI systems, automation workflows, analytics platforms, and software products that create measurable ROI." />
