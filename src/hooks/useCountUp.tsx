@@ -1,9 +1,5 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
-/**
- * Parses a stat string like "315%", "50+", "2–4", "₹2.4Cr", "99.7%"
- * Returns { prefix, number, suffix } where number is the animatable part.
- */
 function parseStatValue(val: string): { prefix: string; number: number; decimals: number; suffix: string } {
   const match = val.match(/^([^\d]*?)([\d.]+)(.*)$/);
   if (!match) return { prefix: "", number: 0, decimals: 0, suffix: val };
@@ -17,29 +13,34 @@ export function useCountUp(
   decimals: number = 0,
   duration: number = 2000,
   trigger: boolean = true
-): number {
+): { value: number; done: boolean } {
   const [value, setValue] = useState(0);
+  const [done, setDone] = useState(false);
   const rafRef = useRef<number>();
 
   useEffect(() => {
     if (!trigger) return;
+    setDone(false);
 
     const startTime = performance.now();
     const animate = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
+      // easeOutExpo
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setValue(eased * target);
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(animate);
+      } else {
+        setDone(true);
       }
     };
     rafRef.current = requestAnimationFrame(animate);
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, [target, duration, trigger, decimals]);
 
-  return decimals > 0 ? parseFloat(value.toFixed(decimals)) : Math.round(value);
+  const display = decimals > 0 ? parseFloat(value.toFixed(decimals)) : Math.round(value);
+  return { value: display, done };
 }
 
 export function AnimatedStat({ value, className = "" }: { value: string; className?: string }) {
@@ -58,10 +59,10 @@ export function AnimatedStat({ value, className = "" }: { value: string; classNa
     return () => observer.disconnect();
   }, []);
 
-  const count = useCountUp(number, decimals, 2000, visible);
+  const { value: count, done } = useCountUp(number, decimals, 2000, visible);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={`${className} ${done ? "counter-complete" : ""}`}>
       {prefix}{decimals > 0 ? count.toFixed(decimals) : count}{suffix}
     </span>
   );
