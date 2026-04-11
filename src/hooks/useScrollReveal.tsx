@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options?: IntersectionObserverInit
@@ -36,19 +36,15 @@ export function RevealSection({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const revealed = useRef(false);
+  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || revealed.current) return;
-
+    if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !revealed.current) {
-          revealed.current = true;
-          setTimeout(() => {
-            el.style.animation = `revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards`;
-          }, delay);
+        if (entry.isIntersecting) {
+          setTimeout(() => setAnimated(true), delay);
           observer.unobserve(el);
         }
       },
@@ -59,7 +55,11 @@ export function RevealSection({
   }, [delay]);
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={className}
+      style={animated ? { animation: "revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards" } : undefined}
+    >
       {children}
     </div>
   );
@@ -75,24 +75,15 @@ export function RevealGrid({
   stagger?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const revealed = useRef(false);
+  const [triggered, setTriggered] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || revealed.current) return;
-
-    const items = el.querySelectorAll<HTMLElement>(".reveal-item");
-    if (items.length === 0) return;
-
+    if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !revealed.current) {
-          revealed.current = true;
-          items.forEach((item, i) => {
-            setTimeout(() => {
-              item.style.animation = `revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards`;
-            }, i * stagger);
-          });
+        if (entry.isIntersecting) {
+          setTriggered(true);
           observer.unobserve(el);
         }
       },
@@ -100,7 +91,19 @@ export function RevealGrid({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [stagger]);
+  }, []);
+
+  useEffect(() => {
+    if (!triggered) return;
+    const el = ref.current;
+    if (!el) return;
+    const items = el.querySelectorAll<HTMLElement>(".reveal-item");
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.style.animation = `revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards`;
+      }, i * stagger);
+    });
+  }, [triggered, stagger]);
 
   return (
     <div ref={ref} className={className}>
