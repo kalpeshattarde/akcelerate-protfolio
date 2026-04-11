@@ -5,15 +5,17 @@ import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const team = [
-  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with 8+ years of experience across manufacturing, fintech, and enterprise AI." },
-  { name: "Kaushal Bharambe", role: "Tech Lead", desc: "Full-stack engineer specializing in scalable cloud architecture and ML deployment." },
-  { name: "Rakesh Chaudhari", role: "Data Engineer", desc: "Expert in data pipelines, ETL systems, and real-time analytics infrastructure." },
+  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with deep expertise in machine learning, data engineering, business automation, and enterprise software." },
+  { name: "Rakesh Chaudhari", role: "Cloud & DevOps Lead", desc: "6+ years in cloud & Kubernetes, CI/CD, infrastructure provisioning, release management, and process enhancement." },
+  { name: "Kaushal Bharambe", role: "AI/ML Engineer", desc: "Specializes in LLM engineering, AI automation pipelines, and real-time ML systems for business applications." },
+  { name: "Priya Singh", role: "Digital Transformation Lead", desc: "15 years of hands-on experience driving digital transformation across FMCG, Healthcare, Retail, and Fintech sectors." },
+  { name: "Arjun Malhotra", role: "Product & Customer Success", desc: "Leads project delivery and customer success, translating complex business challenges into elegant AI and automation solutions." },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <HeroPage label="About" title={<>About <span className="gradient-text">AKcelerate</span></>} description="We're a data-driven growth company helping businesses scale with AI, data science, and digital solutions." />
+      <HeroPage label="About" title={<>Built by Problem-Solvers, <span className="gradient-text">For Real Businesses</span></>} description="AKcelerate was founded with a simple mission: make powerful AI and automation accessible to every business in India — turning data and technology into measurable competitive advantage." />
 
       <section className="py-16 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,12 +28,11 @@ export default function AboutPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
-            <SectionHeader label="Our Story" title={<>Built by <span className="gradient-text">Practitioners</span></>} description="AKcelerate was founded with a mission: make enterprise-grade AI accessible to businesses of every size. We combine deep technical expertise with business acumen to deliver solutions that generate real, measurable ROI." />
+            <SectionHeader label="Who We Are" title={<>AI & Automation: Technology That <span className="gradient-text">Drives Growth</span></>} description="AKcelerate partners with businesses across 13+ industries to design, build, and deploy AI systems, automation workflows, analytics platforms, and software products that create measurable ROI." />
           </RevealSection>
           <RevealSection delay={200}>
             <div className="max-w-3xl mx-auto glass-card p-8 text-muted-foreground leading-relaxed space-y-4">
-              <p>We started as a small team of data scientists and engineers who saw a gap between AI hype and real-world impact. Too many businesses were investing in AI without seeing returns.</p>
-              <p>Our approach is different: we start with business outcomes, not technology. Every project begins with clear success metrics tied to revenue, cost, or efficiency. This results-first mindset has helped us maintain a 92% client retention rate and deliver an average 315% ROI across 50+ projects.</p>
+              <p>We combine deep technical expertise with real business acumen — so every solution we build is grounded in outcomes, not just algorithms. From startup MVPs to enterprise transformations, we scale with you.</p>
             </div>
           </RevealSection>
         </div>
@@ -40,9 +41,9 @@ export default function AboutPage() {
       <section className="py-20 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
-            <SectionHeader label="Team" title={<>Meet the <span className="gradient-text">Team</span></>} />
+            <SectionHeader label="Team" title={<>Expert Minds Behind <span className="gradient-text">Every Insight</span></>} description="A multidisciplinary team combining deep AI, data, and software expertise with real business domain knowledge across 13+ industries." />
           </RevealSection>
-          <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={150}>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={120}>
             {team.map((t, i) => (
               <div key={i} className="reveal-item glass-card p-7 text-center">
                 <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>{t.name.charAt(0)}</div>
@@ -55,7 +56,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CTASection title="Join Our Journey" description="Partner with us to transform your business with AI and data science." primaryCta={{ label: "Contact Us", to: "/contact" }} secondaryCta={{ label: "Free Audit", to: "/free-audit" }} dark />
+      <CTASection title="Ready to Work With The AKcelerate Team?" description="Talk to Kalpesh and the AKcelerate team. We're ready to show you exactly what's possible for your business with AI and automation." primaryCta={{ label: "Contact Us", to: "/contact" }} secondaryCta={{ label: "Free Audit", to: "/free-audit" }} dark />
     </>
   );
 }
