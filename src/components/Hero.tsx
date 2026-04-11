@@ -132,7 +132,7 @@ export function HeroPage({ label, title, description, vizMode }: HeroPageProps) 
       style={{ background: "var(--gradient-hero)" }}
     >
       {vizMode && (
-        <div className="absolute inset-0 z-0 opacity-80">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <VizCanvas mode={vizMode} />
         </div>
       )}
