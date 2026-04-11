@@ -426,15 +426,15 @@ export default function HomePage() {
           <RevealSection>
             <SectionHeader
               label="Results"
-              title={<>Real Impact, <span className="gradient-text">Real Numbers</span></>}
-              description="See how we've delivered measurable growth for businesses across industries."
+              title={<>Real Client <span className="gradient-text">Transformations</span></>}
+              description="See how AI, automation, and data science helped our clients across industries grow revenue, cut costs, and unlock new competitive advantages."
             />
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={120}>
             {[
-              { title: "Manufacturing AI Transformation", metric: "85%", label: "Downtime Reduction", desc: "Predictive maintenance and quality AI for a mid-size manufacturer, reducing downtime by 85% and defect rates by 60%.", stats: [{ v: "85%", l: "Downtime ↓" }, { v: "60%", l: "Defects ↓" }, { v: "₹2.4Cr", l: "Savings" }] },
-              { title: "E-commerce Growth Engine", metric: "35%", label: "Revenue Increase", desc: "Personalization engine and demand forecasting system that increased revenue by 35% and reduced inventory waste by 28%.", stats: [{ v: "35%", l: "Revenue ↑" }, { v: "28%", l: "Waste ↓" }, { v: "95%", l: "Accuracy" }] },
-              { title: "Fintech Risk Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection system processing 10M+ transactions daily with 99.7% accuracy.", stats: [{ v: "99.7%", l: "Accuracy" }, { v: "10M+", l: "Daily Txns" }, { v: "₹8Cr", l: "Fraud Stopped" }] },
+              { title: "Predictive Analytics for Automotive Retail Chain", metric: "38%", label: "Stock-out Reduction", desc: "Implemented machine learning models on sales and inventory data to predict demand, reduce stock-outs by 38%, and improve procurement planning across 120 retail locations.", stats: [{ v: "38%", l: "Stock-outs ↓" }, { v: "120", l: "Locations" }, { v: "95%", l: "Accuracy" }] },
+              { title: "AI-Based Quality Inspection System", metric: "70%", label: "QC Effort Reduced", desc: "Developed a computer vision model that automatically detects product defects using image recognition — reducing manual QC effort by 70% and improving accuracy to 95%.", stats: [{ v: "98%", l: "Detection" }, { v: "70%", l: "QC Effort ↓" }, { v: "1,200", l: "Units/Hr" }] },
+              { title: "Supply Chain Demand Forecasting", metric: "94%", label: "Forecast Accuracy", desc: "Built predictive analytics models that forecast demand using historical production, seasonal trends, and external market signals.", stats: [{ v: "94%", l: "Accuracy" }, { v: "28%", l: "Inventory ↓" }, { v: "₹15Cr", l: "Capital Freed" }] },
             ].map((c, i) => (
               <div key={i} className="reveal-item glass-card p-7">
                 <span className="tag-pill mb-4 block w-fit">{c.label}</span>
