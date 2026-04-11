@@ -21,7 +21,24 @@ function useParallax(speed = 0.3) {
   return { ref, offset };
 }
 
-// Floating particles with parallax
+// Source-faithful hero glow orbs with drift animations
+function HeroGlows({ offset = 0 }: { offset?: number }) {
+  return (
+    <>
+      <div
+        className="hero-glow hero-glow-1"
+        style={{ transform: `translateY(${offset * 0.8}px)` }}
+      />
+      <div
+        className="hero-glow hero-glow-2"
+        style={{ transform: `translateY(${offset * 0.6}px)` }}
+      />
+      <div className="hero-glow-3" />
+    </>
+  );
+}
+
+// Floating particles — source: particle-rise animation
 function ParallaxParticles() {
   const particles = [
     { top: "15%", left: "10%", size: 6, delay: 0, speed: 0.4 },
@@ -72,20 +89,13 @@ export function HeroPrimary({ badge, title, description, primaryCta, secondaryCt
     <section
       ref={ref}
       className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
+      style={{ background: "var(--gradient-hero)" }}
     >
       <div
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.5}px)` }}
       />
-      <div
-        className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
-        style={{ background: "rgba(37,99,235,0.07)", transform: `translateY(${offset * 0.8}px)` }}
-      />
-      <div
-        className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
-        style={{ background: "rgba(6,182,212,0.07)", transform: `translateY(${offset * 0.6}px)` }}
-      />
+      <HeroGlows offset={offset} />
       <ParallaxParticles />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -130,10 +140,7 @@ export function HeroPage({ label, title, description, vizMode }: HeroPageProps) 
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.4}px)` }}
       />
-      <div
-        className="absolute -top-[150px] -left-[150px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
-        style={{ background: "rgba(37,99,235,0.06)", transform: `translateY(${offset * 0.7}px)` }}
-      />
+      <HeroGlows offset={offset} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {label && <span className="section-label">{label}</span>}
         <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5">{title}</h1>

@@ -14,14 +14,9 @@ export default function ScrollProgress() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-[3px]">
-      <div
-        className="h-full transition-[width] duration-100"
-        style={{
-          width: `${progress}%`,
-          background: "linear-gradient(90deg, #2563EB, #06B6D4)",
-        }}
-      />
-    </div>
+    <div
+      id="ak-scroll-progress"
+      style={{ width: `${progress}%` }}
+    />
   );
 }
