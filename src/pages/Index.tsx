@@ -9,6 +9,10 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
+import HeroParticles from "@/components/HeroParticles";
+import TypingCycle from "@/components/TypingCycle";
+import FloatingOrbs from "@/components/FloatingOrbs";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -41,9 +45,9 @@ export default function HomePage() {
     <>
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         {[
           { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
           { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
@@ -65,7 +69,8 @@ export default function HomePage() {
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
                 Increase Revenue & Profit<br />with{" "}
-                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
+                <TypingCycle texts={["AI Solutions", "Data Science", "Digital Growth", "Smart Analytics"]} className="shimmer-text" />
+                </h1>
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
