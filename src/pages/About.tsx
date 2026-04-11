@@ -5,11 +5,9 @@ import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const team = [
-  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with deep expertise in machine learning, data engineering, business automation, and enterprise software." },
-  { name: "Rakesh Chaudhari", role: "Cloud & DevOps Lead", desc: "6+ years in cloud & Kubernetes, CI/CD, infrastructure provisioning, release management, and process enhancement." },
-  { name: "Kaushal Bharambe", role: "AI/ML Engineer", desc: "Specializes in LLM engineering, AI automation pipelines, and real-time ML systems for business applications." },
-  { name: "Priya Singh", role: "Digital Transformation Lead", desc: "15 years of hands-on experience driving digital transformation across FMCG, Healthcare, Retail, and Fintech sectors." },
-  { name: "Arjun Malhotra", role: "Product & Customer Success", desc: "Leads project delivery and customer success, translating complex business challenges into elegant AI and automation solutions." },
+  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with deep expertise in machine learning, data engineering, business automation, and enterprise software.", img: "/images/kalpesh-attarde.jpeg" },
+  { name: "Rakesh Chaudhari", role: "Cloud & DevOps Lead", desc: "6+ years in cloud & Kubernetes, CI/CD, infrastructure provisioning, release management, and process enhancement.", img: "/images/rakesh-chaudhari.jpeg" },
+  { name: "Kaushal Bharambe", role: "AI/ML Engineer", desc: "Specializes in LLM engineering, AI automation pipelines, and real-time ML systems for business applications.", img: "/images/kaushal-bharambe.png" },
 ];
 
 export default function AboutPage() {
