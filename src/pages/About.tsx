@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
-import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
 import { AnimatedStat } from "@/hooks/useCountUp";

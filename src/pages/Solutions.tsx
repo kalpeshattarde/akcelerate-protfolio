@@ -4,7 +4,7 @@ import CTASection from "@/components/CTASection";
 import { SolutionCard } from "@/components/Cards";
 import { solutions } from "@/data/solutions";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-import { ArrowRight, Zap, Target, Clock, Brain, Unlock, Building2 } from "lucide-react";
+import { Zap, Target, Clock, Brain, Unlock, Building2 } from "lucide-react";
 import { AnimatedStat } from "@/hooks/useCountUp";
 import { TiltCard } from "@/hooks/useTiltCard";
 
