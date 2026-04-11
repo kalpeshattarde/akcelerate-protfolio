@@ -1,14 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options?: IntersectionObserverInit
 ) {
   const ref = useRef<T>(null);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -18,20 +16,13 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
           }
         });
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px', ...options }
+      { threshold: 0.1, ...options }
     );
-
-    // Observe all children with .reveal class, or the element itself
     const targets = el.querySelectorAll(".reveal");
-    if (targets.length > 0) {
-      targets.forEach((t) => observer.observe(t));
-    } else {
-      observer.observe(el);
-    }
-
+    if (targets.length > 0) targets.forEach((t) => observer.observe(t));
+    else observer.observe(el);
     return () => observer.disconnect();
   }, []);
-
   return ref;
 }
 
@@ -45,6 +36,7 @@ export function RevealSection({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -52,18 +44,22 @@ export function RevealSection({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => el.classList.add("revealed"), delay);
+          setTimeout(() => setAnimated(true), delay);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [delay]);
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div
+      ref={ref}
+      className={className}
+      style={animated ? { animation: "revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards" } : undefined}
+    >
       {children}
     </div>
   );
@@ -79,25 +75,35 @@ export function RevealGrid({
   stagger?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [triggered, setTriggered] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const items = el.querySelectorAll(".reveal-item");
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          items.forEach((item, i) => {
-            setTimeout(() => item.classList.add("revealed"), i * stagger);
-          });
+          setTriggered(true);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [stagger]);
+  }, []);
+
+  useEffect(() => {
+    if (!triggered) return;
+    const el = ref.current;
+    if (!el) return;
+    const items = el.querySelectorAll<HTMLElement>(".reveal-item");
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.style.animation = `revealUp 0.7s cubic-bezier(0.33,1,0.68,1) forwards`;
+      }, i * stagger);
+    });
+  }, [triggered, stagger]);
 
   return (
     <div ref={ref} className={className}>
