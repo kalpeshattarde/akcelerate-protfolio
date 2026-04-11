@@ -77,7 +77,7 @@ export default function HomePage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {heroStats.map((s, i) => (
                   <div key={i} className="hero-stat-card text-center">
-                    <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}>{s.value}</div>
+                    <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}><AnimatedStat value={s.value} /></div>
                     <div className="text-xs mt-1 text-muted-foreground">{s.label}</div>
                   </div>
                 ))}
