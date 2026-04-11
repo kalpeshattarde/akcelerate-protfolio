@@ -5,10 +5,8 @@ import { SolutionCard } from "@/components/Cards";
 import { solutions } from "@/data/solutions";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { ArrowRight, Zap, Target, Clock, Brain, Unlock, Building2 } from "lucide-react";
-import FloatingOrbs from "@/components/FloatingOrbs";
-import HeroParticles from "@/components/HeroParticles";
+import { AnimatedStat } from "@/hooks/useCountUp";
 import { TiltCard } from "@/hooks/useTiltCard";
-import VizCanvas from "@/components/viz/VizCanvas";
 
 const whyCards = [
   { icon: Zap, title: "End-to-End AI Delivery", desc: "From AI strategy and prototype to production deployment — we own the full lifecycle, not just advisory slides." },
@@ -33,32 +31,49 @@ const solutionDescriptions: Record<string, string> = {
 export default function SolutionsPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <HeroParticles />
-        <FloatingOrbs />
-        <VizCanvas mode="industries" className="opacity-40" />
+      {/* Hero — centered text, matching source exactly */}
+      <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)", paddingTop: "6rem", paddingBottom: "4rem" }}>
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-3xl">
-            <div className="hero-badge mb-5">
-              <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-              Solutions
-            </div>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
-              8 Solution Areas.<br />
-              <span className="shimmer-text">Infinite Possibilities.</span>
-            </h1>
-            <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
-              From building AI systems and automating business operations to developing SaaS products and delivering data-driven insights — we cover the full stack of digital transformation.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/contact" className="btn-primary">Book a Consultation</Link>
-              <Link to="/case-studies" className="btn-secondary">View Case Studies <ArrowRight className="w-4 h-4" /></Link>
-            </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <span className="section-label">Our Solutions</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight font-poppins">
+            8 Solution Areas. <span className="hero-anim-gradient">Infinite Possibilities.</span>
+          </h1>
+          <p className="text-lg max-w-2xl mx-auto mb-8" style={{ color: "hsl(var(--ak-body))" }}>
+            From building AI systems and automating business operations to developing SaaS products and delivering data-driven insights — we cover the full stack of digital transformation.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link to="/contact" className="btn-primary text-base px-8 py-4">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              Book a Consultation
+            </Link>
+            <Link to="/case-studies" className="btn-secondary text-base px-8 py-4">View Case Studies</Link>
           </div>
         </div>
       </section>
+
+      <div className="section-divider" />
+
+      {/* Stats Bar — matching source */}
+      <section className="section-alt py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { value: "25+", label: "Projects Delivered" },
+              { value: "13+", label: "Industries Served" },
+              { value: "8", label: "Solution Areas" },
+              { value: "315%", label: "Average Client ROI" },
+            ].map((s, i) => (
+              <div key={i}>
+                <div className="stat-number text-4xl mb-1"><AnimatedStat value={s.value} /></div>
+                <div className="text-sm text-muted-foreground font-medium">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
 
       {/* Why Choose AKcelerate */}
       <section className="py-20 lg:py-28">
