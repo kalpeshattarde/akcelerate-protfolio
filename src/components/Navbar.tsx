@@ -42,7 +42,7 @@ export default function Navbar() {
   const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/97 backdrop-blur-xl border-b border-border shadow-sm py-3" : "bg-transparent py-5"}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/97 backdrop-blur-xl border-b border-border py-3.5" : "bg-transparent py-5"}`} style={scrolled ? { boxShadow: "0 4px 24px rgba(15,23,42,0.08)" } : undefined}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -111,8 +111,8 @@ export default function Navbar() {
           </div>
 
           {/* Right side */}
-          <div className="hidden lg:flex items-center gap-3">
-            <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground" aria-label="Toggle theme">
+          <div className="hidden lg:flex items-center gap-4">
+            <button onClick={toggleTheme} className="theme-toggle-btn" aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="w-[17px] h-[17px]" /> : <Moon className="w-[17px] h-[17px]" />}
             </button>
             <Link to="/contact" className="btn-primary text-sm">
