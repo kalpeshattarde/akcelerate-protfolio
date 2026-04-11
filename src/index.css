@@ -501,6 +501,56 @@
   animation: float 4s ease-in-out infinite;
 }
 
+/* Advanced dashboard animations */
+@keyframes dashboard-float {
+  0%, 100% { transform: translateY(0) rotate3d(1, 1, 0, 0deg); }
+  33% { transform: translateY(-8px) rotate3d(1, 0, 0, 1deg); }
+  66% { transform: translateY(-4px) rotate3d(0, 1, 0, -1deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 40px 80px rgba(15,23,42,0.25), 0 0 0 1px rgba(37,99,235,0.1), 0 0 60px rgba(37,99,235,0.08); }
+  50% { box-shadow: 0 40px 80px rgba(15,23,42,0.3), 0 0 0 1px rgba(37,99,235,0.2), 0 0 80px rgba(37,99,235,0.15); }
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.dashboard-float {
+  animation: dashboard-float 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.dashboard-glow {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.live-pulse {
+  animation: live-blink 1.5s ease-in-out infinite;
+}
+
+.terminal-cursor {
+  animation: cursor-blink 0.8s step-end infinite;
+  font-size: 10px;
+  margin-left: 1px;
+}
+
+.metric-card-hover:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px rgba(37,99,235,0.2);
+}
+
+.dashboard-dot-red { animation: float 3s ease-in-out infinite; }
+.dashboard-dot-yellow { animation: float 3s ease-in-out 0.15s infinite; }
+.dashboard-dot-green { animation: float 3s ease-in-out 0.3s infinite; }
+
 .pulse-anim {
   animation: pulse-ring 2s ease-in-out infinite;
 }

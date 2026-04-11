@@ -9,6 +9,7 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
+import HeroDashboard from "@/components/HeroDashboard";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -84,77 +85,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="hidden lg:block animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-              <div className="float-anim">
-                <div className="dashboard-mockup">
-                  <div className="flex items-center gap-1.5 px-3 py-2.5" style={{ background: "#0F172A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#EF4444" }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#F59E0B" }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#10B981" }} />
-                    <span className="text-xs ml-3 font-mono" style={{ color: "#9CA3AF" }}>akcelerate.ai · services</span>
-                    <span className="ml-auto text-[10px] font-bold tracking-wide" style={{ color: "#10B981" }}>● LIVE</span>
-                  </div>
-                  <div className="grid grid-cols-4 gap-[3px] px-2.5 pt-2.5 pb-1">
-                    {["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"].map((t, i) => (
-                      <div key={i} className={`text-center py-1.5 rounded-md text-[9px] font-semibold cursor-pointer transition-all ${i === 0 ? "text-white" : "text-slate-400 hover:text-white"}`}
-                        style={{ background: i === 0 ? "linear-gradient(135deg, rgba(37,99,235,0.4), rgba(6,182,212,0.3))" : "rgba(255,255,255,0.04)", border: i === 0 ? "1px solid rgba(37,99,235,0.4)" : "1px solid rgba(255,255,255,0.06)" }}>
-                        {t}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-4 gap-[3px] px-2.5 pb-2">
-                    {["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"].map((t, i) => (
-                      <div key={i} className="text-center py-1.5 rounded-md text-[9px] font-semibold cursor-pointer text-slate-400 hover:text-white transition-all"
-                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                        {t}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between px-3 py-1">
-                    <span className="text-[11px] font-bold text-white font-poppins">Business Automation</span>
-                    <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full" style={{ color: "#34D399", background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.25)" }}>● Active</span>
-                  </div>
-                  <div className="mx-3 mb-2 rounded-lg overflow-hidden" style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.04)", height: "100px" }}>
-                    <div className="flex items-end gap-1 h-full p-3 pb-2">
-                      {[30, 45, 35, 55, 48, 65, 58, 72, 68, 80, 75, 92, 85, 70, 88, 95].map((h, i) => (
-                        <div key={i} className="flex-1 rounded-t-sm transition-all" style={{
-                          height: `${h}%`,
-                          background: `linear-gradient(180deg, ${i < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
-                          opacity: 0.5 + (i / 32),
-                        }} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 px-3 pb-2 overflow-hidden">
-                    {["Audit", "Map", "Build", "Test", "Deploy"].map((step, i) => (
-                      <div key={i} className="flex items-center gap-1">
-                        <span className={`text-[8px] font-semibold px-2 py-1 rounded-md ${i < 2 ? 'text-white' : 'text-slate-500'}`}
-                          style={{ background: i < 2 ? 'linear-gradient(135deg, rgba(37,99,235,0.4), rgba(6,182,212,0.3))' : 'rgba(255,255,255,0.04)', border: '1px solid ' + (i < 2 ? 'rgba(37,99,235,0.3)' : 'rgba(255,255,255,0.06)') }}>
-                          {step}
-                        </span>
-                        {i < 4 && <span className="text-slate-600 text-[8px]">›</span>}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-3 gap-1 px-3 pb-2">
-                    {[
-                      { label: "ROI", value: "315%", color: "#2563EB", bg: "rgba(37,99,235,0.07)", border: "rgba(37,99,235,0.15)", sub: "↑ avg client" },
-                      { label: "Automation", value: "58%", color: "#A78BFA", bg: "rgba(139,92,246,0.07)", border: "rgba(139,92,246,0.15)", sub: "time saved" },
-                      { label: "Accuracy", value: "94.7%", color: "#06B6D4", bg: "rgba(6,182,212,0.07)", border: "rgba(6,182,212,0.15)", sub: "AI models" },
-                    ].map((m, i) => (
-                      <div key={i} className="rounded-lg p-2 text-center" style={{ background: m.bg, border: `1px solid ${m.border}` }}>
-                        <div className="text-[9px] mb-0.5" style={{ color: "#64748B" }}>{m.label}</div>
-                        <div className="text-sm font-bold font-poppins" style={{ color: m.color }}>{m.value}</div>
-                        <div className="text-[8px]" style={{ color: "#34D399" }}>{m.sub}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mx-3 mb-3 rounded-lg px-3 py-2" style={{ background: "rgba(0,0,0,0.22)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <span className="text-[10px] font-mono" style={{ color: "#4ADE80" }}>$ ai_pipeline.run() → optimizing workflows...</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <HeroDashboard />
           </div>
         </div>
       </section>
