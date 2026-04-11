@@ -78,7 +78,7 @@ export default function HomePage() {
             </div>
 
             <div className="hidden lg:block animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-              <div className="float-anim">
+              <div className="dashboard-mockup-wrap float-anim">
                 <div className="dashboard-mockup">
                   <div className="flex items-center gap-1.5 px-3 py-2.5" style={{ background: "#0F172A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#EF4444" }} />
@@ -152,7 +152,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ INTEGRATION STRIP ═══════════════════ */}
+      {/* Hero capability cards — matching original */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full" style={{ marginTop: "-2rem" }}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { emoji: "🤖", title: "AI / ML Solutions", desc: "Custom models & predictions", stroke: "#06B6D4" },
+            { emoji: "📊", title: "Business Automation", desc: "Eliminate manual workflows", stroke: "#2563EB" },
+            { emoji: "💻", title: "SaaS Development", desc: "MVPs to full platforms", stroke: "#0FCCCE" },
+            { emoji: "📈", title: "Data Analytics", desc: "Insights & dashboards", stroke: "#06B6D4" },
+          ].map((c, i) => (
+            <div key={i} className="glass-card p-4 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.08))", border: "1px solid rgba(37,99,235,0.2)" }}>
+                <span className="text-lg">{c.emoji}</span>
+              </div>
+              <div>
+                <div className="text-sm font-semibold font-poppins">{c.title}</div>
+                <div className="text-xs text-muted-foreground">{c.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="py-8 border-y" style={{ background: "hsl(var(--ak-section-alt))" }}>
         <div className="max-w-7xl mx-auto px-4 mb-5">
           <p className="text-center text-muted-foreground text-sm">Integrates with your existing business systems & tools</p>
