@@ -412,6 +412,229 @@
     background: rgba(255,255,255,0.06);
     border-radius: 99px;
     overflow: hidden;
+  /* Industry image card */
+  .industry-img-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .industry-img-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px hsl(var(--primary) / 0.15);
+  }
+  .industry-img-body {
+    padding: 0.85rem 1rem;
+  }
+  .industry-img-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: hsl(var(--foreground));
+  }
+  .industry-img-sub {
+    font-size: 0.7rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 2px;
+    line-height: 1.35;
+  }
+
+  /* Tech category card */
+  .tech-cat-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .tech-cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px hsl(var(--primary) / 0.1);
+  }
+  .tech-cat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+
+  /* Benefit mini chart */
+  .benefit-mini-chart {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid hsl(var(--border));
+  }
+  .benefit-bar-track {
+    height: 5px;
+    border-radius: 99px;
+    background: hsl(var(--muted));
+    overflow: hidden;
+  }
+  .benefit-bar {
+    height: 5px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #2563EB, #06B6D4);
+    margin-top: 6px;
+    transition: width 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .sparkline-svg {
+    display: block;
+    width: 100%;
+    height: 36px;
+    margin-top: 6px;
+  }
+
+  /* Comparison bars */
+  .comparison-bar-wrap { margin-bottom: 1.4rem; }
+  .comparison-bar-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.5rem;
+  }
+  .comparison-bars { display: flex; flex-direction: column; gap: 0.3rem; }
+  .comparison-bar-row { display: flex; align-items: center; gap: 0.6rem; }
+  .comparison-bar-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    width: 45px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .comparison-bar-tag.before { color: hsl(var(--muted-foreground)); }
+  .comparison-bar-tag.after { color: #2563EB; }
+  .comparison-bar-track {
+    flex: 1;
+    height: 10px;
+    background: hsl(var(--muted));
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .comparison-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+  .comparison-bar-fill.before { background: hsl(var(--muted-foreground) / 0.3); }
+  .comparison-bar-fill.after { background: linear-gradient(90deg, #2563EB, #06B6D4); }
+  .comparison-bar-pct {
+    font-size: 0.78rem;
+    font-weight: 700;
+    width: 36px;
+    flex-shrink: 0;
+  }
+  .comparison-bar-pct.before { color: hsl(var(--muted-foreground)); }
+  .comparison-bar-pct.after { color: #2563EB; }
+
+  /* Chart card */
+  .chart-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Case card */
+  .case-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .case-card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
+  }
+
+  /* Skill bars */
+  .skill-bar-track {
+    height: 8px;
+    background: hsl(var(--muted));
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2563EB, #06B6D4);
+  }
+
+  /* ak-sm-card */
+  .ak-sm-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .ak-sm-card:hover {
+    border-color: hsl(var(--primary) / 0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px hsl(var(--primary) / 0.1);
+  }
+
+  /* Pricing */
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: hsl(var(--muted));
+    border-radius: 9999px;
+    padding: 0.375rem;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .pricing-toggle-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+    transition: all 0.22s ease;
+  }
+  .pricing-toggle-btn.active {
+    background: hsl(var(--card));
+    color: hsl(var(--foreground));
+    box-shadow: 0 2px 8px hsla(222, 47%, 11%, 0.08);
+  }
+  .pricing-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2563EB, #06B6D4);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .pricing-card {
+    background: hsl(var(--card));
+    border: 1.5px solid hsl(var(--border));
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    transition: all 0.28s ease;
+  }
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
+  }
+  .pricing-card.featured {
+    border-color: #2563EB;
+    box-shadow: 0 20px 60px hsl(var(--primary) / 0.14);
   }
 }
 
