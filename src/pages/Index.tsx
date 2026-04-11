@@ -9,10 +9,6 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
-import HeroParticles from "@/components/HeroParticles";
-import TypingCycle from "@/components/TypingCycle";
-import FloatingOrbs from "@/components/FloatingOrbs";
-import { TiltCard } from "@/hooks/useTiltCard";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -31,11 +27,11 @@ const processSteps = [
 
 const benefits = [
   { icon: TrendingUp, title: "Transform Raw Data into Insights", desc: "Unify disparate business data streams into a single intelligent analytics layer that surfaces actionable intelligence instantly.", metric: "10x", metricLabel: "faster insights vs. manual reporting" },
-  { icon: Shield, title: "Reduce Operational Costs", desc: "Eliminate waste, reduce energy consumption, and optimize labor allocation through AI-driven operational intelligence.", metric: "23%", metricLabel: "average operational cost reduction" },
-  { icon: Zap, title: "Increase Equipment Uptime", desc: "Predict failures before they occur. Our AI models detect anomalies weeks in advance, enabling planned maintenance.", metric: "35%", metricLabel: "downtime reduction achieved" },
-  { icon: BarChart3, title: "Optimize Supply Chains", desc: "Gain end-to-end supply chain visibility with demand forecasting and inventory optimization powered by ML models.", metric: "28%", metricLabel: "inventory turnover improvement" },
-  { icon: Users, title: "Improve Product Quality", desc: "Apply statistical process control and ML-based anomaly detection to reduce defect rates and improve yield.", metric: "40%", metricLabel: "defect reduction on average" },
-  { icon: Globe, title: "Boost Team Productivity", desc: "Empower operators with real-time guidance and AI-augmented workflows that boost throughput without capital expenditure.", metric: "315%", metricLabel: "average ROI over 3 years" },
+  { icon: Shield, title: "Enterprise-Grade Security", desc: "SOC 2 compliant infrastructure with end-to-end encryption, RBAC, and audit trails for complete data governance.", metric: "100%", metricLabel: "data security compliance" },
+  { icon: Zap, title: "Accelerate Time to Market", desc: "Go from concept to production in weeks, not months, with our proven rapid delivery methodology.", metric: "3x", metricLabel: "faster time to market" },
+  { icon: BarChart3, title: "Measurable Business Impact", desc: "Every engagement starts with clear KPIs tied to revenue growth, cost reduction, or operational efficiency.", metric: "315%", metricLabel: "average 3-year client ROI" },
+  { icon: Users, title: "Dedicated Expert Teams", desc: "Cross-functional teams of data scientists, ML engineers, full-stack developers, and business strategists.", metric: "50+", metricLabel: "projects delivered" },
+  { icon: Globe, title: "Cross-Industry Expertise", desc: "Deep domain knowledge across manufacturing, fintech, healthcare, retail, logistics, energy, and more.", metric: "13+", metricLabel: "industries served" },
 ];
 
 const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
@@ -45,9 +41,20 @@ export default function HomePage() {
     <>
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <HeroParticles />
-        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
+        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
+        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
+        {[
+          { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
+          { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
+          { size: 5, color: "rgba(139,92,246,0.6)", left: "35%", top: "85%", dur: "7s", delay: "0.5s" },
+          { size: 3, color: "rgba(37,99,235,0.6)", left: "55%", top: "78%", dur: "9s", delay: "2s" },
+          { size: 4, color: "rgba(6,182,212,0.7)", left: "68%", top: "82%", dur: "6.5s", delay: "0.8s" },
+          { size: 3, color: "rgba(139,92,246,0.7)", left: "78%", top: "76%", dur: "7.5s", delay: "1.8s" },
+          { size: 4, color: "rgba(37,99,235,0.5)", left: "88%", top: "88%", dur: "5.5s", delay: "3s" },
+        ].map((p, i) => (
+          <div key={i} className="hero-particle" style={{ width: p.size, height: p.size, background: p.color, left: p.left, top: p.top, animationDuration: p.dur, animationDelay: p.delay }} />
+        ))}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -58,7 +65,7 @@ export default function HomePage() {
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
                 Increase Revenue & Profit<br />with{" "}
-                <TypingCycle texts={["AI Solutions", "Data Science", "Digital Growth", "Smart Analytics"]} className="shimmer-text" />
+                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
@@ -151,88 +158,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ═══════════════════ INTEGRATION STRIP ═══════════════════ */}
-      <div className="py-8 border-y" style={{ background: "hsl(var(--ak-section-alt))" }}>
-        <div className="max-w-7xl mx-auto px-4 mb-5">
-          <p className="text-center text-muted-foreground text-sm">Integrates with your existing business systems & tools</p>
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to right, hsl(var(--background)), transparent)" }} />
-          <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to left, hsl(var(--background)), transparent)" }} />
-          <div className="integration-track">
-            {[...["SAP ERP", "HubSpot CRM", "Google Analytics", "Stripe Payments", "PostgreSQL", "Salesforce CRM", "Microsoft Azure", "AWS Cloud"], ...["SAP ERP", "HubSpot CRM", "Google Analytics", "Stripe Payments", "PostgreSQL", "Salesforce CRM", "Microsoft Azure", "AWS Cloud"]].map((t, i) => (
-              <span key={i} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-card border border-border text-muted-foreground" style={{ boxShadow: "var(--shadow-sm)" }}>
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ═══════════════════ ABOUT / OVERVIEW ═══════════════════ */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <RevealSection>
-              <span className="section-label">Overview</span>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-6 leading-tight">
-                We Turn Data Into<br />
-                <span className="gradient-text">Measurable Business Results</span>
-              </h2>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                We are a data-driven growth company specializing in AI, machine learning, and digital solutions that help businesses scale faster and smarter.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                Our AI solutions continuously learn from your business data, surfacing insights invisible to the human eye — enabling proactive decisions before problems escalate into costly mistakes.
-              </p>
-              <div className="space-y-3">
-                {[
-                  "Automate manual workflows saving 40–60% operational time",
-                  "Machine learning and AI model development for smarter growth",
-                  "Custom web development for modern digital products",
-                  "Growth strategy and performance optimization tied to revenue",
-                ].map((text, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)" }}>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
-                    </div>
-                    <span className="text-sm text-muted-foreground">{text}</span>
-                  </div>
-                ))}
-              </div>
-            </RevealSection>
-            <RevealSection delay={200}>
-              <div className="glass-card p-6" style={{ borderRadius: 20 }}>
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <p className="font-poppins font-semibold">Business Performance Over Time</p>
-                    <p className="text-xs text-muted-foreground">After AKcelerate AI engagement</p>
-                  </div>
-                  <span className="tag-pill">+18.3%</span>
-                </div>
-                <div className="h-[200px] flex items-end gap-1.5 p-4 rounded-xl" style={{ background: "hsl(var(--muted))" }}>
-                  {[20, 30, 25, 40, 35, 50, 45, 55, 60, 52, 65, 70, 62, 75, 80, 72, 85, 90, 82, 95].map((h, i) => (
-                    <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h}%`, background: `linear-gradient(180deg, ${i < 12 ? '#2563EB' : '#06B6D4'}, rgba(37,99,235,0.2))`, opacity: 0.5 + (i / 40) }} />
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <div className="rounded-xl p-4" style={{ background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.15)" }}>
-                    <div className="stat-number text-2xl mb-1">500+</div>
-                    <div className="text-xs text-muted-foreground">Data Sources Integrated</div>
-                  </div>
-                  <div className="rounded-xl p-4" style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)" }}>
-                    <div className="stat-number text-2xl mb-1">50ms</div>
-                    <div className="text-xs text-muted-foreground">Real-time Latency</div>
-                  </div>
-                </div>
-              </div>
-            </RevealSection>
-          </div>
-        </div>
-      </section>
-
-      <div className="section-divider" />
 
       {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section className="py-20 lg:py-28">
@@ -329,7 +254,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-7">
+              <div key={i} className="reveal-item glass-card p-7">
                 <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
@@ -337,7 +262,7 @@ export default function HomePage() {
                   <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
                   <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
                 </div>
-              </TiltCard>
+              </div>
             ))}
           </RevealGrid>
         </div>
@@ -426,15 +351,15 @@ export default function HomePage() {
           <RevealSection>
             <SectionHeader
               label="Results"
-              title={<>Real Client <span className="gradient-text">Transformations</span></>}
-              description="See how AI, automation, and data science helped our clients across industries grow revenue, cut costs, and unlock new competitive advantages."
+              title={<>Real Impact, <span className="gradient-text">Real Numbers</span></>}
+              description="See how we've delivered measurable growth for businesses across industries."
             />
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={120}>
             {[
-              { title: "Predictive Analytics for Automotive Retail Chain", metric: "38%", label: "Stock-out Reduction", desc: "Implemented machine learning models on sales and inventory data to predict demand, reduce stock-outs by 38%, and improve procurement planning across 120 retail locations.", stats: [{ v: "38%", l: "Stock-outs ↓" }, { v: "120", l: "Locations" }, { v: "95%", l: "Accuracy" }] },
-              { title: "AI-Based Quality Inspection System", metric: "70%", label: "QC Effort Reduced", desc: "Developed a computer vision model that automatically detects product defects using image recognition — reducing manual QC effort by 70% and improving accuracy to 95%.", stats: [{ v: "98%", l: "Detection" }, { v: "70%", l: "QC Effort ↓" }, { v: "1,200", l: "Units/Hr" }] },
-              { title: "Supply Chain Demand Forecasting", metric: "94%", label: "Forecast Accuracy", desc: "Built predictive analytics models that forecast demand using historical production, seasonal trends, and external market signals.", stats: [{ v: "94%", l: "Accuracy" }, { v: "28%", l: "Inventory ↓" }, { v: "₹15Cr", l: "Capital Freed" }] },
+              { title: "Manufacturing AI Transformation", metric: "85%", label: "Downtime Reduction", desc: "Predictive maintenance and quality AI for a mid-size manufacturer, reducing downtime by 85% and defect rates by 60%.", stats: [{ v: "85%", l: "Downtime ↓" }, { v: "60%", l: "Defects ↓" }, { v: "₹2.4Cr", l: "Savings" }] },
+              { title: "E-commerce Growth Engine", metric: "35%", label: "Revenue Increase", desc: "Personalization engine and demand forecasting system that increased revenue by 35% and reduced inventory waste by 28%.", stats: [{ v: "35%", l: "Revenue ↑" }, { v: "28%", l: "Waste ↓" }, { v: "95%", l: "Accuracy" }] },
+              { title: "Fintech Risk Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection system processing 10M+ transactions daily with 99.7% accuracy.", stats: [{ v: "99.7%", l: "Accuracy" }, { v: "10M+", l: "Daily Txns" }, { v: "₹8Cr", l: "Fraud Stopped" }] },
             ].map((c, i) => (
               <div key={i} className="reveal-item glass-card p-7">
                 <span className="tag-pill mb-4 block w-fit">{c.label}</span>
@@ -456,125 +381,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <div className="section-divider" />
-
-      {/* ═══════════════════ TESTIMONIALS ═══════════════════ */}
-      <section className="py-20 lg:py-28 section-alt">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader
-              label="Client Stories"
-              title={<>What Our <span className="gradient-text">Clients Say</span></>}
-              description="Real business owners and leaders sharing how AKcelerate changed their operations and growth trajectory."
-            />
-          </RevealSection>
-          <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={100}>
-            {[
-              { quote: "AKcelerate deployed a predictive maintenance system that cut our unplanned downtime by 42% in just three months. The ROI was clear within the first quarter. Exceptional team and delivery.", name: "Rohit Kapoor", role: "VP Operations, AutoTech Industries", initials: "RK", gradient: "linear-gradient(135deg, #2563EB, #06B6D4)" },
-              { quote: "Our sales grew 60% after AKcelerate built us a personalised recommendation engine and marketing automation system. They understood our business before writing a single line of code.", name: "Ananya Shah", role: "CEO, StyleBazaar Ecommerce", initials: "AS", gradient: "linear-gradient(135deg, #7C3AED, #06B6D4)" },
-              { quote: "The BI dashboard AKcelerate built replaced three different reporting tools. Now every department has real-time data. Claims processing dropped from 8 days to under 4. Phenomenal work.", name: "Prateek Mehta", role: "COO, BrightShield Insurance", initials: "PM", gradient: "linear-gradient(135deg, #059669, #06B6D4)" },
-            ].map((t, i) => (
-              <div key={i} className="reveal-item glass-card p-8">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                  ))}
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-6 italic">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-border">
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center font-poppins font-bold text-white text-sm flex-shrink-0" style={{ background: t.gradient }}>{t.initials}</div>
-                  <div>
-                    <div className="font-poppins font-semibold text-sm">{t.name}</div>
-                    <div className="text-muted-foreground text-xs">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </RevealGrid>
-        </div>
-      </section>
-
-      <div className="section-divider" />
-
-      {/* ═══════════════════ FREE AUDIT CTA ═══════════════════ */}
-      <section className="py-20 lg:py-24 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 50%, #ECFEFF 100%)" }}>
-        <div className="absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <RevealSection>
-              <div className="hero-badge mb-5">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                FREE — No Obligation — 60 Minutes
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 leading-tight">
-                Book Your Free<br /><span className="gradient-text">Business Audit</span>
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                In 60 minutes, our experts map your systems, identify automation opportunities, assess your AI readiness, and deliver a written roadmap — at zero cost.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                {["Systems & process audit", "Data infrastructure review", "AI readiness assessment", "Automation opportunity map", "ROI potential analysis", "Custom roadmap (48-hr delivery)"].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
-                    {item}
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/free-audit" className="btn-primary text-base px-8 py-4">Book My Free Audit</Link>
-                <Link to="/contact" className="btn-secondary text-base px-7 py-4">Talk to Us First</Link>
-              </div>
-            </RevealSection>
-            <RevealSection delay={200}>
-              <div className="chart-card" style={{ borderRadius: 24, overflow: "hidden", padding: 0 }}>
-                <div style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)", padding: "28px 28px 24px" }}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
-                    </div>
-                    <div>
-                      <p className="font-poppins font-semibold text-white">Free Business Audit</p>
-                      <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 12 }}>60-min session + written report</p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    {[{ val: "60", label: "Min Session" }, { val: "48h", label: "Report ETA" }, { val: "₹0", label: "Cost" }].map((s, i) => (
-                      <div key={i} className="rounded-xl p-3.5 text-center" style={{ background: "rgba(255,255,255,0.15)" }}>
-                        <p className="text-[22px] font-bold text-white leading-none">{s.val}</p>
-                        <p className="text-[10px] mt-1" style={{ color: "rgba(255,255,255,0.75)" }}>{s.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="p-7">
-                  <p className="font-poppins font-semibold text-sm mb-4">What past clients discovered</p>
-                  <div className="space-y-3">
-                    {[
-                      { label: "Avg automation opportunities found", value: "7+ per business", width: 72, color: "#2563EB" },
-                      { label: "Avg annual savings identified", value: "₹28L+", width: 84, color: "#06B6D4" },
-                      { label: "Clients found it \"very valuable\"", value: "94%", width: 94, color: "#10B981" },
-                    ].map((bar, i) => (
-                      <div key={i}>
-                        <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                          <span>{bar.label}</span>
-                          <span className="font-semibold" style={{ color: bar.color }}>{bar.value}</span>
-                        </div>
-                        <div className="skill-bar-track">
-                          <div className="skill-bar-fill" style={{ width: `${bar.width}%`, background: `linear-gradient(90deg, ${bar.color}, ${bar.color}88)` }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <Link to="/free-audit" className="btn-primary w-full justify-center mt-6">Claim My Free Slot</Link>
-                </div>
-              </div>
-            </RevealSection>
-          </div>
-        </div>
-      </section>
-
-      <div className="section-divider" />
 
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
 

@@ -1,14 +1,11 @@
 import { useParams, Link } from "react-router-dom";
+import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
-import { ArrowRight, CheckCircle, Phone } from "lucide-react";
-import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-import HeroParticles from "@/components/HeroParticles";
-import FloatingOrbs from "@/components/FloatingOrbs";
-import { TiltCard } from "@/hooks/useTiltCard";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -25,150 +22,99 @@ export default function SolutionDetailPage() {
     );
   }
 
-  const related = solutions.filter(s => s.slug !== solution.slug).slice(0, 7);
+  const related = solution.relatedSlugs.map(s => solutions.find(x => x.slug === s)).filter(Boolean);
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <HeroParticles />
-        <FloatingOrbs />
-        <div className="absolute inset-0 hero-grid-bg" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-3xl">
-            <div className="hero-badge mb-5">
-              <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-              {solution.title}
-            </div>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
-              {solution.heroTitle}<br />
-              <span className="shimmer-text">{solution.heroSubtitle}</span>
-            </h1>
-            <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
-              {solution.description}
-            </p>
-            <div className="flex flex-wrap gap-4 mb-8">
-              <Link to="/contact" className="btn-primary">
-                <Phone className="w-4 h-4" /> Get a Free Consultation
-              </Link>
-              <Link to="/case-studies" className="btn-secondary">View Case Studies <ArrowRight className="w-4 h-4" /></Link>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {solution.tags.map(tag => (
-                <span key={tag} className="tag-pill">{tag}</span>
-              ))}
-            </div>
+      <HeroPage
+        label="Solutions"
+        title={<><span className="gradient-text">{solution.title}</span></>}
+        description={solution.description}
+      />
+
+      {/* Benefits */}
+      <section className="py-16 border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <StatsRow stats={solution.benefits.map(b => ({ value: b.metric, label: b.metricLabel }))} />
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader label="Capabilities" title={<>What's <span className="gradient-text">Included</span></>} />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {solution.features.map((f, i) => (
+              <div key={i} className="glass-card p-6 flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">{f}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="py-10 border-t border-b border-border" style={{ background: "var(--section-alt, hsl(var(--muted)/0.3))" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StatsRow stats={solution.stats} />
-        </div>
-      </section>
-
-      {/* Services / What We Offer */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader
-              label="What We Offer"
-              title={<>Our <span className="gradient-text">{solution.title}</span> Services</>}
-              description="Comprehensive, end-to-end solutions tailored to your business needs — from strategy to deployment."
-            />
-          </RevealSection>
-          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
-            {solution.services.map((s, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
-                  background: `linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))`,
-                  border: "1px solid rgba(37,99,235,0.2)"
-                }}>
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-poppins font-semibold text-lg mb-2">{s.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
-              </TiltCard>
-            ))}
-          </RevealGrid>
-        </div>
-      </section>
-
-      {/* How We Work */}
+      {/* Benefits Detail */}
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader
-              label="How We Work"
-              title={<>A Structured, Proven Approach That <span className="gradient-text">Delivers Results</span> — Fast</>}
-            />
-          </RevealSection>
-          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
+          <SectionHeader label="Benefits" title={<>Why Choose This <span className="gradient-text">Solution</span></>} />
+          <div className="grid md:grid-cols-3 gap-6">
+            {solution.benefits.map((b, i) => (
+              <div key={i} className="glass-card p-7">
+                <div className="stat-number text-3xl mb-2">{b.metric}</div>
+                <div className="text-accent text-sm font-medium mb-3">{b.metricLabel}</div>
+                <h3 className="font-poppins font-semibold mb-2">{b.title}</h3>
+                <p className="text-muted-foreground text-sm">{b.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader label="Process" title={<>How We <span className="gradient-text">Deliver</span></>} />
+          <div className="grid md:grid-cols-5 gap-6">
             {solution.process.map((p) => (
-              <div key={p.step} className="reveal-item glass-card p-6 text-center">
+              <div key={p.step} className="text-center">
                 <div className="process-number mx-auto mb-4">{p.step}</div>
                 <h3 className="font-poppins font-semibold mb-2">{p.title}</h3>
                 <p className="text-muted-foreground text-sm">{p.description}</p>
               </div>
             ))}
-          </RevealGrid>
+          </div>
         </div>
       </section>
 
       {/* Industries */}
-      <section className="py-20 lg:py-28">
+      <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader
-              label="Industries"
-              title={<>Built for <span className="gradient-text">Every Industry</span></>}
-              description={`Our ${solution.title} expertise spans 13+ industry verticals — from startups to enterprises.`}
-            />
-          </RevealSection>
+          <SectionHeader label="Industries" title={<>Industries We <span className="gradient-text">Serve</span></>} />
           <div className="flex flex-wrap justify-center gap-3">
             {solution.industries.map((ind) => (
-              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card hover:border-primary/30 transition-all cursor-default">{ind}</span>
+              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card">{ind}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <RevealSection>
-        <div className="py-20 lg:py-28 section-alt">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-poppins font-bold text-3xl lg:text-4xl mb-4">Ready to Get Started?</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">Let's discuss how our {solution.title} solutions can transform your business. Free consultation, no commitment.</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="btn-primary">Book Free Consultation</Link>
-              <Link to="/free-audit" className="btn-secondary">Free Business Audit</Link>
+      {/* Related */}
+      {related.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader label="Related" title={<>Explore Related <span className="gradient-text">Solutions</span></>} />
+            <div className="grid md:grid-cols-3 gap-6">
+              {related.map(s => s && <SolutionCard key={s.slug} slug={s.slug} title={s.title} description={s.description} icon={s.icon} />)}
             </div>
           </div>
-        </div>
-      </RevealSection>
-
-      {/* Other Solutions */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader label="Explore" title={<>Other <span className="gradient-text">Solutions</span></>} />
-          </RevealSection>
-          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={80}>
-            {related.map(s => (
-              <div key={s.slug} className="reveal-item">
-                <SolutionCard slug={s.slug} title={s.shortTitle} description={s.description} icon={s.icon} />
-              </div>
-            ))}
-          </RevealGrid>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CTASection
-        title="Book Your Free Business Audit"
-        description="In 60 minutes, our experts map your systems, identify automation opportunities, assess your AI readiness, and deliver a written roadmap — at zero cost."
-        primaryCta={{ label: "Free Business Audit", to: "/free-audit" }}
+        title={`Ready to Get Started with ${solution.title}?`}
+        description="Book a free consultation and let's discuss how this solution can transform your business."
+        primaryCta={{ label: "Book Free Audit", to: "/free-audit" }}
         secondaryCta={{ label: "Contact Us", to: "/contact" }}
         dark
       />

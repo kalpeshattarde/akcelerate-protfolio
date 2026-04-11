@@ -26,7 +26,6 @@ import Gallery from "./pages/Gallery";
 import Careers from "./pages/Careers";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import ServicesNew from "./pages/ServicesNew";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +40,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/services-new" element={<ServicesNew />} />
             <Route path="/services/:slug" element={<ServiceDetail />} />
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/solutions/:slug" element={<SolutionDetail />} />

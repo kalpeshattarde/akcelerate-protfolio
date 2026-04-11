@@ -4,7 +4,6 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PageSkeleton from "./PageSkeleton";
-import ScrollProgress from "./ScrollProgress";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -44,7 +43,6 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <ScrollProgress />
       <Navbar />
       <main className="flex-1 relative">
         {showSkeleton && (
@@ -62,50 +60,47 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       </main>
       <Footer />
 
-      {/* Floating contact buttons — exact match to source */}
-      <a
-        href="mailto:akceleratehq@gmail.com"
-        className="fixed z-40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-        style={{ width: 54, height: 54, bottom: "15.5rem", right: "1.5rem", background: "linear-gradient(135deg, #7C3AED, #2563EB)", boxShadow: "0 4px 20px rgba(124,58,237,0.35)" }}
-        aria-label="Email us"
-      >
-        <Mail className="w-5 h-5 text-white" />
-      </a>
-      <a
-        href="tel:+918208555380"
-        className="fixed z-40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-        style={{ width: 54, height: 54, bottom: "10.5rem", right: "1.5rem", background: "linear-gradient(135deg, #2563EB, #06B6D4)", boxShadow: "0 4px 20px rgba(37,99,235,0.35)" }}
-        aria-label="Call us"
-      >
-        <Phone className="w-5 h-5 text-white" />
-      </a>
-      <a
-        href="https://wa.me/918208555380"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed z-40 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-        style={{ width: 54, height: 54, bottom: "5.5rem", right: "1.5rem", background: "#25D366", boxShadow: "0 4px 20px rgba(37,211,102,0.35)" }}
-        aria-label="WhatsApp us"
-      >
-        <WhatsAppIcon className="w-5 h-5 text-white" />
-      </a>
+      {/* Floating contact buttons */}
+      <div className="fixed right-5 bottom-24 z-40 flex flex-col gap-3">
+        <a
+          href="mailto:akceleratehq@gmail.com"
+          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)" }}
+          aria-label="Email us"
+        >
+          <Mail className="w-5 h-5 text-white" />
+        </a>
+        <a
+          href="tel:+918208555380"
+          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          style={{ background: "linear-gradient(135deg, #06B6D4, #22D3EE)" }}
+          aria-label="Call us"
+        >
+          <Phone className="w-5 h-5 text-white" />
+        </a>
+        <a
+          href="https://wa.me/918208555380"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}
+          aria-label="WhatsApp us"
+        >
+          <WhatsAppIcon className="w-5 h-5 text-white" />
+        </a>
+      </div>
 
       {/* Back to top */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed z-40 rounded-full flex items-center justify-center cursor-pointer border-none transition-all duration-300 hover:-translate-y-0.5"
-        style={{
-          width: 46, height: 46, bottom: "1.5rem", right: "1.5rem",
-          background: "linear-gradient(135deg, #2563EB, #06B6D4)",
-          boxShadow: "0 4px 20px rgba(37,99,235,0.35)",
-          opacity: showTop ? 1 : 0,
-          transform: showTop ? "translateY(0)" : "translateY(20px)",
-          pointerEvents: showTop ? "auto" : "none",
-        }}
-        aria-label="Back to top"
-      >
-        <ArrowUp className="w-5 h-5 text-white" />
-      </button>
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1"
+          style={{ background: "var(--gradient-primary)" }}
+          aria-label="Back to top"
+        >
+          <ArrowUp className="w-5 h-5 text-primary-foreground" />
+        </button>
+      )}
     </div>
   );
 }
