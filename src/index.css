@@ -842,7 +842,14 @@
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  animation: particle-float ease-in-out infinite;
+  opacity: 0;
+  animation: particle-rise linear infinite;
+}
+@keyframes particle-rise {
+  0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+  10% { opacity: 1; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(-120px) translateX(20px) scale(1.2); opacity: 0; }
 }
 
 .process-anim-bar {
