@@ -368,7 +368,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
                   {c.stats.map((s, j) => (
                     <div key={j} className="text-center">
-                      <div className="font-poppins font-bold text-lg gradient-text">{s.v}</div>
+                      <div className="font-poppins font-bold text-lg gradient-text"><AnimatedStat value={s.v} /></div>
                       <div className="text-[10px] text-muted-foreground">{s.l}</div>
                     </div>
                   ))}
