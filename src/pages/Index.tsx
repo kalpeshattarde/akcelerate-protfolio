@@ -265,18 +265,27 @@ export default function HomePage() {
             />
           </RevealSection>
 
-          <RevealGrid className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-2 mb-16" stagger={120}>
+          <div className="flex flex-col md:flex-row items-start md:items-start gap-0 mb-16">
             {processSteps.map((s, i) => (
-              <div key={s.num} className="reveal-item flex items-start md:items-center md:flex-col gap-4 md:gap-0 flex-1 text-center relative">
-                <div className="process-number mx-auto mb-3">{s.num}</div>
-                <div className="md:text-center">
-                  <h3 className="font-poppins font-semibold text-sm mb-1">{s.title}</h3>
-                  <p className="text-muted-foreground text-xs leading-relaxed max-w-[180px]">{s.desc}</p>
+              <React.Fragment key={s.num}>
+                <div className="flex-1 flex flex-col items-center text-center relative px-4">
+                  <div className="process-number mb-4">{s.num}</div>
+                  <div className="process-step-icon">
+                    {[
+                      <svg key="s" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+                      <svg key="d" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+                      <svg key="b" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+                      <svg key="p" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
+                      <svg key="m" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>,
+                    ][i]}
+                  </div>
+                  <div className="process-step-title">{s.title}</div>
+                  <div className="process-step-desc max-w-[180px]">{s.desc}</div>
                 </div>
-                {i < 4 && <div className="hidden md:block absolute top-6 left-[calc(50%+30px)] w-[calc(100%-60px)] h-[2px]" style={{ background: "linear-gradient(90deg, rgba(37,99,235,0.3), rgba(6,182,212,0.3))" }} />}
-              </div>
+                {i < processSteps.length - 1 && <div className="process-step-connector" />}
+              </React.Fragment>
             ))}
-          </RevealGrid>
+          </div>
 
           <RevealGrid className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16" stagger={100}>
             {[
