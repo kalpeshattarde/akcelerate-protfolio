@@ -27,7 +27,7 @@ export default function ServiceDetailPage() {
 
       <section className="py-16 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StatsRow stats={service.results} />
+          <StatsRow stats={service.results.map(r => ({ value: r.metric, label: r.label }))} />
         </div>
       </section>
 
