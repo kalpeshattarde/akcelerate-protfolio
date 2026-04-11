@@ -17,7 +17,7 @@ export default function AboutPage() {
     <>
       {/* PAGE HERO — 2-column layout matching source */}
       <section className="relative pt-[5.5rem] pb-14 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <div className="absolute inset-0 z-0 opacity-80">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <VizCanvas mode="about" />
         </div>
         <div className="absolute inset-0 hero-grid-bg z-[1]" />

@@ -44,7 +44,7 @@ export default function Footer() {
                 { to: "/blog", label: "Blog" },
                 { to: "/contact", label: "Contact" },
               ].map(l => (
-                <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
+                <Link key={l.to} to={l.to} className="footer-link">{l.label}</Link>
               ))}
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function Footer() {
                 { to: "/solutions/saas-dev", label: "SaaS Development" },
                 { to: "/solutions/cloud-devops", label: "Cloud & DevOps" },
               ].map(l => (
-                <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
+                <Link key={l.to} to={l.to} className="footer-link">{l.label}</Link>
               ))}
             </div>
           </div>
