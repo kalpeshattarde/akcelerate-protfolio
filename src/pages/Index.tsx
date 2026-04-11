@@ -10,6 +10,7 @@ import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
 import HeroDashboard from "@/components/HeroDashboard";
+import MagneticButton from "@/components/MagneticButton";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -72,8 +73,12 @@ export default function HomePage() {
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
-                <Link to="/solutions" className="btn-primary"><Play className="w-4 h-4" /> Explore Solutions</Link>
-                <Link to="/contact" className="btn-secondary">Book a Consultation <ArrowRight className="w-4 h-4" /></Link>
+                <MagneticButton>
+                  <Link to="/solutions" className="btn-primary"><Play className="w-4 h-4" /> Explore Solutions</Link>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link to="/contact" className="btn-secondary">Book a Consultation <ArrowRight className="w-4 h-4" /></Link>
+                </MagneticButton>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {heroStats.map((s, i) => (
@@ -85,13 +90,15 @@ export default function HomePage() {
               </div>
             </div>
 
-            <HeroDashboard />
+            <div className="animated-border">
+              <HeroDashboard />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ═══════════════════ PROCESS ═══════════════════ */}
-      <section className="py-20 lg:py-28">
+      <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader
@@ -174,7 +181,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ BENEFITS ═══════════════════ */}
-      <section className="py-20 lg:py-28 section-alt">
+      <section className="py-24 lg:py-32 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader
@@ -202,7 +209,7 @@ export default function HomePage() {
       <div className="section-divider" />
 
       {/* ═══════════════════ SOLUTIONS ═══════════════════ */}
-      <section className="py-20 lg:py-28">
+      <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader
@@ -222,7 +229,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ INDUSTRIES ═══════════════════ */}
-      <section className="py-20 lg:py-28 section-alt">
+      <section className="py-24 lg:py-32 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader
@@ -251,7 +258,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ TECH STACK ═══════════════════ */}
-      <section className="py-20 lg:py-28">
+      <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader
@@ -277,7 +284,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ CASE STUDIES ═══════════════════ */}
-      <section className="py-20 lg:py-28 section-alt">
+      <section className="py-24 lg:py-32 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <SectionHeader

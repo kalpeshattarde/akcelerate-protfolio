@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import PageSkeleton from "./PageSkeleton";
+import Preloader from "./Preloader";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -15,92 +15,102 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const [showTop, setShowTop] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showSkeleton, setShowSkeleton] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [pageKey, setPageKey] = useState(0);
+  const [transitionClass, setTransitionClass] = useState("page-enter-active");
   const { pathname } = useLocation();
   const prevPathname = useRef(pathname);
 
   useEffect(() => {
     if (prevPathname.current !== pathname) {
-      setShowSkeleton(true);
-      setIsTransitioning(true);
-      window.scrollTo(0, 0);
-      const skeletonTimer = setTimeout(() => setShowSkeleton(false), 250);
-      const fadeTimer = setTimeout(() => setIsTransitioning(false), 300);
+      // Exit animation
+      setTransitionClass("page-exit-active");
+      const timer = setTimeout(() => {
+        window.scrollTo(0, 0);
+        setPageKey(k => k + 1);
+        setTransitionClass("page-enter");
+        // Trigger enter animation next frame
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTransitionClass("page-enter-active");
+          });
+        });
+      }, 250);
       prevPathname.current = pathname;
-      return () => {
-        clearTimeout(skeletonTimer);
-        clearTimeout(fadeTimer);
-      };
+      return () => clearTimeout(timer);
     }
   }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      setShowTop(window.scrollY > 400);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 relative">
-        {showSkeleton && (
-          <div className="absolute inset-0 z-10">
-            <PageSkeleton />
-          </div>
-        )}
+    <>
+      <Preloader />
+      <div className="min-h-screen flex flex-col">
+        {/* Scroll progress bar */}
         <div
-          className={`transition-all duration-500 ease-out ${
-            isTransitioning ? "opacity-0 translate-y-3" : "opacity-100 translate-y-0"
-          }`}
-        >
-          {children}
+          className="scroll-progress"
+          style={{ width: `${scrollProgress}%` }}
+        />
+
+        <Navbar />
+        <main className="flex-1 relative">
+          <div key={pageKey} className={transitionClass}>
+            {children}
+          </div>
+        </main>
+        <Footer />
+
+        {/* Floating contact buttons */}
+        <div className="fixed right-5 bottom-24 z-40 flex flex-col gap-3">
+          <a
+            href="mailto:akceleratehq@gmail.com"
+            className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)" }}
+            aria-label="Email us"
+          >
+            <Mail className="w-5 h-5 text-primary-foreground" />
+          </a>
+          <a
+            href="tel:+918208555380"
+            className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            style={{ background: "linear-gradient(135deg, #06B6D4, #22D3EE)" }}
+            aria-label="Call us"
+          >
+            <Phone className="w-5 h-5 text-primary-foreground" />
+          </a>
+          <a
+            href="https://wa.me/918208555380"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}
+            aria-label="WhatsApp us"
+          >
+            <WhatsAppIcon className="w-5 h-5 text-primary-foreground" />
+          </a>
         </div>
-      </main>
-      <Footer />
 
-      {/* Floating contact buttons */}
-      <div className="fixed right-5 bottom-24 z-40 flex flex-col gap-3">
-        <a
-          href="mailto:akceleratehq@gmail.com"
-          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-          style={{ background: "linear-gradient(135deg, #2563EB, #3B82F6)" }}
-          aria-label="Email us"
-        >
-          <Mail className="w-5 h-5 text-white" />
-        </a>
-        <a
-          href="tel:+918208555380"
-          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-          style={{ background: "linear-gradient(135deg, #06B6D4, #22D3EE)" }}
-          aria-label="Call us"
-        >
-          <Phone className="w-5 h-5 text-white" />
-        </a>
-        <a
-          href="https://wa.me/918208555380"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-          style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}
-          aria-label="WhatsApp us"
-        >
-          <WhatsAppIcon className="w-5 h-5 text-white" />
-        </a>
+        {/* Back to top */}
+        {showTop && (
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1"
+            style={{ background: "var(--gradient-primary)" }}
+            aria-label="Back to top"
+          >
+            <ArrowUp className="w-5 h-5 text-primary-foreground" />
+          </button>
+        )}
       </div>
-
-      {/* Back to top */}
-      {showTop && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:-translate-y-1"
-          style={{ background: "var(--gradient-primary)" }}
-          aria-label="Back to top"
-        >
-          <ArrowUp className="w-5 h-5 text-primary-foreground" />
-        </button>
-      )}
-    </div>
+    </>
   );
 }
