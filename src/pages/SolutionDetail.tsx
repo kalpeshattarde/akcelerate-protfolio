@@ -9,6 +9,18 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
 import { TiltCard } from "@/hooks/useTiltCard";
+import VizCanvas from "@/components/viz/VizCanvas";
+
+const slugToVizMode: Record<string, string> = {
+  "business-automation": "flow",
+  "ai-ml": "neural",
+  "business-consulting": "strategy",
+  "saas-dev": "saas",
+  "automated-analytics": "analytics",
+  "data-visualization": "dataviz",
+  "cloud-devops": "cloud",
+  "mlops": "mlops",
+};
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -26,6 +38,7 @@ export default function SolutionDetailPage() {
   }
 
   const related = solutions.filter(s => s.slug !== solution.slug).slice(0, 7);
+  const vizMode = slugToVizMode[solution.slug] || "neural";
 
   return (
     <>
@@ -33,6 +46,7 @@ export default function SolutionDetailPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs />
+        <VizCanvas mode={vizMode} className="opacity-50" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
