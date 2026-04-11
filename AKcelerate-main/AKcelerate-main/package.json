@@ -1,0 +1,27 @@
+{
+  "name": "akcelerate-website",
+  "version": "1.0.0",
+  "description": "AKcelerate Premium Consulting Website",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "consulting",
+    "website",
+    "premium"
+  ],
+  "author": "AKcelerate",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.3.1",
+    "helmet": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
