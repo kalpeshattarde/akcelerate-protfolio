@@ -359,32 +359,33 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
-                <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
-                <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
-                <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
-                  <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
-                </div>
-                {/* Mini chart — matches original benefit-mini-chart */}
-                <div className="benefit-mini-chart">
-                  {i % 2 === 0 ? (
-                    <>
-                      <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 0 ? "Before AI" : i === 2 ? "Downtime Risk" : "Defect Rate"}</span><span>{i === 0 ? "After AI" : i === 2 ? "Uptime" : "Quality Score"}</span></div>
-                      <svg className="sparkline-svg" viewBox="0 0 200 36" preserveAspectRatio="none">
-                        <polyline points="0,30 20,28 40,26 60,22 80,18 100,20 120,14 140,10 160,8 180,5 200,3" fill="none" stroke="url(#sparkGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
-                      </svg>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 1 ? "Cost Index" : i === 3 ? "Inventory Efficiency" : "Productivity"}</span><span>{i === 1 ? "Savings" : "Optimized"}</span></div>
-                      <div className="benefit-bar-track"><div className="benefit-bar" style={{ width: `${[0, 77, 0, 85, 72, 90][i]}%` }} /></div>
-                    </>
-                  )}
-                </div>
-              </TiltCard>
+              <div key={i} className="reveal-item">
+                <TiltCard className="glass-card p-8 h-full">
+                  <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
+                  <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
+                  <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
+                    <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
+                  </div>
+                  <div className="benefit-mini-chart">
+                    {i % 2 === 0 ? (
+                      <>
+                        <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 0 ? "Before AI" : i === 2 ? "Downtime Risk" : "Defect Rate"}</span><span>{i === 0 ? "After AI" : i === 2 ? "Uptime" : "Quality Score"}</span></div>
+                        <svg className="sparkline-svg" viewBox="0 0 200 36" preserveAspectRatio="none">
+                          <polyline points="0,30 20,28 40,26 60,22 80,18 100,20 120,14 140,10 160,8 180,5 200,3" fill="none" stroke="url(#sparkGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#06B6D4"/></linearGradient></defs>
+                        </svg>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex justify-between text-xs text-muted-foreground mb-1"><span>{i === 1 ? "Cost Index" : i === 3 ? "Inventory Efficiency" : "Productivity"}</span><span>{i === 1 ? "Savings" : "Optimized"}</span></div>
+                        <div className="benefit-bar-track"><div className="benefit-bar" style={{ width: `${[0, 77, 0, 85, 72, 90][i]}%` }} /></div>
+                      </>
+                    )}
+                  </div>
+                </TiltCard>
+              </div>
             ))}
           </RevealGrid>
         </div>

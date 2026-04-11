@@ -70,16 +70,18 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {coreCapabilities.map((c, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
-                  background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
-                  border: "1px solid rgba(37,99,235,0.2)"
-                }}>
-                  <c.icon className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
-              </TiltCard>
+              <div key={i} className="reveal-item">
+                <TiltCard className="glass-card p-8 h-full">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
+                    background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
+                    border: "1px solid rgba(37,99,235,0.2)"
+                  }}>
+                    <c.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
+                </TiltCard>
+              </div>
             ))}
           </RevealGrid>
         </div>
@@ -109,14 +111,16 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {techCategories.map((c, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
-                <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {c.items.map(t => (
-                    <span key={t} className="tag-pill">{t}</span>
-                  ))}
-                </div>
-              </TiltCard>
+              <div key={i} className="reveal-item">
+                <TiltCard className="glass-card p-8 h-full">
+                  <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {c.items.map(t => (
+                      <span key={t} className="tag-pill">{t}</span>
+                    ))}
+                  </div>
+                </TiltCard>
+              </div>
             ))}
           </RevealGrid>
         </div>
