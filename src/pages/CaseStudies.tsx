@@ -11,7 +11,7 @@ import StatRing from "@/components/StatRing";
 export default function CaseStudiesPage() {
   return (
     <>
-      <HeroPage label="Case Studies" title={<>Real Clients. <span className="gradient-text">Real Outcomes.</span></>} description="From automotive to pharma — discover how manufacturers across India are transforming operations with AKcelerate's AI analytics platform." />
+      <HeroPage vizMode="casestudies" label="Case Studies" title={<>Real Clients. <span className="gradient-text">Real Outcomes.</span></>} description="From automotive to pharma — discover how manufacturers across India are transforming operations with AKcelerate's AI analytics platform." />
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -16,6 +16,7 @@ export default function PricingPage() {
   return (
     <>
       <HeroPage
+        vizMode="pricing"
         label="Pricing"
         title={<>Transparent <span className="gradient-text">Pricing Plans</span></>}
         description="Choose the engagement model that fits your business. No hidden fees, no surprises."

@@ -9,6 +9,7 @@ export default function ContactPage() {
   return (
     <>
       <HeroPage
+        vizMode="contact"
         label="Contact"
         title={<>Let's Transform Your <span className="gradient-text">Business Together</span></>}
         description="Discuss how our AI and automation solutions can eliminate inefficiencies, unlock insights, and create measurable ROI for your business."
