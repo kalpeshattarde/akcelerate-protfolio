@@ -1823,11 +1823,12 @@ a.ak-link-card:hover {
 [data-count].counting { animation: akCounterPulse 0.3s ease; }
 
 /* ══════════════════════════════════════════════════════════════
-   SCROLL REVEAL — JS-driven (progressive enhancement)
+   SCROLL REVEAL — animation-based (no opacity:0 default)
 ══════════════════════════════════════════════════════════════ */
-/* Reveal states are now applied via JS in useScrollReveal hooks.
-   Elements are visible by default; JS adds opacity:0 after mount.
-   This prevents invisible content if JS fails or observer doesn't fire. */
+@keyframes revealUp {
+  from { opacity: 0.2; transform: translateY(24px); }
+  to   { opacity: 1;   transform: translateY(0); }
+}
 
 /* Source: integration-track */
 .integration-track {
