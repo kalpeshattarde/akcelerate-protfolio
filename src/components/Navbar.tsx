@@ -112,8 +112,8 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden lg:flex items-center gap-3">
-            <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground" aria-label="Toggle theme">
-              {theme === "dark" ? <Sun className="w-[17px] h-[17px]" /> : <Moon className="w-[17px] h-[17px]" />}
+            <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
+              {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" />}
             </button>
             <Link to="/contact" className="btn-primary text-sm">
               <LayoutDashboard className="w-4 h-4" /> Request Demo
@@ -147,8 +147,8 @@ export default function Navbar() {
               <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
             ))}
             <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
-              <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground">
-                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95">
+                {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
               </button>
               <Link to="/contact" className="btn-primary text-sm flex-1 justify-center">Request Demo</Link>
             </div>

@@ -187,7 +187,9 @@
     box-shadow: 0 20px 50px hsl(var(--primary) / 0.1);
   }
 
-  /* Buttons — pill shape with gradient */
+  /* ═══════════ BUTTONS ═══════════ */
+
+  /* Primary button — gradient with animated shine */
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -201,46 +203,169 @@
     border-radius: 50px;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(37,99,235,0.25);
+  }
+
+  /* Animated shine sweep */
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+  }
+  .btn-primary:hover::before {
+    left: 100%;
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(37,99,235,0.35);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 40px rgba(37,99,235,0.4);
   }
 
+  .btn-primary:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    transition-duration: 0.1s;
+  }
+
+  /* Primary — Dark mode: neon glow effect */
+  .dark .btn-primary {
+    background: linear-gradient(135deg, #3B82F6, #22D3EE);
+    box-shadow: 0 4px 20px rgba(59,130,246,0.3), 0 0 0 1px rgba(59,130,246,0.15);
+  }
+  .dark .btn-primary:hover {
+    box-shadow: 0 14px 45px rgba(59,130,246,0.45), 0 0 30px rgba(34,211,238,0.2);
+  }
+
+  /* Secondary button — border with fill-on-hover */
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.75rem;
     background: transparent;
-    color: #2563EB;
+    color: hsl(var(--primary));
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 0.9rem;
     border-radius: 50px;
-    border: 2px solid #2563EB;
+    border: 2px solid hsl(var(--primary));
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  /* Slide-fill background on hover */
+  .btn-secondary::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--primary) / 0.04));
+    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+  .btn-secondary:hover::before {
+    height: 100%;
   }
 
   .btn-secondary:hover {
-    background: rgba(37,99,235,0.06);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(37,99,235,0.15);
+    transform: translateY(-3px) scale(1.03);
+    border-color: hsl(var(--primary));
+    box-shadow: 0 10px 30px hsl(var(--primary) / 0.15);
   }
 
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 0.1s;
+  }
+
+  /* Secondary — Dark mode: frosted glass border */
   .dark .btn-secondary {
     color: #93C5FD;
     border-color: rgba(147,197,253,0.3);
+    background: rgba(59,130,246,0.05);
   }
   .dark .btn-secondary:hover {
-    background: rgba(37,99,235,0.1);
+    border-color: rgba(147,197,253,0.6);
+    background: rgba(59,130,246,0.12);
+    box-shadow: 0 10px 35px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* ═══════════ GLASS CARD THEME VARIANTS ═══════════ */
+
+  /* Light mode cards — clean white with subtle shadow */
+  .glass-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Dark mode cards — frosted glass with glow borders */
+  .dark .glass-card {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(12px);
+    border-color: hsl(var(--primary) / 0.1);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .dark .glass-card:hover {
+    border-color: hsl(var(--primary) / 0.35);
+    box-shadow: 0 20px 60px rgba(37,99,235,0.15), 0 0 0 1px hsl(var(--primary) / 0.1);
+  }
+
+  /* ═══════════ HERO BADGE THEME ═══════════ */
+  .dark .hero-badge {
+    background: rgba(59,130,246,0.12);
+    border-color: rgba(59,130,246,0.3);
+    color: #93C5FD;
+  }
+
+  /* ═══════════ FEATURE ICON THEME ═══════════ */
+  .dark .feature-icon {
+    background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(34,211,238,0.1));
+    border-color: rgba(59,130,246,0.25);
+  }
+
+  /* ═══════════ STAT NUMBER DARK ═══════════ */
+  .dark .stat-number {
+    background: linear-gradient(135deg, #60A5FA, #22D3EE);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* ═══════════ TAG PILL DARK ═══════════ */
+  .dark .tag-pill {
+    background: rgba(59,130,246,0.1);
+    border-color: rgba(59,130,246,0.25);
+    color: #93C5FD;
+  }
+
+  /* ═══════════ SECTION ALT DARK ═══════════ */
+  .dark .section-alt {
+    background: hsl(220 20% 5%);
+  }
+
+  /* ═══════════ GRADIENT TEXT DARK ═══════════ */
+  .dark .gradient-text {
+    background: linear-gradient(135deg, #60A5FA, #22D3EE);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
   /* Feature icon */
@@ -685,7 +810,7 @@
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
 }
 
-/* Form styles matching original */
+/* Form styles */
 .form-input {
   width: 100%;
   padding: 0.875rem 1.125rem;
@@ -699,11 +824,44 @@
   outline: none;
 }
 .form-input:focus {
-  border-color: #2563EB;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
 }
 .form-input::placeholder {
-  color: #94A3B8;
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .form-input {
+  background: hsl(220 20% 10%);
+  border-color: hsl(220 16% 20%);
+}
+.dark .form-input:focus {
+  border-color: #60A5FA;
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+}
+
+/* Theme toggle animation */
+@keyframes theme-spin {
+  from { transform: rotate(0deg) scale(0.8); opacity: 0; }
+  to { transform: rotate(360deg) scale(1); opacity: 1; }
+}
+.theme-toggle-icon {
+  animation: theme-spin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark mode navbar */
+.dark nav { 
+  border-color: hsl(220 16% 16%) !important;
+}
+
+/* Dark mode shimmer for cards */
+.dark .glass-card::before {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent);
+}
+
+/* Dark mode gallery */
+.dark .gallery-item:hover {
+  box-shadow: 0 20px 50px rgba(59,130,246,0.2);
 }
 
 /* Integration strip marquee */
