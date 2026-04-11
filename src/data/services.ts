@@ -82,10 +82,10 @@ export const services: Service[] = [
       { title: "Supply Visibility", description: "End-to-end visibility across your entire supply chain.", metric: "100%", metricLabel: "supply chain visibility" },
     ],
     process: [
-      { step: 1, title: "Data Integration", description: "Connect ERP, WMS, and supply chain systems.", duration: "Week 1–2" },
-      { step: 2, title: "Forecasting Models", description: "Build demand prediction and optimization models.", duration: "Week 3–5" },
-      { step: 3, title: "Dashboard Development", description: "Create real-time analytics dashboards.", duration: "Week 6–7" },
-      { step: 4, title: "Go Live", description: "Deploy and train supply chain teams.", duration: "Week 8" },
+      { step: 1, title: "Supply Chain Mapping", description: "We map all your tier-1 and tier-2 suppliers, warehouses, and logistics partners.", duration: "Week 1–2" },
+      { step: 2, title: "Data Integration", description: "Connect ERP, WMS, TMS, and supplier portals. Historical data ingestion and cleansing.", duration: "Week 2–4" },
+      { step: 3, title: "AI Model Calibration", description: "Demand forecasting models calibrated per SKU family and market segment. Supplier risk models trained.", duration: "Week 4–7" },
+      { step: 4, title: "Dashboard Go-Live", description: "Supply chain control tower live with all KPIs, alerts, and team training completed.", duration: "Week 7–8" },
     ],
     techStack: ["Python", "Scikit-learn", "Power BI", "Azure Data Factory", "SQL Server", "Apache Airflow"],
     results: [
