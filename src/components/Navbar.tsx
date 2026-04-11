@@ -64,17 +64,17 @@ export default function Navbar() {
               <Link to="/solutions" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/solutions") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
                 Solutions <ChevronDown className="w-3 h-3 chevron-icon" />
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[340px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
+              <div className="nav-dropdown-menu absolute top-full left-1/2 pt-3" style={{ minWidth: 340, transform: "translateX(-50%)" }}>
+                <div className="bg-popover border border-border rounded-2xl p-2 space-y-0.5" style={{ boxShadow: "0 24px 64px rgba(15,23,42,0.12), 0 0 0 1px rgba(15,23,42,0.03)" }}>
+                  <Link to="/solutions" className="nav-dropdown-item">
+                    <div className="nav-dropdown-icon"><LayoutDashboard className="w-4 h-4" /></div>
+                    <div><div className="nav-dropdown-title">All Solutions</div><div className="nav-dropdown-desc">Overview of all 8 areas</div></div>
                   </Link>
-                  <div className="border-t border-border my-1" />
+                  <div className="nav-dropdown-divider" />
                   {solutionLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                    <Link key={s.to} to={s.to} className="nav-dropdown-item">
+                      <div className="nav-dropdown-icon"><s.icon className="w-4 h-4" /></div>
+                      <div><div className="nav-dropdown-title">{s.title}</div><div className="nav-dropdown-desc">{s.desc}</div></div>
                     </Link>
                   ))}
                 </div>
@@ -86,17 +86,17 @@ export default function Navbar() {
               <Link to="/services" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/services") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
                 Services <ChevronDown className="w-3 h-3 chevron-icon" />
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
+              <div className="nav-dropdown-menu absolute top-full left-1/2 pt-3" style={{ minWidth: 300, transform: "translateX(-50%)" }}>
+                <div className="bg-popover border border-border rounded-2xl p-2 space-y-0.5" style={{ boxShadow: "0 24px 64px rgba(15,23,42,0.12), 0 0 0 1px rgba(15,23,42,0.03)" }}>
+                  <Link to="/services" className="nav-dropdown-item">
+                    <div className="nav-dropdown-icon"><Settings className="w-4 h-4" /></div>
+                    <div><div className="nav-dropdown-title">All Services</div><div className="nav-dropdown-desc">Implementation & consulting</div></div>
                   </Link>
-                  <div className="border-t border-border my-1" />
+                  <div className="nav-dropdown-divider" />
                   {serviceLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                    <Link key={s.to} to={s.to} className="nav-dropdown-item">
+                      <div className="nav-dropdown-icon"><s.icon className="w-4 h-4" /></div>
+                      <div><div className="nav-dropdown-title">{s.title}</div><div className="nav-dropdown-desc">{s.desc}</div></div>
                     </Link>
                   ))}
                 </div>
