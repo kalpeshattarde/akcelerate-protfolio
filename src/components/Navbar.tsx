@@ -42,7 +42,7 @@ export default function Navbar() {
   const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/97 backdrop-blur-xl border-b border-border shadow-sm py-3 scrolled-nav" : "bg-transparent py-5"}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm py-3 scrolled-nav" : "bg-background/80 backdrop-blur-lg py-4 border-b border-border/50"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
