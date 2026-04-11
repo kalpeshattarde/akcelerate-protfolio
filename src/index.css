@@ -1351,9 +1351,9 @@
   100% { background-position: 200% center; }
 }
 
-/* Source: visual.js @keyframes akRipple */
+/* Source: visual.js @keyframes akRipple — starts at scale(0) inline, ends at scale(1) */
 @keyframes akRipple {
-  to { transform: scale(2.5); opacity: 0; }
+  to { transform: scale(1); opacity: 0; }
 }
 
 /* Source: styles.css @keyframes akFadeUp */
@@ -1572,10 +1572,11 @@
 /* ══════════════════════════════════════════════════════════════
    SCROLL REVEAL — source-faithful
 ══════════════════════════════════════════════════════════════ */
+/* Source: visual.js scrollReveal — translateY(30px), 0.7s ease, threshold 0.15 */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal.revealed {
   opacity: 1;
@@ -1583,8 +1584,8 @@
 }
 .reveal-item {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal-item.revealed {
   opacity: 1;
