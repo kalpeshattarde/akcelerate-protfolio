@@ -2,8 +2,17 @@ import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import { RevealSection } from "@/hooks/useScrollReveal";
+import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { SectionHeader } from "@/components/SectionHeader";
 import FloatingOrbs from "@/components/FloatingOrbs";
+import { TiltCard } from "@/hooks/useTiltCard";
+
+const firstCallHelp = [
+  "Understand your current tech stack and processes",
+  "Identify 2-3 highest-ROI automation opportunities",
+  "Recommend the right solution area and engagement model",
+  "Provide a rough timeline and investment estimate",
+];
 
 export default function ContactPage() {
   return (
@@ -59,6 +68,61 @@ export default function ContactPage() {
                 <h2 className="font-poppins font-bold text-2xl mb-6">Send Us a Message</h2>
                 <p className="text-muted-foreground text-sm mb-6">Tell us about your manufacturing challenges and we'll show you how AKcelerate can help.</p>
                 <ContactForm />
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Reach Out Today */}
+      <section className="py-20 lg:py-28 section-alt">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealSection>
+            <SectionHeader
+              label="First Call"
+              title={<>Why Reach Out <span className="gradient-text">Today</span></>}
+              description="Fast responses, expert guidance, and zero obligations — here's what our clients experience."
+            />
+          </RevealSection>
+          <div className="grid lg:grid-cols-2 gap-8">
+            <RevealSection delay={100}>
+              <div className="glass-card p-8">
+                <h3 className="font-poppins font-semibold mb-1 text-center">Client Satisfaction by Touchpoint</h3>
+                <p className="text-xs text-muted-foreground mb-6 text-center">Rated by past clients</p>
+                <div className="space-y-4">
+                  {[
+                    { label: "Initial Response Speed", pct: 96 },
+                    { label: "Technical Expertise", pct: 98 },
+                    { label: "Solution Relevance", pct: 94 },
+                    { label: "Follow-up Quality", pct: 95 },
+                    { label: "Overall Satisfaction", pct: 97 },
+                  ].map((s, i) => (
+                    <div key={i}>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="font-medium">{s.label}</span>
+                        <span className="text-muted-foreground">{s.pct}%</span>
+                      </div>
+                      <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "hsl(var(--muted))" }}>
+                        <div className="h-full rounded-full" style={{ width: `${s.pct}%`, background: "var(--gradient-primary)" }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+            <RevealSection delay={200}>
+              <div className="glass-card p-8">
+                <h3 className="font-poppins font-semibold mb-6">How we typically help in the first call</h3>
+                <div className="space-y-4">
+                  {firstCallHelp.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)" }}>
+                        <span className="text-white text-xs font-bold">{i + 1}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{item}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </RevealSection>
           </div>
