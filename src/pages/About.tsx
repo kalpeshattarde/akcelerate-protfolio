@@ -44,7 +44,7 @@ export default function AboutPage() {
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={120}>
             {team.map((t, i) => (
               <div key={i} className="reveal-item glass-card p-7 text-center">
-                <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>{t.name.charAt(0)}</div>
+                <img src={t.img} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover object-top" style={{ boxShadow: "0 4px 16px rgba(37,99,235,0.18)" }} />
                 <h3 className="font-poppins font-semibold text-lg">{t.name}</h3>
                 <div className="text-accent text-sm font-medium mb-3">{t.role}</div>
                 <p className="text-muted-foreground text-sm">{t.desc}</p>
