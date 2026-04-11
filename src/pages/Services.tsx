@@ -5,6 +5,9 @@ import { ServiceCard } from "@/components/Cards";
 import { services } from "@/data/services";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { Database, BarChart3, Monitor, Settings, ArrowRight, Phone } from "lucide-react";
+import FloatingOrbs from "@/components/FloatingOrbs";
+import HeroParticles from "@/components/HeroParticles";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 const coreCapabilities = [
   { icon: Database, title: "Data Integration", desc: "Connect and harmonize data from every business system into a unified data layer without disrupting operations." },
@@ -33,9 +36,9 @@ export default function ServicesPage() {
     <>
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
             <div className="hero-badge mb-5">
@@ -44,7 +47,7 @@ export default function ServicesPage() {
             </div>
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
               Strategy to Delivery —<br />
-              <span className="hero-gradient-text">Everything AI & Automation</span>
+              <span className="shimmer-text">Everything AI & Automation</span>
             </h1>
             <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
               We don't just consult — we build. From custom AI systems and automation to SaaS platforms and cloud infrastructure, we handle the full delivery lifecycle.
@@ -65,7 +68,7 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {coreCapabilities.map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{
                   background: "linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.05))",
                   border: "1px solid rgba(37,99,235,0.2)"
@@ -74,7 +77,7 @@ export default function ServicesPage() {
                 </div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -104,14 +107,14 @@ export default function ServicesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {techCategories.map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-6">
                 <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
                 <div className="flex flex-wrap gap-2">
                   {c.items.map(t => (
                     <span key={t} className="tag-pill">{t}</span>
                   ))}
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -124,7 +127,7 @@ export default function ServicesPage() {
             <SectionHeader label="How We Work" title={<>From Data Discovery to <span className="gradient-text">Continuous Optimization</span></>} description="Our proven 5-step implementation methodology ensures rapid time-to-value with minimal operational disruption." />
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-5 gap-6" stagger={100}>
-            {processSteps.map((s, i) => (
+            {processSteps.map((s) => (
               <div key={s.num} className="reveal-item text-center">
                 <div className="process-number mx-auto mb-4">{s.num}</div>
                 <h3 className="font-poppins font-semibold text-sm mb-2">{s.title}</h3>

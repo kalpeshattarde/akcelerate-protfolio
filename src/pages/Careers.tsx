@@ -3,6 +3,8 @@ import CTASection from "@/components/CTASection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { MapPin, Briefcase, Zap, Heart, TrendingUp } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { TiltCard } from "@/hooks/useTiltCard";
+import FloatingOrbs from "@/components/FloatingOrbs";
 
 const perks = [
   { icon: Zap, title: "High Impact", desc: "Your work directly reduces downtime and waste at real factories across India." },
@@ -23,15 +25,16 @@ export default function CareersPage() {
     <>
       <HeroPage label="Careers" title={<>Build the Future of <span className="gradient-text">Indian Manufacturing</span></>} description="We're a small team with a big mission — using AI to transform how India's factories run. Join us and do the most meaningful work of your career." />
 
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+        <FloatingOrbs count={2} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <RevealGrid className="grid md:grid-cols-3 gap-6 mb-16" stagger={100}>
             {perks.map((p, i) => (
-              <div key={i} className="reveal-item glass-card p-7 text-center">
+              <TiltCard key={i} className="reveal-item glass-card p-7 text-center">
                 <div className="feature-icon mx-auto"><p.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold mb-2">{p.title}</h3>
                 <p className="text-muted-foreground text-sm">{p.desc}</p>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
 
@@ -40,19 +43,21 @@ export default function CareersPage() {
           </RevealSection>
           <div className="space-y-4 max-w-4xl mx-auto">
             {jobs.map((j, i) => (
-              <div key={i} className="glass-card p-6">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-poppins font-semibold text-lg">{j.title}</h3>
-                    <p className="text-muted-foreground text-sm mt-1">{j.desc}</p>
-                    <div className="flex gap-4 mt-3">
-                      <span className="text-xs flex items-center gap-1 text-muted-foreground"><MapPin className="w-3 h-3" />{j.location}</span>
-                      <span className="text-xs flex items-center gap-1 text-muted-foreground"><Briefcase className="w-3 h-3" />{j.type}</span>
+              <RevealSection key={i} delay={i * 80}>
+                <div className="glass-card p-6 hover:border-primary/30 transition-all">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-poppins font-semibold text-lg">{j.title}</h3>
+                      <p className="text-muted-foreground text-sm mt-1">{j.desc}</p>
+                      <div className="flex gap-4 mt-3">
+                        <span className="text-xs flex items-center gap-1 text-muted-foreground"><MapPin className="w-3 h-3" />{j.location}</span>
+                        <span className="text-xs flex items-center gap-1 text-muted-foreground"><Briefcase className="w-3 h-3" />{j.type}</span>
+                      </div>
                     </div>
+                    <a href="mailto:akceleratehq@gmail.com" className="btn-primary text-sm">Apply Now</a>
                   </div>
-                  <a href="mailto:akceleratehq@gmail.com" className="btn-primary text-sm">Apply Now</a>
                 </div>
-              </div>
+              </RevealSection>
             ))}
           </div>
           <p className="text-center mt-6 text-muted-foreground text-sm">Don't see a fit? Send us your resume — we hire for talent, not just roles.</p>

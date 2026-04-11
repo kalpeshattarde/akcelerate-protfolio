@@ -8,6 +8,7 @@ import { pricingPlans } from "@/data/pricing";
 import { pricingFAQ } from "@/data/faq";
 import { CheckCircle } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 export default function PricingPage() {
   const [annual, setAnnual] = useState(false);
@@ -40,7 +41,7 @@ export default function PricingPage() {
 
           <RevealGrid className="grid md:grid-cols-3 gap-6 items-start" stagger={150}>
             {pricingPlans.map((plan, i) => (
-              <div key={i} className="reveal-item">
+              <TiltCard key={i} className="reveal-item">
                 <PricingCard
                   name={plan.name}
                   description={plan.description}
@@ -49,7 +50,7 @@ export default function PricingPage() {
                   highlighted={plan.highlighted}
                   cta={plan.cta}
                 />
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>

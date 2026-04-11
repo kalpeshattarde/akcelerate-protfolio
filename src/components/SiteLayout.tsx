@@ -4,6 +4,7 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PageSkeleton from "./PageSkeleton";
+import ScrollProgress from "./ScrollProgress";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -43,6 +44,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollProgress />
       <Navbar />
       <main className="flex-1 relative">
         {showSkeleton && (

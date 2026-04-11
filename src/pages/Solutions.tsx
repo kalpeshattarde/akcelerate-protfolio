@@ -5,6 +5,9 @@ import { SolutionCard } from "@/components/Cards";
 import { solutions } from "@/data/solutions";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { ArrowRight, Zap, Target, Clock, Brain, Unlock, Building2 } from "lucide-react";
+import FloatingOrbs from "@/components/FloatingOrbs";
+import HeroParticles from "@/components/HeroParticles";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 const whyCards = [
   { icon: Zap, title: "End-to-End AI Delivery", desc: "From AI strategy and prototype to production deployment — we own the full lifecycle, not just advisory slides." },
@@ -31,9 +34,9 @@ export default function SolutionsPage() {
     <>
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
             <div className="hero-badge mb-5">
@@ -42,7 +45,7 @@ export default function SolutionsPage() {
             </div>
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 font-poppins">
               8 Solution Areas.<br />
-              <span className="hero-gradient-text">Infinite Possibilities.</span>
+              <span className="shimmer-text">Infinite Possibilities.</span>
             </h1>
             <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
               From building AI systems and automating business operations to developing SaaS products and delivering data-driven insights — we cover the full stack of digital transformation.
@@ -67,11 +70,11 @@ export default function SolutionsPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {whyCards.map((c, i) => (
-              <div key={i} className="reveal-item glass-card p-6">
+              <TiltCard key={i} className="reveal-item glass-card p-6">
                 <div className="feature-icon mb-4"><c.icon className="w-5 h-5 text-accent" /></div>
                 <h3 className="font-poppins font-semibold mb-2">{c.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
@@ -109,7 +112,7 @@ export default function SolutionsPage() {
           </RevealSection>
           <div className="flex flex-wrap justify-center gap-3">
             {["Manufacturing", "Healthcare", "Startups", "MSME", "Retail & E-commerce", "FinTech", "Education", "Logistics", "Brands & Marketing", "AdTech", "Telecom", "Automotive"].map(ind => (
-              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card">{ind}</span>
+              <span key={ind} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card hover:border-primary/30 transition-all cursor-default">{ind}</span>
             ))}
           </div>
         </div>

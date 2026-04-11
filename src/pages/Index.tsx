@@ -9,6 +9,10 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
+import HeroParticles from "@/components/HeroParticles";
+import TypingCycle from "@/components/TypingCycle";
+import FloatingOrbs from "@/components/FloatingOrbs";
+import { TiltCard } from "@/hooks/useTiltCard";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -41,20 +45,9 @@ export default function HomePage() {
     <>
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <HeroParticles />
+        <FloatingOrbs />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
-        {[
-          { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
-          { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
-          { size: 5, color: "rgba(139,92,246,0.6)", left: "35%", top: "85%", dur: "7s", delay: "0.5s" },
-          { size: 3, color: "rgba(37,99,235,0.6)", left: "55%", top: "78%", dur: "9s", delay: "2s" },
-          { size: 4, color: "rgba(6,182,212,0.7)", left: "68%", top: "82%", dur: "6.5s", delay: "0.8s" },
-          { size: 3, color: "rgba(139,92,246,0.7)", left: "78%", top: "76%", dur: "7.5s", delay: "1.8s" },
-          { size: 4, color: "rgba(37,99,235,0.5)", left: "88%", top: "88%", dur: "5.5s", delay: "3s" },
-        ].map((p, i) => (
-          <div key={i} className="hero-particle" style={{ width: p.size, height: p.size, background: p.color, left: p.left, top: p.top, animationDuration: p.dur, animationDelay: p.delay }} />
-        ))}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -65,7 +58,7 @@ export default function HomePage() {
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
                 Increase Revenue & Profit<br />with{" "}
-                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
+                <TypingCycle texts={["AI Solutions", "Data Science", "Digital Growth", "Smart Analytics"]} className="shimmer-text" />
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
@@ -336,7 +329,7 @@ export default function HomePage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {benefits.map((b, i) => (
-              <div key={i} className="reveal-item glass-card p-7">
+              <TiltCard key={i} className="reveal-item glass-card p-7">
                 <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
@@ -344,7 +337,7 @@ export default function HomePage() {
                   <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
                   <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </RevealGrid>
         </div>
