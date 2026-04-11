@@ -1121,6 +1121,40 @@
 }
 
 /* ══════════════════════════════════════════════════════════════
+   THEME TOGGLE BUTTON — source
+══════════════════════════════════════════════════════════════ */
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid hsl(var(--border));
+  background: hsl(var(--muted));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  color: hsl(var(--muted-foreground));
+}
+.theme-toggle-btn:hover {
+  border-color: #2563EB;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.18);
+  transform: scale(1.08);
+  color: #2563EB;
+}
+.dark .theme-toggle-btn {
+  background: hsl(var(--card));
+  border-color: rgba(255,255,255,0.15);
+  color: #F59E0B;
+}
+.dark .theme-toggle-btn:hover {
+  border-color: #F59E0B;
+  box-shadow: 0 4px 14px rgba(245,158,11,0.25);
+  color: #FCD34D;
+}
+
+/* ══════════════════════════════════════════════════════════════
    SCROLLBAR — source
 ══════════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 6px; }
