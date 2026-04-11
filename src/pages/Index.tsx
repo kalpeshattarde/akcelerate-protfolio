@@ -8,6 +8,7 @@ import { solutions } from "@/data/solutions";
 import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { AnimatedStat } from "@/hooks/useCountUp";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
