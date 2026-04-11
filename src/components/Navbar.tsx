@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap } from "lucide-react";
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
@@ -20,6 +20,25 @@ const serviceLinks = [
   { to: "/services/energy-management", title: "Energy Management", desc: "AI-optimised energy usage", icon: Zap },
 ];
 
+function LogoMark() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+    </svg>
+  );
+}
+
+function RequestDemoIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,109 +46,132 @@ export default function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("ak-theme", theme);
   }, [theme]);
 
-  useEffect(() => { setMobileOpen(false); }, [location]);
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
 
-  const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const activeLinkStyle = { color: "#2563EB", fontWeight: 600 };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/97 backdrop-blur-xl border-b border-border shadow-sm py-3" : "bg-transparent py-5"}`}>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/97 backdrop-blur-[16px] border-b border-border py-[0.875rem] shadow-[0_4px_24px_rgba(15,23,42,0.08)]"
+          : "bg-transparent py-5"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center animate-pulse-glow" style={{ background: "var(--gradient-primary)" }}>
-              <Activity className="w-[18px] h-[18px] text-primary-foreground" />
+            <div
+              className="w-9 h-9 rounded-[10px] flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg,#2563EB,#06B6D4)" }}
+            >
+              <LogoMark />
             </div>
             <span className="font-poppins font-bold text-xl tracking-tight text-foreground">
               AK<span className="gradient-text">celerate</span>
             </span>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
-            <Link to="/" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Home</Link>
+            <Link to="/" className="nav-link" style={location.pathname === "/" ? activeLinkStyle : undefined}>Home</Link>
 
-            {/* Solutions Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/solutions" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/solutions") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+            <div className="nav-dropdown relative">
+              <Link to="/solutions" className="nav-link flex items-center gap-1" style={location.pathname.startsWith("/solutions") ? activeLinkStyle : undefined}>
                 Solutions <ChevronDown className="w-3 h-3" />
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[340px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
+              <div className="nav-dropdown-menu min-w-[320px]">
+                <div className="space-y-0.5">
+                  <Link to="/solutions" className="nav-dropdown-item">
+                    <div className="nav-dropdown-icon"><LayoutDashboard className="w-4 h-4" /></div>
+                    <div>
+                      <div className="nav-dropdown-title">All Solutions</div>
+                      <div className="nav-dropdown-desc">Overview of all 8 areas</div>
+                    </div>
                   </Link>
-                  <div className="border-t border-border my-1" />
-                  {solutionLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                  <div className="nav-dropdown-divider" />
+                  {solutionLinks.map((s) => (
+                    <Link key={s.to} to={s.to} className="nav-dropdown-item">
+                      <div className="nav-dropdown-icon"><s.icon className="w-4 h-4" /></div>
+                      <div>
+                        <div className="nav-dropdown-title">{s.title}</div>
+                        <div className="nav-dropdown-desc">{s.desc}</div>
+                      </div>
                     </Link>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Services Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/services" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/services") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+            <div className="nav-dropdown relative">
+              <Link to="/services" className="nav-link flex items-center gap-1" style={location.pathname.startsWith("/services") ? activeLinkStyle : undefined}>
                 Services <ChevronDown className="w-3 h-3" />
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
+              <div className="nav-dropdown-menu min-w-[270px]">
+                <div className="space-y-0.5">
+                  <Link to="/services" className="nav-dropdown-item">
+                    <div className="nav-dropdown-icon"><Settings className="w-4 h-4" /></div>
+                    <div>
+                      <div className="nav-dropdown-title">All Services</div>
+                      <div className="nav-dropdown-desc">Implementation & consulting</div>
+                    </div>
                   </Link>
-                  <div className="border-t border-border my-1" />
-                  {serviceLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                  <div className="nav-dropdown-divider" />
+                  {serviceLinks.map((s) => (
+                    <Link key={s.to} to={s.to} className="nav-dropdown-item">
+                      <div className="nav-dropdown-icon"><s.icon className="w-4 h-4" /></div>
+                      <div>
+                        <div className="nav-dropdown-title">{s.title}</div>
+                        <div className="nav-dropdown-desc">{s.desc}</div>
+                      </div>
                     </Link>
                   ))}
                 </div>
               </div>
             </div>
 
-            <Link to="/industries" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/industries" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Industries</Link>
-            <Link to="/case-studies" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/case-studies" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Case Studies</Link>
-            <Link to="/insights" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Insights</Link>
-            <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/about" ? "text-primary font-semibold" : "text-muted-foreground"}`}>About</Link>
-            <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
+            <Link to="/industries" className="nav-link" style={location.pathname === "/industries" ? activeLinkStyle : undefined}>Industries</Link>
+            <Link to="/case-studies" className="nav-link" style={location.pathname === "/case-studies" ? activeLinkStyle : undefined}>Case Studies</Link>
+            <Link to="/insights" className="nav-link" style={location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? activeLinkStyle : undefined}>Insights</Link>
+            <Link to="/about" className="nav-link" style={location.pathname === "/about" ? activeLinkStyle : undefined}>About</Link>
+            <Link to="/contact" className="nav-link" style={location.pathname === "/contact" ? activeLinkStyle : undefined}>Contact</Link>
           </div>
 
-          {/* Right side */}
           <div className="hidden lg:flex items-center gap-3">
-            <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground" aria-label="Toggle theme">
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 rounded-full border border-border bg-background/80 flex items-center justify-center text-muted-foreground transition-all hover:border-primary/20 hover:text-primary"
+              aria-label="Toggle theme"
+            >
               {theme === "dark" ? <Sun className="w-[17px] h-[17px]" /> : <Moon className="w-[17px] h-[17px]" />}
             </button>
-            <Link to="/contact" className="btn-primary text-sm">
-              <LayoutDashboard className="w-4 h-4" /> Request Demo
+            <Link to="/contact" className="btn-primary text-sm px-7">
+              <RequestDemoIcon /> Request Demo
             </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden p-2 text-muted-foreground hover:text-foreground">
+          <button onClick={() => setMobileOpen((o) => !o)} className="lg:hidden p-2 text-muted-foreground hover:text-foreground" aria-label="Open menu">
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-background border-t border-border shadow-lg">
+        <div className="mobile-menu open lg:hidden">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             {[
               { to: "/", label: "Home" },
@@ -143,14 +185,18 @@ export default function Navbar() {
               { to: "/about", label: "About" },
               { to: "/contact", label: "Contact" },
               { to: "/free-audit", label: "Free Audit" },
-            ].map(l => (
-              <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
+            ].map((l) => (
+              <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">
+                {l.label}
+              </Link>
             ))}
             <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
-              <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-muted transition-colors text-muted-foreground">
+              <button onClick={toggleTheme} className="w-10 h-10 rounded-full border border-border bg-background/80 flex items-center justify-center text-muted-foreground transition-all hover:border-primary/20 hover:text-primary" aria-label="Toggle theme">
                 {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-              <Link to="/contact" className="btn-primary text-sm flex-1 justify-center">Request Demo</Link>
+              <Link to="/contact" className="btn-primary text-sm flex-1 justify-center">
+                <RequestDemoIcon /> Request Demo
+              </Link>
             </div>
           </div>
         </div>
