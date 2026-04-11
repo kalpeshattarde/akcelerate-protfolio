@@ -19,11 +19,13 @@ export default function IndustriesPage() {
           </RevealSection>
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {industries.map((ind, i) => (
-              <TiltCard key={i} className="reveal-item glass-card p-8 h-full">
-                <h3 className="font-poppins font-semibold text-lg mb-2">{ind.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{ind.description}</p>
-                <div className="flex flex-wrap gap-2">{ind.useCases.map((u, j) => <span key={j} className="tag-pill">{u}</span>)}</div>
-              </TiltCard>
+              <div key={i} className="reveal-item">
+                <TiltCard className="glass-card p-8 h-full">
+                  <h3 className="font-poppins font-semibold text-lg mb-2">{ind.name}</h3>
+                  <p className="text-muted-foreground text-sm mb-4">{ind.description}</p>
+                  <div className="flex flex-wrap gap-2">{ind.useCases.map((u, j) => <span key={j} className="tag-pill">{u}</span>)}</div>
+                </TiltCard>
+              </div>
             ))}
           </RevealGrid>
         </div>

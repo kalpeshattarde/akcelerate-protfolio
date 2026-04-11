@@ -43,13 +43,15 @@ export default function InsightsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
             {insightCards.map((card) => (
-              <TiltCard key={card.slug} className="reveal-item">
-                <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all">
-                  <span className="tag-pill mb-3 block w-fit">{card.label}</span>
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
-                </Link>
-              </TiltCard>
+              <div key={card.slug} className="reveal-item">
+                <TiltCard className="h-full">
+                  <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all h-full">
+                    <span className="tag-pill mb-3 block w-fit">{card.label}</span>
+                    <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
+                  </Link>
+                </TiltCard>
+              </div>
             ))}
           </RevealGrid>
           <div className="text-center mt-10">
