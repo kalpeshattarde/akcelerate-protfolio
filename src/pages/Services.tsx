@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import { ServiceCard } from "@/components/Cards";
 import { services } from "@/data/services";
+import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const techCategories = [
   { name: "AI & Machine Learning", items: ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "OpenCV", "Hugging Face"] },
@@ -31,39 +32,47 @@ export default function ServicesPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader label="Capabilities" title={<>Our <span className="gradient-text">Service Areas</span></>} description="Specialized services designed for industrial and enterprise applications." />
-          <div className="grid md:grid-cols-2 gap-6">
+          <RevealSection>
+            <SectionHeader label="Capabilities" title={<>Our <span className="gradient-text">Service Areas</span></>} description="Specialized services designed for industrial and enterprise applications." />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 gap-6" stagger={120}>
             {services.map(s => (
-              <ServiceCard key={s.slug} slug={s.slug} title={s.title} description={s.description} />
+              <div key={s.slug} className="reveal-item">
+                <ServiceCard slug={s.slug} title={s.title} description={s.description} />
+              </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader label="Technology" title={<>Our <span className="gradient-text">Tech Coverage</span></>} />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <RevealSection>
+            <SectionHeader label="Technology" title={<>Our <span className="gradient-text">Tech Coverage</span></>} />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {techCategories.map((c, i) => (
-              <div key={i} className="glass-card p-6">
+              <div key={i} className="reveal-item glass-card p-6">
                 <h3 className="font-poppins font-semibold mb-4">{c.name}</h3>
                 <div className="flex flex-wrap gap-2">
                   {c.items.map(t => (
-                    <span key={t} className="text-xs px-3 py-1.5 rounded-full bg-primary/5 text-primary border border-primary/10">{t}</span>
+                    <span key={t} className="tag-pill">{t}</span>
                   ))}
                 </div>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader label="Delivery" title={<>Our <span className="gradient-text">Delivery Lifecycle</span></>} description="A structured, transparent delivery process from kickoff to production." />
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RevealSection>
+            <SectionHeader label="Delivery" title={<>Our <span className="gradient-text">Delivery Lifecycle</span></>} description="A structured, transparent delivery process from kickoff to production." />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={100}>
             {lifecycle.map(l => (
-              <div key={l.num} className="glass-card p-6 flex items-start gap-4">
+              <div key={l.num} className="reveal-item glass-card p-6 flex items-start gap-4">
                 <div className="process-number flex-shrink-0">{l.num}</div>
                 <div>
                   <h3 className="font-poppins font-semibold mb-1">{l.title}</h3>
@@ -71,7 +80,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 

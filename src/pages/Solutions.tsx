@@ -5,6 +5,7 @@ import { SolutionCard } from "@/components/Cards";
 import StatsRow from "@/components/StatsRow";
 import { solutions } from "@/data/solutions";
 import { industries } from "@/data/industries";
+import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function SolutionsPage() {
   return (
@@ -17,54 +18,64 @@ export default function SolutionsPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            label="Why Choose Us"
-            title={<>End-to-End <span className="gradient-text">Digital Transformation</span></>}
-            description="From strategy to execution, we deliver solutions that generate measurable ROI."
-          />
-          <StatsRow stats={[
-            { value: "50+", label: "Projects Delivered" },
-            { value: "315%", label: "Average ROI" },
-            { value: "92%", label: "Client Retention" },
-            { value: "13+", label: "Industries" },
-          ]} />
+          <RevealSection>
+            <SectionHeader
+              label="Why Choose Us"
+              title={<>End-to-End <span className="gradient-text">Digital Transformation</span></>}
+              description="From strategy to execution, we deliver solutions that generate measurable ROI."
+            />
+          </RevealSection>
+          <RevealSection delay={200}>
+            <StatsRow stats={[
+              { value: "50+", label: "Projects Delivered" },
+              { value: "315%", label: "Average ROI" },
+              { value: "92%", label: "Client Retention" },
+              { value: "13+", label: "Industries" },
+            ]} />
+          </RevealSection>
         </div>
       </section>
 
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            label="Solution Areas"
-            title={<>8 Ways We Drive <span className="gradient-text">Growth</span></>}
-            description="Each solution area is backed by deep domain expertise and proven methodologies."
-          />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <RevealSection>
+            <SectionHeader
+              label="Solution Areas"
+              title={<>8 Ways We Drive <span className="gradient-text">Growth</span></>}
+              description="Each solution area is backed by deep domain expertise and proven methodologies."
+            />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={80}>
             {solutions.map(s => (
-              <SolutionCard key={s.slug} slug={s.slug} title={s.title} description={s.description} icon={s.icon} />
+              <div key={s.slug} className="reveal-item">
+                <SolutionCard slug={s.slug} title={s.title} description={s.description} icon={s.icon} />
+              </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            label="Industries"
-            title={<>Cross-Industry <span className="gradient-text">Expertise</span></>}
-          />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <RevealSection>
+            <SectionHeader
+              label="Industries"
+              title={<>Cross-Industry <span className="gradient-text">Expertise</span></>}
+            />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-5" stagger={80}>
             {industries.map((ind, i) => (
-              <div key={i} className="glass-card p-6">
+              <div key={i} className="reveal-item glass-card p-6">
                 <h3 className="font-poppins font-semibold mb-2">{ind.name}</h3>
                 <p className="text-muted-foreground text-sm mb-3">{ind.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {ind.useCases.map((u, j) => (
-                    <span key={j} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/5 text-primary border border-primary/10">{u}</span>
+                    <span key={j} className="tag-pill">{u}</span>
                   ))}
                 </div>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
