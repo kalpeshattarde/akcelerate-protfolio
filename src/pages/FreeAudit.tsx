@@ -5,6 +5,7 @@ import FAQAccordion from "@/components/FAQAccordion";
 import { AuditForm } from "@/components/Forms";
 import { auditFAQ } from "@/data/faq";
 import { CheckCircle, Clock, Target, TrendingUp } from "lucide-react";
+import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function FreeAuditPage() {
   return (
@@ -19,21 +20,23 @@ export default function FreeAuditPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader label="What You Get" title={<>Your Audit <span className="gradient-text">Includes</span></>} />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <RevealSection>
+            <SectionHeader label="What You Get" title={<>Your Audit <span className="gradient-text">Includes</span></>} />
+          </RevealSection>
+          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" stagger={100}>
             {[
               { icon: Clock, title: "60-Min Discovery Call", desc: "In-depth discussion of your business goals and challenges." },
               { icon: Target, title: "Data Infrastructure Review", desc: "Assessment of your current data systems and readiness." },
               { icon: CheckCircle, title: "5 AI Opportunities", desc: "Identification of 3-5 high-impact AI use cases for your business." },
               { icon: TrendingUp, title: "ROI Estimate & Roadmap", desc: "Preliminary ROI projections and a recommended action plan." },
             ].map((b, i) => (
-              <div key={i} className="glass-card p-7 text-center">
+              <div key={i} className="reveal-item glass-card p-7 text-center">
                 <div className="feature-icon mx-auto"><b.icon className="w-6 h-6 text-accent" /></div>
                 <h3 className="font-poppins font-semibold mb-2">{b.title}</h3>
                 <p className="text-muted-foreground text-sm">{b.desc}</p>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
