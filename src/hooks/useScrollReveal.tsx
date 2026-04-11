@@ -18,7 +18,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
           }
         });
       },
-      { threshold: 0.15, ...options }
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px', ...options }
     );
 
     // Observe all children with .reveal class, or the element itself
@@ -56,7 +56,7 @@ export function RevealSection({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -93,7 +93,7 @@ export function RevealGrid({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
