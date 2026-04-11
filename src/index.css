@@ -1323,10 +1323,10 @@ a.ak-link-card:hover {
    KEYFRAME ANIMATIONS — ALL FROM SOURCE REPO
 ══════════════════════════════════════════════════════════════ */
 
-/* Source: styles.css @keyframes float — smoother with rotation */
+/* Source: styles.css premium @keyframes float — with rotation */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%,100% { transform: translateY(0px) rotate(-0.5deg); }
+  50%     { transform: translateY(-18px) rotate(0.5deg); }
 }
 
 /* Source: styles.css @keyframes pulse-ring */
