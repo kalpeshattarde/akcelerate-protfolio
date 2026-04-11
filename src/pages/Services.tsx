@@ -8,6 +8,7 @@ import { Database, BarChart3, Monitor, Settings, ArrowRight, Phone } from "lucid
 import FloatingOrbs from "@/components/FloatingOrbs";
 import HeroParticles from "@/components/HeroParticles";
 import { TiltCard } from "@/hooks/useTiltCard";
+import VizCanvas from "@/components/viz/VizCanvas";
 
 const coreCapabilities = [
   { icon: Database, title: "Data Integration", desc: "Connect and harmonize data from every business system into a unified data layer without disrupting operations." },
@@ -38,6 +39,7 @@ export default function ServicesPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs />
+        <VizCanvas mode="services" className="opacity-40" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">

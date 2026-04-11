@@ -8,6 +8,7 @@ import { ArrowRight, Zap, Target, Clock, Brain, Unlock, Building2 } from "lucide
 import FloatingOrbs from "@/components/FloatingOrbs";
 import HeroParticles from "@/components/HeroParticles";
 import { TiltCard } from "@/hooks/useTiltCard";
+import VizCanvas from "@/components/viz/VizCanvas";
 
 const whyCards = [
   { icon: Zap, title: "End-to-End AI Delivery", desc: "From AI strategy and prototype to production deployment — we own the full lifecycle, not just advisory slides." },
@@ -36,6 +37,7 @@ export default function SolutionsPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs />
+        <VizCanvas mode="industries" className="opacity-40" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">
