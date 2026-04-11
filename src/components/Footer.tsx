@@ -69,13 +69,13 @@ export default function Footer() {
           <div>
             <h4 className="font-poppins font-semibold text-white mb-5 text-sm tracking-wide">Contact</h4>
             <div className="space-y-4">
-              <a href="mailto:akceleratehq@gmail.com" className="flex items-center gap-3 text-sm text-slate-500 hover:text-cyan-400 transition-colors">
+              <a href="mailto:akceleratehq@gmail.com" className="footer-link flex items-center gap-3">
                 <Mail className="w-4 h-4 flex-shrink-0" style={{ color: "#06B6D4" }} /> akceleratehq@gmail.com
               </a>
-              <a href="tel:+918208555380" className="flex items-center gap-3 text-sm text-slate-500 hover:text-cyan-400 transition-colors">
+              <a href="tel:+918208555380" className="footer-link flex items-center gap-3">
                 <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "#06B6D4" }} /> +91 8208555380
               </a>
-              <div className="flex items-start gap-3 text-sm text-slate-500">
+              <div className="flex items-start gap-3 text-sm" style={{ color: "#94A3B8" }}>
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#06B6D4" }} /> Mumbai, India
               </div>
             </div>
@@ -83,10 +83,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <p className="text-sm text-slate-600">© {new Date().getFullYear()} AKcelerate. All rights reserved.</p>
+          <p className="text-sm" style={{ color: "#475569" }}>© {new Date().getFullYear()} AKcelerate. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="text-sm text-slate-600 hover:text-cyan-400 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="text-sm text-slate-600 hover:text-cyan-400 transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="footer-link">Privacy Policy</Link>
+            <Link to="/terms" className="footer-link">Terms of Service</Link>
           </div>
         </div>
       </div>
