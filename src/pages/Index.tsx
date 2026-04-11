@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play, DollarSign, Clock, CheckCircle, Star, BookOpen, Calendar } from "lucide-react";
+import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
