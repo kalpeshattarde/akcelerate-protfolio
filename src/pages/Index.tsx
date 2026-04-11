@@ -259,7 +259,7 @@ export default function HomePage() {
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
                 <p className="text-sm leading-relaxed mb-3 text-muted-foreground">{b.desc}</p>
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl font-bold font-poppins gradient-text">{b.metric}</span>
+                  <span className="text-2xl font-bold font-poppins gradient-text"><AnimatedStat value={b.metric} /></span>
                   <span className="text-xs text-muted-foreground">{b.metricLabel}</span>
                 </div>
               </div>
