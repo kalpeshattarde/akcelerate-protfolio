@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import VizCanvas from "./viz/VizCanvas";
 
 function useParallax(speed = 0.3) {
   const [offset, setOffset] = useState(0);
@@ -73,7 +74,6 @@ export function HeroPrimary({ badge, title, description, primaryCta, secondaryCt
       className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden"
       style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
     >
-      {/* Parallax background layers */}
       <div
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.5}px)` }}
@@ -109,17 +109,23 @@ interface HeroPageProps {
   label?: string;
   title: ReactNode;
   description: string;
+  vizMode?: string;
 }
 
-export function HeroPage({ label, title, description }: HeroPageProps) {
+export function HeroPage({ label, title, description, vizMode }: HeroPageProps) {
   const { ref, offset } = useParallax(0.25);
 
   return (
     <section
       ref={ref}
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
+      style={{ background: "var(--gradient-hero)" }}
     >
+      {vizMode && (
+        <div className="absolute inset-0 z-0 opacity-80">
+          <VizCanvas mode={vizMode} />
+        </div>
+      )}
       <div
         className="absolute inset-0 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.4}px)` }}
@@ -131,7 +137,7 @@ export function HeroPage({ label, title, description }: HeroPageProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {label && <span className="section-label">{label}</span>}
         <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5">{title}</h1>
-        <p className="text-lg max-w-2xl mx-auto" style={{ color: "#64748B" }}>{description}</p>
+        <p className="text-lg max-w-2xl mx-auto text-muted-foreground">{description}</p>
       </div>
     </section>
   );

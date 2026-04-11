@@ -9,7 +9,7 @@ import FloatingOrbs from "@/components/FloatingOrbs";
 export default function IndustriesPage() {
   return (
     <>
-      <HeroPage label="Industries" title={<>AI Solutions for <span className="gradient-text">Every Industry</span></>} description="We bring the same world-class AI, automation, and data expertise to every vertical — tailored to the unique challenges and opportunities of your industry." />
+      <HeroPage vizMode="industries" label="Industries" title={<>AI Solutions for <span className="gradient-text">Every Industry</span></>} description="We bring the same world-class AI, automation, and data expertise to every vertical — tailored to the unique challenges and opportunities of your industry." />
 
       <section className="py-20 lg:py-28 relative overflow-hidden">
         <FloatingOrbs count={2} />

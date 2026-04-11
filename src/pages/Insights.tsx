@@ -3,6 +3,7 @@ import { RevealGrid } from "@/hooks/useScrollReveal";
 import { TiltCard } from "@/hooks/useTiltCard";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
+import VizCanvas from "@/components/viz/VizCanvas";
 
 const insightCards = [
   { slug: "generative-ai-operations", label: "Featured", title: "Generative AI in Business Operations: Beyond the Hype", desc: "Most companies are still in the experimentation phase with generative AI. We break down exactly how to move from pilots to production — with real-world examples from manufacturing, retail, and FinTech." },
@@ -19,6 +20,7 @@ export default function InsightsPage() {
       <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <HeroParticles />
         <FloatingOrbs count={2} />
+        <VizCanvas mode="insights" className="opacity-40" />
         <div className="absolute inset-0 hero-grid-bg" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl">

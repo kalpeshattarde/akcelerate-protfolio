@@ -15,7 +15,7 @@ const team = [
 export default function AboutPage() {
   return (
     <>
-      <HeroPage label="About" title={<>Built by Problem-Solvers, <span className="gradient-text">For Real Businesses</span></>} description="AKcelerate was founded with a simple mission: make powerful AI and automation accessible to every business in India — turning data and technology into measurable competitive advantage." />
+      <HeroPage vizMode="about" label="About" title={<>Built by Problem-Solvers, <span className="gradient-text">For Real Businesses</span></>} description="AKcelerate was founded with a simple mission: make powerful AI and automation accessible to every business in India — turning data and technology into measurable competitive advantage." />
 
       <section className="py-16 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
