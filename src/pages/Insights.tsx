@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { RevealGrid } from "@/hooks/useScrollReveal";
-import { TiltCard } from "@/hooks/useTiltCard";
 import HeroParticles from "@/components/HeroParticles";
 import FloatingOrbs from "@/components/FloatingOrbs";
 import VizCanvas from "@/components/viz/VizCanvas";
@@ -41,17 +39,15 @@ export default function InsightsPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={80}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {insightCards.map((card) => (
-              <TiltCard key={card.slug} className="reveal-item">
-                <Link to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all">
-                  <span className="tag-pill mb-3 block w-fit">{card.label}</span>
-                  <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
-                </Link>
-              </TiltCard>
+              <Link key={card.slug} to={`/blog/${card.slug}`} className="glass-card p-6 block hover:border-primary/30 transition-all">
+                <span className="tag-pill mb-3 block w-fit">{card.label}</span>
+                <h3 className="font-poppins font-semibold text-lg mb-2">{card.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
+              </Link>
             ))}
-          </RevealGrid>
+          </div>
           <div className="text-center mt-10">
             <Link to="/blog" className="btn-secondary">View All Blog Posts</Link>
           </div>
