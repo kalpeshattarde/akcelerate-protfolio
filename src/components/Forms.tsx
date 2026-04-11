@@ -75,8 +75,8 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
             name={f.name}
             type={f.type}
             placeholder={f.placeholder}
-            className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
-              dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
+            className={`form-input ${
+              dark ? "!bg-white/5 !border-white/10 !text-white placeholder:!text-white/40" : ""
             } ${errors[f.name] ? "!border-destructive" : ""}`}
           />
           {errors[f.name] && <p className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
@@ -88,8 +88,8 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
           name="message"
           rows={4}
           placeholder="Tell us about your project..."
-          className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none ${
-            dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
+          className={`form-input resize-none ${
+            dark ? "!bg-white/5 !border-white/10 !text-white placeholder:!text-white/40" : ""
           }`}
         />
       </div>
