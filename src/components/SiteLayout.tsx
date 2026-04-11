@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ArrowUp } from "lucide-react";
 import Navbar from "./Navbar";
@@ -6,9 +6,20 @@ import Footer from "./Footer";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const [showTop, setShowTop] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { pathname } = useLocation();
+  const prevPathname = useRef(pathname);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      setIsTransitioning(true);
+      window.scrollTo(0, 0);
+      // Allow the fade-in to start after a brief moment
+      const timer = setTimeout(() => setIsTransitioning(false), 50);
+      prevPathname.current = pathname;
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -19,7 +30,13 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <main
+        className={`flex-1 transition-all duration-500 ease-out ${
+          isTransitioning ? "opacity-0 translate-y-3" : "opacity-100 translate-y-0"
+        }`}
+      >
+        {children}
+      </main>
       <Footer />
       {showTop && (
         <button
