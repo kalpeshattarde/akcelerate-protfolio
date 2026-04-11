@@ -90,7 +90,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            <HeroDashboard />
+            <div className="animated-border">
+              <HeroDashboard />
+            </div>
           </div>
         </div>
       </section>
