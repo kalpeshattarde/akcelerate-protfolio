@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, CheckCircle } from "lucide-react";
-import { HeroPrimary } from "@/components/Hero";
+import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
-import StatsRow from "@/components/StatsRow";
 import FAQAccordion from "@/components/FAQAccordion";
 import { SolutionCard } from "@/components/Cards";
 import { solutions } from "@/data/solutions";
@@ -11,89 +9,182 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 
 const heroStats = [
-  { value: "50+", label: "Projects Delivered" },
+  { value: "25+", label: "Projects Delivered" },
   { value: "13+", label: "Industries Served" },
-  { value: "315%", label: "Avg. Client ROI" },
-  { value: "92%", label: "Client Retention" },
+  { value: "8+", label: "Solution Areas" },
+  { value: "315%", label: "Average Client ROI" },
 ];
 
 const processSteps = [
-  { num: 1, title: "Discovery", desc: "Deep-dive into your business goals, data landscape, and pain points." },
-  { num: 2, title: "Strategy & Design", desc: "Build a clear roadmap with milestones and success metrics." },
-  { num: 3, title: "Build & Integrate", desc: "Agile development with seamless integration into existing systems." },
-  { num: 4, title: "Deploy & Go Live", desc: "Rigorous QA, team training, and zero-disruption deployment." },
-  { num: 5, title: "Monitor & Scale", desc: "Ongoing monitoring, model retraining, and continuous improvements." },
+  { num: 1, title: "Discovery", desc: "Deep-dive into your business goals, data landscape, and pain points to pinpoint the highest-impact opportunity." },
+  { num: 2, title: "Strategy & Design", desc: "Build a clear roadmap with milestones, technology choices, and upfront success metrics tailored to your goals." },
+  { num: 3, title: "Build & Integrate", desc: "Agile development with seamless integration into your existing ERP, CRM, data pipelines, and cloud systems." },
+  { num: 4, title: "Deploy & Go Live", desc: "Rigorous QA, team training, and zero-disruption deployment to production with dedicated launch support." },
+  { num: 5, title: "Monitor & Scale", desc: "Ongoing performance monitoring, model retraining, and continuous improvements to maximise long-term ROI." },
 ];
 
 const benefits = [
-  { icon: TrendingUp, title: "Transform Raw Data into Insights", desc: "Unify disparate business data streams into a single intelligent analytics layer.", metric: "10x", metricLabel: "faster insights" },
-  { icon: Shield, title: "Enterprise-Grade Security", desc: "SOC 2 compliant infrastructure with end-to-end encryption and RBAC.", metric: "100%", metricLabel: "compliance" },
-  { icon: Zap, title: "Accelerate Time to Market", desc: "Go from concept to production in weeks, not months.", metric: "3x", metricLabel: "faster delivery" },
-  { icon: BarChart3, title: "Measurable Business Impact", desc: "Every engagement starts with clear KPIs tied to revenue and cost.", metric: "315%", metricLabel: "average ROI" },
-  { icon: Users, title: "Dedicated Expert Teams", desc: "Cross-functional teams of data scientists, engineers, and strategists.", metric: "50+", metricLabel: "experts" },
-  { icon: Globe, title: "Global Delivery, Local Expertise", desc: "Serve clients worldwide with deep understanding of local markets.", metric: "13+", metricLabel: "industries" },
+  { icon: TrendingUp, title: "Transform Raw Data into Insights", desc: "Unify disparate business data streams into a single intelligent analytics layer that surfaces actionable intelligence instantly.", metric: "10x", metricLabel: "faster insights vs. manual reporting" },
+  { icon: Shield, title: "Enterprise-Grade Security", desc: "SOC 2 compliant infrastructure with end-to-end encryption, RBAC, and audit trails for complete data governance.", metric: "100%", metricLabel: "data security compliance" },
+  { icon: Zap, title: "Accelerate Time to Market", desc: "Go from concept to production in weeks, not months, with our proven rapid delivery methodology.", metric: "3x", metricLabel: "faster time to market" },
+  { icon: BarChart3, title: "Measurable Business Impact", desc: "Every engagement starts with clear KPIs tied to revenue growth, cost reduction, or operational efficiency.", metric: "315%", metricLabel: "average 3-year client ROI" },
+  { icon: Users, title: "Dedicated Expert Teams", desc: "Cross-functional teams of data scientists, ML engineers, full-stack developers, and business strategists.", metric: "50+", metricLabel: "projects delivered" },
+  { icon: Globe, title: "Cross-Industry Expertise", desc: "Deep domain knowledge across manufacturing, fintech, healthcare, retail, logistics, energy, and more.", metric: "13+", metricLabel: "industries served" },
 ];
 
-const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL"];
+const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO */}
-      <HeroPrimary
-        badge="🚀 AI-Powered Growth Partner"
-        title={<>Increase Revenue & Profit with <span className="gradient-text">AI, Data Science & Digital Solutions</span></>}
-        description="AKcelerate helps businesses turn raw data into measurable results. From predictive analytics to full-stack digital solutions — we deliver growth you can see in the numbers."
-        primaryCta={{ label: "Book a Free Audit", to: "/free-audit" }}
-        secondaryCta={{ label: "Explore Solutions", to: "/solutions" }}
-      >
-        {/* Dashboard Mockup */}
-        <div className="dashboard-mockup animate-float">
-          <div className="p-2.5 flex items-center gap-1.5" style={{ background: "hsl(220 43% 8%)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-            <span className="text-white/40 text-[10px] ml-2 font-mono">analytics-dashboard.app</span>
-          </div>
-          <div className="p-5 space-y-4">
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: "Revenue Impact", value: "+₹2.4Cr", color: "from-primary to-accent" },
-                { label: "Cost Savings", value: "45%", color: "from-accent to-emerald-400" },
-                { label: "ROI", value: "315%", color: "from-violet-500 to-primary" },
-              ].map((s, i) => (
-                <div key={i} className="p-3 rounded-xl" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div className="text-white/50 text-[10px] mb-1">{s.label}</div>
-                  <div className={`text-lg font-bold font-poppins bg-gradient-to-r ${s.color} bg-clip-text text-transparent`}>{s.value}</div>
-                </div>
-              ))}
-            </div>
-            {/* Mini chart */}
-            <div className="p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="text-white/50 text-[10px] mb-3">Revenue Growth Forecast</div>
-              <div className="flex items-end gap-1.5 h-20">
-                {[30, 45, 35, 55, 48, 65, 58, 72, 68, 80, 75, 92].map((h, i) => (
-                  <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h}%`, background: `linear-gradient(180deg, hsl(217 91% 60%), hsl(187 92% 43% / 0.5))`, opacity: 0.6 + (i / 24) }} />
+      {/* ═══════════════════ HERO ═══════════════════ */}
+      <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}>
+        {/* Grid background */}
+        <div className="absolute inset-0 hero-grid-bg" />
+        {/* Glow orbs */}
+        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
+        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
+        {/* Particles */}
+        {[
+          { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
+          { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
+          { size: 5, color: "rgba(139,92,246,0.6)", left: "35%", top: "85%", dur: "7s", delay: "0.5s" },
+          { size: 3, color: "rgba(37,99,235,0.6)", left: "55%", top: "78%", dur: "9s", delay: "2s" },
+          { size: 4, color: "rgba(6,182,212,0.7)", left: "68%", top: "82%", dur: "6.5s", delay: "0.8s" },
+          { size: 3, color: "rgba(139,92,246,0.7)", left: "78%", top: "76%", dur: "7.5s", delay: "1.8s" },
+          { size: 4, color: "rgba(37,99,235,0.5)", left: "88%", top: "88%", dur: "5.5s", delay: "3s" },
+        ].map((p, i) => (
+          <div key={i} className="hero-particle" style={{ width: p.size, height: p.size, background: p.color, left: p.left, top: p.top, animationDuration: p.dur, animationDelay: p.delay }} />
+        ))}
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left */}
+            <div>
+              <div className="hero-badge">
+                <span className="w-2 h-2 rounded-full bg-accent inline-block" />
+                AI · Data · Automation · Consulting
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
+                Increase Revenue & Profit<br />with{" "}
+                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
+              </h1>
+
+              <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "#475569" }}>
+                We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-12">
+                <Link to="/solutions" className="btn-primary">
+                  <Play className="w-4 h-4" /> Explore Solutions
+                </Link>
+                <Link to="/contact" className="btn-secondary">
+                  Book a Consultation <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              {/* Inline hero stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {heroStats.map((s, i) => (
+                  <div key={i} className="hero-stat-card text-center">
+                    <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}>{s.value}</div>
+                    <div className="text-xs mt-1" style={{ color: "#64748B" }}>{s.label}</div>
+                  </div>
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-green-400 text-[10px] font-medium">LIVE TRACKING</span>
-              <span className="text-white/30 text-[10px] ml-auto">Updated 2s ago</span>
+
+            {/* Right – Interactive Dashboard */}
+            <div className="hidden lg:block">
+              <div className="float-anim">
+                <div className="dashboard-mockup">
+                  {/* Header */}
+                  <div className="flex items-center gap-1.5 px-3 py-2.5" style={{ background: "#0F172A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#EF4444" }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#F59E0B" }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#10B981" }} />
+                    <span className="text-xs ml-3 font-mono" style={{ color: "#9CA3AF" }}>akcelerate.ai · services</span>
+                    <span className="ml-auto text-[10px] font-bold tracking-wide" style={{ color: "#10B981" }}>● LIVE</span>
+                  </div>
+
+                  {/* Service tabs */}
+                  <div className="grid grid-cols-4 gap-[3px] px-2.5 pt-2.5 pb-1">
+                    {["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"].map((t, i) => (
+                      <div key={i} className={`text-center py-1.5 rounded-md text-[9px] font-semibold cursor-pointer transition-all ${i === 0 ? "text-white" : "text-slate-400 hover:text-white"}`}
+                        style={{ background: i === 0 ? "linear-gradient(135deg, rgba(37,99,235,0.4), rgba(6,182,212,0.3))" : "rgba(255,255,255,0.04)", border: i === 0 ? "1px solid rgba(37,99,235,0.4)" : "1px solid rgba(255,255,255,0.06)" }}>
+                        {t}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-4 gap-[3px] px-2.5 pb-2">
+                    {["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"].map((t, i) => (
+                      <div key={i} className="text-center py-1.5 rounded-md text-[9px] font-semibold cursor-pointer text-slate-400 hover:text-white transition-all"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                        {t}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Active service label */}
+                  <div className="flex items-center justify-between px-3 py-1">
+                    <span className="text-[11px] font-bold text-white font-poppins">Business Automation</span>
+                    <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full" style={{ color: "#34D399", background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.25)" }}>● Active</span>
+                  </div>
+
+                  {/* Visualization area */}
+                  <div className="mx-3 mb-2 rounded-lg overflow-hidden" style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.04)", height: "100px" }}>
+                    <div className="flex items-end gap-1 h-full p-3 pb-2">
+                      {[30, 45, 35, 55, 48, 65, 58, 72, 68, 80, 75, 92, 85, 70, 88, 95].map((h, i) => (
+                        <div key={i} className="flex-1 rounded-t-sm transition-all" style={{
+                          height: `${h}%`,
+                          background: `linear-gradient(180deg, ${i < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
+                          opacity: 0.5 + (i / 32),
+                        }} />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Process steps */}
+                  <div className="flex items-center gap-1 px-3 pb-2 overflow-hidden">
+                    {["Audit", "Map", "Build", "Test", "Deploy"].map((step, i) => (
+                      <div key={i} className="flex items-center gap-1">
+                        <span className={`text-[8px] font-semibold px-2 py-1 rounded-md ${i < 2 ? 'text-white' : 'text-slate-500'}`}
+                          style={{ background: i < 2 ? 'linear-gradient(135deg, rgba(37,99,235,0.4), rgba(6,182,212,0.3))' : 'rgba(255,255,255,0.04)', border: '1px solid ' + (i < 2 ? 'rgba(37,99,235,0.3)' : 'rgba(255,255,255,0.06)') }}>
+                          {step}
+                        </span>
+                        {i < 4 && <span className="text-slate-600 text-[8px]">›</span>}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Metric cards */}
+                  <div className="grid grid-cols-3 gap-1 px-3 pb-2">
+                    {[
+                      { label: "ROI", value: "315%", color: "#2563EB", bg: "rgba(37,99,235,0.07)", border: "rgba(37,99,235,0.15)", sub: "↑ avg client" },
+                      { label: "Automation", value: "58%", color: "#A78BFA", bg: "rgba(139,92,246,0.07)", border: "rgba(139,92,246,0.15)", sub: "time saved" },
+                      { label: "Accuracy", value: "94.7%", color: "#06B6D4", bg: "rgba(6,182,212,0.07)", border: "rgba(6,182,212,0.15)", sub: "AI models" },
+                    ].map((m, i) => (
+                      <div key={i} className="rounded-lg p-2 text-center" style={{ background: m.bg, border: `1px solid ${m.border}` }}>
+                        <div className="text-[9px] mb-0.5" style={{ color: "#64748B" }}>{m.label}</div>
+                        <div className="text-sm font-bold font-poppins" style={{ color: m.color }}>{m.value}</div>
+                        <div className="text-[8px]" style={{ color: "#34D399" }}>{m.sub}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Terminal */}
+                  <div className="mx-3 mb-3 rounded-lg px-3 py-2" style={{ background: "rgba(0,0,0,0.22)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <span className="text-[10px] font-mono" style={{ color: "#4ADE80" }}>$ ai_pipeline.run() → optimizing workflows...</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </HeroPrimary>
-
-      {/* Trust Stats */}
-      <section className="py-16 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StatsRow stats={heroStats} />
-        </div>
       </section>
 
-      {/* How We Transform Businesses */}
+      {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -101,32 +192,81 @@ export default function HomePage() {
             title={<>How We <span className="gradient-text">Transform Businesses</span></>}
             description="A proven 5-step engagement model — from discovery to measurable impact — delivered in weeks, not months."
           />
-          <div className="grid md:grid-cols-5 gap-6">
-            {processSteps.map((s) => (
-              <div key={s.num} className="text-center">
-                <div className="process-number mx-auto mb-4">{s.num}</div>
-                <h3 className="font-poppins font-semibold mb-2">{s.title}</h3>
-                <p className="text-muted-foreground text-sm">{s.desc}</p>
+
+          {/* Process flow */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-2 mb-16">
+            {processSteps.map((s, i) => (
+              <div key={s.num} className="flex items-start md:items-center md:flex-col gap-4 md:gap-0 flex-1 text-center relative">
+                <div className="process-number mx-auto mb-3">{s.num}</div>
+                <div className="md:text-center">
+                  <h3 className="font-poppins font-semibold text-sm mb-1">{s.title}</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed max-w-[180px]">{s.desc}</p>
+                </div>
+                {i < 4 && <div className="hidden md:block absolute top-6 left-[calc(50%+30px)] w-[calc(100%-60px)] h-[2px]" style={{ background: "linear-gradient(90deg, rgba(37,99,235,0.3), rgba(6,182,212,0.3))" }} />}
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-16">
+
+          {/* Impact stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16">
             {[
-              { val: "2–4", label: "Weeks to first working prototype" },
-              { val: "40–60%", label: "Reduction in manual operational time" },
-              { val: "315%", label: "Average 3-year client ROI delivered" },
-              { val: "92%", label: "Client retention & repeat engagement" },
+              { val: "2–4", label: "Weeks to first working prototype", bg: "rgba(37,99,235,0.06)", border: "rgba(37,99,235,0.15)" },
+              { val: "40–60%", label: "Reduction in manual operational time", bg: "rgba(6,182,212,0.06)", border: "rgba(6,182,212,0.15)" },
+              { val: "315%", label: "Average 3-year client ROI delivered", bg: "rgba(16,185,129,0.06)", border: "rgba(16,185,129,0.15)" },
+              { val: "92%", label: "Client retention & repeat engagement", bg: "rgba(124,58,237,0.06)", border: "rgba(124,58,237,0.15)" },
             ].map((s, i) => (
-              <div key={i} className="glass-card p-5 text-center">
-                <div className="stat-number mb-1">{s.val}</div>
-                <div className="text-xs text-muted-foreground">{s.label}</div>
+              <div key={i} className="impact-stat" style={{ background: s.bg, borderColor: s.border }}>
+                <div className="impact-stat-num">{s.val}</div>
+                <div className="impact-stat-label">{s.label}</div>
               </div>
             ))}
+          </div>
+
+          {/* Project Delivery Dashboard */}
+          <div className="ak-dark-card">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <div className="ak-dc-title">Project Delivery Dashboard</div>
+                <div className="ak-dc-sub">Typical AKcelerate engagement timeline</div>
+              </div>
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: "rgba(34,197,94,0.15)", color: "#22C55E", border: "1px solid rgba(34,197,94,0.25)" }}>● LIVE TRACKING</span>
+            </div>
+            <div className="space-y-3">
+              {[
+                { label: "1. Discovery & Audit", status: "✓ Complete", statusColor: "#22C55E", width: "100%", gradient: "linear-gradient(90deg,#2563EB,#06B6D4)" },
+                { label: "2. Strategy & Roadmap", status: "✓ Complete", statusColor: "#22C55E", width: "100%", gradient: "linear-gradient(90deg,#06B6D4,#10B981)" },
+                { label: "3. Build & Integrate", status: "In Progress — Week 4", statusColor: "#06B6D4", width: "68%", gradient: "linear-gradient(90deg,#7C3AED,#2563EB)" },
+                { label: "4. Deploy & Go Live", status: "Scheduled — Week 6", statusColor: "#475569", width: "15%", gradient: "rgba(255,255,255,0.15)" },
+                { label: "5. Monitor & Scale", status: "Ongoing post-launch", statusColor: "#475569", width: "5%", gradient: "rgba(255,255,255,0.1)" },
+              ].map((bar, i) => (
+                <div key={i}>
+                  <div className="flex justify-between text-xs mb-1 ak-dc-text">
+                    <span>{bar.label}</span>
+                    <span style={{ color: bar.statusColor }}>{bar.status}</span>
+                  </div>
+                  <div className="ak-dc-bar-track" style={{ height: 8 }}>
+                    <div className={i === 2 ? "process-anim-bar" : ""} style={{ height: 8, borderRadius: 99, width: bar.width, background: bar.gradient, boxShadow: i < 3 ? `0 0 10px ${bar.statusColor}40` : "none", transition: "width 2s ease" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-3 mt-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              {[
+                { value: "68%", label: "Project Progress", gradient: "linear-gradient(135deg,#2563EB,#06B6D4)" },
+                { value: "4 wks", label: "Time Invested", gradient: "linear-gradient(135deg,#10B981,#06B6D4)" },
+                { value: "On Track", label: "Delivery Status", gradient: "linear-gradient(135deg,#7C3AED,#2563EB)" },
+              ].map((m, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-xl font-extrabold font-poppins bg-clip-text" style={{ background: m.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{m.value}</div>
+                  <div className="ak-dc-muted text-[10px]">{m.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Why Businesses Choose AKcelerate */}
+      {/* ═══════════════════ BENEFITS ═══════════════════ */}
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -137,12 +277,12 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {benefits.map((b, i) => (
               <div key={i} className="glass-card p-7">
-                <div className="feature-icon"><b.icon className="w-6 h-6 text-accent" /></div>
+                <div className="feature-icon"><b.icon className="w-6 h-6" style={{ color: "#06B6D4" }} /></div>
                 <h3 className="font-poppins font-semibold text-lg mb-2">{b.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-3">{b.desc}</p>
+                <p className="text-sm leading-relaxed mb-3" style={{ color: "#64748B" }}>{b.desc}</p>
                 <div className="flex items-center gap-2">
-                  <span className="stat-number text-2xl">{b.metric}</span>
-                  <span className="text-muted-foreground text-xs">{b.metricLabel}</span>
+                  <span className="text-2xl font-bold font-poppins gradient-text">{b.metric}</span>
+                  <span className="text-xs" style={{ color: "#64748B" }}>{b.metricLabel}</span>
                 </div>
               </div>
             ))}
@@ -150,7 +290,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8 Solution Areas */}
+      <div className="section-divider" />
+
+      {/* ═══════════════════ SOLUTIONS ═══════════════════ */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -166,7 +308,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Industries */}
+      {/* ═══════════════════ INDUSTRIES ═══════════════════ */}
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -176,16 +318,24 @@ export default function HomePage() {
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {industries.slice(0, 8).map((ind, i) => (
-              <div key={i} className="glass-card p-6 text-center">
-                <div className="font-poppins font-semibold mb-1">{ind.name}</div>
-                <p className="text-muted-foreground text-xs">{ind.description.slice(0, 80)}...</p>
+              <div key={i} className="glass-card p-6">
+                <h3 className="font-poppins font-semibold mb-2">{ind.name}</h3>
+                <p className="text-xs leading-relaxed mb-3" style={{ color: "#64748B" }}>{ind.description}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {ind.useCases.slice(0, 3).map((u, j) => (
+                    <span key={j} className="tag-pill">{u}</span>
+                  ))}
+                </div>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link to="/industries" className="btn-secondary">View All Industries <ArrowRight className="w-4 h-4" /></Link>
           </div>
         </div>
       </section>
 
-      {/* Tech Stack */}
+      {/* ═══════════════════ TECH STACK ═══════════════════ */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -193,15 +343,23 @@ export default function HomePage() {
             title={<>Enterprise-Grade <span className="gradient-text">Tech Stack</span></>}
             description="We use the best tools for each project — chosen for performance, not vendor loyalty."
           />
-          <div className="flex flex-wrap justify-center gap-3">
-            {techStack.map((t) => (
-              <span key={t} className="px-5 py-2.5 rounded-full text-sm font-medium glass-card">{t}</span>
-            ))}
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to right, hsl(var(--background)), transparent)" }} />
+            <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: "linear-gradient(to left, hsl(var(--background)), transparent)" }} />
+            <div className="flex gap-3 overflow-hidden">
+              <div className="integration-track">
+                {[...techStack, ...techStack].map((t, i) => (
+                  <span key={i} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", boxShadow: "0 1px 6px hsla(222,47%,11%,0.06)", color: "#64748B" }}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Case Study Preview */}
+      {/* ═══════════════════ CASE STUDIES ═══════════════════ */}
       <section className="py-20 lg:py-28 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -211,15 +369,22 @@ export default function HomePage() {
           />
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Manufacturing AI", metric: "85%", label: "Downtime Reduction", desc: "Predictive maintenance for a 5-plant network" },
-              { title: "E-commerce Growth", metric: "35%", label: "Revenue Increase", desc: "Personalization engine + demand forecasting" },
-              { title: "Fintech Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection processing 10M+ daily" },
+              { title: "Manufacturing AI Transformation", metric: "85%", label: "Downtime Reduction", desc: "Predictive maintenance and quality AI for a mid-size manufacturer, reducing downtime by 85% and defect rates by 60%.", stats: [{ v: "85%", l: "Downtime ↓" }, { v: "60%", l: "Defects ↓" }, { v: "₹2.4Cr", l: "Savings" }] },
+              { title: "E-commerce Growth Engine", metric: "35%", label: "Revenue Increase", desc: "Personalization engine and demand forecasting system that increased revenue by 35% and reduced inventory waste by 28%.", stats: [{ v: "35%", l: "Revenue ↑" }, { v: "28%", l: "Waste ↓" }, { v: "95%", l: "Accuracy" }] },
+              { title: "Fintech Risk Analytics", metric: "99.7%", label: "Detection Accuracy", desc: "Real-time fraud detection system processing 10M+ transactions daily with 99.7% accuracy.", stats: [{ v: "99.7%", l: "Accuracy" }, { v: "10M+", l: "Daily Txns" }, { v: "₹8Cr", l: "Fraud Stopped" }] },
             ].map((c, i) => (
               <div key={i} className="glass-card p-7">
-                <div className="stat-number text-3xl mb-1">{c.metric}</div>
-                <div className="text-accent text-sm font-medium mb-3">{c.label}</div>
-                <h3 className="font-poppins font-semibold mb-2">{c.title}</h3>
-                <p className="text-muted-foreground text-sm">{c.desc}</p>
+                <span className="tag-pill mb-4 block w-fit">{c.label}</span>
+                <h3 className="font-poppins font-semibold text-lg mb-2">{c.title}</h3>
+                <p className="text-sm mb-5" style={{ color: "#64748B" }}>{c.desc}</p>
+                <div className="grid grid-cols-3 gap-2 pt-4" style={{ borderTop: "1px solid hsl(var(--border))" }}>
+                  {c.stats.map((s, j) => (
+                    <div key={j} className="text-center">
+                      <div className="font-poppins font-bold text-lg gradient-text">{s.v}</div>
+                      <div className="text-[10px]" style={{ color: "#64748B" }}>{s.l}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -229,15 +394,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* ═══════════════════ FAQ ═══════════════════ */}
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
 
-      {/* CTA */}
+      {/* ═══════════════════ CTA ═══════════════════ */}
       <CTASection
         title="Ready to Accelerate Your Growth?"
-        description="Book a free audit and discover how AI, data science, and digital solutions can transform your business."
+        description="Book a free audit and discover how AI, data science, and digital solutions can transform your business — in weeks, not months."
         primaryCta={{ label: "Book Free Audit", to: "/free-audit" }}
-        secondaryCta={{ label: "Contact Us", to: "/contact" }}
+        secondaryCta={{ label: "Explore Solutions", to: "/solutions" }}
         dark
       />
     </>
