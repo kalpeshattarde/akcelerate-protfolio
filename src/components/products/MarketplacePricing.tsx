@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Zap, Crown, Building2 } from "lucide-react";
+import { ArrowRight, Check, Zap, Crown, Building2, GraduationCap, Wrench, Briefcase } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+
+const USD_TO_INR = 85;
 
 const plans = [
   {
-    name: "Single Prototype",
-    price: "$29",
+    name: "Starter",
+    priceUsd: 24.9,
     period: "one-time",
-    description: "Perfect for indie hackers validating one idea. Grab it, customize it, ship it.",
-    icon: Zap,
+    description: "Perfect for students, solo entrepreneurs & vibe coders exploring SaaS ideas.",
+    icon: GraduationCap,
+    audience: ["Students", "Solo Entrepreneurs", "Vibe Coders"],
     features: [
+      "Pick any 1 prototype",
       "Full source code ownership",
       "Commercial & resale license",
       "Free updates for 6 months",
@@ -21,54 +25,64 @@ const plans = [
     highlighted: false,
   },
   {
-    name: "All-Access Bundle",
-    price: "$99",
-    period: "/month",
-    description: "For founders & agencies building multiple SaaS products. Access everything.",
-    icon: Crown,
+    name: "Pro Bundle",
+    priceUsd: 99.9,
+    period: "one-time",
+    description: "For freelancers & specialized SaaS builders shipping multiple products fast.",
+    icon: Wrench,
+    audience: ["Freelancers", "SaaS Builders", "Agency Owners"],
     features: [
-      "All 40+ prototypes included",
-      "Every future release included",
+      "Pick any 5 prototypes",
+      "Full source code ownership",
+      "Commercial license for all 5",
       "Priority support & customization help",
-      "Commercial license for all products",
       "Custom branding kit",
-      "Cancel anytime — keep what you built",
+      "Free updates for 12 months",
     ],
-    cta: "Get Full Access",
+    cta: "Get 5 Prototypes",
     ctaLink: "/contact",
     highlighted: true,
   },
   {
-    name: "Agency / White-Label",
-    price: "$299",
-    period: "+",
-    description: "For agencies delivering client work. White-label everything with your brand.",
+    name: "AKcelerate All-Access",
+    priceUsd: 249,
+    period: "starts from",
+    description: "For agency owners who build & sell SaaS. Get everything — white-label ready.",
     icon: Building2,
+    audience: ["Agency Owners", "White-Label Resellers"],
     features: [
-      "Everything in All-Access",
+      "Access to ALL prototypes",
+      "Every future release included",
       "White-label rights for client delivery",
       "Remove all AKcelerate branding",
       "Priority feature requests",
       "Dedicated Slack channel",
       "Custom prototype development",
     ],
-    cta: "Talk to Us",
+    cta: "Start with AKcelerate",
     ctaLink: "/contact",
     highlighted: false,
   },
 ];
+
+function formatPrice(usd: number, currency: "usd" | "inr") {
+  if (currency === "inr") {
+    const inr = Math.round(usd * USD_TO_INR);
+    return `₹${inr.toLocaleString("en-IN")}`;
+  }
+  return `$${usd}`;
+}
 
 export default function MarketplacePricing() {
   return (
     <section id="pricing" className="py-16 lg:py-20 section-alt">
       <RevealSection>
         <div className="text-center mb-12">
-          {/* H2 — SEO */}
           <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4">
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $29. Everything for $99/mo. Agency white-label from $299.
+            One prototype for $24.9. Five for $99.9. Full access from $249.
             <br />
             <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
@@ -76,7 +90,7 @@ export default function MarketplacePricing() {
       </RevealSection>
 
       <RevealGrid className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" stagger={100}>
-        {plans.map(({ name, price, period, description, icon: Icon, features, cta, ctaLink, highlighted }, i) => (
+        {plans.map(({ name, priceUsd, period, description, icon: Icon, audience, features, cta, ctaLink, highlighted }, i) => (
           <div
             key={i}
             className={`reveal-item glass-card p-7 relative overflow-hidden ${
@@ -92,10 +106,29 @@ export default function MarketplacePricing() {
               <Icon className="w-6 h-6 text-primary" />
             </div>
             <h3 className="font-poppins font-bold text-xl text-foreground mb-1">{name}</h3>
-            <div className="flex items-baseline gap-1 mb-3">
-              <span className="font-poppins text-4xl font-extrabold text-foreground">{price}</span>
-              <span className="text-sm text-muted-foreground">{period}</span>
+
+            {/* Dual currency display */}
+            <div className="mb-1">
+              <div className="flex items-baseline gap-1">
+                <span className="font-poppins text-4xl font-extrabold text-foreground">
+                  {formatPrice(priceUsd, "usd")}
+                </span>
+                <span className="text-sm text-muted-foreground">{period}</span>
+              </div>
+              <div className="text-sm text-muted-foreground">
+                ≈ {formatPrice(priceUsd, "inr")}
+              </div>
             </div>
+
+            {/* Target audience badges */}
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {audience.map((a, j) => (
+                <span key={j} className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
+                  {a}
+                </span>
+              ))}
+            </div>
+
             <p className="text-sm text-muted-foreground mb-6">{description}</p>
             <ul className="space-y-2.5 mb-8">
               {features.map((f, j) => (
