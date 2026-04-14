@@ -24,7 +24,7 @@ export default function ProductCard({ product, currency, isPurchased, onPurchase
 
       {/* Preview */}
       <Link to={`/products/${product.slug}`}>
-        <div className="relative aspect-video bg-muted overflow-hidden">
+        <div className="relative aspect-[4/3] bg-muted overflow-hidden">
           <img
             src={product.previewImage}
             alt={product.name}
