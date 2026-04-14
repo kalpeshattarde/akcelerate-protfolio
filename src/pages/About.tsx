@@ -3,11 +3,12 @@ import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { Linkedin } from "lucide-react";
 
 const team = [
-  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with 8+ years of experience across manufacturing, fintech, and enterprise AI.", img: "/images/kalpesh-attarde.jpeg" },
-  { name: "Kaushal Bharambe", role: "Senior AI/ML Engineer", desc: "Full-stack engineer specializing in scalable cloud architecture, AI/ML solutions, and production ML deployment.", img: "/images/kaushal-bharambe.png" },
-  { name: "Rakesh Chaudhari", role: "Senior DevOps/MLOps", desc: "Expert in data pipelines, cloud infrastructure, DevOps automation, and real-time analytics systems.", img: "/images/rakesh-chaudhari.jpeg" },
+  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with 8+ years of experience across manufacturing, fintech, and enterprise AI.", img: "/images/kalpesh-attarde.jpeg", linkedin: "https://www.linkedin.com/in/kalpeshattarde/" },
+  { name: "Kaushal Bharambe", role: "Senior AI/ML Engineer", desc: "Full-stack engineer specializing in scalable cloud architecture, AI/ML solutions, and production ML deployment.", img: "/images/kaushal-bharambe.png", linkedin: "https://www.linkedin.com/in/kaushal-bharambe/" },
+  { name: "Rakesh Chaudhari", role: "Senior DevOps/MLOps", desc: "Expert in data pipelines, cloud infrastructure, DevOps automation, and real-time analytics systems.", img: "/images/rakesh-chaudhari.jpeg", linkedin: "https://www.linkedin.com/in/crak/" },
 ];
 
 export default function AboutPage() {
@@ -48,7 +49,10 @@ export default function AboutPage() {
                 <img src={t.img} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
                 <h3 className="font-poppins font-semibold text-lg">{t.name}</h3>
                 <div className="text-accent text-sm font-medium mb-3">{t.role}</div>
-                <p className="text-muted-foreground text-sm">{t.desc}</p>
+                <p className="text-muted-foreground text-sm mb-3">{t.desc}</p>
+                <a href={t.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-primary transition-colors font-medium">
+                  <Linkedin className="w-4 h-4" /> LinkedIn
+                </a>
               </div>
             ))}
           </RevealGrid>
