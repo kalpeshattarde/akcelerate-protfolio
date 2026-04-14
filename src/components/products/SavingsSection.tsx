@@ -1,28 +1,35 @@
 import { RevealSection } from "@/hooks/useScrollReveal";
 import { BadgeDollarSign, ArrowDown } from "lucide-react";
+import type { GeoDetection } from "@/hooks/useGeoDetection";
 
-const scenarios = [
-  {
-    label: "Building 1 SaaS with AI",
-    aiCost: "$700–$3,000",
-    ourCost: "$29",
-    savings: "$671–$2,971",
-  },
-  {
-    label: "Building 5 SaaS products",
-    aiCost: "$3,500–$15,000",
-    ourCost: "$99/mo",
-    savings: "$3,400–$14,900",
-  },
-  {
-    label: "Agency building 10+ products",
-    aiCost: "$7,000–$30,000",
-    ourCost: "$299 (white-label)",
-    savings: "$6,700–$29,700",
-  },
-];
+interface Props {
+  geo: GeoDetection;
+}
 
-export default function SavingsSection() {
+export default function SavingsSection({ geo }: Props) {
+  const { formatRange, formatPrice } = geo;
+
+  const scenarios = [
+    {
+      label: "Building 1 SaaS with AI",
+      aiCost: formatRange(700, 3000),
+      ourCost: formatPrice(29),
+      savings: formatRange(671, 2971),
+    },
+    {
+      label: "Building 5 SaaS products",
+      aiCost: formatRange(3500, 15000),
+      ourCost: `${formatPrice(99)}/mo`,
+      savings: formatRange(3400, 14900),
+    },
+    {
+      label: "Agency building 10+ products",
+      aiCost: formatRange(7000, 30000),
+      ourCost: `${formatPrice(299)} (white-label)`,
+      savings: formatRange(6700, 29700),
+    },
+  ];
+
   return (
     <section className="py-16 lg:py-20">
       <RevealSection>
@@ -31,7 +38,7 @@ export default function SavingsSection() {
             <BadgeDollarSign className="w-3.5 h-3.5" /> YOUR SAVINGS
           </div>
           <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Save <span className="gradient-text">$600–$29,700</span> Per Project
+            Save <span className="gradient-text">{formatRange(600, 29700)}</span> Per Project
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             The math is simple. Stop building from scratch. Start launching with prototypes.
@@ -42,7 +49,6 @@ export default function SavingsSection() {
           {scenarios.map(({ label, aiCost, ourCost, savings }, i) => (
             <div key={i} className="glass-card p-6 text-center relative overflow-hidden">
               <h3 className="font-poppins font-semibold text-foreground mb-5">{label}</h3>
-
               <div className="space-y-3">
                 <div className="py-2 px-4 rounded-lg bg-destructive/5">
                   <div className="text-xs text-muted-foreground mb-1">With AI tools</div>
@@ -54,7 +60,6 @@ export default function SavingsSection() {
                   <div className="font-poppins font-bold text-primary text-lg">{ourCost}</div>
                 </div>
               </div>
-
               <div className="mt-5 pt-4 border-t border-border">
                 <div className="text-xs text-muted-foreground mb-1">You save</div>
                 <div className="font-poppins text-2xl font-extrabold text-emerald-500">{savings}</div>
