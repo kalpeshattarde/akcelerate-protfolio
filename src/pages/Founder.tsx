@@ -10,7 +10,7 @@ export default function FounderPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
             <div className="glass-card p-8 mb-8 flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-32 h-32 rounded-2xl flex-shrink-0 flex items-center justify-center text-4xl font-bold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>KA</div>
+              <img src="/images/kalpesh-attarde.jpeg" alt="Kalpesh Attarde" className="w-32 h-32 rounded-2xl flex-shrink-0 object-cover" />
               <div>
                 <h2 className="font-poppins font-bold text-2xl mb-2">Kalpesh Attarde</h2>
                 <div className="text-accent font-medium mb-3">Founder & CEO, AKcelerate</div>
