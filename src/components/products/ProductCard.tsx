@@ -36,7 +36,7 @@ export default function ProductCard({ product, currency, isPurchased, onPurchase
           </Link>
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxOpen(true); }}
-            className="absolute bottom-2 right-2 z-10 p-2 rounded-lg bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+            className="absolute bottom-2 right-2 z-10 p-2 rounded-lg bg-black/50 text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-black/70"
             title="Zoom preview"
           >
             <ZoomIn className="w-4 h-4" />
