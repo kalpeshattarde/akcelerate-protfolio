@@ -14,7 +14,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, currency, isPurchased, onPurchase, onAddToCart }: ProductCardProps) {
-  const price = currency === "inr" ? `₹${product.price.inr.toLocaleString()}` : `$${product.price.usd}`;
+  const priceUsd = `$${product.price.usd}`;
+  const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
@@ -50,7 +51,10 @@ export default function ProductCard({ product, currency, isPurchased, onPurchase
                 {product.name}
               </h3>
             </Link>
-            <span className="text-lg font-bold text-primary whitespace-nowrap">{price}</span>
+            <div className="text-right whitespace-nowrap">
+              <span className="text-lg font-bold text-primary">{priceUsd}</span>
+              <div className="text-[11px] text-muted-foreground">≈ {priceInr}</div>
+            </div>
           </div>
 
           <p className="text-sm text-muted-foreground mb-3">{product.shortDesc}</p>

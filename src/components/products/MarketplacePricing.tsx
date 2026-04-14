@@ -7,7 +7,7 @@ const USD_TO_INR = 85;
 const plans = [
   {
     name: "Starter",
-    priceUsd: 24.9,
+    priceUsd: 29,
     period: "one-time",
     description: "Perfect for students, solo entrepreneurs & vibe coders exploring SaaS ideas.",
     icon: GraduationCap,
@@ -26,7 +26,7 @@ const plans = [
   },
   {
     name: "Pro Bundle",
-    priceUsd: 99.9,
+    priceUsd: 99,
     period: "one-time",
     description: "For freelancers & specialized SaaS builders shipping multiple products fast.",
     icon: Wrench,
@@ -82,7 +82,7 @@ export default function MarketplacePricing() {
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $24.9. Five for $99.9. Full access from $249.
+            One prototype for $29. Five for $99. Full access from $249.
             <br />
             <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
