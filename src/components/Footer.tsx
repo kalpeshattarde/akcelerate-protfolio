@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Activity, Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
