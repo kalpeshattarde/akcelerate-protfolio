@@ -9,14 +9,14 @@ import UpsellBanner from "@/components/products/UpsellBanner";
 
 export default function Products() {
   const { currency, setCurrency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
 
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PersonalizedHero />
 
-        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} />
+        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={purchase} />
 
         {/* Category Tabs */}
         <Tabs defaultValue="mobile-app" className="mt-12">
@@ -32,7 +32,7 @@ export default function Products() {
           <TabsContent value="mobile-app">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {mobileApps.map(p => (
-                <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} />
+                <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={purchase} />
               ))}
             </div>
           </TabsContent>
@@ -40,7 +40,7 @@ export default function Products() {
           <TabsContent value="web-saas">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {webSaas.map(p => (
-                <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} />
+                <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={purchase} />
               ))}
             </div>
           </TabsContent>
