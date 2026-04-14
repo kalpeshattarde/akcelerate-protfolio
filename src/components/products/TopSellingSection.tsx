@@ -17,7 +17,7 @@ export default function TopSellingSection({ products, currency, isPurchased, onP
         <Flame className="w-6 h-6 text-orange-500" />
         <h2 className="font-poppins text-2xl font-bold text-foreground">Top Selling Products</h2>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {products.map(p => (
           <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={onPurchase} />
         ))}
