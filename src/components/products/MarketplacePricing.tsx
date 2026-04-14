@@ -1,90 +1,82 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, Zap, Crown, Building2 } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-import CurrencyToggle from "./CurrencyToggle";
-import type { GeoDetection } from "@/hooks/useGeoDetection";
 
-interface Props {
-  geo: GeoDetection;
-}
+const plans = [
+  {
+    name: "Single Prototype",
+    price: "$29",
+    period: "one-time",
+    description: "Perfect for indie hackers validating one idea. Grab it, customize it, ship it.",
+    icon: Zap,
+    features: [
+      "Full source code ownership",
+      "Commercial & resale license",
+      "Free updates for 6 months",
+      "Documentation included",
+      "Deploy anywhere — Vercel, Netlify, AWS",
+    ],
+    cta: "Browse Prototypes",
+    ctaLink: "#products-catalog",
+    highlighted: false,
+  },
+  {
+    name: "All-Access Bundle",
+    price: "$99",
+    period: "/month",
+    description: "For founders & agencies building multiple SaaS products. Access everything.",
+    icon: Crown,
+    features: [
+      "All 40+ prototypes included",
+      "Every future release included",
+      "Priority support & customization help",
+      "Commercial license for all products",
+      "Custom branding kit",
+      "Cancel anytime — keep what you built",
+    ],
+    cta: "Get Full Access",
+    ctaLink: "/contact",
+    highlighted: true,
+  },
+  {
+    name: "Agency / White-Label",
+    price: "$299",
+    period: "+",
+    description: "For agencies delivering client work. White-label everything with your brand.",
+    icon: Building2,
+    features: [
+      "Everything in All-Access",
+      "White-label rights for client delivery",
+      "Remove all AKcelerate branding",
+      "Priority feature requests",
+      "Dedicated Slack channel",
+      "Custom prototype development",
+    ],
+    cta: "Talk to Us",
+    ctaLink: "/contact",
+    highlighted: false,
+  },
+];
 
-export default function MarketplacePricing({ geo }: Props) {
-  const { currency, setCurrency, isIndia, formatPrice } = geo;
-
-  const plans = [
-    {
-      name: "Single Prototype",
-      priceUsd: 29,
-      period: "one-time",
-      description: "Perfect for indie hackers validating one idea. Grab it, customize it, ship it.",
-      icon: Zap,
-      features: [
-        "Full source code ownership",
-        "Commercial & resale license",
-        "Free updates for 6 months",
-        "Documentation included",
-        "Deploy anywhere — Vercel, Netlify, AWS",
-      ],
-      cta: "Browse Prototypes",
-      ctaLink: "#products-catalog",
-      highlighted: false,
-    },
-    {
-      name: "All-Access Bundle",
-      priceUsd: 99,
-      period: "/month",
-      description: "For founders & agencies building multiple SaaS products. Access everything.",
-      icon: Crown,
-      features: [
-        "All 40+ prototypes included",
-        "Every future release included",
-        "Priority support & customization help",
-        "Commercial license for all products",
-        "Custom branding kit",
-        "Cancel anytime — keep what you built",
-      ],
-      cta: "Get Full Access",
-      ctaLink: "/contact",
-      highlighted: true,
-    },
-    {
-      name: "Agency / White-Label",
-      priceUsd: 299,
-      period: "+",
-      description: "For agencies delivering client work. White-label everything with your brand.",
-      icon: Building2,
-      features: [
-        "Everything in All-Access",
-        "White-label rights for client delivery",
-        "Remove all AKcelerate branding",
-        "Priority feature requests",
-        "Dedicated Slack channel",
-        "Custom prototype development",
-      ],
-      cta: "Talk to Us",
-      ctaLink: "/contact",
-      highlighted: false,
-    },
-  ];
-
+export default function MarketplacePricing() {
   return (
     <section id="pricing" className="py-16 lg:py-20 section-alt">
       <RevealSection>
-        <div className="text-center mb-8">
+        <div className="text-center mb-12">
+          {/* H2 — SEO */}
           <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4">
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-6">
-            One prototype for {formatPrice(29)}. Everything for {formatPrice(99)}/mo. Agency white-label from {formatPrice(299)}.
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+            One prototype for $29. Everything for $99/mo. Agency white-label from $299.
             <br />
-            <span className="font-medium text-foreground">Compare that to {formatPrice(3000)}+ with AI tools.</span>
+            <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
-          <CurrencyToggle currency={currency} onToggle={setCurrency} isIndia={isIndia} />
         </div>
       </RevealSection>
 
       <RevealGrid className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" stagger={100}>
-        {plans.map(({ name, priceUsd, period, description, icon: Icon, features, cta, ctaLink, highlighted }, i) => (
+        {plans.map(({ name, price, period, description, icon: Icon, features, cta, ctaLink, highlighted }, i) => (
           <div
             key={i}
             className={`reveal-item glass-card p-7 relative overflow-hidden ${
@@ -101,7 +93,7 @@ export default function MarketplacePricing({ geo }: Props) {
             </div>
             <h3 className="font-poppins font-bold text-xl text-foreground mb-1">{name}</h3>
             <div className="flex items-baseline gap-1 mb-3">
-              <span className="font-poppins text-4xl font-extrabold text-foreground">{formatPrice(priceUsd)}</span>
+              <span className="font-poppins text-4xl font-extrabold text-foreground">{price}</span>
               <span className="text-sm text-muted-foreground">{period}</span>
             </div>
             <p className="text-sm text-muted-foreground mb-6">{description}</p>

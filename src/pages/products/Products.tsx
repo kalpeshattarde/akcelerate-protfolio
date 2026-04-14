@@ -52,8 +52,7 @@ const TAG_OPTIONS = [
 ];
 
 export default function Products() {
-  const geo = useGeoDetection();
-  const { currency } = geo;
+  const { currency } = useGeoDetection();
   const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
   const cart = useCart();
   const [search, setSearch] = useState("");
@@ -87,13 +86,13 @@ export default function Products() {
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HERO */}
-        <PersonalizedHero geo={geo} />
+        <PersonalizedHero />
 
         {/* PROBLEM */}
         <ProblemSection />
 
         {/* COST BREAKDOWN */}
-        <CostBreakdownSection geo={geo} />
+        <CostBreakdownSection />
 
         {/* SOLUTION */}
         <SolutionSection />
@@ -102,7 +101,7 @@ export default function Products() {
         <ComparisonSection />
 
         {/* SAVINGS */}
-        <SavingsSection geo={geo} />
+        <SavingsSection />
 
         {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
@@ -223,7 +222,7 @@ export default function Products() {
         <UseCasesSection />
 
         {/* MARKETPLACE PRICING */}
-        <MarketplacePricing geo={geo} />
+        <MarketplacePricing />
 
         {/* TRUST SECTION */}
         <TrustSection />
@@ -232,7 +231,7 @@ export default function Products() {
         <ProductsFAQ />
 
         {/* FINAL CTA */}
-        <FinalCTA geo={geo} />
+        <FinalCTA />
 
         <CartDrawer
           open={cart.open}
