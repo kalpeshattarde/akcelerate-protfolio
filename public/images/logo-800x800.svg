@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="800" fill="#0F172A"/>
+  
+  <!-- Icon Container -->
+  <rect x="280" y="200" width="240" height="240" rx="48" fill="url(#iconGrad)"/>
+  
+  <!-- Pulse Line -->
+  <polyline points="320,320 360,320 380,260 420,380 450,300 480,320 520,320" 
+            stroke="white" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- AK Text -->
+  <text x="400" y="520" font-family="Poppins, system-ui, sans-serif" font-weight="700" font-size="80" fill="#F1F5F9" text-anchor="middle">AK</text>
+  
+  <!-- celerate Text -->
+  <text x="400" y="600" font-family="Poppins, system-ui, sans-serif" font-weight="700" font-size="80" fill="url(#grad)" text-anchor="middle">celerate</text>
+</svg>
