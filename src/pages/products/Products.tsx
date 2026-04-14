@@ -52,7 +52,8 @@ const TAG_OPTIONS = [
 ];
 
 export default function Products() {
-  const { currency } = useGeoDetection();
+  const geo = useGeoDetection();
+  const { currency } = geo;
   const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
   const cart = useCart();
   const [search, setSearch] = useState("");
