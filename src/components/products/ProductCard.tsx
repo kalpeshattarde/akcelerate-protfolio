@@ -13,7 +13,7 @@ interface ProductCardProps {
   onAddToCart?: (id: string) => void;
 }
 
-export default function ProductCard({ product, currency, isPurchased, onPurchase, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ product, _currency, isPurchased, onPurchase, onAddToCart }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
