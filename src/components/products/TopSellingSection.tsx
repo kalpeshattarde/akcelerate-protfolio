@@ -7,9 +7,10 @@ interface TopSellingSectionProps {
   products: Product[];
   currency: Currency;
   isPurchased: (id: string) => boolean;
+  onPurchase?: (id: string) => void;
 }
 
-export default function TopSellingSection({ products, currency, isPurchased }: TopSellingSectionProps) {
+export default function TopSellingSection({ products, currency, isPurchased, onPurchase }: TopSellingSectionProps) {
   return (
     <section className="mb-12">
       <div className="flex items-center gap-2 mb-6">
@@ -18,7 +19,7 @@ export default function TopSellingSection({ products, currency, isPurchased }: T
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {products.map(p => (
-          <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} />
+          <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={onPurchase} />
         ))}
       </div>
     </section>
