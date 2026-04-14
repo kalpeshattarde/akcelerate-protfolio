@@ -53,13 +53,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center animate-pulse-glow" style={{ background: "var(--gradient-primary)" }}>
-              <Activity className="w-[18px] h-[18px] text-primary-foreground" />
-            </div>
-            <span className="font-poppins font-bold text-xl tracking-tight text-foreground">
-              AK<span className="gradient-text">celerate</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img src="/images/logo-full-light.svg" alt="AKcelerate" className="h-9 dark:hidden" />
+            <img src="/images/logo-full-dark.svg" alt="AKcelerate" className="h-9 hidden dark:block" />
           </Link>
 
           {/* Desktop Nav */}

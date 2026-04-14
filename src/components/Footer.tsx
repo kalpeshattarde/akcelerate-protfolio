@@ -8,11 +8,8 @@ export default function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #2563EB, #06B6D4)" }}>
-                <Activity className="w-[18px] h-[18px] text-white" />
-              </div>
-              <span className="font-poppins font-bold text-xl text-white">AK<span className="gradient-text">celerate</span></span>
+            <Link to="/" className="flex items-center mb-5">
+              <img src="/images/logo-full-dark.svg" alt="AKcelerate" className="h-9" />
             </Link>
             <p className="text-sm leading-relaxed text-slate-500 mb-4">
               Premium AI, Data, Automation and Business Consulting firm — delivering digital transformation across 13+ industries.
