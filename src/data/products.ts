@@ -558,7 +558,7 @@ export const PRODUCTS: Product[] = [
     name: "SalesDesk – CRM Pro",
     slug: "salesdesk-crm-pro",
     category: "web-saas",
-    topSelling: true,
+    topSelling: false,
     salesCount: 934,
     description: "Salesdeck is a modern B2B sales workspace built for focused revenue teams. Navigate a clean interface with a structured sidebar, calm top bar, and a dashboard designed to surface what matters most. Manage accounts and contacts, move deals through a visual pipeline, log activities, review email threads, and generate clear reports without friction. Built for speed and clarity, the experience stays accessible, responsive, and easy to scale as teams grow.",
     shortDesc: "B2B CRM with visual pipeline, email threads & team reports",
