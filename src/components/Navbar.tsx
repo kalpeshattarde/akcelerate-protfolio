@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb } from "lucide-react";
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
@@ -18,6 +18,13 @@ const serviceLinks = [
   { to: "/services/quality-analytics", title: "Quality Analytics", desc: "Defect detection & QC AI", icon: CheckSquare },
   { to: "/services/supply-chain-analytics", title: "Supply Chain Analytics", desc: "End-to-end supply intelligence", icon: Truck },
   { to: "/services/energy-management", title: "Energy Management", desc: "AI-optimised energy usage", icon: Zap },
+];
+
+const aboutLinks = [
+  { to: "/about", title: "About AKcelerate", desc: "Our story, team & mission", icon: Users },
+  { to: "/industries", title: "Industries", desc: "Sectors we specialise in", icon: Factory },
+  { to: "/case-studies", title: "Case Studies", desc: "Real-world results & ROI", icon: FileText },
+  { to: "/insights", title: "Insights", desc: "Blog, guides & thought leadership", icon: Lightbulb },
 ];
 
 export default function Navbar() {
@@ -103,10 +110,23 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/industries" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/industries" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Industries</Link>
-            <Link to="/case-studies" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/case-studies" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Case Studies</Link>
-            <Link to="/insights" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Insights</Link>
-            <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/about" ? "text-primary font-semibold" : "text-muted-foreground"}`}>About</Link>
+            {/* About Dropdown */}
+            <div className="nav-dropdown relative group">
+              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+                About <ChevronDown className="w-3 h-3" />
+              </Link>
+              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
+                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
+                  {aboutLinks.map(s => (
+                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
 
