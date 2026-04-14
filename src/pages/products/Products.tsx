@@ -218,11 +218,17 @@ export default function Products() {
           </Tabs>
         </div>
 
+        {/* USE CASES */}
+        <UseCasesSection />
+
         {/* MARKETPLACE PRICING */}
         <MarketplacePricing />
 
         {/* TRUST SECTION */}
         <TrustSection />
+
+        {/* FAQ — SEO */}
+        <ProductsFAQ />
 
         {/* FINAL CTA */}
         <FinalCTA />
