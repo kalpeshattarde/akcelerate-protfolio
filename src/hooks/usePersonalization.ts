@@ -10,7 +10,7 @@ export function usePersonalization() {
   }, [country]);
 
   const subline = useMemo(() => {
-    if (country === "IN") return "Get exclusive INR pricing with code INDIA50";
+    if (country === "IN") return "Production-ready SaaS products to accelerate your business";
     return "Production-ready SaaS products to accelerate your business";
   }, [country]);
 
