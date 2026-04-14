@@ -13,9 +13,10 @@ interface CartDrawerProps {
   onUpdateQuantity: (id: string, qty: number) => void;
   onRemove: (id: string) => void;
   onClear: () => void;
+  onCheckout: () => void;
 }
 
-export default function CartDrawer({ open, onOpenChange, items, currency, total, onUpdateQuantity, onRemove, onClear }: CartDrawerProps) {
+export default function CartDrawer({ open, onOpenChange, items, currency, total, onUpdateQuantity, onRemove, onClear, onCheckout }: CartDrawerProps) {
   const symbol = currency === "inr" ? "₹" : "$";
 
   return (
@@ -78,7 +79,7 @@ export default function CartDrawer({ open, onOpenChange, items, currency, total,
               <span className="text-sm font-medium text-muted-foreground">Total</span>
               <span className="text-xl font-bold text-foreground">{symbol}{total.toLocaleString()}</span>
             </div>
-            <Button className="w-full" size="lg">
+            <Button className="w-full" size="lg" onClick={onCheckout}>
               Checkout
             </Button>
             <Button variant="ghost" size="sm" className="w-full text-muted-foreground" onClick={onClear}>

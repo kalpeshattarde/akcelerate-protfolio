@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Smartphone, Globe, Search, X, ShoppingCart } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -9,7 +10,11 @@ import TopSellingSection from "@/components/products/TopSellingSection";
 import ProductCard from "@/components/products/ProductCard";
 import UpsellBanner from "@/components/products/UpsellBanner";
 import CartDrawer from "@/components/products/CartDrawer";
+import CheckoutModal from "@/components/products/CheckoutModal";
 import type { Product } from "@/data/products";
+import type { Currency } from "@/config/appConfig";
+
+type SortOption = "popular" | "price-low" | "price-high" | "name-az" | "name-za";
 
 function filterProducts(products: Product[], search: string, tags: string[]) {
   return products.filter(p => {
@@ -17,6 +22,18 @@ function filterProducts(products: Product[], search: string, tags: string[]) {
     const matchTags = tags.length === 0 || tags.some(t => p.tags.includes(t));
     return matchSearch && matchTags;
   });
+}
+
+function sortProducts(products: Product[], sort: SortOption, currency: Currency) {
+  const sorted = [...products];
+  switch (sort) {
+    case "popular": return sorted.sort((a, b) => b.salesCount - a.salesCount);
+    case "price-low": return sorted.sort((a, b) => (currency === "inr" ? a.price.inr - b.price.inr : a.price.usd - b.price.usd));
+    case "price-high": return sorted.sort((a, b) => (currency === "inr" ? b.price.inr - a.price.inr : b.price.usd - a.price.usd));
+    case "name-az": return sorted.sort((a, b) => a.name.localeCompare(b.name));
+    case "name-za": return sorted.sort((a, b) => b.name.localeCompare(a.name));
+    default: return sorted;
+  }
 }
 
 const TAG_OPTIONS = [
@@ -31,15 +48,20 @@ export default function Products() {
   const cart = useCart();
   const [search, setSearch] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sort, setSort] = useState<SortOption>("popular");
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
 
-  const filteredWebSaas = useMemo(() => filterProducts(webSaas, search, selectedTags), [webSaas, search, selectedTags]);
-  const filteredMobileApps = useMemo(() => filterProducts(mobileApps, search, selectedTags), [mobileApps, search, selectedTags]);
+  const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
+  const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
-  const handleBuy = (id: string) => {
-    purchase(id);
+  const handleBuy = (id: string) => { purchase(id); };
+
+  const handleCheckout = () => {
+    cart.setOpen(false);
+    setCheckoutOpen(true);
   };
 
   return (
@@ -47,7 +69,6 @@ export default function Products() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PersonalizedHero />
 
-        {/* Floating cart button */}
         {cart.totalCount > 0 && (
           <button
             onClick={() => cart.setOpen(true)}
@@ -60,22 +81,37 @@ export default function Products() {
 
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
 
-        {/* Search & Filters */}
+        {/* Search, Sort & Filters */}
         <div className="mt-12 mb-6 space-y-4">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-            />
-            {search && (
-              <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                <X className="w-4 h-4" />
-              </button>
-            )}
+          <div className="flex items-center gap-3 max-w-2xl mx-auto">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+              />
+              {search && (
+                <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
+              <SelectTrigger className="w-44 rounded-xl">
+                <ArrowUpDown className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="popular">Most Popular</SelectItem>
+                <SelectItem value="price-low">Price: Low → High</SelectItem>
+                <SelectItem value="price-high">Price: High → Low</SelectItem>
+                <SelectItem value="name-az">Name: A → Z</SelectItem>
+                <SelectItem value="name-za">Name: Z → A</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -147,6 +183,20 @@ export default function Products() {
           onUpdateQuantity={cart.updateQuantity}
           onRemove={cart.removeFromCart}
           onClear={cart.clearCart}
+          onCheckout={handleCheckout}
+        />
+
+        <CheckoutModal
+          open={checkoutOpen}
+          onOpenChange={setCheckoutOpen}
+          items={cart.items}
+          currency={currency}
+          total={cart.getTotal(currency)}
+          onComplete={() => {
+            cart.items.forEach(i => purchase(i.product.id));
+            cart.clearCart();
+            setCheckoutOpen(false);
+          }}
         />
       </div>
     </main>
