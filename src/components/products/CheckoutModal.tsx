@@ -1,76 +1,108 @@
 import { useState } from "react";
-import { CheckCircle, CreditCard, X } from "lucide-react";
-import type { Product } from "@/data/products";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
+import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
 interface CheckoutModalProps {
-  product: Product;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  items: CartItem[];
   currency: Currency;
-  finalPrice: number;
-  onClose: () => void;
-  onSuccess: () => void;
+  total: number;
+  onComplete: () => void;
 }
 
-export default function CheckoutModal({ product, currency, finalPrice, onClose, onSuccess }: CheckoutModalProps) {
+export default function CheckoutModal({ open, onOpenChange, items, currency, total, onComplete }: CheckoutModalProps) {
+  const symbol = currency === "inr" ? "₹" : "$";
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
+  const [form, setForm] = useState({ name: "", email: "", card: "" });
 
-  const handlePay = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     setStep("processing");
     setTimeout(() => {
       setStep("success");
-      onSuccess();
-    }, 2000);
+      setTimeout(() => {
+        onComplete();
+        setStep("form");
+        setForm({ name: "", email: "", card: "" });
+      }, 2000);
+    }, 1500);
+  };
+
+  const handleClose = (val: boolean) => {
+    if (step === "processing") return;
+    onOpenChange(val);
+    if (!val) { setStep("form"); }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="bg-card border border-border rounded-2xl shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between p-5 border-b border-border">
-          <h3 className="font-poppins font-semibold text-foreground">Checkout</h3>
-          <button onClick={onClose} className="p-1 rounded-lg hover:bg-muted"><X className="w-5 h-5" /></button>
-        </div>
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-lg">
+        {step === "success" ? (
+          <div className="flex flex-col items-center justify-center py-10 gap-4">
+            <CheckCircle2 className="w-16 h-16 text-green-500" />
+            <h2 className="font-poppins text-2xl font-bold text-foreground">Order Confirmed!</h2>
+            <p className="text-muted-foreground text-sm text-center">
+              Thank you for your purchase. Your products are now available.
+            </p>
+          </div>
+        ) : step === "processing" ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-4">
+            <Loader2 className="w-10 h-10 text-primary animate-spin" />
+            <p className="text-muted-foreground text-sm">Processing your order...</p>
+          </div>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <CreditCard className="w-5 h-5" /> Checkout
+              </DialogTitle>
+            </DialogHeader>
 
-        <div className="p-5">
-          {step === "form" && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-muted">
-                <span className="text-sm font-medium text-foreground">{product.name}</span>
-                <span className="font-bold text-primary">
-                  {currency === "inr" ? "₹" : "$"}{finalPrice.toLocaleString()}
-                </span>
+            <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-2">
+              {items.map(({ product, quantity }) => {
+                const price = currency === "inr" ? product.price.inr : product.price.usd;
+                return (
+                  <div key={product.id} className="flex justify-between text-sm">
+                    <span className="text-foreground">
+                      {product.name} <span className="text-muted-foreground">×{quantity}</span>
+                    </span>
+                    <span className="font-medium text-foreground">{symbol}{(price * quantity).toLocaleString()}</span>
+                  </div>
+                );
+              })}
+              <div className="flex justify-between pt-2 border-t border-border text-base font-bold">
+                <span>Total</span>
+                <span className="text-primary">{symbol}{total.toLocaleString()}</span>
               </div>
-              <input placeholder="Email address" className="w-full px-3 py-2.5 rounded-lg border border-input bg-background text-sm" />
-              <input placeholder="Card number" className="w-full px-3 py-2.5 rounded-lg border border-input bg-background text-sm" />
-              <div className="grid grid-cols-2 gap-3">
-                <input placeholder="MM/YY" className="px-3 py-2.5 rounded-lg border border-input bg-background text-sm" />
-                <input placeholder="CVC" className="px-3 py-2.5 rounded-lg border border-input bg-background text-sm" />
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+              <div className="space-y-2">
+                <Label htmlFor="checkout-name">Full Name</Label>
+                <Input id="checkout-name" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="John Doe" />
               </div>
-              <button onClick={handlePay} className="w-full btn-primary justify-center gap-2">
-                <CreditCard className="w-4 h-4" /> Pay {currency === "inr" ? "₹" : "$"}{finalPrice.toLocaleString()}
-              </button>
-              <p className="text-[10px] text-center text-muted-foreground">
-                Mock checkout — no real charges. Production will use Stripe/Razorpay.
-              </p>
-            </div>
-          )}
-
-          {step === "processing" && (
-            <div className="py-12 text-center space-y-3">
-              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-sm text-muted-foreground">Processing payment...</p>
-            </div>
-          )}
-
-          {step === "success" && (
-            <div className="py-12 text-center space-y-3">
-              <CheckCircle className="w-12 h-12 text-green-500 mx-auto" />
-              <h4 className="font-poppins font-semibold text-foreground">Payment Successful!</h4>
-              <p className="text-sm text-muted-foreground">You now have access to {product.name}.</p>
-              <button onClick={onClose} className="btn-primary mx-auto">Continue</button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+              <div className="space-y-2">
+                <Label htmlFor="checkout-email">Email</Label>
+                <Input id="checkout-email" type="email" required value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="john@example.com" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="checkout-card">Card Number</Label>
+                <Input id="checkout-card" required value={form.card} onChange={e => setForm(f => ({ ...f, card: e.target.value.replace(/\D/g, "").slice(0, 16) }))} placeholder="4242 4242 4242 4242" maxLength={16} />
+              </div>
+              <Button type="submit" className="w-full" size="lg">
+                Pay {symbol}{total.toLocaleString()}
+              </Button>
+              <p className="text-[10px] text-center text-muted-foreground">Mock checkout — no real charges.</p>
+            </form>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
