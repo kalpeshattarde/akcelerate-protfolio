@@ -1,4 +1,5 @@
 import { ArrowRight, Zap, Clock, DollarSign, TrendingUp } from "lucide-react";
+import { AnimatedStat } from "@/hooks/useCountUp";
 
 export default function PersonalizedHero() {
   return (
@@ -8,7 +9,7 @@ export default function PersonalizedHero() {
         🔥 Stop Paying $200/mo for AI Spaghetti Code
       </div>
 
-      {/* H1 — SEO: "ready made saas apps" */}
+      {/* H1 */}
       <h1 className="font-poppins text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-5 leading-tight">
         Stop Building. <span className="gradient-text">Start Shipping.</span>
       </h1>
@@ -36,16 +37,16 @@ export default function PersonalizedHero() {
         ))}
       </div>
 
-      {/* Stats bar */}
-      <div className="flex flex-wrap justify-center gap-8 mb-10 py-4 px-6 rounded-xl bg-muted/50 max-w-2xl mx-auto">
+      {/* Animated Stats bar */}
+      <div className="flex flex-wrap justify-center gap-8 mb-10 py-5 px-6 rounded-xl bg-muted/50 max-w-2xl mx-auto">
         {[
           { value: "40+", label: "Ready Prototypes" },
           { value: "200+", label: "Founders Launched" },
           { value: "$2.4M+", label: "Saved vs AI Tools" },
         ].map(({ value, label }, i) => (
           <div key={i} className="text-center">
-            <div className="font-poppins text-2xl font-extrabold text-primary">{value}</div>
-            <div className="text-xs text-muted-foreground">{label}</div>
+            <AnimatedStat value={value} className="font-poppins text-2xl font-extrabold text-primary block" />
+            <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
           </div>
         ))}
       </div>
