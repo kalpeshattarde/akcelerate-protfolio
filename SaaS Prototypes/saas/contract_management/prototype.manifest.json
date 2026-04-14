@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "contract_management",
+    "slug":  "contract-management",
+    "intendedProduct":  "contract_management",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a contract_management product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a contract_management product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with contract_management-specific behavior."
+}

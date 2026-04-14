@@ -1,0 +1,430 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id            String         @id @default(uuid())
+  name          String
+  slug          String         @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  users         Membership[]
+  subscriptions Subscription[]
+  socialPosts   SocialPost[]
+  automations   Automation[]
+  agentRuns     AgentRun[]
+  events        AnalyticsEvent[]
+  apiKeys       ApiKey[]
+  auditLogs     AuditLog[]
+  automationRuns AutomationRun[]
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String?
+  passwordHash  String?
+  createdAt     DateTime      @default(now())
+  memberships   Membership[]
+  oauthAccounts OauthAccount[]
+}
+
+model Membership {
+  id             String       @id @default(uuid())
+  organizationId String
+  userId         String
+  role           String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+}
+
+model OauthAccount {
+  id                String   @id @default(uuid())
+  userId            String
+  provider          String
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+  expiresAt         DateTime?
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Subscription {
+  id                   String       @id @default(uuid())
+  organizationId       String
+  stripeSubscriptionId String?      @unique
+  stripeCustomerId     String?
+  razorpaySubscriptionId String?    @unique
+  razorpayCustomerId   String?
+  provider             String       @default("stripe")
+  status               String
+  organization         Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model SocialPost {
+  id             String       @id @default(uuid())
+  organizationId String
+  provider       String
+  content        String
+  status         String
+  scheduledAt    DateTime?
+  publishedAt    DateTime?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Automation {
+  id             String       @id @default(uuid())
+  organizationId String
+  name           String
+  triggerKey     String
+  provider       String       @default("n8n")
+  status         String       @default("active")
+  config         Json
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  createdBy      String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  runs           AutomationRun[]
+}
+
+// Agent Execution History
+model AgentRun {
+  id             String       @id @default(uuid())
+  organizationId String
+  prompt         String
+  modelUsed      String       @default("claude-3.5-sonnet")
+  result         String?
+  status         String       @default("pending") // pending, completed, failed
+  error          String?
+  usage          Json?        // { inputTokens, outputTokens }
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+// Analytics & Event Tracking
+model AnalyticsEvent {
+  id             String       @id @default(uuid())
+  organizationId String
+  eventType      String       // user_signup, subscription_created, post_published, etc.
+  metadata       Json?
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, eventType, createdAt])
+}
+
+// API Keys for programmatic access
+model ApiKey {
+  id             String       @id @default(uuid())
+  organizationId String
+  name           String
+  keyHash        String       @unique
+  lastUsedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  revokedAt      DateTime?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+// Audit Trail
+model AuditLog {
+  id             String       @id @default(uuid())
+  organizationId String
+  userId         String?
+  entityType     String       // User, SocialPost, Automation, etc.
+  entityId       String
+  action         String       // create, update, delete, publish
+  changes        Json?        // { field: { old, new } }
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+}
+
+// Automation Run History
+model AutomationRun {
+  id             String       @id @default(uuid())
+  organizationId String
+  automationId   String
+  status         String       @default("pending") // pending, completed, failed
+  result         Json?
+  error          String?
+  startedAt      DateTime     @default(now())
+  completedAt    DateTime?
+  automation     Automation   @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, automationId, createdAt: startedAt])
+}
+
+// ============================================================================
+// DOMAIN MODELS: Project Management Prototype
+// ============================================================================
+
+model Project {
+  id             String       @id @default(uuid())
+  organizationId String
+  name           String
+  description    String?
+  status         String       @default("active") // active, completed, archived
+  owner          String       // user id
+  startDate      DateTime?
+  endDate        DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tasks          Task[]
+  members        ProjectMember[]
+
+  @@index([organizationId, status])
+}
+
+model Task {
+  id             String       @id @default(uuid())
+  projectId      String
+  title          String
+  description    String?
+  status         String       @default("todo") // todo, in_progress, review, done
+  priority       String       @default("medium") // low, medium, high, critical
+  assignee       String?      // user id
+  dueDate        DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments       TaskComment[]
+
+  @@index([projectId, status])
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  taskId    String
+  userId    String   // user id
+  content   String
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+}
+
+model ProjectMember {
+  id        String   @id @default(uuid())
+  projectId String
+  userId    String
+  role      String   @default("member") // member, lead
+  addedAt   DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+// ============================================================================
+// DOMAIN MODELS: Video Conferencing Prototype
+// ============================================================================
+
+model VideoMeeting {
+  id             String       @id @default(uuid())
+  organizationId String
+  title          String
+  description    String?
+  roomId         String       @unique
+  hostId         String       // user id
+  scheduledAt    DateTime?
+  startedAt      DateTime?
+  endedAt        DateTime?
+  status         String       @default("scheduled") // scheduled, live, ended
+  maxParticipants Int?
+  recordingId    String?      // external provider id
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  participants   MeetingParticipant[]
+
+  @@index([organizationId, status, scheduledAt])
+}
+
+model MeetingParticipant {
+  id        String   @id @default(uuid())
+  meetingId String
+  userId    String
+  joinedAt  DateTime @default(now())
+  leftAt    DateTime?
+  duration  Int?     // seconds
+  meeting   VideoMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  @@unique([meetingId, userId])
+}
+
+// ============================================================================
+// DOMAIN MODELS: Contract Management Prototype
+// ============================================================================
+
+model Contract {
+  id             String       @id @default(uuid())
+  organizationId String
+  title          String
+  description    String?
+  status         String       @default("draft") // draft, pending_review, signed, archived
+  counterparty   String       // other organization/person
+  currency       String       @default("USD")
+  value          Float?
+  signatureStatus String?      // unsigned, partially_signed, fully_signed
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  signedAt       DateTime?
+  expiresAt      DateTime?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  versions       ContractVersion[]
+  esignatures    Esignature[]
+
+  @@index([organizationId, status])
+}
+
+model ContractVersion {
+  id        String   @id @default(uuid())
+  contractId String
+  versionNumber Int
+  pdfUrl    String?
+  hash      String   @unique
+  createdAt DateTime @default(now())
+  createdBy String
+  contract  Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, versionNumber])
+}
+
+model Esignature {
+  id        String   @id @default(uuid())
+  contractId String
+  signer    String   // email or user id
+  signatureUrl String?
+  status    String   @default("pending") // pending, signed, rejected
+  signedAt  DateTime?
+  createdAt DateTime @default(now())
+  contract  Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, signer])
+}
+
+// ============================================================================
+// DOMAIN MODELS: Job Board Prototype
+// ============================================================================
+
+model JobPosting {
+  id             String       @id @default(uuid())
+  organizationId String
+  title          String
+  description    String
+  department     String?
+  location       String?
+  employmentType String       @default("full_time") // full_time, part_time, contract
+  salaryMin      Float?
+  salaryMax      Float?
+  currency       String       @default("USD")
+  status         String       @default("published") // draft, published, closed
+  publishedAt    DateTime?
+  closedAt       DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  applications   JobApplication[]
+
+  @@index([organizationId, status, publishedAt])
+}
+
+model JobApplication {
+  id        String   @id @default(uuid())
+  jobId     String
+  applicantEmail String
+  applicantName String
+  resumeUrl String?
+  coverLetter String?
+  status    String   @default("new") // new, reviewing, shortlisted, rejected, hired
+  appliedAt DateTime @default(now())
+  rating    Int?     // 1-5 stars
+  notes     String?
+  job       JobPosting @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId, status])
+}
+
+// ============================================================================
+// DOMAIN MODELS: ESG Reporting Prototype
+// ============================================================================
+
+model EsgReport {
+  id             String       @id @default(uuid())
+  organizationId String
+  reportPeriod   String       // YYYY-Q1, YYYY-Q2, etc.
+  status         String       @default("draft") // draft, submitted, approved
+  approvedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  metrics        EsgMetric[]
+
+  @@unique([organizationId, reportPeriod])
+}
+
+model EsgMetric {
+  id        String   @id @default(uuid())
+  reportId  String
+  category  String   // environmental, social, governance
+  metric    String   // carbon_emissions, employee_retention, etc.
+  value     Float
+  unit      String   // tons, percentage, count, etc.
+  targetValue Float?
+  createdAt DateTime @default(now())
+  report    EsgReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId, category])
+}
+
+// ============================================================================
+// DOMAIN MODELS: Fitness Tracking (Mobile Prototype)
+// ============================================================================
+
+model WorkoutSession {
+  id             String       @id @default(uuid())
+  organizationId String
+  userId         String       // user tracking their workouts
+  workoutType    String       // running, cycling, gym, yoga, etc.
+  duration       Int          // minutes
+  caloriesBurned Float?
+  distance       Float?       // km
+  notes          String?
+  sessionDate    DateTime
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, userId, sessionDate])
+}
+
+model FitnessMilestone {
+  id             String       @id @default(uuid())
+  organizationId String
+  userId         String
+  milestone      String       // weight_loss, strength_gain, endurance, etc.
+  targetValue    Float
+  currentValue   Float?
+  unit           String       // kg, lbs, minutes, etc.
+  dueDate        DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, userId])
+}
+
+

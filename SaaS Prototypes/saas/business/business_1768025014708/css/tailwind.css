@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #1a365d; /* Deep technical authority blue */
+  --color-primary-50: #e6f3ff;
+  --color-primary-100: #b3d9ff;
+  --color-primary-200: #80bfff;
+  --color-primary-300: #4da6ff;
+  --color-primary-400: #1a8cff;
+  --color-primary-500: #1a365d; /* Primary */
+  --color-primary-600: #153056;
+  --color-primary-700: #102a4f;
+  --color-primary-800: #0b2448;
+  --color-primary-900: #061e41;
+
+  /* Secondary Colors */
+  --color-secondary: #2d3748; /* Professional depth gray */
+  --color-secondary-50: #f7fafc;
+  --color-secondary-100: #edf2f7;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e0;
+  --color-secondary-400: #a0aec0;
+  --color-secondary-500: #718096;
+  --color-secondary-600: #4a5568;
+  --color-secondary-700: #2d3748; /* Secondary */
+  --color-secondary-800: #1a202c;
+  --color-secondary-900: #171923;
+
+  /* Accent Colors */
+  --color-accent: #38a169; /* Performance success green */
+  --color-accent-50: #f0fff4;
+  --color-accent-100: #c6f6d5;
+  --color-accent-200: #9ae6b4;
+  --color-accent-300: #68d391;
+  --color-accent-400: #48bb78;
+  --color-accent-500: #38a169; /* Accent */
+  --color-accent-600: #2f855a;
+  --color-accent-700: #276749;
+  --color-accent-800: #22543d;
+  --color-accent-900: #1c4532;
+
+  /* Background Colors */
+  --color-background: #ffffff; /* Clean canvas white */
+  --color-surface: #f7fafc; /* Subtle content separation */
+
+  /* Text Colors */
+  --color-text-primary: #1a202c; /* Extended reading comfort */
+  --color-text-secondary: #4a5568; /* Clear information hierarchy */
+
+  /* Status Colors */
+  --color-success: #68d391; /* Achievement celebration green-300 */
+  --color-warning: #ed8936; /* Performance attention orange-400 */
+  --color-error: #e53e3e; /* Critical issues red-500 */
+
+  /* Border Colors */
+  --color-border: #e2e8f0; /* Form inputs and data tables gray-200 */
+  --color-border-light: #f7fafc; /* Subtle separations gray-50 */
+
+  /* Shadow Values */
+  --shadow-minimal: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* Animation */
+  --transition-default: 300ms ease-out;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    box-shadow: var(--shadow-strong);
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-secondary-800 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-gray-200 p-6;
+    box-shadow: var(--shadow-minimal);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .transition-performance {
+    transition: opacity var(--transition-default), transform var(--transition-default);
+  }
+
+  .shadow-minimal {
+    box-shadow: var(--shadow-minimal);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VelocityCore - Enterprise Performance Platform</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #68d391);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #cbd5e0;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        
+        .navigation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            color: white;
+            text-decoration: none;
+            transition: all 300ms ease-out;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background: rgba(56, 161, 105, 0.2);
+            border-color: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .performance-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #68d391;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (max-width: 768px) {
+            .navigation {
+                grid-template-columns: 1fr;
+            }
+            
+            .performance-indicator {
+                position: static;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+        }
+    </style>
+  </head>
+<body>
+    <div class="performance-indicator">
+        Load Time: <span id="loadTime">0ms</span>
+    </div>
+    
+    <div class="container">
+        <h1 class="logo">VelocityCore</h1>
+        <p class="subtitle">Enterprise Performance Platform - Technical Excellence Through Minimalism</p>
+        
+        <div class="navigation">
+            <a href="pages/homepage_enterprise_b2b_saa_s.html" class="nav-link">
+                Enterprise Homepage
+            </a>
+            <a href="pages/solutions_ecosystem_technical_deep_dive.html" class="nav-link">
+                Solutions Deep Dive
+            </a>
+            <a href="pages/performance_lab_live_metrics_showcase.html" class="nav-link">
+                Performance Lab
+            </a>
+            <a href="pages/pricing_center_transparent_value.html" class="nav-link">
+                Pricing Center
+            </a>
+            <a href="pages/resource_library_technical_authority.html" class="nav-link">
+                Resource Library
+            </a>
+            <a href="pages/contact_hub_multi_channel_engagement.html" class="nav-link">
+                Contact Hub
+            </a>
+            <a href="pages/about_technical_excellence_mission.html" class="nav-link">
+                About Mission
+            </a>
+            <a href="pages/developer_portal_technical_community.html" class="nav-link">
+                Developer Portal
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Performance measurement demonstration
+        window.addEventListener('load', function() {
+            const loadTime = performance.now();
+            document.getElementById('loadTime').textContent = Math.round(loadTime) + 'ms';
+        });
+        
+        // Add subtle animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 300ms ease-out';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

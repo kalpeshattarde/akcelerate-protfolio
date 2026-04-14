@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "Blog Creation",
+    "slug":  "blog-creation",
+    "intendedProduct":  "Blog Creation",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a Blog Creation product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a Blog Creation product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with Blog Creation-specific behavior."
+}

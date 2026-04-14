@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "Grocery Delivery",
+    "slug":  "grocery-delivery",
+    "intendedProduct":  "Grocery Delivery",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a Grocery Delivery product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a Grocery Delivery product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with Grocery Delivery-specific behavior."
+}

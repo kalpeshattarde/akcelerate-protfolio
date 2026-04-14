@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "laundry_service",
+    "slug":  "laundry-service",
+    "intendedProduct":  "laundry_service",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a laundry_service product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a laundry_service product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with laundry_service-specific behavior."
+}

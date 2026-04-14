@@ -1,0 +1,27 @@
+<!-- Generated from prototype.manifest.json by `npm run prototypes:generate`. Edit the manifest and rerun the generator. -->
+# LOG.md
+
+## home_services_booking Prototype Audit - 2026-04-12
+
+### Current Reality
+- The top-level home_services_booking prototype root is still the same generic VelocityCore monorepo scaffold used in the other top-level prototype roots.
+- The directory label suggests a home_services_booking direction, but that domain is not implemented in the active code here.
+
+### What Exists
+- Express API modules for auth, billing, email, messaging, social, automation, analytics, and agent intake.
+- Prisma models for organizations, memberships, users, subscriptions, social posts, and automations.
+- Stripe and Razorpay billing adapters with webhook verification seams.
+- Resend and Twilio adapters with live-or-mock behavior.
+- n8n and Zapier dispatch hooks.
+- Minimal Next.js pages for login, dashboard, billing, automation, and social.
+
+### What Was Fixed In This Rewrite
+- Moved this prototype onto the manifest-driven doc and prompt system.
+- Removed copied template language and hand-maintained prompt drift.
+- Reframed this prototype around the actual active code in this directory.
+- Made the domain gap explicit instead of pretending the home_services_booking already exists.
+
+### Still Missing
+- Actual home_services_booking entities and workflows.
+- Data-backed UI and admin behavior.
+- Auth hardening, audit logs, tests, and production readiness.

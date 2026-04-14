@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Event Registration - Redirecting...</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .redirect-container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        .spinner {
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #f97316;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .redirect-text {
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .redirect-subtext {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+    </style>
+  </head>
+<body>
+    <div class="redirect-container">
+        <div class="spinner"></div>
+        <div class="redirect-text">Redirecting to Event Registration</div>
+        <div class="redirect-subtext">Please wait while we take you to the registration page...</div>
+    </div>
+
+    <script>
+        // Redirect to the professional event registration landing page
+        setTimeout(function() {
+            window.location.href = 'pages/professional_event_registration_landing_page.html';
+        }, 2000);
+    </script>
+</body>
+</html>

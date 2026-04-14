@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Landing Page - Download Now</title>
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="description" content="Download our mobile app and transform your experience with proven results trusted by thousands of users.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+<body class="bg-background">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-bounce-gentle mb-8">
+                <div class="w-16 h-16 bg-primary rounded-full mx-auto flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18l9-5-9-5-9 5 9 5z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12l9-5-9-5-9 5 9 5z"></path>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-4xl font-poppins font-bold text-text-primary mb-4">
+                Welcome to Your App Experience
+            </h1>
+            <p class="text-lg text-text-secondary mb-8 max-w-md mx-auto">
+                Redirecting you to discover the app that will transform your daily routine...
+            </p>
+            <div class="animate-pulse">
+                <div class="w-64 h-2 bg-surface rounded-full mx-auto">
+                    <div class="h-2 bg-gradient-to-r from-primary to-accent rounded-full animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Redirect to landing page after a brief delay
+        setTimeout(function() {
+            window.location.href = 'pages/landing_page.html';
+        }, 2000);
+        
+        // Immediate redirect option for users who click
+        document.addEventListener('click', function() {
+            window.location.href = 'pages/landing_page.html';
+        });
+        
+        // Fallback redirect
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+                    window.location.href = 'pages/landing_page.html';
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

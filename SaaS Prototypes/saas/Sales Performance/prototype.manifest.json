@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "Sales Performance",
+    "slug":  "sales-performance",
+    "intendedProduct":  "Sales Performance",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a Sales Performance product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a Sales Performance product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with Sales Performance-specific behavior."
+}

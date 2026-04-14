@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background Colors */
+    --color-background: #FAFAFA; /* gray-50 */
+    --color-foreground: #1A1A1A; /* gray-900 */
+    --color-card: #F5F2ED; /* warm-gray-50 */
+    --color-card-foreground: #1A1A1A; /* gray-900 */
+    --color-popover: #FFFFFF; /* white */
+    --color-popover-foreground: #1A1A1A; /* gray-900 */
+    --color-muted: #F5F2ED; /* warm-gray-50 */
+    --color-muted-foreground: #666666; /* gray-500 */
+
+    /* Brand Colors */
+    --color-primary: #4A9B9B; /* teal-600 */
+    --color-primary-foreground: #FFFFFF; /* white */
+    --color-secondary: #2A2A2A; /* gray-800 */
+    --color-secondary-foreground: #FFFFFF; /* white */
+    --color-accent: #D4AF37; /* yellow-600 */
+    --color-accent-foreground: #1A1A1A; /* gray-900 */
+
+    /* Utility Colors */
+    --color-border: rgba(42, 42, 42, 0.1); /* gray-800 with opacity */
+    --color-input: #FFFFFF; /* white */
+    --color-ring: #4A9B9B; /* teal-600 */
+
+    /* Status Colors */
+    --color-success: #4A9B9B; /* teal-600 */
+    --color-success-foreground: #FFFFFF; /* white */
+    --color-warning: #E6A532; /* amber-500 */
+    --color-warning-foreground: #1A1A1A; /* gray-900 */
+    --color-error: #C85450; /* red-500 */
+    --color-error-foreground: #FFFFFF; /* white */
+    --color-destructive: #C85450; /* red-500 */
+    --color-destructive-foreground: #FFFFFF; /* white */
+
+    /* Additional Brand Colors */
+    --color-trust: #A8E6CF; /* emerald-200 */
+    --color-trust-foreground: #1A1A1A; /* gray-900 */
+    --color-surface: #F5F2ED; /* warm-gray-50 */
+    --color-text-primary: #1A1A1A; /* gray-900 */
+    --color-text-secondary: #666666; /* gray-500 */
+    --color-cta: #3D8B8B; /* teal-700 */
+    --color-cta-foreground: #FFFFFF; /* white */
+
+    /* Shadow Variables */
+    --shadow-subtle: 0 2px 4px rgba(42, 42, 42, 0.08), 0 4px 8px rgba(42, 42, 42, 0.06);
+    --shadow-medium: 0 4px 20px rgba(42, 42, 42, 0.08);
+    --shadow-strong: 0 8px 40px rgba(42, 42, 42, 0.12);
+    --shadow-layered: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+
+    /* Animation Variables */
+    --animation-fast: 300ms;
+    --animation-medium: 400ms;
+    --animation-slow: 600ms;
+    --ease-organic: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: ease-out;
+
+    /* Spacing System */
+    --spacing-xs: 0.5rem; /* 8px */
+    --spacing-sm: 0.75rem; /* 12px */
+    --spacing-md: 1.25rem; /* 20px */
+    --spacing-lg: 2rem; /* 32px */
+    --spacing-xl: 3.25rem; /* 52px */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography Base Styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-inter;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  p, span, div {
+    @apply text-text-primary font-inter;
+    line-height: 1.6;
+  }
+
+  /* Custom Cursor Styles */
+  .cursor-magnetic {
+    cursor: none;
+  }
+
+  .cursor-magnetic::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform var(--animation-fast) var(--ease-organic),
+                width var(--animation-fast) var(--ease-organic),
+                height var(--animation-fast) var(--ease-organic),
+                box-shadow var(--animation-fast) var(--ease-organic);
+  }
+
+  .cursor-magnetic:hover::after {
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 0 20px rgba(74, 155, 155, 0.3);
+  }
+
+  /* Breathing Animation */
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  .animate-breathe {
+    animation: breathe 2s ease-in-out infinite;
+  }
+
+  /* Organic Motion */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Reveal Animations */
+  .reveal-up {
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform var(--animation-medium) var(--ease-organic),
+                opacity var(--animation-medium) var(--ease-organic);
+  }
+
+  .reveal-up.revealed {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Liquid Transitions */
+  .liquid-border {
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    transition: clip-path 1.2s var(--ease-organic);
+  }
+
+  .liquid-border:hover {
+    clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
+  }
+
+  /* Scroll Indicators */
+  .scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    z-index: 1000;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.1s ease-out;
+  }
+}
+
+@layer components {
+  /* Button Variants */
+  .btn-magnetic {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+    @apply hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-magnetic::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0;
+    @apply transition-opacity duration-300;
+  }
+
+  .btn-magnetic:hover::before {
+    @apply opacity-10;
+  }
+
+  /* Card Styles */
+  .card-elevated {
+    @apply bg-card border border-border rounded-lg;
+    box-shadow: var(--shadow-medium);
+    transition: box-shadow var(--animation-fast) var(--ease-organic),
+                transform var(--animation-fast) var(--ease-organic);
+  }
+
+  .card-elevated:hover {
+    box-shadow: var(--shadow-strong);
+    transform: translateY(-2px);
+  }
+
+  /* Grid Breathing */
+  .grid-breathing {
+    @apply grid gap-5;
+    transition: gap var(--animation-medium) var(--ease-organic);
+  }
+
+  .grid-breathing:hover {
+    @apply gap-10;
+  }
+
+  /* Text Reveal */
+  .text-reveal {
+    @apply inline-block;
+    transform: translateY(100%);
+    transition: transform var(--animation-medium) var(--ease-organic);
+  }
+
+  .text-reveal.revealed {
+    transform: translateY(0);
+  }
+
+  /* Ambient Glow */
+  .ambient-glow {
+    position: relative;
+  }
+.ambient-glow::before  {
+    content: '';
+    @apply absolute -inset-1 bg-gradient-to-r;
+    @apply rounded-lg blur-sm opacity-0;
+    @apply transition-opacity duration-500;
+  }
+
+  .ambient-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Organic Shapes */
+  .organic-shape {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transition: border-radius 2s ease-in-out;
+  }
+
+  .organic-shape:hover {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@layer utilities {
+  /* Font Families */
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Custom Spacing */
+  .space-golden > * + * {
+    margin-top: calc(var(--spacing-xs) * 1.618);
+  }
+
+  /* Magnetic Interactions */
+  .magnetic-hover {
+    transition: transform var(--animation-fast) var(--ease-organic);
+  }
+
+  .magnetic-hover:hover {
+    transform: scale(1.05) rotate(0.5deg);
+  }
+
+  /* Liquid Animations */
+  .liquid-morph {
+    transition: all 1.2s var(--ease-organic);
+  }
+
+  /* Scroll Sync */
+  .scroll-sync {
+    transform: translateY(var(--scroll-offset, 0));
+  }
+
+  /* Color Temperature Shifts */
+  .warm-shift {
+    filter: hue-rotate(10deg) saturate(1.1);
+    transition: filter 90s ease-in-out;
+  }
+
+  .cool-shift {
+    filter: hue-rotate(-10deg) saturate(0.9);
+    transition: filter 90s ease-in-out;
+  }
+}

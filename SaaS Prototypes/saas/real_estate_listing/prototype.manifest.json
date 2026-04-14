@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "real_estate_listing",
+    "slug":  "real-estate-listing",
+    "intendedProduct":  "real_estate_listing",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a real_estate_listing product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a real_estate_listing product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with real_estate_listing-specific behavior."
+}

@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #1a365d; /* navy-900 */
+  --color-secondary: #2d3748; /* gray-800 */
+  --color-accent: #3182ce; /* blue-600 */
+  
+  /* Background Colors */
+  --color-background: #ffffff; /* white */
+  --color-surface: #f7fafc; /* gray-50 */
+  
+  /* Text Colors */
+  --color-text-primary: #1a202c; /* gray-900 */
+  --color-text-secondary: #4a5568; /* gray-600 */
+  
+  /* Status Colors */
+  --color-success: #38a169; /* green-500 */
+  --color-warning: #ed8936; /* orange-400 */
+  --color-error: #e53e3e; /* red-500 */
+  
+  /* Border Colors */
+  --color-border: #e2e8f0; /* gray-200 */
+  --color-border-focus: #3182ce; /* blue-600 */
+  
+  /* Shadow Variables */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-white font-poppins font-semibold px-6 py-3 rounded-lg transition-all duration-200 ease-in-out;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .btn-primary:hover {
+    @apply transform -translate-y-0.5;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .form-input {
+    @apply border border-gray-200 rounded-lg px-4 py-3 font-inter transition-all duration-200 ease-in-out;
+  }
+  
+  .form-input:focus {
+    @apply outline-none border-accent;
+    border-width: 2px;
+  }
+  
+  .card-team {
+    @apply bg-white rounded-lg p-6 transition-all duration-200 ease-in-out;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .card-team:hover {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .timeline-milestone {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .email-signup-form {
+    @apply bg-white rounded-lg p-6;
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@layer utilities {
+  .text-headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+  
+  .text-subheadline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  
+  .text-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+  
+  .text-body-medium {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .text-accent {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+  
+  .text-cta {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+}

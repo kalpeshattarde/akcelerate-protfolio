@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "pharmacy_inventory",
+    "slug":  "pharmacy-inventory",
+    "intendedProduct":  "pharmacy_inventory",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a pharmacy_inventory product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a pharmacy_inventory product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with pharmacy_inventory-specific behavior."
+}

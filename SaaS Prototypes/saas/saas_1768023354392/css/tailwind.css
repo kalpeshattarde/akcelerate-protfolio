@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #1E40AF; /* blue-800 - Professional blue for brand trust and navigation */
+  --color-secondary: #3B82F6; /* blue-500 - Supporting blue for section headers and secondary elements */
+  --color-accent: #10B981; /* emerald-500 - Conversion green exclusively for CTAs and success states */
+  
+  /* Background Colors */
+  --color-background: #FFFFFF; /* white - Pure white for maximum content clarity */
+  --color-surface: #F8FAFC; /* slate-50 - Subtle gray for section separation without visual noise */
+  
+  /* Text Colors */
+  --color-text-primary: #111827; /* gray-900 - High contrast black for instant readability */
+  --color-text-secondary: #6B7280; /* gray-500 - Medium gray for supporting text without distraction */
+  
+  /* Status Colors */
+  --color-success: #059669; /* emerald-600 - Darker green for form confirmations and positive metrics */
+  --color-warning: #F59E0B; /* amber-500 - Amber for scarcity elements and trial countdown timers */
+  --color-error: #DC2626; /* red-600 - Clear red for form validation only */
+  
+  /* Border Colors */
+  --color-border: #E5E7EB; /* gray-200 - For form inputs only */
+  --color-border-active: #10B981; /* emerald-500 - For active form states */
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out;
+    background-color: var(--color-accent);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+  }
+  
+  .card-testimonial {
+    @apply bg-white rounded-lg p-6 border border-gray-200;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-input {
+    @apply border border-gray-200 rounded-lg px-4 py-3 focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all duration-200;
+    border-color: var(--color-border);
+  }
+  
+  .form-input:focus {
+    border-color: var(--color-border-active);
+  }
+  
+  .section-reveal {
+    @apply opacity-0 translate-y-4 transition-all duration-300 ease-in-out;
+  }
+  
+  .section-reveal.visible {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .shadow-cta {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-testimonial {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: VelocityCore API
+  version: 1.1.0
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /api/v1/billing/checkout-session:
+    post:
+      summary: Create Stripe checkout session
+      responses:
+        '200':
+          description: Success
+  /api/v1/razorpay/order:
+    post:
+      summary: Create Razorpay order
+      responses:
+        '201':
+          description: Created
+  /api/v1/automation/providers:
+    get:
+      summary: List automation providers
+      responses:
+        '200':
+          description: Success
+  /api/v1/automation/builder:
+    post:
+      summary: Create automation builder flow
+      responses:
+        '201':
+          description: Created

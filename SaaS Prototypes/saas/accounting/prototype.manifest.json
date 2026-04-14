@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "accounting",
+    "slug":  "accounting",
+    "intendedProduct":  "accounting",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a accounting product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a accounting product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with accounting-specific behavior."
+}

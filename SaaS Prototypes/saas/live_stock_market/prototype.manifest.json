@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "live_stock_market",
+    "slug":  "live-stock-market",
+    "intendedProduct":  "live_stock_market",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a live_stock_market product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a live_stock_market product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with live_stock_market-specific behavior."
+}

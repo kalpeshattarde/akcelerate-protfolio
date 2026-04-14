@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "Meditation App",
+    "slug":  "meditation-app",
+    "intendedProduct":  "Meditation App",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a Meditation App product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a Meditation App product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with Meditation App-specific behavior."
+}

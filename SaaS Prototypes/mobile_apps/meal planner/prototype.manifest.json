@@ -1,0 +1,14 @@
+﻿{
+    "$schema":  "../specs/prototype-manifest.schema.json",
+    "name":  "meal planner",
+    "slug":  "meal-planner",
+    "intendedProduct":  "meal planner",
+    "currentState":  "shared VelocityCore customer-operations scaffold",
+    "maturity":  "scaffold",
+    "valueProposition":  "Provide a runnable starting point for teams exploring a meal planner product direction while making the scaffold status explicit.",
+    "targetUsers":  [
+                        "Builders evaluating a meal planner product direction",
+                        "Operators or founders who need a code-first starting point before domain-specific implementation"
+                    ],
+    "firstMilestone":  "Replace the generic customer-operations data model and UI with meal planner-specific behavior."
+}

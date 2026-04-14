@@ -1,0 +1,38 @@
+# STRUCTURE.md
+
+```text
+velocitycore_monorepo_v1/
+  apps/
+    api/
+      prisma/
+      src/
+        config/
+        lib/
+        middleware/
+        modules/
+          auth/
+          billing/
+          email/
+          messaging/
+          social/
+          workflows/
+          agents/
+          analytics/
+    web/
+      app/
+        login/
+        dashboard/
+        billing/
+        social/
+      components/
+      lib/
+  packages/
+    types/
+    config/
+    sdk/
+  infra/
+    docker/
+    n8n/
+  specs/
+  prompts/
+```
