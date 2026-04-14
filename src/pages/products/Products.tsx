@@ -60,6 +60,15 @@ export default function Products() {
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
+  // SEO meta
+  useEffect(() => {
+    document.title = "Ready-Made SaaS Prototypes — Launch in Days, Not Months | AKcelerate";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", "Stop spending $1000+ building SaaS with AI tools. Get ready-made SaaS prototypes for $29. 40+ production-ready apps — CRM, ATS, dashboards & more. Launch instantly.");
+    }
+  }, []);
+
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
 
@@ -76,17 +85,23 @@ export default function Products() {
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* HIGH-CONVERTING HERO */}
+        {/* HERO */}
         <PersonalizedHero />
 
-        {/* PROBLEM SECTION */}
+        {/* PROBLEM */}
         <ProblemSection />
 
-        {/* SOLUTION SECTION */}
+        {/* COST BREAKDOWN */}
+        <CostBreakdownSection />
+
+        {/* SOLUTION */}
         <SolutionSection />
 
-        {/* COMPARISON SECTION */}
+        {/* COMPARISON */}
         <ComparisonSection />
+
+        {/* SAVINGS */}
+        <SavingsSection />
 
         {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
