@@ -1,25 +1,78 @@
 
 
-# Move Industries, Insights & Case Studies into About Dropdown
+# Products Page with Subtabs + Top Selling
 
-## What Changes
-Remove the standalone "Industries", "Case Studies", and "Insights" nav links from the desktop navbar and nest them inside a new "About" dropdown menu — matching the same dropdown pattern already used by Solutions and Services.
+## Summary
+Add a single "Products" link in the navbar (no dropdown). The `/products` page itself has two subtabs — **Mobile App** and **Web SaaS** — as tab switchers at the top of the page, plus a **Top Selling Products** section above the tabs. Admin remains a separate `/admin` route.
 
-## Plan
+## Navigation Change
+- Navbar gets a plain "Products" link (like "Contact") pointing to `/products` — no dropdown, no sub-links
+- Admin link stays in footer only
 
-### 1. Convert "About" link to a dropdown (Navbar.tsx)
-- Replace the plain `<Link to="/about">About</Link>` with a dropdown group (same pattern as Solutions/Services)
-- The dropdown will contain:
-  - **About AKcelerate** — links to `/about` (with a `Users` or `Building2` icon)
-  - **Industries** — links to `/industries` (with `Factory` icon)
-  - **Case Studies** — links to `/case-studies` (with `FileText` or `Award` icon)
-  - **Insights** — links to `/insights` (with `Lightbulb` or `BookOpen` icon)
-- Remove the three standalone `<Link>` elements for Industries, Case Studies, and Insights from the desktop nav
-- Update the active-state check on the "About" trigger to highlight when on any of these four paths
+## Products Page Layout (`/products`)
 
-### 2. Update mobile menu (Navbar.tsx)
-- Group Industries, Case Studies, and Insights under an "About" section header in the mobile menu, or keep them as flat links (they're already listed there) — no structural change needed for mobile since it's already a flat list
+```text
+┌─────────────────────────────────────┐
+│  Personalized Hero Banner           │
+├─────────────────────────────────────┤
+│  🔥 Top Selling Products (carousel)│
+│  [Card] [Card] [Card] [Card]       │
+├─────────────────────────────────────┤
+│  [ Mobile App ]  [ Web SaaS ]  ←tabs│
+├─────────────────────────────────────┤
+│  Product Grid (filtered by tab)     │
+│  [Card] [Card] [Card]              │
+│  [Card] [Card] [Card]              │
+├─────────────────────────────────────┤
+│  Upsell Banner                      │
+└─────────────────────────────────────┘
+```
 
-### File changed
-- `src/components/Navbar.tsx` — restructure desktop nav, add About dropdown with 4 sub-links, remove 3 standalone links
+## What Gets Built
+
+### Files Created (~25 new files)
+- `src/config/appConfig.ts` — global config (pricing, discounts, growth, features)
+- `src/data/products.ts` — demo products with `category` ("mobile-app" | "web-saas") and `topSelling: boolean` flag
+- `src/pages/products/Products.tsx` — main page with Top Selling section + Mobile App / Web SaaS tabs (using existing Tabs UI component)
+- `src/pages/products/ProductDetail.tsx` — single product view
+- `src/pages/products/Checkout.tsx` — mock checkout
+- `src/pages/admin/Admin.tsx` — admin panel with tabbed sections (Dashboard, Config, Products, Affiliates, Growth, Ad Generator)
+- `src/components/products/ProductCard.tsx` — card with preview, price, locked state, badges ("Most Popular", "Top Selling")
+- `src/components/products/PricingSelector.tsx` — USD/INR toggle, coupon input
+- `src/components/products/CheckoutModal.tsx` — mock Stripe/Razorpay flow
+- `src/components/products/TopSellingSection.tsx` — horizontal showcase of top-selling products
+- `src/components/products/RecommendationEngine.tsx` — "You might also like"
+- `src/components/products/UpsellBanner.tsx` — single → bundle prompts
+- `src/components/products/PersonalizedHero.tsx` — dynamic hero
+- `src/components/admin/DashboardTab.tsx` — revenue charts
+- `src/components/admin/ConfigTab.tsx` — edit pricing/toggles
+- `src/components/admin/ProductsTab.tsx` — manage catalog
+- `src/components/admin/AffiliateTab.tsx` — affiliate dashboard
+- `src/components/admin/GrowthTab.tsx` — growth agent panel
+- `src/components/admin/AdGeneratorTab.tsx` — AI ad tools
+- Hooks: `useGeoDetection.ts`, `useProducts.ts`, `useAffiliate.ts`, `usePersonalization.ts`
+- Lib: `growthEngine.ts`, `ltvCalculator.ts`, `adGenerator.ts`
+
+### Files Modified (minimal)
+- `src/components/Navbar.tsx` — add plain "Products" link (no dropdown)
+- `src/App.tsx` — add routes: `/products`, `/products/:slug`, `/products/checkout`, `/admin`
+- `src/components/Footer.tsx` — add "Admin" link
+
+### Product Data Shape
+```typescript
+{
+  id, name, slug, category: "mobile-app" | "web-saas",
+  topSelling: boolean, salesCount: number,
+  description, previewImage, tags, priceTier,
+  price: { usd, inr }
+}
+```
+
+Top Selling section filters by `topSelling: true` and sorts by `salesCount`.
+
+## Technical Notes
+- All mock data in localStorage until Supabase connected
+- No existing pages changed — purely additive
+- Tabs component from `src/components/ui/tabs.tsx` used for Mobile App / Web SaaS switching
+- Recharts (already installed) for admin dashboard
 
