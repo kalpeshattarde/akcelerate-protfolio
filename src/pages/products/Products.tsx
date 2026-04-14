@@ -1,12 +1,14 @@
 import { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Smartphone, Globe, Search, X } from "lucide-react";
+import { Smartphone, Globe, Search, X, ShoppingCart } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
+import { useCart } from "@/hooks/useCart";
 import PersonalizedHero from "@/components/products/PersonalizedHero";
 import TopSellingSection from "@/components/products/TopSellingSection";
 import ProductCard from "@/components/products/ProductCard";
 import UpsellBanner from "@/components/products/UpsellBanner";
+import CartDrawer from "@/components/products/CartDrawer";
 import type { Product } from "@/data/products";
 
 function filterProducts(products: Product[], search: string, tags: string[]) {
@@ -24,8 +26,9 @@ const TAG_OPTIONS = [
 ];
 
 export default function Products() {
-  const { currency, setCurrency } = useGeoDetection();
+  const { currency } = useGeoDetection();
   const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
+  const cart = useCart();
   const [search, setSearch] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -35,12 +38,27 @@ export default function Products() {
   const filteredWebSaas = useMemo(() => filterProducts(webSaas, search, selectedTags), [webSaas, search, selectedTags]);
   const filteredMobileApps = useMemo(() => filterProducts(mobileApps, search, selectedTags), [mobileApps, search, selectedTags]);
 
+  const handleBuy = (id: string) => {
+    purchase(id);
+  };
+
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PersonalizedHero />
 
-        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={purchase} />
+        {/* Floating cart button */}
+        {cart.totalCount > 0 && (
+          <button
+            onClick={() => cart.setOpen(true)}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-semibold">{cart.totalCount}</span>
+          </button>
+        )}
+
+        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
 
         {/* Search & Filters */}
         <div className="mt-12 mb-6 space-y-4">
@@ -99,7 +117,7 @@ export default function Products() {
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredWebSaas.map(p => (
-                  <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={purchase} />
+                  <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
                 ))}
               </div>
             )}
@@ -111,7 +129,7 @@ export default function Products() {
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredMobileApps.map(p => (
-                  <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={purchase} />
+                  <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
                 ))}
               </div>
             )}
@@ -119,6 +137,17 @@ export default function Products() {
         </Tabs>
 
         <UpsellBanner />
+
+        <CartDrawer
+          open={cart.open}
+          onOpenChange={cart.setOpen}
+          items={cart.items}
+          currency={currency}
+          total={cart.getTotal(currency)}
+          onUpdateQuantity={cart.updateQuantity}
+          onRemove={cart.removeFromCart}
+          onClear={cart.clearCart}
+        />
       </div>
     </main>
   );

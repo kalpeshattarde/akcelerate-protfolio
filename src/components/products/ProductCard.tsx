@@ -8,21 +8,20 @@ interface ProductCardProps {
   currency: Currency;
   isPurchased: boolean;
   onPurchase?: (id: string) => void;
+  onAddToCart?: (id: string) => void;
 }
 
-export default function ProductCard({ product, currency, isPurchased, onPurchase }: ProductCardProps) {
+export default function ProductCard({ product, currency, isPurchased, onPurchase, onAddToCart }: ProductCardProps) {
   const price = currency === "inr" ? `₹${product.price.inr.toLocaleString()}` : `$${product.price.usd}`;
 
   return (
     <div className="group relative rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1">
-      {/* Badge */}
       {product.badge && (
         <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
           {product.badge}
         </div>
       )}
 
-      {/* Preview */}
       <Link to={`/products/${product.slug}`}>
         <div className="relative aspect-[4/3] bg-muted overflow-hidden">
           <img
@@ -33,7 +32,6 @@ export default function ProductCard({ product, currency, isPurchased, onPurchase
         </div>
       </Link>
 
-      {/* Content */}
       <div className="p-5">
         <div className="flex items-start justify-between gap-2 mb-2">
           <Link to={`/products/${product.slug}`}>
@@ -78,8 +76,9 @@ export default function ProductCard({ product, currency, isPurchased, onPurchase
               <Zap className="w-3.5 h-3.5" /> Buy Now
             </button>
             <button
-              onClick={(e) => { e.preventDefault(); onPurchase?.(product.id); }}
+              onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
               className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+              title="Add to cart"
             >
               <ShoppingCart className="w-4 h-4" />
             </button>
