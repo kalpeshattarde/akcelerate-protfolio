@@ -20,6 +20,13 @@ const serviceLinks = [
   { to: "/services/energy-management", title: "Energy Management", desc: "AI-optimised energy usage", icon: Zap },
 ];
 
+const aboutLinks = [
+  { to: "/about", title: "About AKcelerate", desc: "Our story, team & mission", icon: Users },
+  { to: "/industries", title: "Industries", desc: "Sectors we specialise in", icon: Factory },
+  { to: "/case-studies", title: "Case Studies", desc: "Real-world results & ROI", icon: FileText },
+  { to: "/insights", title: "Insights", desc: "Blog, guides & thought leadership", icon: Lightbulb },
+];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
