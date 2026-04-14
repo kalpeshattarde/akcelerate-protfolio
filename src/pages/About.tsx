@@ -5,9 +5,9 @@ import StatsRow from "@/components/StatsRow";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const team = [
-  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with 8+ years of experience across manufacturing, fintech, and enterprise AI." },
-  { name: "Kaushal Bharambe", role: "Tech Lead", desc: "Full-stack engineer specializing in scalable cloud architecture and ML deployment." },
-  { name: "Rakesh Chaudhari", role: "Data Engineer", desc: "Expert in data pipelines, ETL systems, and real-time analytics infrastructure." },
+  { name: "Kalpesh Attarde", role: "Founder & CEO", desc: "Data scientist and AI strategist with 8+ years of experience across manufacturing, fintech, and enterprise AI.", img: "/images/kalpesh-attarde.jpeg" },
+  { name: "Kaushal Bharambe", role: "Senior AI/ML Engineer", desc: "Full-stack engineer specializing in scalable cloud architecture, AI/ML solutions, and production ML deployment.", img: "/images/kaushal-bharambe.png" },
+  { name: "Rakesh Chaudhari", role: "Senior DevOps/MLOps", desc: "Expert in data pipelines, cloud infrastructure, DevOps automation, and real-time analytics systems.", img: "/images/rakesh-chaudhari.jpeg" },
 ];
 
 export default function AboutPage() {
@@ -45,7 +45,7 @@ export default function AboutPage() {
           <RevealGrid className="grid md:grid-cols-3 gap-6" stagger={150}>
             {team.map((t, i) => (
               <div key={i} className="reveal-item glass-card p-7 text-center">
-                <div className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>{t.name.charAt(0)}</div>
+                <img src={t.img} alt={t.name} className="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
                 <h3 className="font-poppins font-semibold text-lg">{t.name}</h3>
                 <div className="text-accent text-sm font-medium mb-3">{t.role}</div>
                 <p className="text-muted-foreground text-sm">{t.desc}</p>
