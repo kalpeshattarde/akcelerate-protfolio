@@ -26,6 +26,9 @@ import Gallery from "./pages/Gallery";
 import Careers from "./pages/Careers";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Products from "./pages/products/Products";
+import ProductDetail from "./pages/products/ProductDetail";
+import Admin from "./pages/admin/Admin";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +61,9 @@ const App = () => (
             <Route path="/careers" element={<Careers />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>
