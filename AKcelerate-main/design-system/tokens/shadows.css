@@ -1,0 +1,33 @@
+/* =============================================
+   AKcelerate Design System — Shadow Tokens
+   ============================================= */
+
+:root {
+  --shadow-xs:  0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm:  0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-md:  0 8px 24px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --shadow-lg:  0 20px 50px rgba(15, 23, 42, 0.10), 0 4px 12px rgba(15, 23, 42, 0.05);
+  --shadow-xl:  0 40px 80px rgba(15, 23, 42, 0.14), 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-2xl: 0 60px 120px rgba(15, 23, 42, 0.18);
+
+  /* ── Colored Shadows ── */
+  --shadow-primary:  0 12px 40px rgba(37, 99, 235, 0.30);
+  --shadow-accent:   0 12px 40px rgba(6, 182, 212, 0.25);
+  --shadow-success:  0 8px 24px rgba(16, 185, 129, 0.25);
+  --shadow-danger:   0 8px 24px rgba(239, 68, 68, 0.25);
+
+  /* ── Glow Effects ── */
+  --glow-primary: 0 0 40px rgba(37, 99, 235, 0.15);
+  --glow-accent:  0 0 40px rgba(6, 182, 212, 0.12);
+
+  /* ── Inset ── */
+  --shadow-inset: inset 0 2px 4px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="dark"] {
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md:  0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg:  0 20px 50px rgba(0, 0, 0, 0.40);
+  --shadow-xl:  0 40px 80px rgba(0, 0, 0, 0.50);
+}

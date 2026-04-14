@@ -1,0 +1,458 @@
+AI Manufacturing Analytics Platform
+SYSTEM ROLE
+
+You are a principal full-stack engineer, AI product designer, and enterprise SaaS architect.
+
+Your task is to build a high-end AI manufacturing analytics platform website inspired by industry leaders.
+
+The platform website should reflect the design quality of:
+
+• Alteryx
+• Altair
+• ScienceSoft
+• Sigmoid
+
+The website must feel like a serious enterprise AI startup platform.
+
+WEBSITE GOAL
+
+Create a professional SaaS-style website for a company providing:
+
+Manufacturing Data Analytics & AI Intelligence Platform
+
+The platform helps manufacturers:
+
+• consolidate factory data
+• predict equipment failures
+• optimize production processes
+• improve supply chain visibility
+• enable Industry 4.0 transformation
+
+DESIGN STYLE
+
+Design should resemble modern enterprise AI platforms.
+
+Inspiration:
+
+• Stripe
+• Databricks
+• Nvidia
+• Palantir
+
+UI characteristics:
+
+• soft gradient backgrounds
+• glass cards
+• analytics dashboards
+• smooth animations
+• large modern typography
+
+COLOR SYSTEM
+
+Primary Blue
+#2563EB
+
+Accent Cyan
+#06B6D4
+
+Secondary Teal
+#0FCCCE
+
+Dark Background
+#111827
+
+Light Background
+#F9FAFB
+
+Hero Gradient
+
+linear-gradient(135deg,#2563EB,#06B6D4)
+TYPOGRAPHY
+
+Use Google Fonts.
+
+Headings
+Poppins
+
+Body
+Inter
+
+Weights:
+
+300
+400
+500
+600
+700
+
+TECH STACK
+
+The site must run instantly in Replit.
+
+Use:
+
+HTML5
+Tailwind CSS CDN
+Vanilla JavaScript
+
+Libraries:
+
+Lucide Icons
+AOS animations
+Chart.js (analytics visuals)
+
+FILE STRUCTURE
+
+Generate:
+
+index.html
+contact.html
+
+styles.css
+script.js
+HEADER
+
+Sticky navigation.
+
+Left
+
+{{COMPANY_NAME}}
+
+Navigation links:
+
+Home
+Solutions
+Services
+Case Studies
+About
+Contact
+
+Right side button
+
+Request Demo
+
+Mobile menu must collapse.
+
+HERO SECTION
+
+Headline
+
+Transform Manufacturing with AI-Driven Data Intelligence
+
+Subheadline
+
+Manufacturing organizations generate massive volumes of data from ERP systems, IoT sensors, MES platforms, and supply chains.
+Our analytics platform converts this data into actionable insights that improve operational efficiency and enable smarter decisions.
+
+Buttons
+
+Explore Platform
+Request Demo
+
+Hero cards
+
+Predictive Maintenance
+Production Analytics
+Supply Chain Intelligence
+Smart Factory Transformation
+
+ABOUT MANUFACTURING ANALYTICS
+
+Manufacturing analytics consolidates and analyzes data across factory systems including ERP, MES, IoT sensors, and supply chains.
+
+Key goals:
+
+• identify production bottlenecks
+• optimize resource utilization
+• increase overall equipment effectiveness (OEE)
+• enable predictive maintenance
+• improve supply chain planning
+
+This section should explain the value of manufacturing data intelligence.
+
+CORE BENEFITS
+
+Create animated benefit cards.
+
+Transform Raw Data into Insights
+Reduce Operational Costs
+Increase Equipment Uptime
+Optimize Supply Chains
+Improve Product Quality
+
+Include statistics inspired by industry benchmarks:
+
+• 35% downtime reduction
+• 15% productivity increase
+• 10x faster insights
+• up to 315% ROI
+
+CORE CAPABILITIES
+
+Create feature cards.
+
+Data Integration
+
+Integrate data from
+
+ERP
+MES
+SCADA
+IoT sensors
+
+Advanced Analytics
+
+Capabilities:
+
+machine learning models
+anomaly detection
+forecasting
+root cause analysis
+
+Operational Intelligence
+
+Real-time dashboards
+plant monitoring
+production insights
+
+Predictive Maintenance
+
+Detect early equipment failures using AI.
+
+USE CASES
+
+Create grid.
+
+Production Optimization
+Quality Analytics
+Supply Chain Intelligence
+Energy Management
+
+Each card must include description.
+
+CASE STUDIES
+
+Example case studies.
+
+Predictive Maintenance
+
+Reduced downtime by 35%.
+
+Supply Chain Analytics
+
+Improved inventory turnover by 28%.
+
+Production Optimization
+
+Increased OEE by 18%.
+
+IMPLEMENTATION DETAILS
+
+Explain integration.
+
+Supported integrations:
+
+ERP
+CRM
+MES
+SCM
+IoT platforms
+
+Implementation cost range
+
+$70,000 – $1,000,000 depending on scope.
+
+PROCESS SECTION
+
+Adapt the WingzSphere-style process.
+
+Step 1
+
+Data Discovery
+Understand factory systems and data sources.
+
+Step 2
+
+Data Integration
+Connect ERP, MES, IoT platforms.
+
+Step 3
+
+Analytics Modeling
+Build machine learning models.
+
+Step 4
+
+Dashboard Deployment
+Create operational analytics dashboards.
+
+Step 5
+
+Optimization & Support
+Continuous improvements.
+
+FOUNDER SECTION
+
+Create founder spotlight.
+
+Name
+
+Kalpesh Attarde
+
+Role
+
+Founder & CEO
+
+Bio
+
+Kalpesh Attarde is the founder of {{COMPANY_NAME}}, focused on building AI-powered manufacturing analytics platforms that transform operational data into strategic intelligence.
+
+Contact
+
+Phone
+
+8208555380
+
+Add LinkedIn placeholder.
+
+TEAM SECTION
+
+Create team member cards.
+
+Fields
+
+{{TEAM_MEMBER_NAME}}
+{{TEAM_MEMBER_ROLE}}
+{{TEAM_MEMBER_DESCRIPTION}}
+{{TEAM_MEMBER_LINKEDIN}}
+
+Example roles
+
+Chief Data Scientist
+AI Engineer
+Manufacturing Analytics Consultant
+Product Manager
+
+RESOURCES SECTION
+
+Include resources inspired by industry platforms.
+
+E-books
+Analytics guides
+Manufacturing AI insights
+Industry 4.0 reports
+
+FAQ SECTION
+
+Example questions.
+
+How does manufacturing analytics improve efficiency?
+
+How does predictive maintenance work?
+
+What systems can the platform integrate with?
+
+What ROI can manufacturers expect?
+
+CTA SECTION
+
+Headline
+
+Ready to Transform Your Manufacturing Operations?
+
+Buttons
+
+Request Demo
+Contact Us
+
+FOOTER
+
+Sections
+
+Company
+
+About
+Careers
+Blog
+
+Solutions
+
+Manufacturing Analytics
+Predictive Maintenance
+Supply Chain Intelligence
+
+Contact
+
+Email
+
+{{CONTACT_EMAIL}}
+
+Phone
+
+8208555380
+
+Location
+
+India
+
+CONTACT PAGE
+
+Create contact.html
+
+Sections:
+
+Hero
+
+Get in Touch
+
+Description
+
+Discuss how our analytics solutions can transform your manufacturing operations.
+
+CONTACT FORM
+
+Fields
+
+Name
+Email
+Company
+Phone
+Message
+
+Add JavaScript validation.
+
+Show success message after submission.
+
+EXTRA FEATURES
+
+Include:
+
+floating WhatsApp button
+back-to-top button
+smooth scroll navigation
+card hover animations
+responsive mobile design
+
+OUTPUT REQUIREMENT
+
+Generate complete working code for:
+
+index.html
+contact.html
+styles.css
+script.js
+
+The site must run instantly in Replit.
+
+END PROMPT
+
+💡 Founder tip for you, Kalpesh
+
+If you're positioning yourself as a startup founder, your site should follow this hierarchy:
+
+1️⃣ Vision
+2️⃣ Platform
+3️⃣ Technology
+4️⃣ Use cases
+5️⃣ Founder story
+6️⃣ Enterprise proof

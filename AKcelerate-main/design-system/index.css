@@ -1,0 +1,12 @@
+/* =============================================
+   AKcelerate Design System — Master Import
+   Provides all design tokens in one import.
+
+   Usage: <link rel="stylesheet" href="/design-system/index.css">
+   ============================================= */
+
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+@import './tokens/radius.css';

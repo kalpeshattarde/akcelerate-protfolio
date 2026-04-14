@@ -1,0 +1,341 @@
+Build a modern, conversion-focused marketing website for AKcelerate, inspired by high-performing Vercel-style startup sites. The site should feel premium, fast, minimal, and highly scannable, with a strong emphasis on trust, outcomes, and lead generation.
+
+PROJECT GOAL
+Create a polished multi-section business website for AKcelerate, an AI, Data, and Automation consultancy. The site should combine:
+- crisp startup-style messaging
+- benefit-first structure
+- quantified proof
+- clear service segmentation
+- pricing clarity
+- FAQ-based objection handling
+- strong CTA flow
+
+BRAND / POSITIONING
+Company: AKcelerate
+Core positioning: Premium AI, Data, Automation, and consulting solutions for measurable digital transformation.
+Tone: Confident, modern, expert, clear, credible, outcome-driven.
+Audience:
+- SMEs
+- startups
+- manufacturing businesses
+- fintech
+- healthcare
+- operations-heavy businesses
+Primary user intent:
+- understand what AKcelerate does
+- see proof/results
+- explore solutions by use case/industry
+- review pricing/packages
+- book a strategy call or request a demo
+
+DESIGN DIRECTION
+Reference style:
+- Vercel-like clean layouts
+- minimal, modern SaaS look
+- bold hero section
+- strong spacing and typography
+- subtle gradients/glows allowed
+- premium cards and sections
+- responsive
+- lightweight, fast-loading
+- conversion-oriented
+
+Visual structure should resemble top startup landing pages:
+- hero with eyebrow/tag
+- big H1
+- short supporting copy
+- two CTAs
+- trust/proof strip
+- feature/solution cards
+- process steps
+- case studies
+- pricing
+- FAQ
+- final CTA
+
+SITE STRUCTURE
+Create these main sections on the homepage:
+1. Hero
+2. Credibility / KPI strip
+3. Supported systems / integrations trust strip
+4. Solutions overview
+5. Services / capabilities cards
+6. Process / methodology section
+7. Industries served
+8. Case study highlights
+9. Pricing preview
+10. Testimonials
+11. FAQ
+12. Final CTA
+13. Footer
+
+Also structure the code so these pages can easily be added or generated next:
+- /solutions
+- /services
+- /industries
+- /case-studies
+- /pricing
+- /insights
+- /blog
+- /about
+- /contact
+- /careers
+
+COPY DIRECTION
+Use benefit-first copy. Every major block should answer:
+- what it is
+- who it’s for
+- what outcome it creates
+- why trust AKcelerate
+
+Avoid vague fluff. Write in short, punchy, startup-style copy. Make headings highly scannable.
+
+KEY MESSAGING TO INCORPORATE
+- Build smarter business with AI and automation
+- measurable ROI
+- faster operations
+- better decisions through data
+- real-time dashboards and KPI visibility
+- workflow automation
+- AI copilots and intelligent systems
+- fast prototyping in 2–4 weeks
+- client-owned IP / no lock-in
+- enterprise-grade foundation
+- human-centered implementation
+- integrations with existing business systems
+
+HERO REQUIREMENTS
+Include:
+- eyebrow/tag: “AI · Data · Automation · Consulting”
+- headline options inspired by:
+  - Build Smarter Business with AI & Automation
+  - Premium AI systems for measurable business growth
+- supporting subhead focused on business outcomes
+- two CTAs:
+  - Primary: Book Free Strategy Call
+  - Secondary: Explore Solutions
+- hero proof points below CTA
+
+IMPORTANT:
+Do NOT use fake counters like 0.
+Use realistic placeholder metrics that look credible and editable, for example:
+- 315% Average Client ROI
+- 40–60% Operational Time Saved
+- 2–4 Weeks to First Prototype
+- 100% Client-Owned IP
+
+TRUST / KPI STRIP
+Add a clean proof strip immediately below hero with 4 metrics:
+- Average Client ROI
+- Time Saved
+- Prototype Delivery Speed
+- Ownership / No Lock-In
+
+Also include a “works with your existing stack” style integrations band with placeholder tool chips/logos like:
+- SAP
+- Salesforce
+- HubSpot
+- Power BI
+- AWS
+- Azure
+- Slack
+- PostgreSQL
+
+SOLUTIONS SECTION
+Add a section titled something like:
+“8 Solution Areas. Infinite Possibilities.”
+Create 8 solution cards with short descriptions and outcome-focused language. Suggested categories:
+- AI Strategy & Advisory
+- Business Process Automation
+- Data Analytics & BI
+- Predictive Intelligence
+- AI Copilots & Assistants
+- Custom AI Applications
+- System Integrations
+- Operational Dashboards
+
+Each card should have:
+- short title
+- 1–2 line description
+- business outcome
+- “Learn more” link/button
+
+SERVICES / CAPABILITIES SECTION
+Create scannable cards with outcome-first headings. Example style:
+- Transform Raw Data into Insights
+- Automate Manual Workflows
+- Launch AI Faster
+- Connect Siloed Systems
+- Monitor Performance in Real Time
+- Build for Scale and Security
+
+Each card should feel useful to skim in under 3 seconds.
+
+PROCESS SECTION
+Add a 5-step process/methodology section with clear step labels:
+1. Discovery
+2. Strategy & Design
+3. Build & Integrate
+4. Deploy & Go Live
+5. Monitor & Scale
+
+Each step should include a short explanation that reduces buying friction and shows what happens after the consultation.
+
+INDUSTRIES SECTION
+Create a section titled:
+“AI Solutions for Every Industry”
+Add industry cards such as:
+- Manufacturing
+- FinTech
+- Healthcare
+- Retail
+- Logistics
+- Startups / SaaS
+
+Each card should include:
+- a sample use case
+- a short measurable outcome
+Example tone:
+“Predictive maintenance reduces downtime by 40%.”
+
+CASE STUDIES SECTION
+Add 3 featured case study cards with:
+- industry
+- challenge
+- what AKcelerate built
+- 2–3 measurable outcomes
+
+Example outcomes:
+- 42% reduction in machine downtime
+- 55% faster reporting cycles
+- 31% lower support workload
+- 18-hour weekly manual effort eliminated
+
+Include a CTA to view all case studies.
+
+PRICING SECTION
+Add a homepage pricing preview and also structure reusable pricing components for a full pricing page.
+
+Section headline:
+“Plans That Scale With You”
+
+Supporting copy:
+“Start with one AI module. Add more as you grow. No hidden fees, no lock-in.”
+
+Create 3 pricing tiers:
+1. Starter
+2. Growth
+3. Enterprise
+
+Each tier should include:
+- short “best for” label
+- price placeholder or “custom”
+- features list
+- CTA
+
+Make pricing transparent and helpful, not overly complex.
+Also include a short row of universal plan benefits:
+- onboarding support
+- measurable roadmap
+- secure deployment
+- client-owned IP
+- support and optimisation
+
+TESTIMONIALS SECTION
+Create 2–3 testimonial cards. Tone should sound credible and business-focused.
+Include lines like:
+- “The ROI was clear within the first quarter.”
+- “They helped us move from manual reporting to real-time operational visibility.”
+- “The implementation was fast, structured, and practical.”
+
+Use realistic role/company placeholders rather than generic anonymous text.
+
+FAQ SECTION
+Add an accordion FAQ with strong objection-handling questions:
+- How quickly can we get started?
+- Do we need clean data before working with you?
+- Do we own the code and AI systems you build?
+- Can you integrate with our existing tools?
+- How do you price projects?
+- What happens after launch?
+- Is this suitable for smaller teams or only enterprises?
+- How do you measure ROI?
+
+FINAL CTA SECTION
+Create a strong final CTA block with headline, reassurance, and action.
+Include:
+- Primary CTA: Book Free Strategy Call
+- Secondary CTA: Request Demo
+Support copy should reduce pressure:
+- response within 24 business hours
+- no hard sales process
+- practical consultation focused on fit and value
+
+CONTACT / LEAD CAPTURE THINKING
+Design the site so future lead magnets and forms can be added easily:
+- downloadable guides
+- ROI calculator
+- readiness checklist
+- newsletter signup
+- consultation booking
+- industry-specific lead forms
+
+TECH / BUILD REQUIREMENTS
+Use a modern frontend stack suitable for Replit.
+Preferred:
+- Next.js or React
+- Tailwind CSS
+- component-based architecture
+- reusable sections
+- responsive design
+- clean code
+- easy content editing
+
+If using Next.js:
+- make the homepage production-ready
+- keep copy in reusable data objects where possible
+- structure sections as reusable components
+- optimize for SEO-ready markup
+- include clean headings hierarchy
+- include metadata placeholders
+
+STYLE REQUIREMENTS
+- polished SaaS/startup visuals
+- bold typography
+- clean card grids
+- subtle hover states
+- soft shadows/borders
+- strong whitespace
+- mobile-friendly
+- premium CTA buttons
+- accessible color contrast
+
+OUTPUT EXPECTATION
+Generate a complete homepage implementation with:
+- strong production-style UI
+- fully written placeholder copy aligned to AKcelerate’s positioning
+- reusable components
+- clean layout
+- no lorem ipsum
+- no empty states
+- no fake “0” metrics
+- no generic agency fluff
+
+Also include:
+- a navbar
+- footer
+- placeholder routes for other pages
+- section IDs for easy navigation
+- organized file structure
+
+EXTRA CONVERSION IMPROVEMENTS
+Where appropriate, include placeholder blocks or reusable components for future:
+- ROI calculator
+- implementation checklist
+- industry detail pages
+- solution detail pages
+- blog CTA modules
+- downloadable resources
+- comparison pages like build vs buy
+
+The final result should feel like a premium Vercel-style startup website for an AI consultancy that is ready to convert serious business leads.
