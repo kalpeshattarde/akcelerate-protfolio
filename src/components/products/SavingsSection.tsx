@@ -11,14 +11,14 @@ const scenarios = [
   {
     label: "Building 5 SaaS products",
     aiCost: "$3,500–$15,000",
-    ourCost: "$99/mo",
-    savings: "$3,400–$14,900",
+    ourCost: "$99 (one-time)",
+    savings: "$3,401–$14,901",
   },
   {
     label: "Agency building 10+ products",
     aiCost: "$7,000–$30,000",
-    ourCost: "$299 (white-label)",
-    savings: "$6,700–$29,700",
+    ourCost: "$249 (all-access)",
+    savings: "$6,751–$29,751",
   },
 ];
 
