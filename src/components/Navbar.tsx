@@ -110,10 +110,23 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/industries" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/industries" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Industries</Link>
-            <Link to="/case-studies" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/case-studies" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Case Studies</Link>
-            <Link to="/insights" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Insights</Link>
-            <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/about" ? "text-primary font-semibold" : "text-muted-foreground"}`}>About</Link>
+            {/* About Dropdown */}
+            <div className="nav-dropdown relative group">
+              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+                About <ChevronDown className="w-3 h-3" />
+              </Link>
+              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
+                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
+                  {aboutLinks.map(s => (
+                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
 
