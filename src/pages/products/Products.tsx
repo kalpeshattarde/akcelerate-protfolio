@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-react";
@@ -7,12 +7,16 @@ import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
 import PersonalizedHero from "@/components/products/PersonalizedHero";
 import ProblemSection from "@/components/products/ProblemSection";
+import CostBreakdownSection from "@/components/products/CostBreakdownSection";
 import SolutionSection from "@/components/products/SolutionSection";
 import ComparisonSection from "@/components/products/ComparisonSection";
+import SavingsSection from "@/components/products/SavingsSection";
+import UseCasesSection from "@/components/products/UseCasesSection";
 import TopSellingSection from "@/components/products/TopSellingSection";
 import ProductCard from "@/components/products/ProductCard";
 import MarketplacePricing from "@/components/products/MarketplacePricing";
 import TrustSection from "@/components/products/TrustSection";
+import ProductsFAQ from "@/components/products/ProductsFAQ";
 import FinalCTA from "@/components/products/FinalCTA";
 import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
@@ -56,6 +60,15 @@ export default function Products() {
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
+  // SEO meta
+  useEffect(() => {
+    document.title = "Ready-Made SaaS Prototypes — Launch in Days, Not Months | AKcelerate";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", "Stop spending $1000+ building SaaS with AI tools. Get ready-made SaaS prototypes for $29. 40+ production-ready apps — CRM, ATS, dashboards & more. Launch instantly.");
+    }
+  }, []);
+
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
 
@@ -72,17 +85,23 @@ export default function Products() {
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* HIGH-CONVERTING HERO */}
+        {/* HERO */}
         <PersonalizedHero />
 
-        {/* PROBLEM SECTION */}
+        {/* PROBLEM */}
         <ProblemSection />
 
-        {/* SOLUTION SECTION */}
+        {/* COST BREAKDOWN */}
+        <CostBreakdownSection />
+
+        {/* SOLUTION */}
         <SolutionSection />
 
-        {/* COMPARISON SECTION */}
+        {/* COMPARISON */}
         <ComparisonSection />
+
+        {/* SAVINGS */}
+        <SavingsSection />
 
         {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
@@ -199,11 +218,17 @@ export default function Products() {
           </Tabs>
         </div>
 
+        {/* USE CASES */}
+        <UseCasesSection />
+
         {/* MARKETPLACE PRICING */}
         <MarketplacePricing />
 
         {/* TRUST SECTION */}
         <TrustSection />
+
+        {/* FAQ — SEO */}
+        <ProductsFAQ />
 
         {/* FINAL CTA */}
         <FinalCTA />
