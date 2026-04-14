@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ArrowRight, Zap, Clock, DollarSign } from "lucide-react";
 
 export default function PersonalizedHero() {
