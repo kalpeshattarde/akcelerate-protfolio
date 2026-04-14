@@ -1,0 +1,22 @@
+/* =============================================
+   AKcelerate Design System — Border Radius Tokens
+   ============================================= */
+
+:root {
+  --radius-none: 0;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-3xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Semantic Aliases ── */
+  --radius-btn:    var(--radius-full);
+  --radius-card:   var(--radius-xl);
+  --radius-input:  var(--radius-lg);
+  --radius-badge:  var(--radius-full);
+  --radius-modal:  var(--radius-2xl);
+  --radius-tag:    var(--radius-full);
+}

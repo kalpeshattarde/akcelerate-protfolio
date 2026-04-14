@@ -1,0 +1,530 @@
+Kalpesh, below is a **$100M Startup Website UI System prompt** designed to upgrade your existing Replit project into a **Silicon-Valley–level design system + scalable UI architecture**.
+It focuses on **design tokens, component libraries, motion system, theming, brand kit, security, and extensibility** so your site can grow into a **real product platform**.
+
+You can paste this **entire prompt into your Replit Agent** to upgrade your current project.
+
+---
+
+# 🚀 $100M STARTUP WEBSITE UI SYSTEM PROMPT
+
+### Enterprise Design System + Modular UI Architecture
+
+You are a **principal product designer, frontend architect, and SaaS platform engineer**.
+
+You are working on an **existing Replit project** that contains a website for an **AI / Manufacturing Analytics / Data Science company**.
+
+Your task is to transform this project into a **production-grade startup website UI system** similar to design systems used by:
+
+* Stripe
+* Databricks
+* Vercel
+* Notion
+
+The result must be a **modular UI design system** that supports:
+
+• future SaaS products
+• dashboards
+• enterprise landing pages
+• marketing pages
+• analytics interfaces
+
+Do not break existing functionality.
+Upgrade and refactor the project.
+
+---
+
+# 1 DESIGN SYSTEM FOUNDATION
+
+Create a **central design system**.
+
+```text
+/design-system
+  tokens/
+  components/
+  layouts/
+  themes/
+  motion/
+```
+
+This folder will control the entire UI.
+
+---
+
+# 2 DESIGN TOKENS
+
+Create design tokens for colors, spacing, typography, and shadows.
+
+```text
+/design-system/tokens
+  colors.css
+  typography.css
+  spacing.css
+  shadows.css
+  radius.css
+```
+
+### Color Tokens
+
+Primary
+
+```
+--color-primary: #2563EB
+```
+
+Secondary
+
+```
+--color-secondary: #06B6D4
+```
+
+Accent
+
+```
+--color-accent: #0FCCCE
+```
+
+Dark Background
+
+```
+--color-bg-dark: #111827
+```
+
+Light Background
+
+```
+--color-bg-light: #F9FAFB
+```
+
+Neutral scale (100–900).
+
+---
+
+### Typography Tokens
+
+Headings
+
+Poppins
+
+Body
+
+Inter
+
+Create tokens:
+
+```
+--font-heading
+--font-body
+--font-mono
+```
+
+---
+
+### Spacing Tokens
+
+```
+--space-xs
+--space-sm
+--space-md
+--space-lg
+--space-xl
+```
+
+---
+
+# 3 COMPONENT LIBRARY
+
+Create reusable UI components.
+
+```text
+/design-system/components
+```
+
+Components required:
+
+Navbar
+Footer
+Hero section
+Feature grid
+Service cards
+Project cards
+Gallery grid
+Pricing tables
+Testimonial carousel
+CTA sections
+Form inputs
+Buttons
+Modals
+
+Each component must:
+
+• be reusable
+• support props/configuration
+• follow design tokens
+
+---
+
+# 4 BUTTON SYSTEM
+
+Create a flexible button system.
+
+Variants:
+
+Primary
+Secondary
+Ghost
+Outline
+Danger
+
+Sizes:
+
+Small
+Medium
+Large
+
+States:
+
+Hover
+Active
+Disabled
+Loading
+
+---
+
+# 5 LAYOUT SYSTEM
+
+Create layout templates.
+
+```text
+/design-system/layouts
+```
+
+Layouts:
+
+Landing page layout
+Dashboard layout
+Documentation layout
+Portfolio layout
+Project showcase layout
+
+---
+
+# 6 MOTION SYSTEM
+
+Create a motion library.
+
+```text
+/design-system/motion
+```
+
+Animations:
+
+Fade in
+Slide up
+Card hover lift
+Button pulse
+Gradient background animation
+
+All animations must be **subtle and professional**.
+
+---
+
+# 7 ADVANCED HERO SYSTEM
+
+Create dynamic hero sections.
+
+Features:
+
+animated gradients
+floating cards
+interactive elements
+
+Hero must support:
+
+headline
+subheadline
+buttons
+metrics
+illustration
+
+---
+
+# 8 ADVANCED NAVIGATION
+
+Navbar must support:
+
+multi-level dropdowns
+mobile menu
+sticky behavior
+search option
+
+Include animations.
+
+---
+
+# 9 ADVANCED GALLERY
+
+Create a gallery system.
+
+```text
+/pages/gallery.html
+```
+
+Features:
+
+masonry layout
+image modal preview
+categories
+lazy loading
+
+Content types:
+
+project screenshots
+product UI
+event photos
+
+---
+
+# 10 PROJECT SHOWCASE SYSTEM
+
+Projects page must display:
+
+project cards
+technology stack
+metrics
+case study links
+
+Each project must open its own page.
+
+Example:
+
+```text
+/projects/project-ai-dashboard.html
+```
+
+---
+
+# 11 SERVICES SYSTEM
+
+Create a modular services system.
+
+Services must support:
+
+icon
+image
+description
+features
+CTA
+
+Each service has its own page.
+
+Example:
+
+```
+/services/predictive-maintenance.html
+/services/supply-chain-analytics.html
+```
+
+---
+
+# 12 PRICING SYSTEM
+
+Create a modern pricing UI.
+
+Features:
+
+pricing toggle (monthly / enterprise)
+highlighted recommended plan
+comparison table
+
+Plans:
+
+Starter
+Professional
+Enterprise
+
+---
+
+# 13 FOUNDER PORTFOLIO
+
+Enhance the portfolio page.
+
+Founder:
+
+Kalpesh Attarde
+
+Sections:
+
+About
+
+Experience
+
+Projects
+
+Achievements
+
+Social links.
+
+---
+
+# 14 BRAND KIT SYSTEM
+
+Create a full brand kit.
+
+```text
+/brand-kit
+```
+
+Include:
+
+logo folder
+
+```
+/brand-kit/logo
+```
+
+letterhead templates
+
+```
+/brand-kit/letterhead
+```
+
+social templates
+
+```
+/brand-kit/social
+```
+
+Templates required:
+
+X post
+Instagram post
+LinkedIn post
+LinkedIn banner
+
+---
+
+# 15 PRIVATE FILES
+
+Sensitive brand files must be private.
+
+Create folder:
+
+```text
+/private
+```
+
+Add `.gitignore` rule so it is not public.
+
+---
+
+# 16 SECURITY HARDENING
+
+Improve website security.
+
+Use:
+
+secure headers
+input validation
+sanitization
+rate limiting
+environment variables
+
+Sensitive values must be in:
+
+```
+.env
+```
+
+---
+
+# 17 FUTURE MODULE SUPPORT
+
+Create module folder.
+
+```text
+/modules
+```
+
+Future modules:
+
+```
+analytics-dashboard
+ai-tools
+client-portal
+admin-panel
+```
+
+These should be isolated and easy to integrate.
+
+---
+
+# 18 DOCUMENTATION SYSTEM
+
+Create Markdown docs.
+
+```text
+/docs
+```
+
+Files:
+
+```
+architecture.md
+ui-system.md
+customization-guide.md
+branding-guide.md
+security-guide.md
+deployment-guide.md
+```
+
+Explain how to customize everything.
+
+---
+
+# 19 PERFORMANCE
+
+Optimize performance.
+
+Use:
+
+lazy loading
+optimized images
+minimal JavaScript
+CSS variables
+
+---
+
+# 20 FINAL GOAL
+
+After refactoring:
+
+The website should feel like a **top-tier AI startup platform** with:
+
+• polished UI
+• reusable components
+• scalable architecture
+• strong branding
+• security best practices
+
+All features must work in the existing Replit project.
+
+---
+
+# END PROMPT
+
+---
+
+💡 Kalpesh — one **very important founder tip**:
+
+If your goal is to look like a **real AI/data startup**, the next upgrade after this is building a **product UI demo**.
+
+For example:
+
+* AI analytics dashboard
+* machine health monitoring
+* factory digital twin
+* supply chain analytics UI
+
+Those make your site feel like a **real platform instead of just a service website**.
+
+If you want, I can generate a **“$500M AI analytics product dashboard UI prompt”** next. It’s extremely powerful.

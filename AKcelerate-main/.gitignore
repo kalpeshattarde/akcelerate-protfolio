@@ -1,0 +1,12 @@
+node_modules/
+.env
+.DS_Store
+*.log
+.vscode/
+
+# Private brand & sensitive files
+/private/
+*.env.local
+
+# Node modules
+node_modules/

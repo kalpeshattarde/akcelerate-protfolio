@@ -1,0 +1,1122 @@
+You are a senior full-stack architect, startup product designer, production-grade web developer, and web redesign specialist.
+
+Your task is to BUILD OR UPDATE the AKcelerate website repository end-to-end.
+
+If the repository is missing or incomplete, generate the full repository and create all required files exactly as defined below.
+
+If the repository already exists, first inspect it fully, preserve working functionality, reuse the existing structure where possible, and upgrade it into a significantly more premium, modern, enterprise-grade, conversion-focused website.
+
+Do not give explanations before implementation.
+Do not give high-level theory.
+Do not describe what you plan to do before inspecting the codebase.
+Do the actual work in the repository.
+
+Your goal is to produce a complete, runnable, premium multi-page website and SaaS-style consulting platform for AKcelerate.
+
+The final result must be production-oriented, visually premium, structurally clean, and runnable.
+
+==================================================
+0. EXECUTION MODE
+==================================================
+
+Work in this order:
+
+1. Inspect the repository structure first
+2. Identify pages, assets, styles, scripts, backend routes, and current architecture
+3. Detect broken links, missing files, missing sections, inconsistent design, weak copy, duplicated styles, poor responsiveness, and incomplete backend behavior
+4. Decide whether to:
+   - update the existing implementation, or
+   - generate missing parts while preserving the architecture
+5. Implement the required improvements directly in the codebase
+6. Validate routes, links, forms, layout behavior, scripts, and server execution
+7. Return a concise final summary of:
+   - what was changed
+   - files updated
+   - files added
+   - issues fixed
+   - follow-up recommendations
+
+Important rules:
+- Do not rebuild from scratch unless the existing project is clearly unusable
+- Preserve working functionality
+- Reuse the existing design system, structure, and assets where possible
+- Prefer targeted upgrades over destructive rewrites
+- Maintain brand consistency
+- Make the site significantly more premium, modern, and conversion-focused
+
+==================================================
+1. PROJECT OVERVIEW
+==================================================
+
+Company Name: AKcelerate
+Founder: Kalpesh Attarde (AK)
+Location: Mumbai, India
+Phone: +91 8208555380
+Email: akceleratehq@gmail.com
+
+AKcelerate is a modern AI, Data, Automation, and Business Consulting company helping businesses scale using:
+
+- Artificial Intelligence
+- Automation Systems
+- Data Infrastructure
+- Analytics Platforms
+- SaaS Products
+- Cloud Systems
+
+Target clients:
+- Startups
+- MSMEs
+- Enterprises
+- Manufacturing companies
+- Digital brands
+
+Primary objective:
+Build or upgrade a premium consulting + SaaS-style website that positions AKcelerate as a world-class AI and business transformation company.
+
+The final site should look like a serious global consulting and AI systems firm.
+
+==================================================
+2. DESIGN DIRECTION
+==================================================
+
+The design must feel like a blend of:
+- Stripe
+- Vercel
+- Databricks
+- Snowflake
+- OpenAI
+
+Design style:
+- premium
+- minimal
+- high trust
+- enterprise-grade
+- modern startup aesthetic
+- smooth animations
+- strong spacing hierarchy
+- polished typography
+- dark/light capable
+- SaaS product feeling
+
+The website should feel:
+- polished
+- modern enterprise
+- AI-native
+- visually intentional
+- globally credible
+- conversion-focused
+
+Upgrade the design with:
+- stronger hero section layout
+- premium gradients
+- subtle shadows
+- better card design
+- better content width control
+- improved whitespace
+- elegant section dividers
+- more refined icon usage
+- improved hover states
+- smoother animations
+- better visual rhythm
+- stronger pricing layout
+- stronger founder storytelling
+- cleaner mobile navigation
+- sharper CTA placement
+- better trust-building blocks
+
+Do not overdecorate.
+Keep the UI minimal, sharp, and professional.
+
+==================================================
+3. TECH STACK
+==================================================
+
+Backend:
+- Node.js 20
+- Express.js 4
+
+Security:
+- helmet
+- express-rate-limit
+
+Frontend:
+- HTML5
+- TailwindCSS via CDN
+- Vanilla JavaScript
+
+Libraries:
+- Chart.js
+- AOS animation library
+- Lucide Icons
+
+Fonts:
+- Poppins for headings
+- Inter for body text
+
+==================================================
+4. SERVER REQUIREMENTS
+==================================================
+
+Build or preserve an Express server with these requirements:
+
+Host:
+- 0.0.0.0
+
+Port:
+- 5000
+
+Middleware:
+- helmet security headers
+- express.json()
+- express.urlencoded({ extended: true })
+- static file serving from /public
+
+Rate limiting:
+- 100 requests per 15 minutes per IP
+- apply protection to /api/* routes
+
+API requirements:
+- POST /api/contact
+- validate required fields
+- return JSON success response
+- handle errors cleanly
+
+Validation requirements:
+- required fields: name, email, message
+- return proper 400 JSON on invalid input
+
+Success response:
+{
+  "success": true,
+  "message": "Message received successfully."
+}
+
+Create a safe fallback route that serves the website pages properly.
+
+The project must run with:
+- npm install
+- npm start
+
+==================================================
+5. REQUIRED PROJECT STRUCTURE
+==================================================
+
+Ensure the repository matches this structure exactly, adding missing files where necessary and updating existing files where they already exist:
+
+/
+├── server/
+│   └── server.js
+│
+├── public/
+│   ├── index.html
+│   ├── about.html
+│   ├── services.html
+│   ├── solutions.html
+│   ├── industries.html
+│   ├── case-studies.html
+│   ├── completed-projects.html
+│   ├── insights.html
+│   ├── gallery.html
+│   ├── contact.html
+│   ├── pricing.html
+│   ├── founder.html
+│   ├── blog.html
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   │
+│   ├── blog/
+│   │   ├── generative-ai-operations.html
+│   │   ├── data-to-intelligence.html
+│   │   ├── msme-growth-strategies.html
+│   │   ├── ml-deployment-guide.html
+│   │   ├── ai-manufacturing-adoption.html
+│   │   └── data-driven-brand.html
+│   │
+│   ├── services/
+│   │   ├── predictive-maintenance.html
+│   │   ├── supply-chain-analytics.html
+│   │   ├── quality-analytics.html
+│   │   └── energy-management.html
+│   │
+│   ├── css/
+│   │   └── styles.css
+│   │
+│   ├── js/
+│   │   └── script.js
+│   │
+│   └── assets/
+│       ├── images/
+│       └── icons/
+│
+├── design-system/
+│   └── tokens/
+│       ├── colors.css
+│       ├── typography.css
+│       ├── spacing.css
+│       ├── shadows.css
+│       └── radius.css
+│
+├── docs/
+│   ├── architecture.md
+│   ├── ui-system.md
+│   ├── customization-guide.md
+│   ├── branding-guide.md
+│   ├── security-guide.md
+│   └── deployment-guide.md
+│
+├── brand-kit/
+│   ├── logo/
+│   ├── social/
+│   └── README.md
+│
+├── private/
+│   └── README.md
+│
+├── .gitignore
+├── package.json
+└── README.md
+
+==================================================
+6. ROUTES
+==================================================
+
+All navigation links and buttons must work.
+
+Main pages:
+- /
+- /solutions
+- /services
+- /industries
+- /case-studies
+- /completed-projects
+- /insights
+- /gallery
+- /about
+- /contact
+- /pricing
+- /founder
+- /blog
+
+Blog pages:
+- /blog/generative-ai-operations
+- /blog/data-to-intelligence
+- /blog/msme-growth-strategies
+- /blog/ml-deployment-guide
+- /blog/ai-manufacturing-adoption
+- /blog/data-driven-brand
+
+Service pages:
+- /services/predictive-maintenance
+- /services/supply-chain-analytics
+- /services/quality-analytics
+- /services/energy-management
+
+Fix broken navigation and route issues if found.
+
+==================================================
+7. GLOBAL UI REQUIREMENTS
+==================================================
+
+Every page must include:
+- responsive navbar
+- premium footer
+- consistent CTA sections
+- proper spacing
+- mobile-friendly layout
+- accessible color contrast
+- polished hover states
+- subtle card animations
+- section reveal animations
+- semantic HTML structure
+
+Create reusable layout patterns across pages:
+- navbar
+- hero
+- content grid
+- CTA banner
+- footer
+- page header section
+
+Use a strong visual hierarchy with:
+- large hero headlines
+- supporting subtext
+- section badges
+- cards with icons
+- stats/counters
+- trust indicators
+
+Update all existing pages for consistency and better structure.
+
+==================================================
+8. HOMEPAGE SECTIONS
+==================================================
+
+Build or upgrade the homepage with the following sections in this order:
+
+1. Hero Section
+Headline:
+Build Intelligent Businesses with AI, Data & Automation
+
+Subheadline:
+AKcelerate helps startups, MSMEs, and enterprises scale with AI systems, analytics, automation, and digital transformation solutions.
+
+Primary CTA:
+Explore Solutions
+
+Secondary CTA:
+Book Consultation
+
+Include:
+- gradient hero background
+- mock dashboard preview
+- animated stat blocks
+- trust-style design
+
+2. Trusted By / Partner Logos
+Create a polished strip of sample partner/client logos.
+
+3. Our Business Solutions
+Create a premium card-based section with the following categories:
+
+A. Business Automation
+- Workflow Automation
+- Robotic Process Automation
+- CRM / ERP Automation
+- Document Processing Automation
+- Intelligent Email Automation
+- Sales Automation Pipelines
+- Marketing Automation
+- AI Driven Process Automation
+
+B. Business & Strategy Consulting
+- Business Growth Strategy
+- Digital Transformation
+- AI Adoption Strategy
+- Data Governance
+- Market Intelligence
+- Revenue Optimization
+- Technology Advisory
+- Process Optimization
+
+C. Website & SaaS Development
+- Business Website Development
+- SaaS Product Development
+- Custom Web Applications
+- Startup MVP Development
+- Enterprise Systems
+- API Development
+- Dashboard Systems
+- Ecommerce Platforms
+
+D. AI / ML Solutions
+- Machine Learning Models
+- Natural Language Processing
+- Computer Vision
+- Generative AI
+- AI Chatbots
+- AI Agents
+- Recommendation Engines
+- Predictive Analytics
+
+E. Automated Analytics
+- Automated Reporting
+- Real Time Analytics
+- KPI Monitoring
+- Forecasting Systems
+- Data Pipeline Automation
+- ETL Pipelines
+- AI Analytics
+- Performance Tracking
+
+F. Data Visualization
+- Executive Dashboards
+- Business Intelligence
+- Financial Dashboards
+- Marketing Dashboards
+- Operations Monitoring
+- Data Storytelling
+- Custom BI Platforms
+
+Tools:
+- Power BI
+- Tableau
+- Looker Studio
+
+G. Cloud & DevOps
+- Cloud Architecture
+- Cloud Migration
+- Infrastructure as Code
+- CI/CD
+- Kubernetes
+- Serverless
+- Monitoring
+- Security
+
+Platforms:
+- AWS
+- Azure
+- Google Cloud
+
+H. MLOps
+- ML Pipelines
+- Model Deployment
+- Monitoring Systems
+- Model Retraining
+- Feature Pipelines
+- Experiment Tracking
+- Data Versioning
+- Performance Monitoring
+
+Tools:
+- MLflow
+- Kubeflow
+- Airflow
+
+4. AI Capabilities Section
+Title:
+Let Your Creativity Flow — Our AI Systems Handle the Complexity
+
+Cards:
+- Machine Learning
+- Natural Language Processing
+- Computer Vision
+- Generative AI
+- Deep Learning
+- Predictive Analytics
+
+Each card must explain business impact, not just technical meaning.
+
+5. Industries Section
+Include these industries:
+- Manufacturing
+- Healthcare
+- Startups
+- MSME Businesses
+- Retail & Ecommerce
+- Brands & Marketing
+- AdTech
+- FinTech
+- Logistics
+- Education
+- Entertainment
+- Telecom
+- Automotive
+
+Each industry card must display 3 relevant AI or automation use cases.
+
+6. Case Studies Preview
+Show 3 case studies:
+
+Case Study 1:
+50% Faster Claims Processing
+Industry: Insurance
+
+Case Study 2:
+60% Sales Increase
+Industry: Ecommerce
+
+Case Study 3:
+45% Cost Reduction
+Industry: Manufacturing
+
+Include CTA button:
+View Our Completed Projects
+
+Link to:
+completed-projects.html
+
+7. Methodology Section
+Title:
+Our Tried & Tested Approach
+
+Steps:
+- Planning
+- Design
+- Development
+- Testing
+- Deployment
+- Maintenance
+
+Each step must include short bullet points.
+
+8. Technology Stack Section
+Display categorized stack:
+
+Languages / AI:
+- Python
+- TensorFlow
+- PyTorch
+- Keras
+- OpenCV
+
+LLMs / NLP:
+- GPT
+- BERT
+- spaCy
+- HuggingFace
+
+Cloud:
+- AWS
+- Azure
+- Google Cloud
+
+Analytics:
+- Power BI
+- Tableau
+- Looker Studio
+
+Integrations:
+- Stripe
+- Twilio
+- Salesforce
+- Snowflake
+
+9. Testimonials Section
+Add 3 polished testimonial cards.
+
+10. Final CTA Banner
+Strong premium CTA to contact AKcelerate.
+
+Improve homepage hierarchy, storytelling, conversion flow, and premium positioning.
+
+==================================================
+9. INNER PAGES
+==================================================
+
+Create or upgrade content-rich, premium versions of all pages.
+
+About page:
+- company story
+- mission
+- vision
+- values
+- why AKcelerate
+- founder philosophy
+- timeline style section
+
+Services page:
+- service overview
+- service cards
+- methodology
+- engagement model
+- CTA
+
+Solutions page:
+- solution architecture style layout
+- business outcomes
+- use case blocks
+- AI systems positioning
+
+Industries page:
+- industry-specific cards
+- AI use cases by industry
+- process transformation messaging
+
+Case Studies page:
+- detailed case study cards
+- metrics
+- outcomes
+- CTA to completed projects
+
+Completed Projects page:
+- portfolio grid
+- filters:
+  - AI
+  - Automation
+  - Analytics
+  - Web Development
+  - Cloud
+  - Strategy
+
+Each project card must include:
+- Project Name
+- Industry
+- Client Problem
+- Solution
+- Technologies
+- Results
+- Project image placeholder
+
+Insights page:
+- featured insights
+- blog previews
+- thought leadership positioning
+
+Gallery page:
+- project mockups
+- dashboard visuals
+- innovation showcase style layout
+
+Pricing page:
+Create premium consulting packages such as:
+- Starter
+- Growth
+- Enterprise
+
+Include:
+- features
+- positioning
+- CTA buttons
+- enterprise contact option
+
+Founder page:
+Highlight Kalpesh Attarde with:
+- founder story
+- vision statement
+- leadership positioning
+- expertise areas
+- CTA to contact
+
+Contact page:
+Include:
+- premium contact form
+- Google Maps embed for Mumbai
+- phone
+- email
+- company info
+- CTA
+- contact reassurance copy
+
+Blog page:
+Create a blog listing page with featured posts and cards linking to all blog detail pages.
+
+All inner pages must be consistent, polished, and premium.
+
+==================================================
+10. BLOG CONTENT
+==================================================
+
+Create or upgrade individual polished article pages for:
+- generative-ai-operations
+- data-to-intelligence
+- msme-growth-strategies
+- ml-deployment-guide
+- ai-manufacturing-adoption
+- data-driven-brand
+
+Each blog page must include:
+- title
+- author
+- date
+- category
+- hero header
+- article body
+- related posts
+- CTA section
+
+Tone:
+- insightful
+- premium
+- business-focused
+- credible
+- consulting-grade
+
+==================================================
+11. SERVICE DETAIL PAGES
+==================================================
+
+Create or upgrade service detail pages for:
+- predictive-maintenance
+- supply-chain-analytics
+- quality-analytics
+- energy-management
+
+Each page must include:
+- service overview
+- business pain points
+- solution explanation
+- benefits
+- process
+- technology stack
+- CTA section
+
+==================================================
+12. CONTENT IMPROVEMENT RULES
+==================================================
+
+Improve weak copy across the site.
+
+Rewrite sections to sound:
+- premium
+- concise
+- credible
+- strategic
+- client-facing
+- enterprise-ready
+
+Avoid generic buzzword-heavy copy.
+Make the messaging outcome-focused.
+
+Position AKcelerate around:
+- AI systems
+- automation
+- analytics
+- SaaS development
+- digital transformation
+- business growth
+
+==================================================
+13. BUSINESS SOLUTIONS CONTENT
+==================================================
+
+Where relevant, ensure the website clearly represents these business solution categories:
+
+1. Business Automation
+- Workflow Automation
+- Robotic Process Automation
+- CRM / ERP Automation
+- Document Processing Automation
+- Intelligent Email Automation
+- Sales Automation Pipelines
+- Marketing Automation
+- AI Driven Process Automation
+
+2. Business & Strategy Consulting
+- Business Growth Strategy
+- Digital Transformation
+- AI Adoption Strategy
+- Data Governance
+- Market Intelligence
+- Revenue Optimization
+- Technology Advisory
+- Process Optimization
+
+3. Website & SaaS Development
+- Business Website Development
+- SaaS Product Development
+- Custom Web Applications
+- Startup MVP Development
+- Enterprise Systems
+- API Development
+- Dashboard Systems
+- Ecommerce Platforms
+
+4. AI / ML Solutions
+- Machine Learning Models
+- Natural Language Processing
+- Computer Vision
+- Generative AI
+- AI Chatbots
+- AI Agents
+- Recommendation Engines
+- Predictive Analytics
+
+5. Automated Analytics
+- Automated Reporting
+- Real Time Analytics
+- KPI Monitoring
+- Forecasting Systems
+- Data Pipeline Automation
+- ETL Pipelines
+- AI Analytics
+- Performance Tracking
+
+6. Data Visualization
+- Executive Dashboards
+- Business Intelligence
+- Financial Dashboards
+- Marketing Dashboards
+- Operations Monitoring
+- Data Storytelling
+- Custom BI Platforms
+
+Tools:
+- Power BI
+- Tableau
+- Looker Studio
+
+7. Cloud & DevOps
+- Cloud Architecture
+- Cloud Migration
+- Infrastructure as Code
+- CI/CD
+- Kubernetes
+- Serverless
+- Monitoring
+- Security
+
+Platforms:
+- AWS
+- Azure
+- Google Cloud
+
+8. MLOps
+- ML Pipelines
+- Model Deployment
+- Monitoring Systems
+- Model Retraining
+- Feature Pipelines
+- Experiment Tracking
+- Data Versioning
+- Performance Monitoring
+
+Tools:
+- MLflow
+- Kubeflow
+- Airflow
+
+==================================================
+14. INDUSTRIES CONTENT
+==================================================
+
+Where relevant, improve the presentation of these sectors:
+- Manufacturing
+- Healthcare
+- Startups
+- MSME Businesses
+- Retail & Ecommerce
+- Brands & Marketing
+- AdTech
+- FinTech
+- Logistics
+- Education
+- Entertainment
+- Telecom
+- Automotive
+
+Each industry section should show practical AI or automation use cases.
+
+==================================================
+15. CASE STUDIES / PROJECTS
+==================================================
+
+Improve any case studies or portfolio/project sections.
+
+Where relevant, present case studies in a premium way with:
+- title
+- industry
+- problem
+- solution
+- technologies
+- results
+- impact metrics
+
+If filters exist on completed projects, improve UX and consistency.
+
+Suggested filters:
+- AI
+- Automation
+- Analytics
+- Web Development
+- Cloud
+- Strategy
+
+==================================================
+16. JAVASCRIPT FEATURES
+==================================================
+
+Implement in public/js/script.js:
+- theme toggle
+- AOS animation initialization
+- Chart.js sample dashboard charts
+- animated counters
+- FAQ accordion
+- smooth scrolling
+- portfolio filter interaction
+- mobile menu toggle
+- active nav link highlighting
+- form enhancement behavior
+
+Code must be clean and production-friendly.
+
+==================================================
+17. STYLING REQUIREMENTS
+==================================================
+
+Use TailwindCSS CDN for layout and utilities.
+
+Also create or upgrade a custom public/css/styles.css for:
+- advanced gradients
+- glassmorphism accents where appropriate
+- card effects
+- hover states
+- animation tuning
+- design system alignment
+
+Create or preserve token files in /design-system/tokens for:
+- colors
+- typography
+- spacing
+- shadows
+- radius
+
+These files should reflect a professional design system even if they are simple CSS token definitions.
+
+Avoid duplicated styles where possible.
+
+==================================================
+18. SEO REQUIREMENTS
+==================================================
+
+All pages must include:
+- proper page titles
+- meta descriptions
+- Open Graph tags
+- canonical-style structure where relevant
+- JSON-LD schema markup
+- semantic HTML
+
+Improve:
+- page titles
+- meta descriptions
+- Open Graph tags
+- semantic headings
+- image alt text
+- internal linking
+- sitemap
+- robots
+- internal consistency
+
+Use professional SEO copy aligned with:
+- AI consulting
+- automation
+- analytics
+- SaaS development
+- digital transformation
+
+==================================================
+19. PERFORMANCE + QUALITY
+==================================================
+
+Implement or improve:
+- lazy loading for images
+- clean HTML structure
+- responsive design
+- minimal unnecessary JavaScript
+- optimized asset loading
+- accessible forms
+- mobile-first responsiveness
+- polished desktop layout
+
+Avoid:
+- broken links
+- empty pages
+- placeholder junk
+- unfinished sections
+- TODO placeholders
+- pseudo-code
+
+==================================================
+20. CODE QUALITY RULES
+==================================================
+
+While updating or generating the site:
+- preserve existing architecture when possible
+- remove dead code if safe
+- avoid large unnecessary rewrites
+- avoid duplicating styles
+- keep code readable
+- keep naming consistent with the repo
+- do not break existing routes
+- implement real working code changes
+
+If there is repeated UI markup across multiple pages, refactor only if the current architecture supports it cleanly.
+
+==================================================
+21. PACKAGE REQUIREMENTS
+==================================================
+
+Create or update package.json with all required dependencies and scripts.
+
+Must include:
+- start script
+- correct main entry
+- express
+- helmet
+- express-rate-limit
+
+==================================================
+22. DOCUMENTATION FILES
+==================================================
+
+Create or update useful docs:
+
+docs/architecture.md
+- explain page structure
+- frontend/backend setup
+- route strategy
+
+docs/ui-system.md
+- explain UI sections
+- card system
+- spacing
+- design philosophy
+
+docs/customization-guide.md
+- how to edit content
+- how to add pages
+- how to replace branding
+
+docs/branding-guide.md
+- brand tone
+- colors
+- typography
+- logo usage notes
+
+docs/security-guide.md
+- helmet
+- rate limiting
+- form handling notes
+
+docs/deployment-guide.md
+- how to run locally
+- how to deploy
+
+brand-kit/README.md
+- brand asset guidance
+
+private/README.md
+- placeholder private notes area
+
+README.md
+- project overview
+- setup instructions
+- run instructions
+
+==================================================
+23. VALIDATION REQUIREMENTS
+==================================================
+
+After making changes:
+- verify links between pages
+- verify forms
+- verify layout responsiveness
+- verify script behavior
+- verify no obvious console-breaking issues
+- verify the server still runs
+- verify styles load correctly
+
+If build or runtime commands exist in the repo, run them.
+If npm scripts exist, use them to validate.
+
+==================================================
+24. OUTPUT RULES
+==================================================
+
+Strictly follow these rules:
+- inspect first if a repo already exists
+- update instead of rebuilding when possible
+- generate the full repository if missing or incomplete
+- create all missing files
+- do not skip pages
+- do not omit backend setup
+- make all navigation links work
+- ensure the site is visually premium
+- ensure the project is runnable
+- preserve working functionality
+- do not downgrade the implementation
+- do not simplify the site into a basic landing page
+
+==================================================
+25. FINAL RESPONSE FORMAT
+==================================================
+
+After implementation is complete, return:
+
+1. A short summary of what you changed
+2. Key files updated
+3. Any new files added
+4. Any issues found and fixed
+5. Any follow-up recommendations
+
+Now inspect the repository and begin the build-or-update process.

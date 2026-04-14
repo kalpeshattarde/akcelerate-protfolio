@@ -1,0 +1,81 @@
+/* =============================================
+   AKcelerate Design System — Color Tokens
+   ============================================= */
+
+:root {
+  /* ── Brand Primary ── */
+  --color-primary-50:  #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-300: #93C5FD;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;
+  --color-primary-600: #2563EB;
+  --color-primary-700: #1D4ED8;
+  --color-primary-800: #1E40AF;
+  --color-primary-900: #1E3A8A;
+
+  --color-primary: var(--color-primary-600);
+
+  /* ── Brand Accent (Cyan) ── */
+  --color-accent-50:  #ECFEFF;
+  --color-accent-100: #CFFAFE;
+  --color-accent-300: #67E8F9;
+  --color-accent-500: #06B6D4;
+  --color-accent-600: #0891B2;
+  --color-accent-700: #0E7490;
+
+  --color-accent:   var(--color-accent-500);
+  --color-teal:     #0FCCCE;
+
+  /* ── Neutral Scale ── */
+  --color-neutral-50:  #F8FAFC;
+  --color-neutral-100: #F1F5F9;
+  --color-neutral-200: #E2E8F0;
+  --color-neutral-300: #CBD5E1;
+  --color-neutral-400: #94A3B8;
+  --color-neutral-500: #64748B;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1E293B;
+  --color-neutral-900: #0F172A;
+
+  /* ── Semantic ── */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger:  #EF4444;
+  --color-info:    #3B82F6;
+
+  /* ── Surface (Light Mode defaults) ── */
+  --color-bg:          #FFFFFF;
+  --color-bg-alt:      #F0F7FF;
+  --color-bg-muted:    #F8FAFF;
+  --color-surface:     #FFFFFF;
+  --color-surface-alt: #F1F5F9;
+
+  /* ── Text ── */
+  --color-text-heading: var(--color-neutral-900);
+  --color-text-body:    var(--color-neutral-500);
+  --color-text-muted:   var(--color-neutral-400);
+  --color-text-inverse: #FFFFFF;
+
+  /* ── Border ── */
+  --color-border:       var(--color-neutral-200);
+  --color-border-focus: var(--color-primary-600);
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --color-bg:          #0D1117;
+  --color-bg-alt:      #0F172A;
+  --color-bg-muted:    #111827;
+  --color-surface:     #1E293B;
+  --color-surface-alt: #111827;
+
+  --color-text-heading: var(--color-neutral-100);
+  --color-text-body:    var(--color-neutral-400);
+  --color-text-muted:   var(--color-neutral-500);
+
+  --color-border:       rgba(255, 255, 255, 0.09);
+  --color-border-focus: var(--color-primary-400);
+}

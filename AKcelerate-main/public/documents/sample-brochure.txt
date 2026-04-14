@@ -1,0 +1,19 @@
+AKcelerate Company Brochure
+=============================
+
+This is a sample document to demonstrate how to add PDFs and documents to your website.
+
+You can replace this file with your actual PDF brochure.
+
+To add a real PDF:
+1. Place your PDF file here: public/documents/your-brochure.pdf
+2. Link to it in your HTML: <a href="documents/your-brochure.pdf" download>Download Brochure</a>
+
+Services:
+- Strategy Consulting
+- Business Transformation
+- Growth Acceleration
+- Executive Coaching
+
+Contact: info@akcelerate.com
+Website: https://akcelerate-website.vercel.app
