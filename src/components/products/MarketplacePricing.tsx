@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Zap, Crown } from "lucide-react";
+import { ArrowRight, Check, Zap, Crown, Building2 } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const plans = [
@@ -7,14 +7,14 @@ const plans = [
     name: "Single Prototype",
     price: "$29",
     period: "one-time",
-    description: "Grab one prototype, customize it, ship it. No subscription. No strings.",
+    description: "Perfect for indie hackers validating one idea. Grab it, customize it, ship it.",
     icon: Zap,
     features: [
-      "Full source code",
-      "Commercial license",
+      "Full source code ownership",
+      "Commercial & resale license",
       "Free updates for 6 months",
       "Documentation included",
-      "Deploy anywhere",
+      "Deploy anywhere — Vercel, Netlify, AWS",
     ],
     cta: "Browse Prototypes",
     ctaLink: "#products-catalog",
@@ -24,47 +24,68 @@ const plans = [
     name: "All-Access Bundle",
     price: "$99",
     period: "/month",
-    description: "Access every prototype. Every update. Every new release. Cancel anytime.",
+    description: "For founders & agencies building multiple SaaS products. Access everything.",
     icon: Crown,
     features: [
-      "40+ prototypes included",
-      "All future releases included",
-      "Priority support",
-      "Commercial license for all",
+      "All 40+ prototypes included",
+      "Every future release included",
+      "Priority support & customization help",
+      "Commercial license for all products",
       "Custom branding kit",
-      "Early access to new products",
+      "Cancel anytime — keep what you built",
     ],
     cta: "Get Full Access",
     ctaLink: "/contact",
     highlighted: true,
   },
+  {
+    name: "Agency / White-Label",
+    price: "$299",
+    period: "+",
+    description: "For agencies delivering client work. White-label everything with your brand.",
+    icon: Building2,
+    features: [
+      "Everything in All-Access",
+      "White-label rights for client delivery",
+      "Remove all AKcelerate branding",
+      "Priority feature requests",
+      "Dedicated Slack channel",
+      "Custom prototype development",
+    ],
+    cta: "Talk to Us",
+    ctaLink: "/contact",
+    highlighted: false,
+  },
 ];
 
 export default function MarketplacePricing() {
   return (
-    <section className="py-16 lg:py-20 section-alt">
+    <section id="pricing" className="py-16 lg:py-20 section-alt">
       <RevealSection>
         <div className="text-center mb-12">
+          {/* H2 — SEO */}
           <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Simple Pricing. <span className="gradient-text">No Surprises.</span>
+            Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $29. Or everything for $99/month. That's it.
+            One prototype for $29. Everything for $99/mo. Agency white-label from $299.
+            <br />
+            <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
         </div>
       </RevealSection>
 
-      <RevealGrid className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto" stagger={120}>
+      <RevealGrid className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" stagger={100}>
         {plans.map(({ name, price, period, description, icon: Icon, features, cta, ctaLink, highlighted }, i) => (
           <div
             key={i}
-            className={`reveal-item glass-card p-8 relative overflow-hidden ${
+            className={`reveal-item glass-card p-7 relative overflow-hidden ${
               highlighted ? "border-2 border-primary ring-4 ring-primary/10" : ""
             }`}
           >
             {highlighted && (
               <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-bl-lg">
-                BEST VALUE
+                MOST POPULAR
               </div>
             )}
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
@@ -87,9 +108,7 @@ export default function MarketplacePricing() {
             <Link
               to={ctaLink}
               className={`w-full inline-flex justify-center items-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
-                highlighted
-                  ? "btn-primary"
-                  : "btn-secondary"
+                highlighted ? "btn-primary" : "btn-secondary"
               }`}
             >
               {cta} <ArrowRight className="w-4 h-4" />
