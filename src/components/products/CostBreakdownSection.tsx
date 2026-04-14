@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function CostBreakdownSection({ geo }: Props) {
-  const { formatRange, formatPrice, currency } = geo;
+  const { formatRange, formatPrice } = geo;
 
   const aiCosts = [
     { item: "ChatGPT Plus / Claude Pro subscription", monthly: formatRange(20, 40), annual: formatRange(240, 480) },
