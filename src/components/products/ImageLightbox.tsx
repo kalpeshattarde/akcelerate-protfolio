@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, ZoomIn, ZoomOut } from "lucide-react";
 
 interface ImageLightboxProps {
@@ -30,8 +31,8 @@ export default function ImageLightbox({ src, alt, open, onClose }: ImageLightbox
 
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={onClose}>
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={onClose}>
       <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
         <button
           onClick={(e) => { e.stopPropagation(); setScale(s => Math.max(s - 0.25, 0.5)); }}
@@ -76,6 +77,7 @@ export default function ImageLightbox({ src, alt, open, onClose }: ImageLightbox
           draggable={false}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
