@@ -96,15 +96,14 @@ export default function ProductDetail() {
 
         <RecommendationEngine currentProduct={product} allProducts={products} currency={currency} />
 
-        {showCheckout && (
-          <CheckoutModal
-            product={product}
-            currency={currency}
-            finalPrice={finalPrice || (currency === "inr" ? product.price.inr : product.price.usd)}
-            onClose={() => setShowCheckout(false)}
-            onSuccess={() => { purchase(product.id); setShowCheckout(false); }}
-          />
-        )}
+        <CheckoutModal
+          open={showCheckout}
+          onOpenChange={setShowCheckout}
+          items={[{ product, quantity: 1 }]}
+          currency={currency}
+          total={finalPrice || (currency === "inr" ? product.price.inr : product.price.usd)}
+          onComplete={() => { purchase(product.id); setShowCheckout(false); }}
+        />
       </div>
     </main>
   );
