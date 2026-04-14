@@ -123,6 +123,7 @@ export default function Navbar() {
               </div>
             </div>
 
+            <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
 
@@ -156,6 +157,7 @@ export default function Navbar() {
               { to: "/insights", label: "Insights" },
               { to: "/blog", label: "Blog" },
               { to: "/pricing", label: "Pricing" },
+              { to: "/products", label: "Products" },
               { to: "/about", label: "About" },
               { to: "/contact", label: "Contact" },
               { to: "/free-audit", label: "Free Audit" },
