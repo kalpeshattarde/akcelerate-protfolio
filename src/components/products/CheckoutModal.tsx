@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2, CreditCard, Loader2, LogIn, Shield } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { isStripeConfigured, getStripe } from "@/lib/stripe";
+import { isStripeConfigured } from "@/lib/stripe";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -30,8 +30,6 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   const handleStripeCheckout = async () => {
     setStep("processing");
     try {
-      const stripe = await getStripe();
-      if (!stripe) throw new Error("Stripe not loaded");
 
       // In production, this would call your backend to create a Checkout Session
       // For now, show what the integration looks like
