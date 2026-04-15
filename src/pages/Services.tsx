@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import { ServiceCard } from "@/components/Cards";

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";

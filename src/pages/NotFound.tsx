@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { Home, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {

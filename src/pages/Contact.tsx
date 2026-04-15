@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";

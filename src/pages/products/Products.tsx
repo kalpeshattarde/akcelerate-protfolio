@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
