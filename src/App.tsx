@@ -8,7 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import SiteLayout from "@/components/SiteLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PageSkeleton from "@/components/PageSkeleton";
-import ChatbotWidget from "@/components/ChatbotWidget";
+
 
 // Lazy-loaded pages for code splitting
 const Index = lazy(() => import("./pages/Index"));
@@ -86,7 +86,7 @@ const App = () => (
                 </Routes>
               </Suspense>
             </SiteLayout>
-            <ChatbotWidget />
+            
           </ErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
