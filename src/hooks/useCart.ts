@@ -76,5 +76,7 @@ export function useCart() {
     }, 0);
   }, [items]);
 
-  return { items, totalCount, getTotal, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen };
+  const getQuantity = useCallback((productId: string) => cartMap[productId] || 0, [cartMap]);
+
+  return { items, totalCount, getTotal, getQuantity, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen };
 }
