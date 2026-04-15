@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search } from "lucide-react";
+import SearchModal from "./SearchModal";
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
