@@ -5,9 +5,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn, Shield } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { isStripeConfigured } from "@/lib/stripe";
+import { isRazorpayConfigured, openRazorpayCheckout } from "@/lib/razorpay";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -25,14 +26,49 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   const { isSignedIn, user } = useUser();
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
   const [form, setForm] = useState({ name: "", email: "", card: "" });
+
   const stripeReady = isStripeConfigured();
+  const razorpayReady = isRazorpayConfigured();
+  const useRazorpay = currency === "inr" && razorpayReady;
+  const useStripe = currency !== "inr" && stripeReady;
+  const hasRealPayment = useRazorpay || useStripe;
+
+  const showSuccess = () => {
+    setStep("success");
+    const productNames = items.map(i => i.product.name).join(", ");
+    toast({
+      title: "🎉 Purchase confirmed!",
+      description: `You now have access to: ${productNames}. Check your email for details.`,
+    });
+    setTimeout(() => {
+      onComplete();
+      setStep("form");
+      setForm({ name: "", email: "", card: "" });
+    }, 3000);
+  };
+
+  const handleRazorpayCheckout = () => {
+    setStep("processing");
+    openRazorpayCheckout({
+      amount: Math.round(total * 100), // Convert to paise
+      productName: items.map(i => i.product.name).join(", "),
+      customerEmail: user?.primaryEmailAddress?.emailAddress,
+      customerName: user?.fullName || "",
+      onSuccess: () => {
+        showSuccess();
+      },
+      onFailure: (error) => {
+        setStep("form");
+        if (error !== "Payment cancelled") {
+          toast({ title: "Payment failed", description: error, variant: "destructive" });
+        }
+      },
+    });
+  };
 
   const handleStripeCheckout = async () => {
     setStep("processing");
     try {
-
-      // In production, this would call your backend to create a Checkout Session
-      // For now, show what the integration looks like
       const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
       const response = await fetch(
         `https://${projectId}.supabase.co/functions/v1/create-checkout-session`,
@@ -53,40 +89,31 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
       );
 
       if (!response.ok) {
-        // Stripe backend not deployed yet — fall back to mock
         handleMockCheckout();
         return;
       }
 
       const { sessionId } = await response.json();
-      // Redirect to Stripe Checkout
-      window.location.href = sessionId; // sessionId here is actually the checkout URL from your backend
+      window.location.href = sessionId;
     } catch {
-      // Fallback to mock checkout if Stripe backend isn't ready
       handleMockCheckout();
     }
   };
 
   const handleMockCheckout = () => {
     setStep("processing");
-    setTimeout(() => {
-      setStep("success");
-      const productNames = items.map(i => i.product.name).join(", ");
-      toast({
-        title: "🎉 Purchase confirmed!",
-        description: `You now have access to: ${productNames}. Check your email for details.`,
-      });
-      setTimeout(() => {
-        onComplete();
-        setStep("form");
-        setForm({ name: "", email: "", card: "" });
-      }, 3000);
-    }, 1500);
+    setTimeout(() => showSuccess(), 1500);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (stripeReady) {
+    handleMockCheckout();
+  };
+
+  const handlePaymentClick = () => {
+    if (useRazorpay) {
+      handleRazorpayCheckout();
+    } else if (useStripe) {
       handleStripeCheckout();
     } else {
       handleMockCheckout();
@@ -158,13 +185,18 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
               </div>
             </div>
 
-            {stripeReady ? (
+            {hasRealPayment ? (
               <div className="space-y-4 mt-2">
-                <Button onClick={handleStripeCheckout} className="w-full" size="lg">
-                  <CreditCard className="w-4 h-4 mr-2" /> Pay with Stripe — {symbol}{total.toLocaleString()}
+                <Button onClick={handlePaymentClick} className="w-full" size="lg">
+                  {useRazorpay ? (
+                    <><IndianRupee className="w-4 h-4 mr-2" /> Pay with Razorpay — {symbol}{total.toLocaleString()}</>
+                  ) : (
+                    <><CreditCard className="w-4 h-4 mr-2" /> Pay with Stripe — {symbol}{total.toLocaleString()}</>
+                  )}
                 </Button>
                 <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
-                  <Shield className="w-3 h-3" /> Secured by Stripe. 256-bit SSL encryption.
+                  <Shield className="w-3 h-3" />
+                  {useRazorpay ? "Secured by Razorpay. PCI DSS compliant." : "Secured by Stripe. 256-bit SSL encryption."}
                 </div>
               </div>
             ) : (
