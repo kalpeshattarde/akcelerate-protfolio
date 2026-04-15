@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2 } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn } from "lucide-react";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -18,6 +20,7 @@ interface CheckoutModalProps {
 
 export default function CheckoutModal({ open, onOpenChange, items, currency, total, onComplete }: CheckoutModalProps) {
   const symbol = currency === "inr" ? "₹" : "$";
+  const { isSignedIn } = useUser();
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
   const [form, setForm] = useState({ name: "", email: "", card: "" });
 
@@ -43,7 +46,18 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-lg">
-        {step === "success" ? (
+        {!isSignedIn ? (
+          <div className="flex flex-col items-center justify-center py-10 gap-4">
+            <LogIn className="w-12 h-12 text-primary" />
+            <h2 className="font-poppins text-xl font-bold text-foreground">Sign in to purchase</h2>
+            <p className="text-muted-foreground text-sm text-center">
+              Create an account or sign in to complete your purchase.
+            </p>
+            <Link to="/sign-in" onClick={() => onOpenChange(false)} className="btn-primary px-6 py-2.5 text-sm">
+              Sign In / Sign Up
+            </Link>
+          </div>
+        ) : step === "success" ? (
           <div className="flex flex-col items-center justify-center py-10 gap-4">
             <CheckCircle2 className="w-16 h-16 text-green-500" />
             <h2 className="font-poppins text-2xl font-bold text-foreground">Order Confirmed!</h2>
