@@ -3,16 +3,35 @@ import { Link } from "react-router-dom";
 import { useProducts } from "@/hooks/useProducts";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { PRODUCTS } from "@/data/products";
-import { Package, Download, ExternalLink, ShoppingBag, Loader2 } from "lucide-react";
+import { Package, Download, ExternalLink, ShoppingBag, Loader2, Clock, Receipt, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { downloadProductFile } from "@/lib/downloadProduct";
+
+interface Order {
+  orderId: string;
+  date: string;
+  items: { name: string; id: string; quantity: number }[];
+  subtotal: number;
+  discount: { code: string; percent: number } | null;
+  total: number;
+  currency: string;
+  status: string;
+  paymentMethod: string;
+}
+
+function getOrders(): Order[] {
+  try {
+    return JSON.parse(localStorage.getItem("ak-orders") || "[]");
+  } catch { return []; }
+}
 
 export default function MyPurchases() {
   const { isSignedIn, isLoaded } = useUser();
   const { isPurchased } = useProducts();
   const { currency } = useGeoDetection();
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
 
   if (!isLoaded) {
     return (
@@ -28,6 +47,7 @@ export default function MyPurchases() {
 
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
+  const orders = getOrders();
 
   const handleDownload = async (product: typeof PRODUCTS[0]) => {
     setDownloading(product.id);
@@ -58,6 +78,62 @@ export default function MyPurchases() {
             All your purchased prototypes in one place. Full source code access included.
           </p>
         </div>
+
+        {/* Order History */}
+        {orders.length > 0 && (
+          <div className="mb-8">
+            <button
+              onClick={() => setShowHistory(!showHistory)}
+              className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors mb-4"
+            >
+              <Receipt className="w-4 h-4" />
+              Order History ({orders.length})
+              {showHistory ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+
+            {showHistory && (
+              <div className="space-y-3 mb-6">
+                {orders.map((order, i) => {
+                  const sym = order.currency === "inr" ? "₹" : "$";
+                  return (
+                    <div key={i} className="rounded-xl border border-border bg-card p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">{order.orderId}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                            order.status === "completed" ? "bg-green-500/10 text-green-600" : "bg-yellow-500/10 text-yellow-600"
+                          }`}>
+                            {order.status === "completed" ? "✓ Completed" : "Pending"}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Clock className="w-3 h-3" />
+                          {new Date(order.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </div>
+                      </div>
+                      <div className="text-sm text-foreground">
+                        {order.items.map(item => item.name).join(", ")}
+                      </div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <div className="text-xs text-muted-foreground capitalize">
+                          {order.paymentMethod === "mock" ? "Demo" : order.paymentMethod}
+                        </div>
+                        <div className="text-sm font-semibold text-foreground">
+                          {order.discount && (
+                            <span className="text-xs text-green-600 mr-2">
+                              {order.discount.code} (-{order.discount.percent}%)
+                            </span>
+                          )}
+                          {sym}{order.total.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
 
         {purchasedProducts.length === 0 ? (
           <div className="text-center py-20 rounded-2xl border border-border bg-muted/20">
