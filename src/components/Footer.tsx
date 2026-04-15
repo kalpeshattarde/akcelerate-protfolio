@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="footer-gradient text-slate-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center mb-5">
@@ -37,9 +37,29 @@ export default function Footer() {
             <div className="space-y-2.5">
               {[
                 { to: "/about", label: "About" },
+                { to: "/founder", label: "Founder" },
                 { to: "/careers", label: "Careers" },
                 { to: "/blog", label: "Blog" },
                 { to: "/contact", label: "Contact" },
+              ].map(l => (
+                <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Resources */}
+          <div className="lg:hidden xl:block">
+            <h4 className="font-poppins font-semibold text-white mb-5 text-sm tracking-wide">Resources</h4>
+            <div className="space-y-2.5">
+              {[
+                { to: "/pricing", label: "Pricing" },
+                { to: "/products", label: "Products" },
+                { to: "/resources", label: "Resources" },
+                { to: "/gallery", label: "Gallery" },
+                { to: "/case-studies", label: "Case Studies" },
+                { to: "/completed-projects", label: "Completed Projects" },
+                { to: "/free-audit", label: "Free Audit" },
+                { to: "/wishlist", label: "Wishlist" },
               ].map(l => (
                 <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
               ))}
