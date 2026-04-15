@@ -23,13 +23,13 @@ export function useCart() {
   const [cartMap, setCartMap] = useState<Record<string, number>>(loadCart);
   const [open, setOpen] = useState(false);
 
-  const addToCart = useCallback((productId: string) => {
+  const addToCart = useCallback((productId: string, openDrawer = true) => {
     setCartMap(prev => {
       const next = { ...prev, [productId]: (prev[productId] || 0) + 1 };
       saveCart(next);
       return next;
     });
-    setOpen(true);
+    if (openDrawer) setOpen(true);
   }, []);
 
   const removeFromCart = useCallback((productId: string) => {

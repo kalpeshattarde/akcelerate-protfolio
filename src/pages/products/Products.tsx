@@ -75,7 +75,8 @@ export default function Products() {
   const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
   const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
-  const handleBuy = (id: string) => { purchase(id); };
+  const handleBuy = (id: string) => { cart.addToCart(id, true); };
+  const handleAddToCartSilent = (id: string) => { cart.addToCart(id, false); };
 
   const handleCheckout = () => {
     cart.setOpen(false);
@@ -104,7 +105,7 @@ export default function Products() {
         <SavingsSection />
 
         {/* TOP SELLING */}
-        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
+        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
 
         {/* FLOATING CART BUTTON */}
         {cart.totalCount > 0 && (
@@ -198,7 +199,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredWebSaas.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
                   ))}
                 </div>
               )}
@@ -210,7 +211,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredMobileApps.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
                   ))}
                 </div>
               )}

@@ -95,7 +95,7 @@ export default function ProductCard({ product, isPurchased, onPurchase, onAddToC
                 className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
                 title="Add to cart"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-4 h-4 text-muted-foreground" />
               </button>
             </div>
           )}
