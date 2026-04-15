@@ -32,6 +32,7 @@ import Admin from "./pages/admin/Admin";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import MyPurchases from "./pages/MyPurchases";
+import Wishlist from "./pages/Wishlist";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const App = () => (
             <Route path="/sign-in/*" element={<SignIn />} />
             <Route path="/sign-up/*" element={<SignUp />} />
             <Route path="/my-purchases" element={<MyPurchases />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>
