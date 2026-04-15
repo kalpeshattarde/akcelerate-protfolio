@@ -6,6 +6,7 @@ import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
+import { useWishlist } from "@/hooks/useWishlist";
 import PersonalizedHero from "@/components/products/PersonalizedHero";
 import ProblemSection from "@/components/products/ProblemSection";
 import CostBreakdownSection from "@/components/products/CostBreakdownSection";
@@ -21,6 +22,7 @@ import ProductsFAQ from "@/components/products/ProductsFAQ";
 import FinalCTA from "@/components/products/FinalCTA";
 import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
+import ProductQuickView from "@/components/products/ProductQuickView";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -55,11 +57,13 @@ const TAG_OPTIONS = [
 export default function Products() {
   const { currency } = useGeoDetection();
   const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
+  const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   // SEO meta
   useEffect(() => {
@@ -81,6 +85,18 @@ export default function Products() {
     cart.addToCart(id, false);
     const product = [...webSaas, ...mobileApps].find(p => p.id === id);
     toast.success(`${product?.name || "Product"} added to cart`, { duration: 2000 });
+  };
+
+  const handleQuickView = (id: string) => {
+    const product = [...webSaas, ...mobileApps].find(p => p.id === id);
+    if (product) setQuickViewProduct(product);
+  };
+
+  const handleToggleFavorite = (id: string) => {
+    wishlist.toggleFavorite(id);
+    const product = [...webSaas, ...mobileApps].find(p => p.id === id);
+    const isFav = !wishlist.isFavorite(id);
+    toast.success(isFav ? `${product?.name} saved to wishlist` : `${product?.name} removed from wishlist`, { duration: 2000 });
   };
 
   const handleCheckout = () => {
