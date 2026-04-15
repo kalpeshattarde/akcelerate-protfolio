@@ -3,12 +3,55 @@ import { Link } from "react-router-dom";
 import { useProducts } from "@/hooks/useProducts";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { PRODUCTS } from "@/data/products";
-import { Package, Download, ExternalLink, ShoppingBag } from "lucide-react";
+import { Package, Download, ExternalLink, ShoppingBag, Loader2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
+
+function generateReadme(productName: string, features: string[]): string {
+  return `# ${productName} — Source Code
+
+## Getting Started
+
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
+
+## Features
+${features.map(f => `- ${f}`).join("\n")}
+
+## Tech Stack
+- React 18 + TypeScript
+- Tailwind CSS
+- Vite
+- Shadcn/ui components
+
+## Support
+Email: akceleratehq@gmail.com
+
+© ${new Date().getFullYear()} AKcelerate. All rights reserved.
+`;
+}
+
+function downloadProduct(product: { name: string; slug: string; features: string[] }) {
+  // Generate a README as a downloadable text file (placeholder for real source code delivery)
+  const content = generateReadme(product.name, product.features);
+  const blob = new Blob([content], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${product.slug}-source-code-README.md`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 export default function MyPurchases() {
   const { isSignedIn, isLoaded } = useUser();
-  const { products, isPurchased } = useProducts();
+  const { isPurchased } = useProducts();
   const { currency } = useGeoDetection();
+  const [downloading, setDownloading] = useState<string | null>(null);
 
   if (!isLoaded) {
     return (
@@ -24,6 +67,19 @@ export default function MyPurchases() {
 
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
+
+  const handleDownload = (product: typeof PRODUCTS[0]) => {
+    setDownloading(product.id);
+    // Simulate brief preparation
+    setTimeout(() => {
+      downloadProduct(product);
+      setDownloading(null);
+      toast({
+        title: "Download started",
+        description: `${product.name} README has been downloaded. Full source code will be delivered to your email.`,
+      });
+    }, 800);
+  };
 
   return (
     <main className="pt-28 pb-20">
@@ -52,6 +108,7 @@ export default function MyPurchases() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {purchasedProducts.map(product => {
                 const price = currency === "inr" ? product.price.inr : product.price.usd;
+                const isDownloading = downloading === product.id;
                 return (
                   <div key={product.id} className="rounded-2xl border border-border bg-card overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-video bg-muted overflow-hidden">
@@ -73,8 +130,13 @@ export default function MyPurchases() {
                           <Link to={`/products/${product.slug}`} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" title="View details">
                             <ExternalLink className="w-4 h-4" />
                           </Link>
-                          <button className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors" title="Download source code">
-                            <Download className="w-4 h-4" />
+                          <button
+                            onClick={() => handleDownload(product)}
+                            disabled={isDownloading}
+                            className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
+                            title="Download source code"
+                          >
+                            {isDownloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                           </button>
                         </div>
                       </div>

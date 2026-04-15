@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2, CreditCard, Loader2, LogIn } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -29,11 +30,17 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
     setStep("processing");
     setTimeout(() => {
       setStep("success");
+      // Show purchase confirmation toast
+      const productNames = items.map(i => i.product.name).join(", ");
+      toast({
+        title: "🎉 Purchase confirmed!",
+        description: `You now have access to: ${productNames}. Check your email for details.`,
+      });
       setTimeout(() => {
         onComplete();
         setStep("form");
         setForm({ name: "", email: "", card: "" });
-      }, 2000);
+      }, 3000);
     }, 1500);
   };
 
@@ -62,8 +69,14 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
             <CheckCircle2 className="w-16 h-16 text-green-500" />
             <h2 className="font-poppins text-2xl font-bold text-foreground">Order Confirmed!</h2>
             <p className="text-muted-foreground text-sm text-center">
-              Thank you for your purchase. Your products are now available.
+              Thank you for your purchase! Your products are now available in your dashboard.
             </p>
+            <p className="text-muted-foreground text-xs text-center">
+              A confirmation email with download instructions has been sent to your email.
+            </p>
+            <Link to="/my-purchases" onClick={() => onOpenChange(false)} className="text-sm font-medium text-primary hover:underline">
+              Go to My Purchases →
+            </Link>
           </div>
         ) : step === "processing" ? (
           <div className="flex flex-col items-center justify-center py-16 gap-4">
