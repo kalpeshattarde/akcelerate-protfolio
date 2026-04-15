@@ -69,8 +69,14 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
             <CheckCircle2 className="w-16 h-16 text-green-500" />
             <h2 className="font-poppins text-2xl font-bold text-foreground">Order Confirmed!</h2>
             <p className="text-muted-foreground text-sm text-center">
-              Thank you for your purchase. Your products are now available.
+              Thank you for your purchase! Your products are now available in your dashboard.
             </p>
+            <p className="text-muted-foreground text-xs text-center">
+              A confirmation email with download instructions has been sent to your email.
+            </p>
+            <Link to="/my-purchases" onClick={() => onOpenChange(false)} className="text-sm font-medium text-primary hover:underline">
+              Go to My Purchases →
+            </Link>
           </div>
         ) : step === "processing" ? (
           <div className="flex flex-col items-center justify-center py-16 gap-4">
