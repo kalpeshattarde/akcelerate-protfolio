@@ -135,6 +135,9 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden lg:flex items-center gap-3">
+            <button onClick={() => setSearchOpen(true)} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Search">
+              <Search className="w-[17px] h-[17px]" />
+            </button>
             <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" />}
             </button>
@@ -196,6 +199,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
     </nav>
   );
 }
