@@ -25,6 +25,7 @@ const lifecycle = [
 export default function ServicesPage() {
   return (
     <>
+      <SEOHead title="Services" description="Deep-tech AI/ML implementation services including predictive maintenance, quality analytics, and supply chain optimization." path="/services" />
       <HeroPage
         label="Services"
         title={<>Deep-Tech <span className="gradient-text">Implementation Services</span></>}

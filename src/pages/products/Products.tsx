@@ -66,14 +66,7 @@ export default function Products() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // SEO meta
-  useEffect(() => {
-    document.title = "Ready-Made SaaS Prototypes — Launch in Days, Not Months | AKcelerate";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "Stop spending $1000+ building SaaS with AI tools. Get ready-made SaaS prototypes for $29. 40+ production-ready apps — CRM, ATS, dashboards & more. Launch instantly.");
-    }
-  }, []);
+  // SEO handled by SEOHead component
 
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
