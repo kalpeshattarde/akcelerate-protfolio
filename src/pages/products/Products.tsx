@@ -105,7 +105,7 @@ export default function Products() {
         <SavingsSection />
 
         {/* TOP SELLING */}
-        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={cart.addToCart} />
+        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
 
         {/* FLOATING CART BUTTON */}
         {cart.totalCount > 0 && (
