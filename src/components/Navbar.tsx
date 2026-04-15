@@ -35,6 +35,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem("ak-theme") || "light");
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
