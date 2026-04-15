@@ -6,46 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import { Package, Download, ExternalLink, ShoppingBag, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
-
-function generateReadme(productName: string, features: string[]): string {
-  return `# ${productName} — Source Code
-
-## Getting Started
-
-\`\`\`bash
-npm install
-npm run dev
-\`\`\`
-
-## Features
-${features.map(f => `- ${f}`).join("\n")}
-
-## Tech Stack
-- React 18 + TypeScript
-- Tailwind CSS
-- Vite
-- Shadcn/ui components
-
-## Support
-Email: akceleratehq@gmail.com
-
-© ${new Date().getFullYear()} AKcelerate. All rights reserved.
-`;
-}
-
-function downloadProduct(product: { name: string; slug: string; features: string[] }) {
-  // Generate a README as a downloadable text file (placeholder for real source code delivery)
-  const content = generateReadme(product.name, product.features);
-  const blob = new Blob([content], { type: "text/markdown" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${product.slug}-source-code-README.md`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+import { downloadProductFile } from "@/lib/downloadProduct";
 
 export default function MyPurchases() {
   const { isSignedIn, isLoaded } = useUser();
@@ -68,17 +29,22 @@ export default function MyPurchases() {
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
 
-  const handleDownload = (product: typeof PRODUCTS[0]) => {
+  const handleDownload = async (product: typeof PRODUCTS[0]) => {
     setDownloading(product.id);
-    // Simulate brief preparation
-    setTimeout(() => {
-      downloadProduct(product);
-      setDownloading(null);
+    const result = await downloadProductFile(product.slug, product.name, product.features);
+    setDownloading(null);
+
+    if (result.fallback) {
+      toast({
+        title: "README downloaded",
+        description: `Full source code for ${product.name} will be delivered to your email shortly.`,
+      });
+    } else {
       toast({
         title: "Download started",
-        description: `${product.name} README has been downloaded. Full source code will be delivered to your email.`,
+        description: `${product.name} source code is downloading.`,
       });
-    }, 800);
+    }
   };
 
   return (
