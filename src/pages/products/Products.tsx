@@ -2,11 +2,10 @@ import { useState, useMemo, useEffect } from "react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, Heart } from "lucide-react";
+import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
-import { useWishlist } from "@/hooks/useWishlist";
 import PersonalizedHero from "@/components/products/PersonalizedHero";
 import ProblemSection from "@/components/products/ProblemSection";
 import CostBreakdownSection from "@/components/products/CostBreakdownSection";
@@ -22,7 +21,6 @@ import ProductsFAQ from "@/components/products/ProductsFAQ";
 import FinalCTA from "@/components/products/FinalCTA";
 import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
-import ProductQuickView from "@/components/products/ProductQuickView";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -58,12 +56,10 @@ export default function Products() {
   const { currency } = useGeoDetection();
   const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
   const cart = useCart();
-  const wishlist = useWishlist();
   const [search, setSearch] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   // SEO meta
   useEffect(() => {
@@ -92,57 +88,40 @@ export default function Products() {
     setCheckoutOpen(true);
   };
 
-  const renderProductCard = (p: Product) => (
-    <ProductCard
-      key={p.id}
-      product={p}
-      currency={currency}
-      isPurchased={isPurchased(p.id)}
-      cartQuantity={cart.getQuantity(p.id)}
-      isWishlisted={wishlist.isWishlisted(p.id)}
-      onPurchase={handleBuy}
-      onAddToCart={handleAddToCartSilent}
-      onToggleWishlist={wishlist.toggle}
-      onQuickView={setQuickViewProduct}
-    />
-  );
-
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* HERO */}
         <PersonalizedHero />
+
+        {/* PROBLEM */}
         <ProblemSection />
+
+        {/* COST BREAKDOWN */}
         <CostBreakdownSection />
+
+        {/* SOLUTION */}
         <SolutionSection />
+
+        {/* COMPARISON */}
         <ComparisonSection />
+
+        {/* SAVINGS */}
         <SavingsSection />
+
+        {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
 
-        {/* FLOATING BUTTONS */}
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
-          {wishlist.count > 0 && (
-            <button
-              onClick={() => {
-                const el = document.getElementById("products-catalog");
-                el?.scrollIntoView({ behavior: "smooth" });
-                toast.info(`${wishlist.count} item${wishlist.count > 1 ? "s" : ""} in your wishlist`);
-              }}
-              className="flex items-center gap-2 px-5 py-3 rounded-full bg-card border border-border text-foreground shadow-lg hover:bg-muted transition-all"
-            >
-              <Heart className="w-5 h-5 fill-red-500 text-red-500" />
-              <span className="font-semibold">{wishlist.count}</span>
-            </button>
-          )}
-          {cart.totalCount > 0 && (
-            <button
-              onClick={() => cart.setOpen(true)}
-              className="flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              <span className="font-semibold">{cart.totalCount}</span>
-            </button>
-          )}
-        </div>
+        {/* FLOATING CART BUTTON */}
+        {cart.totalCount > 0 && (
+          <button
+            onClick={() => cart.setOpen(true)}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-semibold">{cart.totalCount}</span>
+          </button>
+        )}
 
         {/* PRODUCT CATALOG */}
         <div id="products-catalog" className="mt-16">
@@ -224,7 +203,9 @@ export default function Products() {
                 <p className="text-center text-muted-foreground py-12">No prototypes match your filters.</p>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredWebSaas.map(renderProductCard)}
+                  {filteredWebSaas.map(p => (
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+                  ))}
                 </div>
               )}
             </TabsContent>
@@ -234,17 +215,28 @@ export default function Products() {
                 <p className="text-center text-muted-foreground py-12">No prototypes match your filters.</p>
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredMobileApps.map(renderProductCard)}
+                  {filteredMobileApps.map(p => (
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+                  ))}
                 </div>
               )}
             </TabsContent>
           </Tabs>
         </div>
 
+        {/* USE CASES */}
         <UseCasesSection />
+
+        {/* MARKETPLACE PRICING */}
         <MarketplacePricing />
+
+        {/* TRUST SECTION */}
         <TrustSection />
+
+        {/* FAQ — SEO */}
         <ProductsFAQ />
+
+        {/* FINAL CTA */}
         <FinalCTA />
 
         <CartDrawer
@@ -270,19 +262,6 @@ export default function Products() {
             cart.clearCart();
             setCheckoutOpen(false);
           }}
-        />
-
-        <ProductQuickView
-          product={quickViewProduct}
-          open={!!quickViewProduct}
-          onClose={() => setQuickViewProduct(null)}
-          currency={currency}
-          isPurchased={quickViewProduct ? isPurchased(quickViewProduct.id) : false}
-          isWishlisted={quickViewProduct ? wishlist.isWishlisted(quickViewProduct.id) : false}
-          cartQuantity={quickViewProduct ? cart.getQuantity(quickViewProduct.id) : 0}
-          onPurchase={handleBuy}
-          onAddToCart={handleAddToCartSilent}
-          onToggleWishlist={wishlist.toggle}
         />
       </div>
     </main>

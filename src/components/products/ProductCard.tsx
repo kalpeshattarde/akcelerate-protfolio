@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Heart, Eye } from "lucide-react";
+import { ShoppingCart, Star, TrendingUp, Zap, ZoomIn } from "lucide-react";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
@@ -10,14 +10,11 @@ interface ProductCardProps {
   currency: Currency;
   isPurchased: boolean;
   cartQuantity?: number;
-  isWishlisted?: boolean;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
-  onToggleWishlist?: (id: string) => void;
-  onQuickView?: (product: Product) => void;
 }
 
-export default function ProductCard({ product, isPurchased, cartQuantity = 0, isWishlisted = false, onPurchase, onAddToCart, onToggleWishlist, onQuickView }: ProductCardProps) {
+export default function ProductCard({ product, isPurchased, cartQuantity = 0, onPurchase, onAddToCart }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -30,24 +27,6 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             {product.badge}
           </div>
         )}
-
-        {/* Top-right action buttons */}
-        <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={(e) => { e.preventDefault(); onToggleWishlist?.(product.id); }}
-            className="p-2 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-colors"
-            title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          >
-            <Heart className={`w-4 h-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-muted-foreground"}`} />
-          </button>
-          <button
-            onClick={(e) => { e.preventDefault(); onQuickView?.(product); }}
-            className="p-2 rounded-lg bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background transition-colors"
-            title="Quick view"
-          >
-            <Eye className="w-4 h-4 text-muted-foreground" />
-          </button>
-        </div>
 
         <div className="relative aspect-[4/3] bg-muted overflow-hidden">
           <Link to={`/products/${product.slug}`}>
