@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search } from "lucide-react";
+import SearchModal from "./SearchModal";
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
@@ -23,15 +24,18 @@ const serviceLinks = [
 
 const aboutLinks = [
   { to: "/about", title: "About AKcelerate", desc: "Our story, team & mission", icon: Users },
+  { to: "/founder", title: "Founder", desc: "Meet the founder", icon: Users },
   { to: "/industries", title: "Industries", desc: "Sectors we specialise in", icon: Factory },
   { to: "/case-studies", title: "Case Studies", desc: "Real-world results & ROI", icon: FileText },
-  { to: "/insights", title: "Insights", desc: "Blog, guides & thought leadership", icon: Lightbulb },
+  { to: "/insights", title: "Insights", desc: "Guides & thought leadership", icon: Lightbulb },
+  { to: "/blog", title: "Blog", desc: "Latest articles & news", icon: FileText },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem("ak-theme") || "light");
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -131,6 +135,9 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden lg:flex items-center gap-3">
+            <button onClick={() => setSearchOpen(true)} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Search">
+              <Search className="w-[17px] h-[17px]" />
+            </button>
             <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" />}
             </button>
@@ -192,6 +199,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
     </nav>
   );
 }
