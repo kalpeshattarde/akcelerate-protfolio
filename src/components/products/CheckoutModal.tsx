@@ -5,10 +5,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { isStripeConfigured } from "@/lib/stripe";
 import { isRazorpayConfigured, openRazorpayCheckout } from "@/lib/razorpay";
+import { useDiscountCode } from "@/hooks/useDiscountCode";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -26,6 +27,8 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   const { isSignedIn, user } = useUser();
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
   const [form, setForm] = useState({ name: "", email: "", card: "" });
+  const [couponInput, setCouponInput] = useState("");
+  const { appliedDiscount, applyCode, removeDiscount, calculateDiscountedTotal } = useDiscountCode(currency);
 
   const stripeReady = isStripeConfigured();
   const razorpayReady = isRazorpayConfigured();
@@ -33,30 +36,57 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   const useStripe = currency !== "inr" && stripeReady;
   const hasRealPayment = useRazorpay || useStripe;
 
+  const finalTotal = calculateDiscountedTotal(total);
+  const orderId = `AK-${Date.now().toString(36).toUpperCase()}`;
+
   const showSuccess = () => {
     setStep("success");
+    // Save order to localStorage for history
+    const orders = JSON.parse(localStorage.getItem("ak-orders") || "[]");
+    orders.unshift({
+      orderId,
+      date: new Date().toISOString(),
+      items: items.map(i => ({ name: i.product.name, id: i.product.id, quantity: i.quantity })),
+      subtotal: total,
+      discount: appliedDiscount?.valid ? { code: appliedDiscount.code, percent: appliedDiscount.percent } : null,
+      total: finalTotal,
+      currency,
+      status: "completed",
+      paymentMethod: useRazorpay ? "razorpay" : useStripe ? "stripe" : "mock",
+    });
+    localStorage.setItem("ak-orders", JSON.stringify(orders));
+
     const productNames = items.map(i => i.product.name).join(", ");
     toast({
       title: "🎉 Purchase confirmed!",
-      description: `You now have access to: ${productNames}. Check your email for details.`,
+      description: `Order ${orderId}: ${productNames}. Check your email for details.`,
     });
     setTimeout(() => {
       onComplete();
       setStep("form");
       setForm({ name: "", email: "", card: "" });
+      setCouponInput("");
+      removeDiscount();
     }, 3000);
+  };
+
+  const handleCouponApply = () => {
+    const result = applyCode(couponInput);
+    toast({
+      title: result.valid ? "✅ Coupon applied" : "❌ Invalid coupon",
+      description: result.message,
+      variant: result.valid ? "default" : "destructive",
+    });
   };
 
   const handleRazorpayCheckout = () => {
     setStep("processing");
     openRazorpayCheckout({
-      amount: Math.round(total * 100), // Convert to paise
+      amount: Math.round(finalTotal * 100),
       productName: items.map(i => i.product.name).join(", "),
       customerEmail: user?.primaryEmailAddress?.emailAddress,
       customerName: user?.fullName || "",
-      onSuccess: () => {
-        showSuccess();
-      },
+      onSuccess: () => showSuccess(),
       onFailure: (error) => {
         setStep("form");
         if (error !== "Payment cancelled") {
@@ -84,6 +114,7 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
             currency: currency === "inr" ? "inr" : "usd",
             customerEmail: user?.primaryEmailAddress?.emailAddress,
             clerkUserId: user?.id,
+            discountCode: appliedDiscount?.valid ? appliedDiscount.code : undefined,
           }),
         }
       );
@@ -111,13 +142,9 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
   };
 
   const handlePaymentClick = () => {
-    if (useRazorpay) {
-      handleRazorpayCheckout();
-    } else if (useStripe) {
-      handleStripeCheckout();
-    } else {
-      handleMockCheckout();
-    }
+    if (useRazorpay) handleRazorpayCheckout();
+    else if (useStripe) handleStripeCheckout();
+    else handleMockCheckout();
   };
 
   const handleClose = (val: boolean) => {
@@ -125,6 +152,8 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
     onOpenChange(val);
     if (!val) { setStep("form"); }
   };
+
+  const discountAmount = appliedDiscount?.valid ? total - finalTotal : 0;
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -144,11 +173,9 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
           <div className="flex flex-col items-center justify-center py-10 gap-4">
             <CheckCircle2 className="w-16 h-16 text-green-500" />
             <h2 className="font-poppins text-2xl font-bold text-foreground">Order Confirmed!</h2>
+            <p className="text-xs font-mono text-muted-foreground bg-muted px-3 py-1 rounded-full">{orderId}</p>
             <p className="text-muted-foreground text-sm text-center">
               Thank you for your purchase! Your products are now available in your dashboard.
-            </p>
-            <p className="text-muted-foreground text-xs text-center">
-              A confirmation email with download instructions has been sent to your email.
             </p>
             <Link to="/my-purchases" onClick={() => onOpenChange(false)} className="text-sm font-medium text-primary hover:underline">
               Go to My Purchases →
@@ -167,6 +194,7 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
               </DialogTitle>
             </DialogHeader>
 
+            {/* Order Summary */}
             <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-2">
               {items.map(({ product, quantity }) => {
                 const price = currency === "inr" ? product.price.inr : product.price.usd;
@@ -179,19 +207,52 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
                   </div>
                 );
               })}
+              {appliedDiscount?.valid && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span className="flex items-center gap-1">
+                    <Tag className="w-3 h-3" /> {appliedDiscount.code} (-{appliedDiscount.percent}%)
+                  </span>
+                  <span>-{symbol}{discountAmount.toLocaleString()}</span>
+                </div>
+              )}
               <div className="flex justify-between pt-2 border-t border-border text-base font-bold">
                 <span>Total</span>
-                <span className="text-primary">{symbol}{total.toLocaleString()}</span>
+                <span className="text-primary">{symbol}{finalTotal.toLocaleString()}</span>
               </div>
+            </div>
+
+            {/* Coupon Code */}
+            <div className="flex gap-2">
+              {appliedDiscount?.valid ? (
+                <div className="flex-1 flex items-center justify-between bg-green-500/10 text-green-700 rounded-lg px-3 py-2 text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <Tag className="w-3.5 h-3.5" /> {appliedDiscount.code} — {appliedDiscount.percent}% off
+                  </span>
+                  <button onClick={removeDiscount} className="hover:text-green-900"><X className="w-4 h-4" /></button>
+                </div>
+              ) : (
+                <>
+                  <Input
+                    placeholder="Discount code"
+                    value={couponInput}
+                    onChange={e => setCouponInput(e.target.value.toUpperCase())}
+                    className="flex-1"
+                    onKeyDown={e => e.key === "Enter" && (e.preventDefault(), handleCouponApply())}
+                  />
+                  <Button variant="outline" size="sm" onClick={handleCouponApply} disabled={!couponInput.trim()}>
+                    Apply
+                  </Button>
+                </>
+              )}
             </div>
 
             {hasRealPayment ? (
               <div className="space-y-4 mt-2">
                 <Button onClick={handlePaymentClick} className="w-full" size="lg">
                   {useRazorpay ? (
-                    <><IndianRupee className="w-4 h-4 mr-2" /> Pay with Razorpay — {symbol}{total.toLocaleString()}</>
+                    <><IndianRupee className="w-4 h-4 mr-2" /> Pay with Razorpay — {symbol}{finalTotal.toLocaleString()}</>
                   ) : (
-                    <><CreditCard className="w-4 h-4 mr-2" /> Pay with Stripe — {symbol}{total.toLocaleString()}</>
+                    <><CreditCard className="w-4 h-4 mr-2" /> Pay with Stripe — {symbol}{finalTotal.toLocaleString()}</>
                   )}
                 </Button>
                 <div className="flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
@@ -214,7 +275,7 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
                   <Input id="checkout-card" required value={form.card} onChange={e => setForm(f => ({ ...f, card: e.target.value.replace(/\D/g, "").slice(0, 16) }))} placeholder="4242 4242 4242 4242" maxLength={16} />
                 </div>
                 <Button type="submit" className="w-full" size="lg">
-                  Pay {symbol}{total.toLocaleString()}
+                  Pay {symbol}{finalTotal.toLocaleString()}
                 </Button>
                 <p className="text-[10px] text-center text-muted-foreground">Mock checkout — no real charges.</p>
               </form>
