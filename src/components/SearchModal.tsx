@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search, FileText, Package, Newspaper, ArrowRight } from "lucide-react";
@@ -60,12 +60,15 @@ interface Props {
 
 export default function SearchModal({ open, onOpenChange }: Props) {
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open) {
       setQuery("");
+      setActiveIndex(0);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [open]);
@@ -90,9 +93,35 @@ export default function SearchModal({ open, onOpenChange }: Props) {
       .slice(0, 10);
   }, [query]);
 
-  const go = (path: string) => {
+  // Reset active index when results change
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [results]);
+
+  const go = useCallback((path: string) => {
     navigate(path);
     onOpenChange(false);
+  }, [navigate, onOpenChange]);
+
+  // Scroll active item into view
+  useEffect(() => {
+    const container = listRef.current;
+    if (!container) return;
+    const activeEl = container.children[activeIndex] as HTMLElement | undefined;
+    activeEl?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex(i => (i + 1) % results.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex(i => (i - 1 + results.length) % results.length);
+    } else if (e.key === "Enter" && results.length > 0) {
+      e.preventDefault();
+      go(results[activeIndex].path);
+    }
   };
 
   return (
@@ -106,21 +135,23 @@ export default function SearchModal({ open, onOpenChange }: Props) {
             onChange={e => setQuery(e.target.value)}
             placeholder="Search pages, products, blog posts..."
             className="flex-1 bg-transparent text-sm outline-none text-foreground placeholder:text-muted-foreground"
-            onKeyDown={e => { if (e.key === "Enter" && results.length) go(results[0].path); }}
+            onKeyDown={handleKeyDown}
           />
           <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-muted text-[10px] text-muted-foreground font-mono">ESC</kbd>
         </div>
-        <div className="max-h-[360px] overflow-y-auto py-2">
+        <div ref={listRef} className="max-h-[360px] overflow-y-auto py-2">
           {results.length === 0 ? (
             <p className="text-sm text-muted-foreground text-center py-8">No results found</p>
           ) : (
-            results.map(r => {
+            results.map((r, i) => {
               const Icon = typeIcon[r.type];
+              const isActive = i === activeIndex;
               return (
                 <button
                   key={r.path}
                   onClick={() => go(r.path)}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-muted/60 transition-colors text-left group"
+                  onMouseEnter={() => setActiveIndex(i)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 transition-colors text-left group ${isActive ? "bg-muted/80" : "hover:bg-muted/60"}`}
                 >
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <Icon className="w-4 h-4 text-primary" />
@@ -129,7 +160,7 @@ export default function SearchModal({ open, onOpenChange }: Props) {
                     <div className="text-sm font-medium text-foreground truncate">{r.title}</div>
                     <div className="text-xs text-muted-foreground truncate">{r.description}</div>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                  <ArrowRight className={`w-3.5 h-3.5 text-muted-foreground transition-opacity shrink-0 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
                 </button>
               );
             })
