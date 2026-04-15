@@ -5,7 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn, Mail, Package } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
@@ -29,11 +30,17 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
     setStep("processing");
     setTimeout(() => {
       setStep("success");
+      // Show purchase confirmation toast
+      const productNames = items.map(i => i.product.name).join(", ");
+      toast({
+        title: "🎉 Purchase confirmed!",
+        description: `You now have access to: ${productNames}. Check your email for details.`,
+      });
       setTimeout(() => {
         onComplete();
         setStep("form");
         setForm({ name: "", email: "", card: "" });
-      }, 2000);
+      }, 3000);
     }, 1500);
   };
 
