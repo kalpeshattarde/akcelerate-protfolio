@@ -75,7 +75,7 @@ export default function Products() {
   const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
   const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
-  const handleBuy = (id: string) => { purchase(id); };
+  const handleBuy = (id: string) => { cart.addToCart(id); };
 
   const handleCheckout = () => {
     cart.setOpen(false);
