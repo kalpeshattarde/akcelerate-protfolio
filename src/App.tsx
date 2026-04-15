@@ -29,6 +29,8 @@ import Terms from "./pages/Terms";
 import Products from "./pages/products/Products";
 import ProductDetail from "./pages/products/ProductDetail";
 import Admin from "./pages/admin/Admin";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,8 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/sign-in/*" element={<SignIn />} />
+            <Route path="/sign-up/*" element={<SignUp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>

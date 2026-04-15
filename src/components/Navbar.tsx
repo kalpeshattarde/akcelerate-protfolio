@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn } from "lucide-react";
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
@@ -132,9 +133,14 @@ export default function Navbar() {
             <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" />}
             </button>
-            <Link to="/contact" className="btn-primary text-sm">
-              <LayoutDashboard className="w-4 h-4" /> Request Demo
-            </Link>
+            <SignedOut>
+              <Link to="/sign-in" className="btn-primary text-sm">
+                <LogIn className="w-4 h-4" /> Sign In
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
           </div>
 
           {/* Mobile toggle */}
@@ -168,7 +174,12 @@ export default function Navbar() {
               <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95">
                 {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
               </button>
-              <Link to="/contact" className="btn-primary text-sm flex-1 justify-center">Request Demo</Link>
+              <SignedOut>
+                <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
+              </SignedOut>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
             </div>
           </div>
         </div>
