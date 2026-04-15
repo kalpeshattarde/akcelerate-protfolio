@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/integrations/supabase/client";
-import { PRODUCTS, type Product } from "@/data/products";
+import { PRODUCTS } from "@/data/products";
 
 function getLocalPurchased(): string[] {
   try {
@@ -12,28 +12,23 @@ function getLocalPurchased(): string[] {
 export function useProducts() {
   const { user, isSignedIn } = useUser();
   const [purchased, setPurchased] = useState<string[]>(getLocalPurchased);
-  const [loaded, setLoaded] = useState(false);
 
   // Sync from Supabase when user signs in
   useEffect(() => {
-    if (!isSignedIn || !user?.id) {
-      setLoaded(true);
-      return;
-    }
+    if (!isSignedIn || !user?.id) return;
 
     const fetchPurchases = async () => {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from("purchases")
         .select("product_id")
         .eq("clerk_user_id", user.id);
 
       if (data && data.length > 0) {
-        const ids = data.map((r: any) => r.product_id);
+        const ids = (data as any[]).map(r => r.product_id as string);
         const merged = [...new Set([...getLocalPurchased(), ...ids])];
         setPurchased(merged);
         localStorage.setItem("ak-purchased", JSON.stringify(merged));
       }
-      setLoaded(true);
     };
 
     fetchPurchases();
@@ -54,7 +49,7 @@ export function useProducts() {
 
     // Persist to Supabase if signed in
     if (isSignedIn && user?.id) {
-      await supabase.from("purchases").upsert(
+      await (supabase as any).from("purchases").upsert(
         { clerk_user_id: user.id, product_id: id },
         { onConflict: "clerk_user_id,product_id" }
       );
