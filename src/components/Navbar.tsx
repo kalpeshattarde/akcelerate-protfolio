@@ -23,9 +23,11 @@ const serviceLinks = [
 
 const aboutLinks = [
   { to: "/about", title: "About AKcelerate", desc: "Our story, team & mission", icon: Users },
+  { to: "/founder", title: "Founder", desc: "Meet the founder", icon: Users },
   { to: "/industries", title: "Industries", desc: "Sectors we specialise in", icon: Factory },
   { to: "/case-studies", title: "Case Studies", desc: "Real-world results & ROI", icon: FileText },
-  { to: "/insights", title: "Insights", desc: "Blog, guides & thought leadership", icon: Lightbulb },
+  { to: "/insights", title: "Insights", desc: "Guides & thought leadership", icon: Lightbulb },
+  { to: "/blog", title: "Blog", desc: "Latest articles & news", icon: FileText },
 ];
 
 export default function Navbar() {
