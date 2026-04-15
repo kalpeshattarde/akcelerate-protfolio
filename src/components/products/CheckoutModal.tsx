@@ -61,8 +61,8 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
       }
 
       const { sessionId } = await response.json();
-      const result = await stripe.redirectToCheckout({ sessionId });
-      if (result.error) throw result.error;
+      // Redirect to Stripe Checkout
+      window.location.href = sessionId; // sessionId here is actually the checkout URL from your backend
     } catch {
       // Fallback to mock checkout if Stripe backend isn't ready
       handleMockCheckout();
