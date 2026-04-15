@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import { SolutionCard } from "@/components/Cards";
@@ -10,6 +11,7 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 export default function SolutionsPage() {
   return (
     <>
+      <SEOHead title="Solutions" description="8 specialized AI and digital solution areas designed to drive measurable business growth." path="/solutions" />
       <HeroPage
         label="Solutions"
         title={<>Comprehensive <span className="gradient-text">AI & Digital Solutions</span></>}

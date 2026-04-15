@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -65,14 +66,7 @@ export default function Products() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // SEO meta
-  useEffect(() => {
-    document.title = "Ready-Made SaaS Prototypes — Launch in Days, Not Months | AKcelerate";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "Stop spending $1000+ building SaaS with AI tools. Get ready-made SaaS prototypes for $29. 40+ production-ready apps — CRM, ATS, dashboards & more. Launch instantly.");
-    }
-  }, []);
+  // SEO handled by SEOHead component
 
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
@@ -105,7 +99,9 @@ export default function Products() {
   };
 
   return (
-    <main className="pt-28 pb-20">
+    <>
+      <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $29. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
+      <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HERO */}
         <PersonalizedHero />
@@ -294,5 +290,6 @@ export default function Products() {
         />
       </div>
     </main>
+    </>
   );
 }

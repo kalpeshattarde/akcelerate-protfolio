@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
@@ -14,6 +15,7 @@ export default function PricingPage() {
 
   return (
     <>
+      <SEOHead title="Pricing" description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services." path="/pricing" />
       <HeroPage
         label="Pricing"
         title={<>Transparent <span className="gradient-text">Pricing Plans</span></>}

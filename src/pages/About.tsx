@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
@@ -14,6 +15,7 @@ const team = [
 export default function AboutPage() {
   return (
     <>
+      <SEOHead title="About Us" description="Learn about AKcelerate — a data-driven growth company helping businesses scale with AI, data science, and digital solutions." path="/about" />
       <HeroPage label="About" title={<>About <span className="gradient-text">AKcelerate</span></>} description="We're a data-driven growth company helping businesses scale with AI, data science, and digital solutions." />
 
       <section className="py-16 border-b border-border">

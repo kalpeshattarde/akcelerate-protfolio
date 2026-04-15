@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
@@ -7,6 +8,7 @@ import { RevealSection } from "@/hooks/useScrollReveal";
 export default function ContactPage() {
   return (
     <>
+      <SEOHead title="Contact" description="Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours." path="/contact" />
       <HeroPage
         label="Contact"
         title={<>Let's Build Something <span className="gradient-text">Great Together</span></>}

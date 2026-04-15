@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { BlogCard } from "@/components/Cards";
 import { blogPosts } from "@/data/blog";
@@ -7,6 +8,7 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 export default function BlogPage() {
   return (
     <>
+      <SEOHead title="Blog" description="Expert insights on AI, data science, digital transformation, and business growth strategies." path="/blog" />
       <HeroPage label="Blog" title={<>Insights & <span className="gradient-text">Thought Leadership</span></>} description="Expert perspectives on AI, data science, digital transformation, and business growth." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
