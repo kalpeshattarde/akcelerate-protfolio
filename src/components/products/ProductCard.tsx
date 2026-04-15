@@ -9,11 +9,12 @@ interface ProductCardProps {
   product: Product;
   currency: Currency;
   isPurchased: boolean;
+  cartQuantity?: number;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
 }
 
-export default function ProductCard({ product, isPurchased, onPurchase, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ product, isPurchased, cartQuantity = 0, onPurchase, onAddToCart }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -92,10 +93,15 @@ export default function ProductCard({ product, isPurchased, onPurchase, onAddToC
               </button>
               <button
                 onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
-                className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+                className="relative flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
                 title="Add to cart"
               >
                 <ShoppingCart className="w-4 h-4 text-muted-foreground" />
+                {cartQuantity > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+                    {cartQuantity}
+                  </span>
+                )}
               </button>
             </div>
           )}

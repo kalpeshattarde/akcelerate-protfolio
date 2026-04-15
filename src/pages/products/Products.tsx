@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-react";
@@ -76,7 +77,11 @@ export default function Products() {
   const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
   const handleBuy = (id: string) => { cart.addToCart(id, true); };
-  const handleAddToCartSilent = (id: string) => { cart.addToCart(id, false); };
+  const handleAddToCartSilent = (id: string) => {
+    cart.addToCart(id, false);
+    const product = [...webSaas, ...mobileApps].find(p => p.id === id);
+    toast.success(`${product?.name || "Product"} added to cart`, { duration: 2000 });
+  };
 
   const handleCheckout = () => {
     cart.setOpen(false);
