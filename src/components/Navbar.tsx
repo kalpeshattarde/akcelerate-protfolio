@@ -139,6 +139,7 @@ export default function Navbar() {
               </Link>
             </SignedOut>
             <SignedIn>
+              <Link to="/my-purchases" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">My Purchases</Link>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
           </div>
