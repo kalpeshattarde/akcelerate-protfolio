@@ -290,5 +290,6 @@ export default function Products() {
         />
       </div>
     </main>
+    </>
   );
 }
