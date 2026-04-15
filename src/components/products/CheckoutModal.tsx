@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn, Mail, Package } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import type { CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
