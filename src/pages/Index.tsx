@@ -42,6 +42,7 @@ const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS",
 export default function HomePage() {
   return (
     <>
+      <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <div className="absolute inset-0 hero-grid-bg" />

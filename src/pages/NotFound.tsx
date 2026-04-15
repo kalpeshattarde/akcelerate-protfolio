@@ -4,7 +4,9 @@ import { Home, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center" style={{ background: "var(--gradient-hero)" }}>
+    <>
+      <SEOHead title="Page Not Found" description="The page you're looking for doesn't exist." />
+      <section className="min-h-screen flex items-center justify-center" style={{ background: "var(--gradient-hero)" }}>
       <div className="text-center px-4">
         <div className="stat-number text-8xl mb-4">404</div>
         <h1 className="font-poppins font-bold text-3xl mb-4">Page Not Found</h1>

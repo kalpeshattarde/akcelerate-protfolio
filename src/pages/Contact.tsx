@@ -8,6 +8,7 @@ import { RevealSection } from "@/hooks/useScrollReveal";
 export default function ContactPage() {
   return (
     <>
+      <SEOHead title="Contact" description="Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours." path="/contact" />
       <HeroPage
         label="Contact"
         title={<>Let's Build Something <span className="gradient-text">Great Together</span></>}
