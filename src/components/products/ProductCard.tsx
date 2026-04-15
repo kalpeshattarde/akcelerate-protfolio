@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Star, TrendingUp, Zap, ZoomIn } from "lucide-react";
+import { Heart, ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Eye } from "lucide-react";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
@@ -10,11 +10,14 @@ interface ProductCardProps {
   currency: Currency;
   isPurchased: boolean;
   cartQuantity?: number;
+  isFavorite?: boolean;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
+  onQuickView?: (id: string) => void;
+  onToggleFavorite?: (id: string) => void;
 }
 
-export default function ProductCard({ product, isPurchased, cartQuantity = 0, onPurchase, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ product, isPurchased, cartQuantity = 0, isFavorite = false, onPurchase, onAddToCart, onQuickView, onToggleFavorite }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -36,12 +39,31 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, on
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </Link>
+          <div className="absolute bottom-2 right-2 z-10 flex gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView?.(product.id); }}
+              className="p-2 rounded-lg bg-black/50 text-white hover:bg-black/70"
+              title="Quick view"
+            >
+              <Eye className="w-4 h-4" />
+            </button>
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxOpen(true); }}
+              className="p-2 rounded-lg bg-black/50 text-white hover:bg-black/70"
+              title="Zoom preview"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
+          </div>
+          {/* Favorite button */}
           <button
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxOpen(true); }}
-            className="absolute bottom-2 right-2 z-10 p-2 rounded-lg bg-black/50 text-white opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-black/70"
-            title="Zoom preview"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleFavorite?.(product.id); }}
+            className={`absolute top-3 right-3 z-10 p-1.5 rounded-full transition-colors ${
+              isFavorite ? "bg-red-500/20 text-red-500" : "bg-black/30 text-white hover:bg-black/50"
+            }`}
+            title={isFavorite ? "Remove from wishlist" : "Add to wishlist"}
           >
-            <ZoomIn className="w-4 h-4" />
+            <Heart className={`w-4 h-4 ${isFavorite ? "fill-current" : ""}`} />
           </button>
         </div>
 
