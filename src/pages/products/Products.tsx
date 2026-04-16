@@ -148,20 +148,41 @@ export default function Products() {
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Purchased user quick-access bar */}
-        {purchased.length > 0 && (
-          <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl border border-border bg-card">
-            <span className="text-sm font-medium text-muted-foreground mr-auto">
-              You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
-            </span>
-            <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
-              <LayoutDashboard className="w-4 h-4" /> My Dashboard
-            </Link>
-            <Link to="/guide" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted text-foreground text-sm font-semibold hover:bg-muted/80 transition-colors">
-              <BookOpen className="w-4 h-4" /> Guide
-            </Link>
+        {/* Sticky products toolbar */}
+        <div className="sticky top-[72px] z-40 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 mb-6 bg-background/80 backdrop-blur-lg border-b border-border">
+          <div className="flex items-center gap-3 max-w-7xl mx-auto">
+            {purchased.length > 0 && (
+              <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
+                <LayoutDashboard className="w-4 h-4" /> My Purchases
+                <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary-foreground/20 text-[10px] font-bold">{purchased.length}</span>
+              </Link>
+            )}
+            {purchased.length > 0 && (
+              <Link to="/guide" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors">
+                <BookOpen className="w-4 h-4" /> Guide
+              </Link>
+            )}
+            <div className="ml-auto flex items-center gap-3">
+              {purchased.length > 0 && (
+                <span className="text-xs text-muted-foreground hidden sm:block">
+                  You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
+                </span>
+              )}
+              <button
+                onClick={() => cart.setOpen(true)}
+                className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card text-foreground text-sm font-medium hover:bg-muted transition-colors"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden sm:inline">Cart</span>
+                {cart.totalCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+                    {cart.totalCount}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Recently Purchased Banner */}
         {lastPurchased && !bannerDismissed && (
@@ -187,17 +208,6 @@ export default function Products() {
 
         {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
-
-        {/* FLOATING CART BUTTON */}
-        {cart.totalCount > 0 && (
-          <button
-            onClick={() => cart.setOpen(true)}
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            <span className="font-semibold">{cart.totalCount}</span>
-          </button>
-        )}
 
         {/* PRODUCT CATALOG */}
         <div id="products-catalog" className="mt-16">
