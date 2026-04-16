@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X, Sparkles, Crown, TrendingDown } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X, Sparkles, Crown, BadgePercent } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { BUNDLE_THRESHOLD, STARTER_PRICE, BUNDLE_PRICE, ALL_ACCESS_PRICE } from "@/hooks/useCart";
 import { PRODUCTS } from "@/data/products";
@@ -196,35 +196,77 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
               </DialogTitle>
             </DialogHeader>
 
-            {/* Order Summary */}
-            <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-2">
-              {items.length >= BUNDLE_THRESHOLD && (
-                <div className="flex items-center gap-2 mb-2 p-2 rounded-lg bg-primary/10 text-sm">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-foreground font-medium">Pro Bundle — {items.length} prototypes</span>
+            {/* Order Summary with Savings */}
+            {(() => {
+              const starterPerItem = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
+              const individualTotal = starterPerItem * items.length;
+              const isAllAccess = items.length >= PRODUCTS.length * 0.8;
+              const isBundleTier = items.length >= BUNDLE_THRESHOLD && !isAllAccess;
+              const tierName = isAllAccess ? "All Access" : isBundleTier ? "Pro Bundle" : "Starter";
+              const savings = individualTotal - total;
+              const savingsPercent = individualTotal > 0 ? Math.round((savings / individualTotal) * 100) : 0;
+
+              return (
+                <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+                  {/* Tier badge */}
+                  {(isAllAccess || isBundleTier) && (
+                    <div className={`flex items-center gap-2 p-2.5 rounded-lg text-sm ${
+                      isAllAccess ? "bg-amber-500/10 border border-amber-500/20" : "bg-primary/10 border border-primary/20"
+                    }`}>
+                      {isAllAccess ? <Crown className="w-4 h-4 text-amber-500" /> : <Sparkles className="w-4 h-4 text-primary" />}
+                      <span className="text-foreground font-semibold">{tierName}</span>
+                      <span className="text-muted-foreground">— {items.length} prototypes</span>
+                    </div>
+                  )}
+
+                  {/* Items (collapsed if many) */}
+                  <div className={`space-y-1.5 ${items.length > 6 ? "max-h-36 overflow-y-auto pr-1" : ""}`}>
+                    {items.map(({ product }) => (
+                      <div key={product.id} className="flex justify-between text-sm">
+                        <span className="text-foreground truncate mr-2">{product.name}</span>
+                        <span className="font-medium text-muted-foreground whitespace-nowrap">
+                          {(isAllAccess || isBundleTier) ? "Included" : `${symbol}${starterPerItem.toLocaleString()}`}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Savings breakdown */}
+                  {savings > 0 && (
+                    <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 space-y-1.5">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-green-700">
+                        <BadgePercent className="w-4 h-4" />
+                        You save {symbol}{savings.toLocaleString()} ({savingsPercent}% off)
+                      </div>
+                      <div className="flex justify-between text-xs text-green-700/70">
+                        <span>If bought individually ({items.length} × {symbol}{starterPerItem.toLocaleString()})</span>
+                        <span className="line-through">{symbol}{individualTotal.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-xs text-green-700/70">
+                        <span>{tierName} price</span>
+                        <span className="font-medium">{symbol}{total.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Coupon discount */}
+                  {appliedDiscount?.valid && (
+                    <div className="flex justify-between text-sm text-green-600">
+                      <span className="flex items-center gap-1">
+                        <Tag className="w-3 h-3" /> {appliedDiscount.code} (-{appliedDiscount.percent}%)
+                      </span>
+                      <span>-{symbol}{discountAmount.toLocaleString()}</span>
+                    </div>
+                  )}
+
+                  {/* Total */}
+                  <div className="flex justify-between pt-2 border-t border-border text-base font-bold">
+                    <span>Total</span>
+                    <span className="text-primary">{symbol}{finalTotal.toLocaleString()}</span>
+                  </div>
                 </div>
-              )}
-              {items.map(({ product }) => (
-                <div key={product.id} className="flex justify-between text-sm">
-                  <span className="text-foreground">{product.name}</span>
-                  <span className="font-medium text-muted-foreground">
-                    {items.length >= BUNDLE_THRESHOLD ? "Included" : `${symbol}${(currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd).toLocaleString()}`}
-                  </span>
-                </div>
-              ))}
-              {appliedDiscount?.valid && (
-                <div className="flex justify-between text-sm text-green-600">
-                  <span className="flex items-center gap-1">
-                    <Tag className="w-3 h-3" /> {appliedDiscount.code} (-{appliedDiscount.percent}%)
-                  </span>
-                  <span>-{symbol}{discountAmount.toLocaleString()}</span>
-                </div>
-              )}
-              <div className="flex justify-between pt-2 border-t border-border text-base font-bold">
-                <span>Total</span>
-                <span className="text-primary">{symbol}{finalTotal.toLocaleString()}</span>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Coupon Code */}
             <div className="flex gap-2">
