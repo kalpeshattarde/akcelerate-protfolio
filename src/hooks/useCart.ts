@@ -81,17 +81,24 @@ export function useCart() {
 
   const totalCount = useMemo(() => items.length, [items]);
 
-  // Pricing logic: 5+ items = Pro Bundle flat price, otherwise Starter per item
-  const isBundle = useMemo(() => items.length >= BUNDLE_THRESHOLD, [items]);
+  // Pricing: all products = All Access, 5+ = Pro Bundle, otherwise Starter per item
+  const isAllAccess = useMemo(() => {
+    const totalProducts = PRODUCTS.length;
+    return items.length >= totalProducts * 0.8; // 80%+ of catalog = all access
+  }, [items]);
+
+  const isBundle = useMemo(() => items.length >= BUNDLE_THRESHOLD && !isAllAccess, [items, isAllAccess]);
 
   const getTotal = useCallback((currency: Currency) => {
+    if (isAllAccess) {
+      return currency === "inr" ? ALL_ACCESS_PRICE.inr : ALL_ACCESS_PRICE.usd;
+    }
     if (items.length >= BUNDLE_THRESHOLD) {
       return currency === "inr" ? BUNDLE_PRICE.inr : BUNDLE_PRICE.usd;
     }
-    // Starter price per item
     const perItem = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
     return perItem * items.length;
-  }, [items]);
+  }, [items, isAllAccess]);
 
   const getQuantity = useCallback((productId: string) => cartMap[productId] || 0, [cartMap]);
 
