@@ -20,7 +20,11 @@ export default function ProductDetail() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
-  if (!product) {
+  // Track product view
+  useEffect(() => {
+    if (product) trackProductView(product.slug, product.name);
+  }, [product?.slug, product?.name]);
+
     return (
       <main className="pt-28 pb-20 text-center">
         <p className="text-muted-foreground">Product not found.</p>
