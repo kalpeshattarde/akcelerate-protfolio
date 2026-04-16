@@ -31,6 +31,65 @@ const aboutLinks = [
   { to: "/blog", title: "Blog", desc: "Latest articles & news", icon: FileText },
 ];
 
+function ProfileDropdown() {
+  const { user } = useUser();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const profileLinks = [
+    { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
+    { to: "/wishlist", label: "Wishlist", icon: Heart },
+    { to: "/guide", label: "Guide", icon: BookOpen },
+  ];
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+      >
+        <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold uppercase">
+          {user?.firstName?.[0] || user?.primaryEmailAddress?.emailAddress?.[0] || "U"}
+        </div>
+        <span className="hidden xl:inline max-w-[100px] truncate">{user?.firstName || "Profile"}</span>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl border border-border bg-card shadow-xl z-50 overflow-hidden">
+          <div className="p-4 border-b border-border bg-muted/30">
+            <p className="text-sm font-semibold text-foreground truncate">{user?.fullName || "User"}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.primaryEmailAddress?.emailAddress}</p>
+          </div>
+          <div className="p-2">
+            {profileLinks.map(l => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+              >
+                <l.icon className="w-4 h-4" /> {l.label}
+              </Link>
+            ))}
+          </div>
+          <div className="p-3 border-t border-border">
+            <UserButton afterSignOutUrl="/" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
