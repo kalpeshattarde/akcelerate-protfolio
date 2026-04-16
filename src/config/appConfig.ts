@@ -1,8 +1,8 @@
 export const CONFIG = {
   pricing: {
-    single: { usd: 29, inr: 2499 },
-    bundle: { usd: 119, inr: 9999 },
-    enterprise: { usd: 499, inr: 41999 },
+    single: { usd: 19, inr: 1499 },
+    bundle: { usd: 59, inr: 4999 },
+    enterprise: { usd: 249, inr: 21000 },
   },
   discounts: {
     codes: {
