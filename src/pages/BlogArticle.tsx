@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { useEffect, useState } from "react";
 import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";

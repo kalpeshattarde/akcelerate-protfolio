@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
