@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, User, BookOpen, Sparkles } from "lucide-react";
+import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen, Sparkles } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -264,7 +264,10 @@ export default function Products() {
             {/* Toolbar below tabs */}
             <div className="flex items-center gap-3 mb-8 p-3 rounded-2xl border border-border bg-card">
               <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
-                <User className="w-4 h-4" /> Profile
+                <LayoutDashboard className="w-4 h-4" /> My Purchases
+                {purchased.length > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary-foreground/20 text-[10px] font-bold">{purchased.length}</span>
+                )}
               </Link>
               <Link to="/guide" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors">
                 <BookOpen className="w-4 h-4" /> Guide
