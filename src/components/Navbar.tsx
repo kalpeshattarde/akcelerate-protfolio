@@ -131,6 +131,7 @@ export default function Navbar() {
             <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
             <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
+            <Link to="/guide" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/guide" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Guide</Link>
           </div>
 
           {/* Right side */}
@@ -185,6 +186,7 @@ export default function Navbar() {
               { to: "/gallery", label: "Gallery" },
               { to: "/completed-projects", label: "Completed Projects" },
               { to: "/careers", label: "Careers" },
+              { to: "/guide", label: "Guide" },
               { to: "/wishlist", label: "Wishlist" },
             ].map(l => (
               <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
