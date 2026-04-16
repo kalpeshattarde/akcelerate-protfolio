@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
@@ -9,6 +9,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import RecommendationEngine from "@/components/products/RecommendationEngine";
 import { downloadProductFile } from "@/lib/downloadProduct";
 import { toast } from "sonner";
+import { trackProductView, trackPurchase } from "@/lib/analytics";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -18,6 +19,11 @@ export default function ProductDetail() {
   const [finalPrice, setFinalPrice] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [downloading, setDownloading] = useState(false);
+
+  // Track product view
+  useEffect(() => {
+    if (product) trackProductView(product.slug, product.name);
+  }, [product?.slug, product?.name]);
 
   if (!product) {
     return (
@@ -132,7 +138,7 @@ export default function ProductDetail() {
           items={[{ product, quantity: 1 }]}
           currency={currency}
           total={finalPrice || (currency === "inr" ? product.price.inr : product.price.usd)}
-          onComplete={() => { purchase(product.id); setShowCheckout(false); }}
+          onComplete={() => { purchase(product.id); trackPurchase(product.id, product.name, finalPrice || (currency === "inr" ? product.price.inr : product.price.usd), currency); setShowCheckout(false); }}
         />
       </div>
     </main>
