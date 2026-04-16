@@ -56,9 +56,13 @@ function ProfileDropdown() {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
       >
-        <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold uppercase">
-          {user?.firstName?.[0] || user?.primaryEmailAddress?.emailAddress?.[0] || "U"}
-        </div>
+        {user?.imageUrl ? (
+          <img src={user.imageUrl} alt="" className="w-7 h-7 rounded-full object-cover" referrerPolicy="no-referrer" />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold uppercase">
+            {user?.firstName?.[0] || user?.primaryEmailAddress?.emailAddress?.[0] || "U"}
+          </div>
+        )}
         <span className="hidden xl:inline max-w-[100px] truncate">{user?.firstName || "Profile"}</span>
         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
