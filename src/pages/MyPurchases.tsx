@@ -54,18 +54,6 @@ export default function MyPurchases() {
   const [showHistory, setShowHistory] = useState(false);
   const [filter, setFilter] = useState<"all" | "mobile-app" | "web-saas">("all");
 
-  if (!isLoaded) {
-    return (
-      <main className="pt-28 pb-20 text-center">
-        <Loader2 className="w-6 h-6 animate-spin mx-auto text-primary" />
-      </main>
-    );
-  }
-
-  if (!isSignedIn) {
-    return <RedirectToSignIn />;
-  }
-
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
   const orders = getOrders();
@@ -79,6 +67,18 @@ export default function MyPurchases() {
   const totalSpent = useMemo(() => {
     return purchasedProducts.reduce((sum, p) => sum + (currency === "inr" ? p.price.inr : p.price.usd), 0);
   }, [purchasedProducts, currency]);
+
+  if (!isLoaded) {
+    return (
+      <main className="pt-28 pb-20 text-center">
+        <Loader2 className="w-6 h-6 animate-spin mx-auto text-primary" />
+      </main>
+    );
+  }
+
+  if (!isSignedIn) {
+    return <RedirectToSignIn />;
+  }
 
   const handleDownload = async (product: typeof PRODUCTS[0]) => {
     setDownloading(product.id);
