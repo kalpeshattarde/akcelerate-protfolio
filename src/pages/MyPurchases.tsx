@@ -48,7 +48,7 @@ function getPurchaseDate(productId: string, orders: Order[]): string | null {
 }
 
 export default function MyPurchases() {
-  const { isSignedIn, isLoaded } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const { isPurchased } = useProducts();
   const { currency } = useGeoDetection();
   const [downloading, setDownloading] = useState<string | null>(null);
@@ -120,7 +120,7 @@ export default function MyPurchases() {
     }
     setEmailing(product.id);
     try {
-      const { data, error } = await supabase.functions.invoke("send-download-email", {
+      const { error } = await supabase.functions.invoke("send-download-email", {
         body: { email: userEmail, productName: product.name, productSlug: product.slug },
       });
       if (error) throw error;
