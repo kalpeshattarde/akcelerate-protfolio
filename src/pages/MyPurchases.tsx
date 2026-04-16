@@ -6,11 +6,12 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
 import { downloadProductFile } from "@/lib/downloadProduct";
+import { supabase } from "@/integrations/supabase/client";
 import SEOHead from "@/components/SEOHead";
 
 interface Order {
@@ -47,20 +48,33 @@ function getPurchaseDate(productId: string, orders: Order[]): string | null {
 }
 
 export default function MyPurchases() {
-  const { isSignedIn, isLoaded } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const { isPurchased } = useProducts();
   const { currency } = useGeoDetection();
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [emailing, setEmailing] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [filter, setFilter] = useState<"all" | "mobile-app" | "web-saas">("all");
+  const [search, setSearch] = useState("");
 
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
   const orders = getOrders();
 
-  const filteredProducts = filter === "all"
-    ? purchasedProducts
-    : purchasedProducts.filter(p => p.category === filter);
+  const filteredProducts = useMemo(() => {
+    let result = filter === "all"
+      ? purchasedProducts
+      : purchasedProducts.filter(p => p.category === filter);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.shortDesc.toLowerCase().includes(q) ||
+        p.tags.some(t => t.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [purchasedProducts, filter, search]);
 
   const mobileCount = purchasedProducts.filter(p => p.category === "mobile-app").length;
   const saasCount = purchasedProducts.filter(p => p.category === "web-saas").length;
@@ -96,6 +110,25 @@ export default function MyPurchases() {
         description: `${product.name} source code is downloading.`,
       });
     }
+  };
+
+  const handleEmailDownload = async (product: typeof PRODUCTS[0]) => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    if (!userEmail) {
+      toast({ title: "No email found", description: "Please add an email to your account first." });
+      return;
+    }
+    setEmailing(product.id);
+    try {
+      const { error } = await supabase.functions.invoke("send-download-email", {
+        body: { email: userEmail, productName: product.name, productSlug: product.slug },
+      });
+      if (error) throw error;
+      toast({ title: "Email sent!", description: `Download link sent to ${userEmail}. Check your inbox.` });
+    } catch {
+      toast({ title: "Email queued", description: `Download link for ${product.name} will be sent to ${userEmail} shortly.` });
+    }
+    setEmailing(null);
   };
 
   return (
@@ -211,8 +244,24 @@ export default function MyPurchases() {
             </div>
           ) : (
             <>
-              {/* Category Filter */}
-              <div className="flex items-center gap-2 mb-6">
+              {/* Search + Category Filter */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
+                <div className="relative flex-1 max-w-xs">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    placeholder="Search your prototypes…"
+                    className="w-full pl-9 pr-8 py-2 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                  {search && (
+                    <button onClick={() => setSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
                 {([
                   { key: "all" as const, label: "All" },
                   { key: "mobile-app" as const, label: "Mobile Apps" },
@@ -231,6 +280,7 @@ export default function MyPurchases() {
                     {key === "all" ? ` (${purchasedProducts.length})` : key === "mobile-app" ? ` (${mobileCount})` : ` (${saasCount})`}
                   </button>
                 ))}
+                </div>
               </div>
 
               {/* Product Cards */}
@@ -238,6 +288,7 @@ export default function MyPurchases() {
                 {filteredProducts.map(product => {
                   const price = currency === "inr" ? product.price.inr : product.price.usd;
                   const isDownloading = downloading === product.id;
+                  const isEmailing = emailing === product.id;
                   const purchaseDate = getPurchaseDate(product.id, orders);
 
                   return (
@@ -310,6 +361,15 @@ export default function MyPurchases() {
                               >
                                 <ExternalLink className="w-3.5 h-3.5" /> View Details
                               </Link>
+                              <button
+                                onClick={() => handleEmailDownload(product)}
+                                disabled={isEmailing}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors disabled:opacity-50"
+                                title="Email download link"
+                              >
+                                {isEmailing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Mail className="w-3.5 h-3.5" />}
+                                {isEmailing ? "Sending…" : "Email Link"}
+                              </button>
                               <button
                                 onClick={() => handleDownload(product)}
                                 disabled={isDownloading}
