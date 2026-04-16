@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, forwardRef, useRef, useCallback } from "react";
+import { useState, useEffect, memo, forwardRef, useRef } from "react";
 
 const tabs1 = ["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"];
 const tabs2 = ["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"];
@@ -21,18 +21,7 @@ function AnimatedChart({ animate }: { animate: boolean }) {
 
   useEffect(() => {
     if (!animate || !containerRef.current) return;
-    const bars = containerRef.current.children;
-
-    const tick = () => {
-      const now = Date.now();
-      for (let i = 0; i < bars.length; i++) {
-        const h = barHeights[i] + Math.sin(now / 800 + i * 0.7) * 12;
-        (bars[i] as HTMLElement).style.height = `${Math.max(10, Math.min(98, h))}%`;
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    // Throttle to ~30fps instead of 60fps for this decorative animation
+    // Throttle to ~30fps for this decorative animation
     let lastTime = 0;
     const throttledTick = () => {
       const now = performance.now();
