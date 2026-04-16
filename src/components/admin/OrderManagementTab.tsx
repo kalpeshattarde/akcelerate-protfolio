@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { Receipt, Search, X, Package, Clock, CheckCircle2, AlertCircle, ArrowUpDown } from "lucide-react";
+import { Receipt, Search, X, Package, Clock, CheckCircle2, AlertCircle, ArrowUpDown, Download } from "lucide-react";
+import { downloadCSV } from "@/lib/csvExport";
 
 interface Order {
   orderId: string;
@@ -39,9 +40,7 @@ export default function OrderManagementTab() {
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(o =>
-        o.orderId.toLowerCase().includes(q) ||
-        o.items.some(i => i.name.toLowerCase().includes(q)) ||
-        (o.email || "").toLowerCase().includes(q)
+        o.orderId.toLowerCase().includes(q) || o.items.some(i => i.name.toLowerCase().includes(q)) || (o.email || "").toLowerCase().includes(q)
       );
     }
     result = [...result].sort((a, b) => {
@@ -69,14 +68,26 @@ export default function OrderManagementTab() {
     }
   };
 
+  const exportOrders = () => {
+    downloadCSV("orders-export.csv",
+      ["Order ID", "Date", "Items", "Total", "Currency", "Status", "Payment", "Email"],
+      filtered.map(o => [o.orderId, new Date(o.date).toLocaleDateString(), o.items.map(i => i.name).join("; "), String(o.total), o.currency, o.status, o.paymentMethod, o.email || ""])
+    );
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-2 mb-2">
-        <Receipt className="w-5 h-5 text-primary" />
-        <h2 className="font-poppins text-xl font-semibold text-foreground">Order Management</h2>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Receipt className="w-5 h-5 text-primary" />
+          <h2 className="font-poppins text-xl font-semibold text-foreground">Order Management</h2>
+        </div>
+        <button onClick={exportOrders}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-colors">
+          <Download className="w-3.5 h-3.5" /> Export CSV
+        </button>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           { label: "Total Orders", value: orders.length.toString() },
@@ -91,7 +102,6 @@ export default function OrderManagementTab() {
         ))}
       </div>
 
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -109,7 +119,6 @@ export default function OrderManagementTab() {
         </div>
       </div>
 
-      {/* Orders Table */}
       {filtered.length === 0 ? (
         <div className="text-center py-16 rounded-2xl border border-border bg-muted/20">
           <Package className="w-12 h-12 text-muted-foreground/40 mx-auto mb-3" />
@@ -166,11 +175,8 @@ export default function OrderManagementTab() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-center">
-                        <select
-                          value={order.status}
-                          onChange={e => updateStatus(order.orderId, e.target.value)}
-                          className="text-xs rounded-lg border border-input bg-background px-2 py-1 focus:outline-none"
-                        >
+                        <select value={order.status} onChange={e => updateStatus(order.orderId, e.target.value)}
+                          className="text-xs rounded-lg border border-input bg-background px-2 py-1 focus:outline-none">
                           <option value="completed">Completed</option>
                           <option value="pending">Pending</option>
                           <option value="refunded">Refunded</option>
