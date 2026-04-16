@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
@@ -9,6 +9,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import RecommendationEngine from "@/components/products/RecommendationEngine";
 import { downloadProductFile } from "@/lib/downloadProduct";
 import { toast } from "sonner";
+import { trackProductView, trackPurchase } from "@/lib/analytics";
 
 export default function ProductDetail() {
   const { slug } = useParams();
