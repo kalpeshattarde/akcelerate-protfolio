@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, forwardRef } from "react";
 
 const tabs1 = ["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"];
 const tabs2 = ["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"];
@@ -65,28 +65,31 @@ function useTypingEffect(lines: string[], speed = 40, pauseDuration = 2000) {
   return text;
 }
 
-function CountUpValue({ target, suffix = "", prefix = "" }: { target: number; suffix?: string; prefix?: string }) {
-  const [val, setVal] = useState(0);
+const CountUpValue = forwardRef<HTMLSpanElement, { target: number; suffix?: string; prefix?: string }>(
+  ({ target, suffix = "", prefix = "" }, ref) => {
+    const [val, setVal] = useState(0);
 
-  useEffect(() => {
-    const duration = 1800;
-    const steps = 40;
-    const increment = target / steps;
-    let current = 0;
-    const interval = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        setVal(target);
-        clearInterval(interval);
-      } else {
-        setVal(Math.round(current * 10) / 10);
-      }
-    }, duration / steps);
-    return () => clearInterval(interval);
-  }, [target]);
+    useEffect(() => {
+      const duration = 1800;
+      const steps = 40;
+      const increment = target / steps;
+      let current = 0;
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setVal(target);
+          clearInterval(interval);
+        } else {
+          setVal(Math.round(current * 10) / 10);
+        }
+      }, duration / steps);
+      return () => clearInterval(interval);
+    }, [target]);
 
-  return <>{prefix}{val % 1 === 0 ? val : val.toFixed(1)}{suffix}</>;
-}
+    return <span ref={ref}>{prefix}{val % 1 === 0 ? val : val.toFixed(1)}{suffix}</span>;
+  }
+);
+CountUpValue.displayName = "CountUpValue";
 
 const HeroDashboard = memo(function HeroDashboard() {
   const [activeTab, setActiveTab] = useState(0);
