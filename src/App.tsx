@@ -8,6 +8,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import SiteLayout from "@/components/SiteLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PageSkeleton from "@/components/PageSkeleton";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 
 // Lazy-loaded pages for code splitting
@@ -53,6 +55,7 @@ const App = () => (
         <BrowserRouter>
           <ErrorBoundary>
             <SiteLayout>
+              <Breadcrumbs />
               <Suspense fallback={<PageSkeleton />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
@@ -81,8 +84,8 @@ const App = () => (
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/sign-in/*" element={<SignIn />} />
                   <Route path="/sign-up/*" element={<SignUp />} />
-                  <Route path="/my-purchases" element={<MyPurchases />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/my-purchases" element={<ProtectedRoute><MyPurchases /></ProtectedRoute>} />
+                  <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
                   <Route path="/guide" element={<Guide />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
