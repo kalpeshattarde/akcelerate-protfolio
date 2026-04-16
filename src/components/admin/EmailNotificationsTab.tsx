@@ -138,7 +138,7 @@ export default function EmailNotificationsTab() {
   const renderPreview = (body: string) => {
     let rendered = body;
     for (const [key, val] of Object.entries(sampleInvoiceData)) {
-      rendered = rendered.replaceAll(key, val);
+      rendered = rendered.split(key).join(val);
     }
     return rendered;
   };
