@@ -63,6 +63,31 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
       title: "🎉 Purchase confirmed!",
       description: `Order ${orderId}: ${productNames}. Check your email for details.`,
     });
+
+    // Send purchase confirmation email
+    const isAllAccessTier = items.length >= PRODUCTS.length * 0.8;
+    const isBundleTier = items.length >= BUNDLE_THRESHOLD && !isAllAccessTier;
+    const tierName = isAllAccessTier ? "All Access" : isBundleTier ? "Pro Bundle" : "Starter";
+    
+    const emailPayload = {
+      customerEmail: user?.primaryEmailAddress?.emailAddress || form.email,
+      customerName: user?.fullName || form.name,
+      orderId,
+      items: items.map(i => ({ slug: i.product.slug, name: i.product.name })),
+      total: finalTotal,
+      currency,
+      tierName,
+    };
+
+    const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+    if (projectId) {
+      fetch(`https://${projectId}.supabase.co/functions/v1/send-purchase-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emailPayload),
+      }).catch(() => { /* email sending is best-effort */ });
+    }
+
     setTimeout(() => {
       onComplete();
       setStep("form");
