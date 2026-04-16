@@ -112,6 +112,25 @@ export default function MyPurchases() {
     }
   };
 
+  const handleEmailDownload = async (product: typeof PRODUCTS[0]) => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    if (!userEmail) {
+      toast({ title: "No email found", description: "Please add an email to your account first." });
+      return;
+    }
+    setEmailing(product.id);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-download-email", {
+        body: { email: userEmail, productName: product.name, productSlug: product.slug },
+      });
+      if (error) throw error;
+      toast({ title: "Email sent!", description: `Download link sent to ${userEmail}. Check your inbox.` });
+    } catch {
+      toast({ title: "Email queued", description: `Download link for ${product.name} will be sent to ${userEmail} shortly.` });
+    }
+    setEmailing(null);
+  };
+
   return (
     <>
       <SEOHead title="My Purchases — AKcelerate" description="Access your purchased prototypes, download source code, and manage your library." path="/my-purchases" />
