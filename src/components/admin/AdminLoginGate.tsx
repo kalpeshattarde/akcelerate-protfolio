@@ -14,7 +14,7 @@ const ADMIN_USER_KEY = "ak-admin-user";
 
 // Permission map: which tabs each role can access
 export const ROLE_PERMISSIONS: Record<AdminRole, string[]> = {
-  super_admin: ["dashboard", "analytics", "users", "orders", "content", "email", "products", "config", "affiliates", "growth", "ads", "activity"],
+  super_admin: ["dashboard", "analytics", "users", "orders", "content", "email", "products", "config", "affiliates", "growth", "ads", "activity", "audit"],
   manager: ["dashboard", "analytics", "users", "orders", "content", "email", "products", "activity"],
   editor: ["dashboard", "content", "products", "activity"],
 };

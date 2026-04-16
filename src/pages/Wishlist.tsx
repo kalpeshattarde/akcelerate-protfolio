@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Heart, ShoppingCart, Trash2, ArrowLeft, Zap } from "lucide-react";
@@ -58,6 +59,7 @@ export default function Wishlist() {
           </div>
         ) : (
           <>
+      <SEOHead title="Wishlist" description="Your saved SaaS prototypes — review and purchase your favorite products." path="/wishlist" />
             {wishlistProducts.length > 1 && (
               <div className="flex justify-end mb-4">
                 <button

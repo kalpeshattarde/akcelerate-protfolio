@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
@@ -37,6 +38,8 @@ export default function ProductDetail() {
   const purchased = isPurchased(product.id);
 
   return (
+    <>
+      <SEOHead title={product.name} description={product.description.slice(0, 155)} path={`/products/${slug}`} />
     <main className="pt-28 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link to="/products" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-6">
@@ -142,5 +145,6 @@ export default function ProductDetail() {
         />
       </div>
     </main>
+    </>
   );
 }

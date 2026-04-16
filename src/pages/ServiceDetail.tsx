@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
@@ -23,6 +24,7 @@ export default function ServiceDetailPage() {
 
   return (
     <>
+      <SEOHead title={service.title} description={service.description} path={`/services/${slug}`} />
       <HeroPage label="Services" title={<><span className="gradient-text">{service.title}</span></>} description={service.description} />
 
       <section className="py-16 border-b border-border">

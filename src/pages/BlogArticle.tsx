@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { useEffect, useState } from "react";
 import { HeroPage } from "@/components/Hero";
 import CTASection from "@/components/CTASection";
@@ -68,6 +69,7 @@ export default function BlogArticlePage() {
   const related = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3);
   return (
     <>
+      <SEOHead title={post.title} description={post.description} path={`/blog/${slug}`} />
       <HeroPage label={post.category} title={<>{post.title}</>} description={`${post.date} · ${post.readTime} · By ${post.author}`} />
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

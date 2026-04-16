@@ -1,4 +1,5 @@
 import { SignUp as ClerkSignUp } from "@clerk/clerk-react";
+import SEOHead from "@/components/SEOHead";
 
 export default function SignUp() {
   return (
