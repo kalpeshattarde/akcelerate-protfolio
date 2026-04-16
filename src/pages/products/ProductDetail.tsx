@@ -138,7 +138,7 @@ export default function ProductDetail() {
           items={[{ product, quantity: 1 }]}
           currency={currency}
           total={finalPrice || (currency === "inr" ? product.price.inr : product.price.usd)}
-          onComplete={() => { purchase(product.id); setShowCheckout(false); }}
+          onComplete={() => { purchase(product.id); trackPurchase(product.id, product.name, finalPrice || (currency === "inr" ? product.price.inr : product.price.usd), currency); setShowCheckout(false); }}
         />
       </div>
     </main>
