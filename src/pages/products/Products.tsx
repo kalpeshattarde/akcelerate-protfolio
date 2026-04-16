@@ -341,8 +341,8 @@ export default function Products() {
           currency={currency}
           total={cart.getTotal(currency)}
           onComplete={() => {
-            // If bundle (5+ items), grant all access to all files
-            if (cart.isBundle) {
+            // If bundle (5+) or all access, grant access to all files
+            if (cart.isBundle || cart.isAllAccess) {
               grantAllAccess();
             }
             cart.items.forEach(i => purchase(i.product.id));
