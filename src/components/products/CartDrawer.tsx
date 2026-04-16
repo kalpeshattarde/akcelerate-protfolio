@@ -66,7 +66,9 @@ export default function CartDrawer({ open, onOpenChange, items, currency, total,
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold text-foreground truncate">{product.name}</h4>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {isBundle ? (
+                    {isAllAccess ? (
+                      <span className="text-amber-600 font-medium">All Access</span>
+                    ) : isBundle ? (
                       <span className="text-primary font-medium">Included in bundle</span>
                     ) : (
                       <>{symbol}{starterPrice.toLocaleString()}</>
