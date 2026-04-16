@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Zap, Crown, Building2, GraduationCap, Wrench, Briefcase } from "lucide-react";
+import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-
-const USD_TO_INR = 85;
 
 const plans = [
   {
     name: "Starter",
-    priceUsd: 29,
+    priceUsd: 19,
+    priceInr: 1499,
     period: "one-time",
     description: "Perfect for students, solo entrepreneurs & vibe coders exploring SaaS ideas.",
     icon: GraduationCap,
@@ -26,7 +25,8 @@ const plans = [
   },
   {
     name: "Pro Bundle",
-    priceUsd: 99,
+    priceUsd: 59,
+    priceInr: 4999,
     period: "one-time",
     description: "For freelancers & specialized SaaS builders shipping multiple products fast.",
     icon: Wrench,
@@ -44,15 +44,37 @@ const plans = [
     highlighted: true,
   },
   {
-    name: "AKcelerate All-Access",
-    priceUsd: 249,
-    period: "starts from",
-    description: "For agency owners who build & sell SaaS. Get everything — white-label ready.",
-    icon: Building2,
-    audience: ["Agency Owners", "White-Label Resellers"],
+    name: "All Access",
+    priceUsd: 119,
+    priceInr: 9999,
+    period: "one-time",
+    description: "Get access to every prototype in the catalog — current and future releases.",
+    icon: Crown,
+    audience: ["Builders", "Resellers", "Teams"],
     features: [
       "Access to ALL prototypes",
       "Every future release included",
+      "Full source code ownership",
+      "Commercial license for all",
+      "Free updates for 12 months",
+      "Priority support",
+    ],
+    cta: "Get All Access",
+    ctaLink: "/contact",
+    highlighted: false,
+  },
+  {
+    name: "AKcelerate All-Access",
+    priceUsd: 249,
+    priceInr: 21000,
+    period: "starts from",
+    description: "Custom SaaS or mobile app solution with all features — white-label ready.",
+    icon: Building2,
+    audience: ["Agency Owners", "White-Label Resellers", "Enterprises"],
+    features: [
+      "Access to ALL prototypes",
+      "Custom SaaS or mobile app solution",
+      "All features included",
       "White-label rights for client delivery",
       "Remove all AKcelerate branding",
       "Priority feature requests",
@@ -65,14 +87,6 @@ const plans = [
   },
 ];
 
-function formatPrice(usd: number, currency: "usd" | "inr") {
-  if (currency === "inr") {
-    const inr = Math.round(usd * USD_TO_INR);
-    return `₹${inr.toLocaleString("en-IN")}`;
-  }
-  return `$${usd}`;
-}
-
 export default function MarketplacePricing() {
   return (
     <section id="pricing" className="py-16 lg:py-20 section-alt">
@@ -82,15 +96,15 @@ export default function MarketplacePricing() {
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $29. Five for $99. Full access from $249.
+            One prototype for $19. Five for $59. All access for $119. Custom solutions from $249.
             <br />
             <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
         </div>
       </RevealSection>
 
-      <RevealGrid className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" stagger={100}>
-        {plans.map(({ name, priceUsd, period, description, icon: Icon, audience, features, cta, ctaLink, highlighted }, i) => (
+      <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto" stagger={100}>
+        {plans.map(({ name, priceUsd, priceInr, period, description, icon: Icon, audience, features, cta, ctaLink, highlighted }, i) => (
           <div
             key={i}
             className={`reveal-item glass-card p-7 relative overflow-hidden ${
@@ -111,12 +125,12 @@ export default function MarketplacePricing() {
             <div className="mb-1">
               <div className="flex items-baseline gap-1">
                 <span className="font-poppins text-4xl font-extrabold text-foreground">
-                  {formatPrice(priceUsd, "usd")}
+                  ${priceUsd}
                 </span>
                 <span className="text-sm text-muted-foreground">{period}</span>
               </div>
               <div className="text-sm text-muted-foreground">
-                ≈ {formatPrice(priceUsd, "inr")}
+                ≈ ₹{priceInr.toLocaleString("en-IN")}
               </div>
             </div>
 
