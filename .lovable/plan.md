@@ -1,78 +1,50 @@
 
 
-# Products Page with Subtabs + Top Selling
+# Plan: Build the SaaS Prototypes Guide Page
 
-## Summary
-Add a single "Products" link in the navbar (no dropdown). The `/products` page itself has two subtabs — **Mobile App** and **Web SaaS** — as tab switchers at the top of the page, plus a **Top Selling Products** section above the tabs. Admin remains a separate `/admin` route.
+## Overview
+Create a new `/guide` route with a comprehensive, premium-designed help page for the SaaS Prototypes library. The page will be a single large component with all 11 sections, sticky side navigation, copy-to-clipboard prompt blocks, FAQ accordion, and mobile-first responsive design.
 
-## Navigation Change
-- Navbar gets a plain "Products" link (like "Contact") pointing to `/products` — no dropdown, no sub-links
-- Admin link stays in footer only
+## Design Direction
+- Neutral ink/stone palette (slate/zinc grays) with a single warm accent (amber-500 or emerald-600 — not purple, not crypto)
+- Strong typographic hierarchy using existing Poppins/Inter fonts
+- Clean whitespace, no glassmorphism, no fake stats
+- Reuse existing components: `FAQAccordion`, `SEOHead`, scroll reveal hooks
 
-## Products Page Layout (`/products`)
+## Files to Create/Edit
 
-```text
-┌─────────────────────────────────────┐
-│  Personalized Hero Banner           │
-├─────────────────────────────────────┤
-│  🔥 Top Selling Products (carousel)│
-│  [Card] [Card] [Card] [Card]       │
-├─────────────────────────────────────┤
-│  [ Mobile App ]  [ Web SaaS ]  ←tabs│
-├─────────────────────────────────────┤
-│  Product Grid (filtered by tab)     │
-│  [Card] [Card] [Card]              │
-│  [Card] [Card] [Card]              │
-├─────────────────────────────────────┤
-│  Upsell Banner                      │
-└─────────────────────────────────────┘
-```
+### 1. `src/pages/Guide.tsx` (new — ~800-1000 lines)
+The main page component containing all 11 sections with fully written copy:
+- **Hero** — headline, subheadline, two CTAs (Browse Prototypes links to `/products`, Copy Lovable Prompt copies the short prompt)
+- **What This Library Contains** — two-column layout for SaaS vs Mobile groups with example names
+- **How To Choose** — 4-step cards with icons
+- **Which Folder To Give To AI** — callout panels with do/don't guidance
+- **Folder Structure** — labeled table/grid showing each file/folder with category badges (source of truth, implementation, reference, archive)
+- **Prompts Folder** — explanation of LOVABLE_ADVANCED_PROMPT.md and global prompt packs
+- **How To Write Better Prompts** — formula breakdown with labeled items
+- **Copy-Paste Prompt Blocks** — short and long prompt blocks with copy buttons, exact text from the spec
+- **Best Practices** — checklist-style cards
+- **FAQ** — using existing `FAQAccordion` component with the 6 specified questions
+- **Final CTA** — closing section encouraging action
 
-## What Gets Built
+Includes a sticky desktop side navigation (hidden on mobile) that highlights the active section using IntersectionObserver.
 
-### Files Created (~25 new files)
-- `src/config/appConfig.ts` — global config (pricing, discounts, growth, features)
-- `src/data/products.ts` — demo products with `category` ("mobile-app" | "web-saas") and `topSelling: boolean` flag
-- `src/pages/products/Products.tsx` — main page with Top Selling section + Mobile App / Web SaaS tabs (using existing Tabs UI component)
-- `src/pages/products/ProductDetail.tsx` — single product view
-- `src/pages/products/Checkout.tsx` — mock checkout
-- `src/pages/admin/Admin.tsx` — admin panel with tabbed sections (Dashboard, Config, Products, Affiliates, Growth, Ad Generator)
-- `src/components/products/ProductCard.tsx` — card with preview, price, locked state, badges ("Most Popular", "Top Selling")
-- `src/components/products/PricingSelector.tsx` — USD/INR toggle, coupon input
-- `src/components/products/CheckoutModal.tsx` — mock Stripe/Razorpay flow
-- `src/components/products/TopSellingSection.tsx` — horizontal showcase of top-selling products
-- `src/components/products/RecommendationEngine.tsx` — "You might also like"
-- `src/components/products/UpsellBanner.tsx` — single → bundle prompts
-- `src/components/products/PersonalizedHero.tsx` — dynamic hero
-- `src/components/admin/DashboardTab.tsx` — revenue charts
-- `src/components/admin/ConfigTab.tsx` — edit pricing/toggles
-- `src/components/admin/ProductsTab.tsx` — manage catalog
-- `src/components/admin/AffiliateTab.tsx` — affiliate dashboard
-- `src/components/admin/GrowthTab.tsx` — growth agent panel
-- `src/components/admin/AdGeneratorTab.tsx` — AI ad tools
-- Hooks: `useGeoDetection.ts`, `useProducts.ts`, `useAffiliate.ts`, `usePersonalization.ts`
-- Lib: `growthEngine.ts`, `ltvCalculator.ts`, `adGenerator.ts`
+### 2. `src/App.tsx` (edit)
+- Add lazy import: `const Guide = lazy(() => import("./pages/Guide"));`
+- Add route: `<Route path="/guide" element={<Guide />} />`
 
-### Files Modified (minimal)
-- `src/components/Navbar.tsx` — add plain "Products" link (no dropdown)
-- `src/App.tsx` — add routes: `/products`, `/products/:slug`, `/products/checkout`, `/admin`
-- `src/components/Footer.tsx` — add "Admin" link
+### 3. `src/components/Navbar.tsx` (edit — optional)
+- Add "Guide" link to the navigation if appropriate
 
-### Product Data Shape
-```typescript
-{
-  id, name, slug, category: "mobile-app" | "web-saas",
-  topSelling: boolean, salesCount: number,
-  description, previewImage, tags, priceTier,
-  price: { usd, inr }
-}
-```
+## Technical Details
+- Copy-to-clipboard uses `navigator.clipboard.writeText()` with toast feedback via existing sonner
+- Sticky side nav uses `position: sticky` with `IntersectionObserver` to track active section
+- All copy is fully written — no placeholders
+- Mobile: side nav collapses, sections stack vertically
+- Prompt blocks styled with monospace font, dark background, and a copy icon button
 
-Top Selling section filters by `topSelling: true` and sorts by `salesCount`.
-
-## Technical Notes
-- All mock data in localStorage until Supabase connected
-- No existing pages changed — purely additive
-- Tabs component from `src/components/ui/tabs.tsx` used for Mobile App / Web SaaS switching
-- Recharts (already installed) for admin dashboard
+## Scope
+- 3 files touched (1 new page, 1 route addition, 1 optional nav update)
+- No new dependencies needed
+- All content written inline, no separate data file needed for this one-off page
 
