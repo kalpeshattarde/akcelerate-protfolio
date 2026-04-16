@@ -133,4 +133,6 @@ const ProductQuickView = forwardRef<HTMLDivElement, ProductQuickViewProps>(funct
       </DialogContent>
     </Dialog>
   );
-}
+});
+
+export default ProductQuickView;
