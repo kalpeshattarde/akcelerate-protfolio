@@ -62,7 +62,7 @@ export default function CostBreakdownSection() {
             <div className="flex items-center justify-center gap-4 mb-3">
               <span className="line-through text-2xl text-muted-foreground font-medium">$3,260</span>
               <ArrowRight className="w-5 h-5 text-primary" />
-              <span className="font-poppins text-5xl font-extrabold text-primary">$29</span>
+              <span className="font-poppins text-5xl font-extrabold text-primary">$19</span>
             </div>
             <p className="text-sm text-muted-foreground">
               One-time. Full source code. No subscription. No tokens. No debugging.
