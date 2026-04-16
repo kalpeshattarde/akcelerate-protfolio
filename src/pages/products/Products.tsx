@@ -386,6 +386,12 @@ export default function Products() {
           onAddToCart={handleAddToCartSilent}
           onToggleFavorite={handleToggleFavorite}
         />
+        <ProductCompare
+          compareList={compareList}
+          onRemove={(id) => setCompareList(prev => prev.filter(x => x !== id))}
+          onClear={() => setCompareList([])}
+          currency={currency}
+        />
       </div>
     </main>
     </>
