@@ -4,6 +4,7 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Preloader from "./Preloader";
+import { trackPageView } from "@/lib/analytics";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
