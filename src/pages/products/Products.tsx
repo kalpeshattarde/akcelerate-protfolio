@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
@@ -10,24 +10,24 @@ import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
 import PersonalizedHero from "@/components/products/PersonalizedHero";
-import ProblemSection from "@/components/products/ProblemSection";
-import CostBreakdownSection from "@/components/products/CostBreakdownSection";
 import SolutionSection from "@/components/products/SolutionSection";
-import ComparisonSection from "@/components/products/ComparisonSection";
-import SavingsSection from "@/components/products/SavingsSection";
-import UseCasesSection from "@/components/products/UseCasesSection";
 import TopSellingSection from "@/components/products/TopSellingSection";
 import ProductCard from "@/components/products/ProductCard";
-import MarketplacePricing from "@/components/products/MarketplacePricing";
-import TrustSection from "@/components/products/TrustSection";
-import ProductsFAQ from "@/components/products/ProductsFAQ";
-import FinalCTA from "@/components/products/FinalCTA";
 import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
+
+// Lazy-load below-fold heavy sections
+const ComparisonSection = lazy(() => import("@/components/products/ComparisonSection"));
+const SavingsSection = lazy(() => import("@/components/products/SavingsSection"));
+const UseCasesSection = lazy(() => import("@/components/products/UseCasesSection"));
+const MarketplacePricing = lazy(() => import("@/components/products/MarketplacePricing"));
+const TrustSection = lazy(() => import("@/components/products/TrustSection"));
+const ProductsFAQ = lazy(() => import("@/components/products/ProductsFAQ"));
+const FinalCTA = lazy(() => import("@/components/products/FinalCTA"));
 
 type SortOption = "popular" | "price-low" | "price-high" | "name-az" | "name-za";
 
@@ -57,6 +57,8 @@ const TAG_OPTIONS = [
   "dashboard", "productivity", "wellness",
 ];
 
+const LazyFallback = () => <div className="h-32" />;
+
 export default function Products() {
   const { currency } = useGeoDetection();
   const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products, grantAllAccess } = useProducts();
@@ -81,8 +83,6 @@ export default function Products() {
       return { product, date: last.date };
     } catch { return null; }
   }, [products, purchased]);
-
-  // SEO handled by SEOHead component
 
   const toggleTag = (tag: string) =>
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
@@ -137,7 +137,6 @@ export default function Products() {
   };
 
   const handleAddAllToCart = () => {
-    // Add ALL products to cart for All Access pricing
     products.forEach(p => {
       if (!isPurchased(p.id)) cart.addToCart(p.id, false);
     });
@@ -146,7 +145,6 @@ export default function Products() {
   };
 
   const handleAddBundleToCart = () => {
-    // Add top 5 products to cart for Pro Bundle pricing
     const top5 = topSelling.slice(0, 5);
     top5.forEach(p => {
       if (!isPurchased(p.id)) cart.addToCart(p.id, false);
@@ -319,26 +317,28 @@ export default function Products() {
           </Tabs>
         </div>
 
-        {/* COMPARISON */}
-        <ComparisonSection />
-
-        {/* SAVINGS */}
-        <SavingsSection />
-
-        {/* USE CASES */}
-        <UseCasesSection />
-
-        {/* MARKETPLACE PRICING */}
-        <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
-
-        {/* TRUST SECTION */}
-        <TrustSection />
-
-        {/* FAQ — SEO */}
-        <ProductsFAQ />
-
-        {/* FINAL CTA */}
-        <FinalCTA />
+        {/* Below-fold sections — lazy loaded */}
+        <Suspense fallback={<LazyFallback />}>
+          <ComparisonSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <SavingsSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <UseCasesSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <TrustSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <ProductsFAQ />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <FinalCTA />
+        </Suspense>
 
         <CartDrawer
           open={cart.open}
@@ -360,7 +360,6 @@ export default function Products() {
           currency={currency}
           total={cart.getTotal(currency)}
           onComplete={() => {
-            // If bundle (5+) or all access, grant access to all files
             if (cart.isBundle || cart.isAllAccess) {
               grantAllAccess();
             }
@@ -389,7 +388,7 @@ export default function Products() {
           currency={currency}
         />
       </div>
-    </main>
+      </main>
     </>
   );
 }

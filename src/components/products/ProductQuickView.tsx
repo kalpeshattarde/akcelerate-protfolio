@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -18,11 +19,12 @@ interface ProductQuickViewProps {
   onToggleFavorite: (id: string) => void;
 }
 
-export default function ProductQuickView({
+const ProductQuickView = forwardRef<HTMLDivElement, ProductQuickViewProps>(function ProductQuickView({
   product, open, onOpenChange, currency, isPurchased, isFavorite, cartQuantity,
   onPurchase, onAddToCart, onToggleFavorite,
-}: ProductQuickViewProps) {
+}, _ref) {
   if (!product) return null;
+
 
   const price = currency === "inr" ? `₹${product.price.inr.toLocaleString("en-IN")}` : `$${product.price.usd}`;
 
@@ -131,4 +133,6 @@ export default function ProductQuickView({
       </DialogContent>
     </Dialog>
   );
-}
+});
+
+export default ProductQuickView;

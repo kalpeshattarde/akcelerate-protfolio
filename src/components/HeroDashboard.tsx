@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, forwardRef } from "react";
+import { useState, useEffect, memo, forwardRef, useRef } from "react";
 
 const tabs1 = ["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"];
 const tabs2 = ["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"];
@@ -14,27 +14,50 @@ const terminalLines = [
 
 const barHeights = [30, 45, 35, 55, 48, 65, 58, 72, 68, 80, 75, 92, 85, 70, 88, 95];
 
-function AnimatedBar({ baseHeight, index, animate }: { baseHeight: number; index: number; animate: boolean }) {
-  const [h, setH] = useState(baseHeight);
+// Single RAF-driven chart using CSS transforms instead of per-bar state
+function AnimatedChart({ animate }: { animate: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>();
 
   useEffect(() => {
-    if (!animate) return;
-    const interval = setInterval(() => {
-      setH(baseHeight + Math.sin(Date.now() / 800 + index * 0.7) * 12);
-    }, 120);
-    return () => clearInterval(interval);
-  }, [baseHeight, index, animate]);
+    if (!animate || !containerRef.current) return;
+    // Throttle to ~30fps for this decorative animation
+    let lastTime = 0;
+    const throttledTick = () => {
+      const now = performance.now();
+      if (now - lastTime >= 33) {
+        lastTime = now;
+        const t = Date.now();
+        const bars = containerRef.current?.children;
+        if (bars) {
+          for (let i = 0; i < bars.length; i++) {
+            const h = barHeights[i] + Math.sin(t / 800 + i * 0.7) * 12;
+            (bars[i] as HTMLElement).style.height = `${Math.max(10, Math.min(98, h))}%`;
+          }
+        }
+      }
+      rafRef.current = requestAnimationFrame(throttledTick);
+    };
+
+    rafRef.current = requestAnimationFrame(throttledTick);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [animate]);
 
   return (
-    <div
-      className="flex-1 rounded-t-sm"
-      style={{
-        height: `${Math.max(10, Math.min(98, h))}%`,
-        background: `linear-gradient(180deg, ${index < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
-        opacity: 0.5 + (index / 32),
-        transition: "height 0.3s ease",
-      }}
-    />
+    <div ref={containerRef} className="flex items-end gap-1 h-full p-3 pb-2">
+      {barHeights.map((h, i) => (
+        <div
+          key={i}
+          className="flex-1 rounded-t-sm"
+          style={{
+            height: `${h}%`,
+            background: `linear-gradient(180deg, ${i < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
+            opacity: 0.5 + (i / 32),
+            willChange: "height",
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -187,13 +210,9 @@ const HeroDashboard = memo(function HeroDashboard() {
             <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full" style={{ color: "#34D399", background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.25)" }}>● Active</span>
           </div>
 
-          {/* Animated chart */}
+          {/* Animated chart — single RAF instead of 16 intervals */}
           <div className="mx-3 mb-2 rounded-lg overflow-hidden" style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.04)", height: "100px" }}>
-            <div className="flex items-end gap-1 h-full p-3 pb-2">
-              {barHeights.map((h, i) => (
-                <AnimatedBar key={i} baseHeight={h} index={i} animate={isVisible} />
-              ))}
-            </div>
+            <AnimatedChart animate={isVisible} />
           </div>
 
           {/* Pipeline steps */}
