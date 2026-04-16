@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -11,8 +10,6 @@ import { CheckCircle } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function PricingPage() {
-  const [annual, setAnnual] = useState(false);
-
   return (
     <>
       <SEOHead title="Pricing" description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services." path="/pricing" />
@@ -24,29 +21,14 @@ export default function PricingPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <div className="flex items-center justify-center gap-4 mb-12">
-              <span className={`text-sm font-medium ${!annual ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
-              <button
-                onClick={() => setAnnual(!annual)}
-                className="relative w-14 h-7 rounded-full transition-colors"
-                style={{ background: annual ? "var(--gradient-primary)" : "hsl(var(--border))" }}
-              >
-                <div className={`absolute top-1 w-5 h-5 rounded-full bg-white shadow transition-all ${annual ? "left-8" : "left-1"}`} />
-              </button>
-              <span className={`text-sm font-medium ${annual ? "text-foreground" : "text-muted-foreground"}`}>
-                Annual <span className="text-accent text-xs font-semibold ml-1">Save 20%</span>
-              </span>
-            </div>
-          </RevealSection>
-
           <RevealGrid className="grid md:grid-cols-3 gap-6 items-start" stagger={150}>
             {pricingPlans.map((plan, i) => (
               <div key={i} className="reveal-item">
                 <PricingCard
                   name={plan.name}
                   description={plan.description}
-                  price={annual ? plan.annualPrice : plan.monthlyPrice}
+                  priceUsd={plan.priceUsd}
+                  priceInr={plan.priceInr}
                   features={plan.features}
                   highlighted={plan.highlighted}
                   cta={plan.cta}
