@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench } from "lucide-react";
+import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench, ShoppingCart } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { PRODUCTS } from "@/data/products";
+
+interface MarketplacePricingProps {
+  onAddAllToCart?: () => void;
+  onAddBundleToCart?: () => void;
+}
 
 const plans = [
   {
@@ -22,6 +28,7 @@ const plans = [
     cta: "Browse Prototypes",
     ctaLink: "#products-catalog",
     highlighted: false,
+    action: null as string | null,
   },
   {
     name: "Pro Bundle",
@@ -39,9 +46,10 @@ const plans = [
       "Custom branding kit",
       "Free updates for 12 months",
     ],
-    cta: "Get 5 Prototypes",
-    ctaLink: "/contact",
+    cta: "Add 5 to Cart",
+    ctaLink: "#products-catalog",
     highlighted: true,
+    action: "bundle" as string | null,
   },
   {
     name: "All Access",
@@ -52,7 +60,7 @@ const plans = [
     icon: Crown,
     audience: ["Builders", "Resellers", "Teams"],
     features: [
-      "Access to ALL prototypes",
+      "Access to ALL " + PRODUCTS.length + " prototypes",
       "Every future release included",
       "Full source code ownership",
       "Commercial license for all",
@@ -60,8 +68,9 @@ const plans = [
       "Priority support",
     ],
     cta: "Get All Access",
-    ctaLink: "/contact",
+    ctaLink: "#",
     highlighted: false,
+    action: "all-access" as string | null,
   },
   {
     name: "AKcelerate All-Access",
@@ -84,10 +93,23 @@ const plans = [
     cta: "Start with AKcelerate",
     ctaLink: "/contact",
     highlighted: false,
+    action: null as string | null,
   },
 ];
 
-export default function MarketplacePricing() {
+export default function MarketplacePricing({ onAddAllToCart, onAddBundleToCart }: MarketplacePricingProps) {
+  const handleClick = (action: string | null, ctaLink: string) => {
+    if (action === "all-access" && onAddAllToCart) {
+      onAddAllToCart();
+      return;
+    }
+    if (action === "bundle" && onAddBundleToCart) {
+      onAddBundleToCart();
+      return;
+    }
+    // Default link navigation handled by Link component
+  };
+
   return (
     <section id="pricing" className="py-16 lg:py-20 section-alt">
       <RevealSection>
@@ -104,7 +126,7 @@ export default function MarketplacePricing() {
       </RevealSection>
 
       <RevealGrid className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto" stagger={100}>
-        {plans.map(({ name, priceUsd, priceInr, period, description, icon: Icon, audience, features, cta, ctaLink, highlighted }, i) => (
+        {plans.map(({ name, priceUsd, priceInr, period, description, icon: Icon, audience, features, cta, ctaLink, highlighted, action }, i) => (
           <div
             key={i}
             className={`reveal-item glass-card p-7 relative overflow-hidden ${
@@ -121,7 +143,6 @@ export default function MarketplacePricing() {
             </div>
             <h3 className="font-poppins font-bold text-xl text-foreground mb-1">{name}</h3>
 
-            {/* Dual currency display */}
             <div className="mb-1">
               <div className="flex items-baseline gap-1">
                 <span className="font-poppins text-4xl font-extrabold text-foreground">
@@ -134,7 +155,6 @@ export default function MarketplacePricing() {
               </div>
             </div>
 
-            {/* Target audience badges */}
             <div className="flex flex-wrap gap-1.5 mb-4">
               {audience.map((a, j) => (
                 <span key={j} className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
@@ -152,14 +172,25 @@ export default function MarketplacePricing() {
                 </li>
               ))}
             </ul>
-            <Link
-              to={ctaLink}
-              className={`w-full inline-flex justify-center items-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
-                highlighted ? "btn-primary" : "btn-secondary"
-              }`}
-            >
-              {cta} <ArrowRight className="w-4 h-4" />
-            </Link>
+            {action ? (
+              <button
+                onClick={() => handleClick(action, ctaLink)}
+                className={`w-full inline-flex justify-center items-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
+                  highlighted ? "btn-primary" : "btn-secondary"
+                }`}
+              >
+                <ShoppingCart className="w-4 h-4" /> {cta}
+              </button>
+            ) : (
+              <Link
+                to={ctaLink}
+                className={`w-full inline-flex justify-center items-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
+                  highlighted ? "btn-primary" : "btn-secondary"
+                }`}
+              >
+                {cta} <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         ))}
       </RevealGrid>

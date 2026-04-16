@@ -123,6 +123,25 @@ export default function Products() {
     setCheckoutOpen(true);
   };
 
+  const handleAddAllToCart = () => {
+    // Add ALL products to cart for All Access pricing
+    products.forEach(p => {
+      if (!isPurchased(p.id)) cart.addToCart(p.id, false);
+    });
+    cart.setOpen(true);
+    toast.success(`All ${products.length} prototypes added to cart!`);
+  };
+
+  const handleAddBundleToCart = () => {
+    // Add top 5 products to cart for Pro Bundle pricing
+    const top5 = topSelling.slice(0, 5);
+    top5.forEach(p => {
+      if (!isPurchased(p.id)) cart.addToCart(p.id, false);
+    });
+    cart.setOpen(true);
+    toast.success("5 top-selling prototypes added to cart!");
+  };
+
   return (
     <>
       <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
@@ -291,7 +310,7 @@ export default function Products() {
         <UseCasesSection />
 
         {/* MARKETPLACE PRICING */}
-        <MarketplacePricing />
+        <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
 
         {/* TRUST SECTION */}
         <TrustSection />
@@ -312,6 +331,7 @@ export default function Products() {
           onClear={cart.clearCart}
           onCheckout={handleCheckout}
           isBundle={cart.isBundle}
+          isAllAccess={cart.isAllAccess}
         />
 
         <CheckoutModal
@@ -321,8 +341,8 @@ export default function Products() {
           currency={currency}
           total={cart.getTotal(currency)}
           onComplete={() => {
-            // If bundle (5+ items), grant all access to all files
-            if (cart.isBundle) {
+            // If bundle (5+) or all access, grant access to all files
+            if (cart.isBundle || cart.isAllAccess) {
               grantAllAccess();
             }
             cart.items.forEach(i => purchase(i.product.id));
