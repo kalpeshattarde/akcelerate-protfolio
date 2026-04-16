@@ -155,12 +155,6 @@ export default function Products() {
         {/* SOLUTION */}
         <SolutionSection />
 
-        {/* COMPARISON */}
-        <ComparisonSection />
-
-        {/* SAVINGS */}
-        <SavingsSection />
-
         {/* TOP SELLING */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
 
@@ -275,6 +269,12 @@ export default function Products() {
             </TabsContent>
           </Tabs>
         </div>
+
+        {/* COMPARISON */}
+        <ComparisonSection />
+
+        {/* SAVINGS */}
+        <SavingsSection />
 
         {/* USE CASES */}
         <UseCasesSection />

@@ -2,22 +2,20 @@ import { useState } from "react";
 import { Lock, LogIn } from "lucide-react";
 
 const ADMIN_PASS_KEY = "ak-admin-auth";
+const ADMIN_USER = "kalpeshattarde";
+const ADMIN_PASS = "attarde@2468";
 
 export function useAdminAuth() {
   const [authenticated, setAuthenticated] = useState(() => {
     try {
-      const stored = sessionStorage.getItem(ADMIN_PASS_KEY);
-      return stored === "true";
+      return sessionStorage.getItem(ADMIN_PASS_KEY) === "true";
     } catch {
       return false;
     }
   });
 
-  const login = (password: string): boolean => {
-    // Hash comparison: the admin password is checked against a SHA-256 hash
-    // Default password: "akcelerate2024" — change the hash below to update
-    const ADMIN_HASH = "akcelerate2024"; // In production, compare hashed values
-    if (password === ADMIN_HASH) {
+  const login = (username: string, password: string): boolean => {
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
       sessionStorage.setItem(ADMIN_PASS_KEY, "true");
       setAuthenticated(true);
       return true;
@@ -39,6 +37,7 @@ interface AdminLoginGateProps {
 
 export default function AdminLoginGate({ children }: AdminLoginGateProps) {
   const { authenticated, login } = useAdminAuth();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -49,8 +48,8 @@ export default function AdminLoginGate({ children }: AdminLoginGateProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!login(password)) {
-      setError("Incorrect password. Please try again.");
+    if (!login(username, password)) {
+      setError("Incorrect credentials. Please try again.");
       setPassword("");
     }
   };
@@ -65,24 +64,31 @@ export default function AdminLoginGate({ children }: AdminLoginGateProps) {
             </div>
           </div>
           <h1 className="font-poppins text-xl font-bold text-foreground text-center mb-2">Admin Access</h1>
-          <p className="text-sm text-muted-foreground text-center mb-6">Enter the admin password to continue.</p>
+          <p className="text-sm text-muted-foreground text-center mb-6">Enter your admin credentials to continue.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder="Username"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+              autoFocus
+            />
             <div>
               <input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Admin password"
+                placeholder="Password"
                 className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                autoFocus
               />
-              {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
+              {error && <p className="text-xs text-destructive mt-2">{error}</p>}
             </div>
             <button
               type="submit"
               className="w-full btn-primary justify-center gap-2"
-              disabled={!password.trim()}
+              disabled={!username.trim() || !password.trim()}
             >
               <LogIn className="w-4 h-4" /> Sign In
             </button>
