@@ -185,7 +185,6 @@ export default function Navbar() {
               { to: "/gallery", label: "Gallery" },
               { to: "/completed-projects", label: "Completed Projects" },
               { to: "/careers", label: "Careers" },
-              { to: "/guide", label: "Guide" },
               { to: "/wishlist", label: "Wishlist" },
             ].map(l => (
               <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
