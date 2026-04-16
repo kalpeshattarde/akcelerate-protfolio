@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Copy, Check, ChevronRight, FolderOpen, FileText, Code, Archive, Eye, BookOpen, Lightbulb, CheckCircle2, ArrowRight } from "lucide-react";
+import { Copy, Check, ChevronRight, FolderOpen, FileText, Code, BookOpen, Lightbulb, CheckCircle2, ArrowRight } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import FAQAccordion from "@/components/FAQAccordion";
 import { toast } from "sonner";
