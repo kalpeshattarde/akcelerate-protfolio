@@ -161,40 +161,6 @@ export default function Products() {
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Sticky products toolbar */}
-        <div className="sticky top-[72px] z-40 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 mb-6 bg-background/80 backdrop-blur-lg border-b border-border">
-          <div className="flex items-center gap-3 max-w-7xl mx-auto">
-            <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
-              <LayoutDashboard className="w-4 h-4" /> My Purchases
-              {purchased.length > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary-foreground/20 text-[10px] font-bold">{purchased.length}</span>
-              )}
-            </Link>
-            <Link to="/guide" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors">
-              <BookOpen className="w-4 h-4" /> Guide
-            </Link>
-            <div className="ml-auto flex items-center gap-3">
-              {purchased.length > 0 && (
-                <span className="text-xs text-muted-foreground hidden sm:block">
-                  You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
-                </span>
-              )}
-              <button
-                onClick={() => cart.setOpen(true)}
-                className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card text-foreground text-sm font-medium hover:bg-muted transition-colors"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                <span className="hidden sm:inline">Cart</span>
-                {cart.totalCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
-                    {cart.totalCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Recently Purchased Banner */}
         {lastPurchased && !bannerDismissed && (
           <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl border border-primary/20 bg-primary/5">
@@ -286,7 +252,7 @@ export default function Products() {
 
           {/* Category Tabs */}
           <Tabs defaultValue="web-saas">
-            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 mb-8">
+            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 mb-4">
               <TabsTrigger value="web-saas" className="gap-2">
                 <Globe className="w-4 h-4" /> Web SaaS
               </TabsTrigger>
@@ -294,6 +260,38 @@ export default function Products() {
                 <Smartphone className="w-4 h-4" /> Mobile App
               </TabsTrigger>
             </TabsList>
+
+            {/* Toolbar below tabs */}
+            <div className="flex items-center gap-3 mb-8 p-3 rounded-2xl border border-border bg-card">
+              <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
+                <LayoutDashboard className="w-4 h-4" /> My Purchases
+                {purchased.length > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary-foreground/20 text-[10px] font-bold">{purchased.length}</span>
+                )}
+              </Link>
+              <Link to="/guide" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors">
+                <BookOpen className="w-4 h-4" /> Guide
+              </Link>
+              <div className="ml-auto flex items-center gap-3">
+                {purchased.length > 0 && (
+                  <span className="text-xs text-muted-foreground hidden sm:block">
+                    You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
+                  </span>
+                )}
+                <button
+                  onClick={() => cart.setOpen(true)}
+                  className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-background text-foreground text-sm font-medium hover:bg-muted transition-colors"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  <span className="hidden sm:inline">Cart</span>
+                  {cart.totalCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+                      {cart.totalCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
 
             <TabsContent value="web-saas">
               {filteredWebSaas.length === 0 ? (
