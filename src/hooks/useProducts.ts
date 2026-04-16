@@ -60,5 +60,5 @@ export function useProducts() {
   const mobileApps = PRODUCTS.filter(p => p.category === "mobile-app");
   const webSaas = PRODUCTS.filter(p => p.category === "web-saas");
 
-  return { products: PRODUCTS, topSelling, mobileApps, webSaas, isPurchased, purchase };
+  return { products: PRODUCTS, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased };
 }

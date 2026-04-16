@@ -1,9 +1,10 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown } from "lucide-react";
+import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -57,7 +58,7 @@ const TAG_OPTIONS = [
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
@@ -103,6 +104,22 @@ export default function Products() {
       <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Purchased user quick-access bar */}
+        {purchased.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl border border-border bg-card">
+            <span className="text-sm font-medium text-muted-foreground mr-auto">
+              You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
+            </span>
+            <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
+              <LayoutDashboard className="w-4 h-4" /> My Dashboard
+            </Link>
+            <Link to="/guide" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted text-foreground text-sm font-semibold hover:bg-muted/80 transition-colors">
+              <BookOpen className="w-4 h-4" /> Guide
+            </Link>
+          </div>
+        )}
+
         {/* HERO */}
         <PersonalizedHero />
 
