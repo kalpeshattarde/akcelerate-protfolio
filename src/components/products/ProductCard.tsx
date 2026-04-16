@@ -12,13 +12,15 @@ interface ProductCardProps {
   isPurchased: boolean;
   cartQuantity?: number;
   isFavorite?: boolean;
+  isComparing?: boolean;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
   onQuickView?: (id: string) => void;
   onToggleFavorite?: (id: string) => void;
+  onToggleCompare?: (id: string) => void;
 }
 
-export default function ProductCard({ product, isPurchased, cartQuantity = 0, isFavorite = false, onPurchase, onAddToCart, onQuickView, onToggleFavorite }: ProductCardProps) {
+export default function ProductCard({ product, isPurchased, cartQuantity = 0, isFavorite = false, isComparing = false, onPurchase, onAddToCart, onQuickView, onToggleFavorite, onToggleCompare }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -65,6 +67,16 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             title={isFavorite ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart className={`w-4 h-4 ${isFavorite ? "fill-current" : ""}`} />
+          </button>
+          {/* Compare button */}
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggleCompare?.(product.id); }}
+            className={`absolute top-3 right-12 z-10 p-1.5 rounded-full transition-colors ${
+              isComparing ? "bg-primary/20 text-primary" : "bg-black/30 text-white hover:bg-black/50"
+            }`}
+            title={isComparing ? "Remove from compare" : "Compare"}
+          >
+            <ArrowLeftRight className="w-4 h-4" />
           </button>
         </div>
 
