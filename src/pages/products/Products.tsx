@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
@@ -58,7 +58,7 @@ const TAG_OPTIONS = [
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
