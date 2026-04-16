@@ -310,7 +310,7 @@ export default function Products() {
         <UseCasesSection />
 
         {/* MARKETPLACE PRICING */}
-        <MarketplacePricing />
+        <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
 
         {/* TRUST SECTION */}
         <TrustSection />
