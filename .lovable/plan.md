@@ -1,78 +1,44 @@
 
 
-# Products Page with Subtabs + Top Selling
+# GitHub Repo for Product File Downloads
 
-## Summary
-Add a single "Products" link in the navbar (no dropdown). The `/products` page itself has two subtabs — **Mobile App** and **Web SaaS** — as tab switchers at the top of the page, plus a **Top Selling Products** section above the tabs. Admin remains a separate `/admin` route.
+## Approach
+Use a **private GitHub repository** to host product ZIP files. Each product gets a download URL mapped in the product data. After purchase, the app redirects to the GitHub download link.
 
-## Navigation Change
-- Navbar gets a plain "Products" link (like "Contact") pointing to `/products` — no dropdown, no sub-links
-- Admin link stays in footer only
+However, there's an important consideration: **private GitHub repos require authentication** to download files. Two practical options:
 
-## Products Page Layout (`/products`)
+### Option A: Public GitHub Releases (Free, Simple)
+- Create a public repo (e.g., `akcelerate-product-files`)
+- Upload each product ZIP as a **GitHub Release asset** (up to 2GB per file)
+- Map release asset URLs directly in `src/data/products.ts`
+- Download works instantly — no auth needed
 
-```text
-┌─────────────────────────────────────┐
-│  Personalized Hero Banner           │
-├─────────────────────────────────────┤
-│  🔥 Top Selling Products (carousel)│
-│  [Card] [Card] [Card] [Card]       │
-├─────────────────────────────────────┤
-│  [ Mobile App ]  [ Web SaaS ]  ←tabs│
-├─────────────────────────────────────┤
-│  Product Grid (filtered by tab)     │
-│  [Card] [Card] [Card]              │
-│  [Card] [Card] [Card]              │
-├─────────────────────────────────────┤
-│  Upsell Banner                      │
-└─────────────────────────────────────┘
-```
+### Option B: Private Repo + Personal Access Token
+- Requires a GitHub token stored as an env variable
+- Adds complexity for no real security gain (the signed URL approach is better handled by Google Drive or Supabase)
 
-## What Gets Built
+**Recommendation: Option A** — public repo with GitHub Releases. The files are only accessible to users who have the direct URL, and your app only reveals the URL after purchase verification.
 
-### Files Created (~25 new files)
-- `src/config/appConfig.ts` — global config (pricing, discounts, growth, features)
-- `src/data/products.ts` — demo products with `category` ("mobile-app" | "web-saas") and `topSelling: boolean` flag
-- `src/pages/products/Products.tsx` — main page with Top Selling section + Mobile App / Web SaaS tabs (using existing Tabs UI component)
-- `src/pages/products/ProductDetail.tsx` — single product view
-- `src/pages/products/Checkout.tsx` — mock checkout
-- `src/pages/admin/Admin.tsx` — admin panel with tabbed sections (Dashboard, Config, Products, Affiliates, Growth, Ad Generator)
-- `src/components/products/ProductCard.tsx` — card with preview, price, locked state, badges ("Most Popular", "Top Selling")
-- `src/components/products/PricingSelector.tsx` — USD/INR toggle, coupon input
-- `src/components/products/CheckoutModal.tsx` — mock Stripe/Razorpay flow
-- `src/components/products/TopSellingSection.tsx` — horizontal showcase of top-selling products
-- `src/components/products/RecommendationEngine.tsx` — "You might also like"
-- `src/components/products/UpsellBanner.tsx` — single → bundle prompts
-- `src/components/products/PersonalizedHero.tsx` — dynamic hero
-- `src/components/admin/DashboardTab.tsx` — revenue charts
-- `src/components/admin/ConfigTab.tsx` — edit pricing/toggles
-- `src/components/admin/ProductsTab.tsx` — manage catalog
-- `src/components/admin/AffiliateTab.tsx` — affiliate dashboard
-- `src/components/admin/GrowthTab.tsx` — growth agent panel
-- `src/components/admin/AdGeneratorTab.tsx` — AI ad tools
-- Hooks: `useGeoDetection.ts`, `useProducts.ts`, `useAffiliate.ts`, `usePersonalization.ts`
-- Lib: `growthEngine.ts`, `ltvCalculator.ts`, `adGenerator.ts`
+## Implementation
 
-### Files Modified (minimal)
-- `src/components/Navbar.tsx` — add plain "Products" link (no dropdown)
-- `src/App.tsx` — add routes: `/products`, `/products/:slug`, `/products/checkout`, `/admin`
-- `src/components/Footer.tsx` — add "Admin" link
+### 1. Add `downloadUrl` field to Product interface
+Add an optional `downloadUrl: string` to the `Product` type in `src/data/products.ts`. Populate it with GitHub Release asset URLs for each product.
 
-### Product Data Shape
-```typescript
-{
-  id, name, slug, category: "mobile-app" | "web-saas",
-  topSelling: boolean, salesCount: number,
-  description, previewImage, tags, priceTier,
-  price: { usd, inr }
-}
-```
+### 2. Update `downloadProductFile()` in `src/lib/downloadProduct.ts`
+- Accept `downloadUrl` as a parameter
+- If URL exists, open it directly (no Supabase dependency)
+- Keep README fallback for products without URLs yet
 
-Top Selling section filters by `topSelling: true` and sorts by `salesCount`.
+### 3. Update `MyPurchases.tsx`
+- Pass `product.downloadUrl` to the download function
 
-## Technical Notes
-- All mock data in localStorage until Supabase connected
-- No existing pages changed — purely additive
-- Tabs component from `src/components/ui/tabs.tsx` used for Mobile App / Web SaaS switching
-- Recharts (already installed) for admin dashboard
+## Your Setup Steps
+1. Create a GitHub repo (e.g., `akcelerate-products`)
+2. For each product, create a Release and attach the ZIP file
+3. Copy each release asset URL into the product data
+
+## Technical Details
+- File: `src/data/products.ts` — add `downloadUrl` field
+- File: `src/lib/downloadProduct.ts` — use direct URL instead of Supabase Storage
+- File: `src/pages/MyPurchases.tsx` — pass URL to download function
 
