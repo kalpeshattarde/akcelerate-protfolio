@@ -27,6 +27,7 @@ export default function SolutionDetailPage() {
 
   return (
     <>
+      <SEOHead title={solution.title} description={solution.description} path={`/solutions/${slug}`} />
       <HeroPage
         label="Solutions"
         title={<><span className="gradient-text">{solution.title}</span></>}
