@@ -1,19 +1,21 @@
 export interface PricingPlan {
   name: string;
   description: string;
-  priceUsd: string;
-  priceInr: string;
+  monthlyUsd: number;
+  monthlyInr: number;
   features: string[];
   highlighted: boolean;
   cta: string;
 }
 
+export const ANNUAL_DISCOUNT = 17; // percent
+
 export const pricingPlans: PricingPlan[] = [
   {
     name: "Starter",
     description: "Perfect for startups and small teams exploring AI and data solutions.",
-    priceUsd: "$21,000",
-    priceInr: "₹17,49,999",
+    monthlyUsd: 249,
+    monthlyInr: 20999,
     features: [
       "1 AI/Data project per month",
       "Basic analytics dashboard",
@@ -28,8 +30,8 @@ export const pricingPlans: PricingPlan[] = [
   {
     name: "Growth",
     description: "For growing businesses ready to scale with AI-driven automation and analytics.",
-    priceUsd: "$49,000",
-    priceInr: "₹40,99,999",
+    monthlyUsd: 999,
+    monthlyInr: 83999,
     features: [
       "3 AI/Data projects per month",
       "Advanced analytics & BI dashboards",
@@ -46,8 +48,8 @@ export const pricingPlans: PricingPlan[] = [
   {
     name: "Enterprise",
     description: "Full-scale AI transformation with dedicated team and unlimited support.",
-    priceUsd: "Custom",
-    priceInr: "Custom",
+    monthlyUsd: 0,
+    monthlyInr: 0,
     features: [
       "Unlimited AI/Data projects",
       "Enterprise-grade analytics platform",
