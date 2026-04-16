@@ -54,7 +54,7 @@ export default function PersonalizedHero() {
       {/* CTA */}
       <div className="flex flex-wrap justify-center gap-4">
         <a href="#products-catalog" className="btn-primary text-base px-8 py-3.5">
-          Browse Prototypes — From $29 <ArrowRight className="w-4 h-4" />
+          Browse Prototypes — From $19 <ArrowRight className="w-4 h-4" />
         </a>
         <a href="#cost-breakdown" className="btn-secondary text-base px-8 py-3.5">
           <TrendingUp className="w-4 h-4" /> See the Real Cost of AI Tools

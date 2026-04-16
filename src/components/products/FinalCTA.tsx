@@ -19,7 +19,7 @@ export default function FinalCTA() {
             Every day you spend wrestling with ChatGPT is a day your competitor gains paying customers.
           </p>
           <p className="text-foreground font-semibold text-lg mb-8">
-            Stop building. Start shipping. Launch your SaaS today for $29.
+            Stop building. Start shipping. Launch your SaaS today for $19.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="#products-catalog" className="btn-primary text-base px-8 py-3.5">
