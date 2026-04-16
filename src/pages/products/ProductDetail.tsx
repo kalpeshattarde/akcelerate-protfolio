@@ -17,6 +17,7 @@ export default function ProductDetail() {
   const { isPurchased, purchase, products } = useProducts();
   const [finalPrice, setFinalPrice] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   if (!product) {
     return (
