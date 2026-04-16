@@ -1,9 +1,11 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import { RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function PrivacyPage() {
   return (
     <>
+      <SEOHead title="Privacy Policy" description="AKcelerate privacy policy — how we collect, use, and protect your data." path="/privacy" />
       <HeroPage label="Legal" title="Privacy Policy" description="Last updated: March 2026" />
       <section className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

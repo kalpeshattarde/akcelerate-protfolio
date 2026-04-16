@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { RevealGrid } from "@/hooks/useScrollReveal";
 
@@ -6,6 +7,7 @@ export default function GalleryPage() {
   const items = ["AI Dashboard", "Analytics Platform", "Data Visualization", "ML Pipeline", "IoT Dashboard", "Quality Control UI", "Supply Chain Map", "Energy Monitor", "Fraud Detection"];
   return (
     <>
+      <SEOHead title="Gallery" description="Visual showcase of AI dashboards, analytics platforms, and solutions built by AKcelerate." path="/gallery" />
       <HeroPage label="Gallery" title={<>Project <span className="gradient-text">Gallery</span></>} description="A visual showcase of dashboards, platforms, and solutions we've built." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
@@ -6,6 +7,7 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 export default function IndustriesPage() {
   return (
     <>
+      <SEOHead title="Industries" description="Deep AI and data expertise across 13+ industries including manufacturing, fintech, and healthcare." path="/industries" />
       <HeroPage label="Industries" title={<>Deep Expertise Across <span className="gradient-text">13+ Industries</span></>} description="We bring specialized domain knowledge to every engagement, ensuring solutions that fit your industry's unique needs." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

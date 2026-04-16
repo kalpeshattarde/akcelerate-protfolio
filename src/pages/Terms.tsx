@@ -1,9 +1,11 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import { RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function TermsPage() {
   return (
     <>
+      <SEOHead title="Terms of Service" description="AKcelerate terms of service — legal terms governing use of our services and products." path="/terms" />
       <HeroPage label="Legal" title="Terms of Service" description="Last updated: March 2026" />
       <section className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,10 +1,12 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function FounderPage() {
   return (
     <>
+      <SEOHead title="Founder" description="Meet Kalpesh Attarde — founder and CEO of AKcelerate, data scientist and AI strategist." path="/founder" />
       <HeroPage label="Founder" title={<>Meet <span className="gradient-text">Kalpesh Attarde</span></>} description="Founder & CEO of AKcelerate — data scientist, AI strategist, and passionate advocate for data-driven business growth." />
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,5 @@
 import { SignIn as ClerkSignIn } from "@clerk/clerk-react";
+import SEOHead from "@/components/SEOHead";
 
 export default function SignIn() {
   return (

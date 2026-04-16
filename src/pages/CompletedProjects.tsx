@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { completedProjects } from "@/data/industries";
 import { RevealGrid } from "@/hooks/useScrollReveal";
@@ -6,6 +7,7 @@ import { RevealGrid } from "@/hooks/useScrollReveal";
 export default function CompletedProjectsPage() {
   return (
     <>
+      <SEOHead title="Completed Projects" description="Browse our portfolio of 50+ delivered AI, analytics, and automation projects." path="/completed-projects" />
       <HeroPage label="Portfolio" title={<>Completed <span className="gradient-text">Projects</span></>} description="A selection of projects we've delivered across industries and solution areas." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { Download } from "lucide-react";
 import { RevealGrid } from "@/hooks/useScrollReveal";
@@ -12,6 +13,7 @@ export default function ResourcesPage() {
   ];
   return (
     <>
+      <SEOHead title="Resources" description="Guides, tools, and resources for AI adoption, data strategy, and digital transformation." path="/resources" />
       <HeroPage label="Resources" title={<>Free <span className="gradient-text">Resources & Downloads</span></>} description="Practical guides, templates, and tools to accelerate your AI journey." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

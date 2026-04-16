@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { HeroPage } from "@/components/Hero";
 import { blogPosts } from "@/data/blog";
 import { BlogCard } from "@/components/Cards";
@@ -7,6 +8,7 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 export default function InsightsPage() {
   return (
     <>
+      <SEOHead title="Insights" description="Expert analysis and thought leadership on AI, data science, and digital transformation." path="/insights" />
       <HeroPage label="Insights" title={<>Latest <span className="gradient-text">Insights & Resources</span></>} description="Expert analysis, guides, and thought leadership on AI, data science, and digital transformation." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

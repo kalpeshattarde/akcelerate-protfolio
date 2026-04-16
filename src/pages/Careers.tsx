@@ -1,4 +1,5 @@
 import { HeroPage } from "@/components/Hero";
+import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { MapPin, Briefcase } from "lucide-react";
 import { RevealGrid } from "@/hooks/useScrollReveal";
@@ -13,6 +14,7 @@ const jobs = [
 export default function CareersPage() {
   return (
     <>
+      <SEOHead title="Careers" description="Join AKcelerate — explore open roles in AI, data science, and full-stack development." path="/careers" />
       <HeroPage label="Careers" title={<>Join the <span className="gradient-text">AKcelerate Team</span></>} description="Help businesses grow with AI. We're looking for passionate builders and problem-solvers." />
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
