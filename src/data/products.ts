@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
   // ──────────── MOBILE APPS ────────────
   {
     id: "m1",
-    name: "Flexa – Fitness Booking",
+    name: "Fitness Booking – Flexa",
     slug: "flexa-fitness-booking",
     category: "mobile-app",
     topSelling: true,
@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m2",
-    name: "Freshly – Grocery Delivery",
+    name: "Grocery Delivery – Freshly",
     slug: "freshly-grocery-delivery",
     category: "mobile-app",
     topSelling: false,
@@ -53,7 +53,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m3",
-    name: "Ritual Time – Habit Tracker",
+    name: "Habit Tracker – Ritual Time",
     slug: "ritual-time-habit-tracker",
     category: "mobile-app",
     topSelling: false,
@@ -68,7 +68,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m4",
-    name: "Tavola – Restaurant App",
+    name: "Restaurant App – Tavola",
     slug: "tavola-restaurant-app",
     category: "mobile-app",
     topSelling: false,
@@ -83,7 +83,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m5",
-    name: "Bloom – Pregnancy Tracker",
+    name: "Pregnancy Tracker – Bloom",
     slug: "bloom-pregnancy-tracker",
     category: "mobile-app",
     topSelling: false,
@@ -98,7 +98,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m6",
-    name: "Circle – Digital Agency",
+    name: "Digital Agency – Circle",
     slug: "circle-digital-agency",
     category: "mobile-app",
     topSelling: false,
@@ -113,7 +113,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m7",
-    name: "Silhouette – Fashion Brand",
+    name: "Fashion Brand – Silhouette",
     slug: "silhouette-fashion-brand",
     category: "mobile-app",
     topSelling: false,
@@ -128,7 +128,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m8",
-    name: "Still – Meditation App",
+    name: "Meditation App – Still",
     slug: "still-meditation-app",
     category: "mobile-app",
     topSelling: false,
@@ -144,7 +144,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m9",
-    name: "Echofy – Music Player",
+    name: "Music Player – Echofy",
     slug: "echofy-music-player",
     category: "mobile-app",
     topSelling: false,
@@ -159,7 +159,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m10",
-    name: "Resonance – Podcast Player",
+    name: "Podcast Player – Resonance",
     slug: "resonance-podcast-player",
     category: "mobile-app",
     topSelling: false,
@@ -174,7 +174,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m11",
-    name: "FrameCut – Video Editing",
+    name: "Video Editing – FrameCut",
     slug: "framecut-video-editing",
     category: "mobile-app",
     topSelling: false,
@@ -189,7 +189,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m12",
-    name: "Nurture – Baby Growth",
+    name: "Baby Growth – Nurture",
     slug: "nurture-baby-growth",
     category: "mobile-app",
     topSelling: false,
@@ -204,7 +204,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m13",
-    name: "Attend – Event Registration",
+    name: "Event Registration – Attend",
     slug: "attend-event-registration",
     category: "mobile-app",
     topSelling: false,
@@ -219,7 +219,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m14",
-    name: "Intake – Health Calorie Tracker",
+    name: "Health Calorie Tracker – Intake",
     slug: "intake-health-calorie-tracker",
     category: "mobile-app",
     topSelling: false,
@@ -234,7 +234,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m15",
-    name: "Domus – Home Services",
+    name: "Home Services – Domus",
     slug: "domus-home-services",
     category: "mobile-app",
     topSelling: false,
@@ -249,7 +249,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m16",
-    name: "Lingua – Language Learning",
+    name: "Language Learning – Lingua",
     slug: "lingua-language-learning",
     category: "mobile-app",
     topSelling: false,
@@ -264,7 +264,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m17",
-    name: "Rinse – Laundry Service",
+    name: "Laundry Service – Rinse",
     slug: "rinse-laundry-service",
     category: "mobile-app",
     topSelling: false,
@@ -279,7 +279,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m18",
-    name: "Nourish – Meal Planner",
+    name: "Meal Planner – Nourish",
     slug: "nourish-meal-planner",
     category: "mobile-app",
     topSelling: false,
@@ -294,7 +294,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m19",
-    name: "Companion – Pet Care",
+    name: "Pet Care – Companion",
     slug: "companion-pet-care",
     category: "mobile-app",
     topSelling: false,
@@ -309,7 +309,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m20",
-    name: "Formulary – Pharmacy Inventory",
+    name: "Pharmacy Inventory – Formulary",
     slug: "formulary-pharmacy-inventory",
     category: "mobile-app",
     topSelling: false,
@@ -324,7 +324,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m21",
-    name: "FluxChain – Supply Chain Vision",
+    name: "Supply Chain Vision – FluxChain",
     slug: "fluxchain-supply-chain",
     category: "mobile-app",
     topSelling: false,
@@ -339,7 +339,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m22",
-    name: "Ignite – Tech Startup",
+    name: "Tech Startup – Ignite",
     slug: "ignite-tech-startup",
     category: "mobile-app",
     topSelling: false,
@@ -354,7 +354,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m23",
-    name: "Focus – To-Do List",
+    name: "To-Do List – Focus",
     slug: "focus-to-do-list",
     category: "mobile-app",
     topSelling: false,
@@ -369,7 +369,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "m24",
-    name: "Breathly – Guided Breathing",
+    name: "Guided Breathing – Breathly",
     slug: "breathly-guided-breathing",
     category: "mobile-app",
     topSelling: false,
@@ -386,7 +386,7 @@ export const PRODUCTS: Product[] = [
   // ──────────── WEB SAAS ────────────
   {
     id: "s1",
-    name: "PublishHub – Blog Creation",
+    name: "Blog Creation – PublishHub",
     slug: "publishhub-blog-creation",
     category: "web-saas",
     topSelling: true,
@@ -402,7 +402,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s2",
-    name: "Payoutly – Sales Commission",
+    name: "Sales Commission – Payoutly",
     slug: "payoutly-sales-commission",
     category: "web-saas",
     topSelling: false,
@@ -417,7 +417,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s3",
-    name: "Quotalytics – Sales Performance",
+    name: "Sales Performance – Quotalytics",
     slug: "quotalytics-sales-performance",
     category: "web-saas",
     topSelling: true,
@@ -433,7 +433,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s4",
-    name: "Pillar One – Business Platform",
+    name: "Business Platform – Pillar One",
     slug: "pillar-one-business",
     category: "web-saas",
     topSelling: false,
@@ -448,7 +448,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s5",
-    name: "Accord – Contract Management",
+    name: "Contract Management – Accord",
     slug: "accord-contract-management",
     category: "web-saas",
     topSelling: false,
@@ -463,7 +463,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s6",
-    name: "HireBoard – Job Board",
+    name: "Job Board – HireBoard",
     slug: "hireboard-job-board",
     category: "web-saas",
     topSelling: false,
@@ -478,7 +478,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s7",
-    name: "Release – Product Launch",
+    name: "Product Launch – Release",
     slug: "release-product-launch",
     category: "web-saas",
     topSelling: false,
@@ -493,7 +493,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s8",
-    name: "Taskline – Project Management",
+    name: "Project Management – Taskline",
     slug: "taskline-project-management",
     category: "web-saas",
     topSelling: true,
@@ -509,7 +509,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s9",
-    name: "Launchpad – Startup Pre-Launch",
+    name: "Startup Pre-Launch – Launchpad",
     slug: "launchpad-startup-prelaunch",
     category: "web-saas",
     topSelling: false,
@@ -524,7 +524,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s10",
-    name: "Conv Teams – Video Conferencing",
+    name: "Video Conferencing – Conv Teams",
     slug: "conv-teams-video-conferencing",
     category: "web-saas",
     topSelling: false,
@@ -539,7 +539,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s11",
-    name: "Ledgerly – Accounting",
+    name: "Accounting – Ledgerly",
     slug: "ledgerly-accounting",
     category: "web-saas",
     topSelling: false,
@@ -555,7 +555,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s12",
-    name: "SalesDesk – CRM Pro",
+    name: "CRM Pro – SalesDesk",
     slug: "salesdesk-crm-pro",
     category: "web-saas",
     topSelling: false,
@@ -571,7 +571,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s13",
-    name: "e-Lectern – E-Learning",
+    name: "E-Learning – e-Lectern",
     slug: "electern-elearning",
     category: "web-saas",
     topSelling: false,
@@ -586,7 +586,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s14",
-    name: "Procura – Order Management",
+    name: "Order Management – Procura",
     slug: "procura-order-management",
     category: "web-saas",
     topSelling: false,
@@ -601,7 +601,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s15",
-    name: "Tripio – Travel Booking",
+    name: "Travel Booking – Tripio",
     slug: "tripio-travel-booking",
     category: "web-saas",
     topSelling: false,
@@ -616,7 +616,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s16",
-    name: "Forme – Workout Trainer",
+    name: "Workout Trainer – Forme",
     slug: "forme-workout-trainer",
     category: "web-saas",
     topSelling: false,
@@ -631,7 +631,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s17",
-    name: "Atlas – ESG Reporting",
+    name: "ESG Reporting – Atlas",
     slug: "atlas-esg-reporting",
     category: "web-saas",
     topSelling: false,
@@ -646,7 +646,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s18",
-    name: "Bracket – Gaming Tournament",
+    name: "Gaming Tournament – Bracket",
     slug: "bracket-gaming-tournament",
     category: "web-saas",
     topSelling: false,
@@ -661,7 +661,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s19",
-    name: "Tickerview – Live Stock Market",
+    name: "Live Stock Market – Tickerview",
     slug: "tickerview-stock-market",
     category: "web-saas",
     topSelling: false,
@@ -676,7 +676,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s20",
-    name: "Signal Mint – Marketing Analytics",
+    name: "Marketing Analytics – Signal Mint",
     slug: "signal-mint-marketing-analytics",
     category: "web-saas",
     topSelling: false,
@@ -691,7 +691,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s21",
-    name: "Install Kick – App Download",
+    name: "App Download – Install Kick",
     slug: "install-kick-app-download",
     category: "web-saas",
     topSelling: false,
@@ -706,7 +706,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s22",
-    name: "Alignbase – OKR Tracking",
+    name: "OKR Tracking – Alignbase",
     slug: "alignbase-okr-tracking",
     category: "web-saas",
     topSelling: false,
@@ -721,7 +721,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s23",
-    name: "Estatea – Real Estate Listing",
+    name: "Real Estate Listing – Estatea",
     slug: "estatea-real-estate",
     category: "web-saas",
     topSelling: false,
@@ -736,7 +736,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "s24",
-    name: "VitalTracker – Health Dashboard",
+    name: "Health Dashboard – VitalTracker",
     slug: "vitaltracker-health-dashboard",
     category: "web-saas",
     topSelling: false,
