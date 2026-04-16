@@ -287,6 +287,7 @@ export default function MyPurchases() {
               <div className="space-y-4">
                 {filteredProducts.map(product => {
                   const price = currency === "inr" ? product.price.inr : product.price.usd;
+                  const isDownloading = downloading === product.id;
                   const isEmailing = emailing === product.id;
                   const purchaseDate = getPurchaseDate(product.id, orders);
 
