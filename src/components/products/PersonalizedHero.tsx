@@ -18,7 +18,7 @@ export default function PersonalizedHero() {
       <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
         Why spend <span className="font-semibold text-foreground">$1,000–$3,000</span> and weeks wrestling with
         ChatGPT, Claude, Replit, or Bolt? Grab a <span className="font-semibold text-foreground">ready-made SaaS prototype</span> for
-        <span className="font-semibold text-primary"> $29</span> and launch today.
+        <span className="font-semibold text-primary"> $19</span> and launch today.
       </p>
 
       {/* 3 Bullet Benefits */}
@@ -54,7 +54,7 @@ export default function PersonalizedHero() {
       {/* CTA */}
       <div className="flex flex-wrap justify-center gap-4">
         <a href="#products-catalog" className="btn-primary text-base px-8 py-3.5">
-          Browse Prototypes — From $29 <ArrowRight className="w-4 h-4" />
+          Browse Prototypes — From $19 <ArrowRight className="w-4 h-4" />
         </a>
         <a href="#cost-breakdown" className="btn-secondary text-base px-8 py-3.5">
           <TrendingUp className="w-4 h-4" /> See the Real Cost of AI Tools

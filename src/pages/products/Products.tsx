@@ -100,7 +100,7 @@ export default function Products() {
 
   return (
     <>
-      <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $29. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
+      <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HERO */}

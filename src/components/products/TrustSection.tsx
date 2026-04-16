@@ -36,7 +36,7 @@ const trustPoints = [
 
 const testimonials = [
   {
-    quote: "I spent 3 weeks and $800 trying to build a CRM with Claude and Replit. Bought the AKcelerate prototype for $29 and launched in a day. Wish I found this sooner.",
+    quote: "I spent 3 weeks and $800 trying to build a CRM with Claude and Replit. Bought the AKcelerate prototype for $19 and launched in a day. Wish I found this sooner.",
     name: "Arjun Mehta",
     role: "Indie Hacker",
     company: "SalesPipe.io",

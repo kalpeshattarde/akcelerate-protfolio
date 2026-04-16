@@ -5,7 +5,7 @@ const scenarios = [
   {
     label: "Building 1 SaaS with AI",
     aiCost: "$700–$3,000",
-    ourCost: "$29",
+    ourCost: "$19",
     savings: "$671–$2,971",
   },
   {
