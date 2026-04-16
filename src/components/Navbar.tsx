@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search } from "lucide-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search, User, ShoppingBag, Heart, BookOpen, CreditCard } from "lucide-react";
 import SearchModal from "./SearchModal";
 
 const solutionLinks = [
@@ -147,8 +147,7 @@ export default function Navbar() {
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link to="/my-purchases" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">My Purchases</Link>
-              <UserButton afterSignOutUrl="/" />
+              <ProfileDropdown />
             </SignedIn>
           </div>
 
@@ -189,6 +188,22 @@ export default function Navbar() {
             ].map(l => (
               <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
             ))}
+            <SignedIn>
+              <div className="pt-3 border-t border-border mt-3 space-y-1">
+                {[
+                  { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
+                  { to: "/wishlist", label: "Wishlist", icon: Heart },
+                  { to: "/guide", label: "Guide", icon: BookOpen },
+                ].map(l => (
+                  <Link key={l.to} to={l.to} className="flex items-center gap-2.5 py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all text-sm">
+                    <l.icon className="w-4 h-4" /> {l.label}
+                  </Link>
+                ))}
+                <div className="flex items-center gap-3 pt-2">
+                  <UserButton afterSignOutUrl="/" />
+                </div>
+              </div>
+            </SignedIn>
             <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
               <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95">
                 {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
@@ -196,9 +211,6 @@ export default function Navbar() {
               <SignedOut>
                 <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
               </SignedOut>
-              <SignedIn>
-                <UserButton afterSignOutUrl="/" />
-              </SignedIn>
             </div>
           </div>
         </div>
