@@ -70,7 +70,6 @@ export default function BlogArticlePage() {
   return (
     <>
       <SEOHead title={post.title} description={post.excerpt} path={`/blog/${slug}`} />
-    <>
       <HeroPage label={post.category} title={<>{post.title}</>} description={`${post.date} · ${post.readTime} · By ${post.author}`} />
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
