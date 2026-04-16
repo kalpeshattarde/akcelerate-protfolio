@@ -58,7 +58,7 @@ const TAG_OPTIONS = [
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
@@ -66,6 +66,19 @@ export default function Products() {
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
+
+  // Get last purchased product
+  const lastPurchased = useMemo(() => {
+    try {
+      const sales = JSON.parse(localStorage.getItem("ak-sales") || "[]");
+      if (sales.length === 0) return null;
+      const last = sales[sales.length - 1];
+      const product = products.find(p => p.id === last.id);
+      if (!product) return null;
+      return { product, date: last.date };
+    } catch { return null; }
+  }, [products, purchased]);
 
   // SEO handled by SEOHead component
 
