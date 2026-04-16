@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Zap, Crown, Building2, GraduationCap, Wrench, Briefcase } from "lucide-react";
+import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 const plans = [
