@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X, Sparkles, Crown, BadgePercent } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { BUNDLE_THRESHOLD, STARTER_PRICE, BUNDLE_PRICE, ALL_ACCESS_PRICE } from "@/hooks/useCart";
+import { BUNDLE_THRESHOLD, STARTER_PRICE } from "@/hooks/useCart";
 import { PRODUCTS } from "@/data/products";
 import { isStripeConfigured } from "@/lib/stripe";
 import { isRazorpayConfigured, openRazorpayCheckout } from "@/lib/razorpay";
