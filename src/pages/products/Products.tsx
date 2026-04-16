@@ -58,7 +58,7 @@ const TAG_OPTIONS = [
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products, grantAllAccess } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
@@ -321,6 +321,10 @@ export default function Products() {
           currency={currency}
           total={cart.getTotal(currency)}
           onComplete={() => {
+            // If bundle (5+ items), grant all access to all files
+            if (cart.isBundle) {
+              grantAllAccess();
+            }
             cart.items.forEach(i => purchase(i.product.id));
             cart.clearCart();
             setCheckoutOpen(false);
