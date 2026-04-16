@@ -88,8 +88,19 @@ export default function Products() {
   const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
   const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
-  const handleBuy = (id: string) => { cart.addToCart(id, true); };
+  const handleBuy = (id: string) => {
+    if (cart.isInCart(id)) {
+      toast.info("Already in cart!");
+      cart.setOpen(true);
+      return;
+    }
+    cart.addToCart(id, true);
+  };
   const handleAddToCartSilent = (id: string) => {
+    if (cart.isInCart(id)) {
+      toast.info("Already in cart!");
+      return;
+    }
     cart.addToCart(id, false);
     const product = [...webSaas, ...mobileApps].find(p => p.id === id);
     toast.success(`${product?.name || "Product"} added to cart`, { duration: 2000 });
@@ -297,10 +308,10 @@ export default function Products() {
           items={cart.items}
           currency={currency}
           total={cart.getTotal(currency)}
-          onUpdateQuantity={cart.updateQuantity}
           onRemove={cart.removeFromCart}
           onClear={cart.clearCart}
           onCheckout={handleCheckout}
+          isBundle={cart.isBundle}
         />
 
         <CheckoutModal
