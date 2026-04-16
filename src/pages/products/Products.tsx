@@ -25,6 +25,7 @@ import FinalCTA from "@/components/products/FinalCTA";
 import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
+import ProductCompare from "@/components/products/ProductCompare";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -67,6 +68,7 @@ export default function Products() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [bannerDismissed, setBannerDismissed] = useState(false);
+  const [compareList, setCompareList] = useState<string[]>([]);
 
   // Get last purchased product
   const lastPurchased = useMemo(() => {
@@ -116,6 +118,17 @@ export default function Products() {
     const product = [...webSaas, ...mobileApps].find(p => p.id === id);
     const isFav = !wishlist.isFavorite(id);
     toast.success(isFav ? `${product?.name} saved to wishlist` : `${product?.name} removed from wishlist`, { duration: 2000 });
+  };
+
+  const handleToggleCompare = (id: string) => {
+    setCompareList(prev => {
+      if (prev.includes(id)) return prev.filter(x => x !== id);
+      if (prev.length >= 3) {
+        toast.error("You can compare up to 3 products at a time");
+        return prev;
+      }
+      return [...prev, id];
+    });
   };
 
   const handleCheckout = () => {
@@ -290,7 +303,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredWebSaas.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}
@@ -302,7 +315,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredMobileApps.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}
@@ -372,6 +385,12 @@ export default function Products() {
           onPurchase={handleBuy}
           onAddToCart={handleAddToCartSilent}
           onToggleFavorite={handleToggleFavorite}
+        />
+        <ProductCompare
+          compareList={compareList}
+          onRemove={(id) => setCompareList(prev => prev.filter(x => x !== id))}
+          onClear={() => setCompareList([])}
+          currency={currency}
         />
       </div>
     </main>
