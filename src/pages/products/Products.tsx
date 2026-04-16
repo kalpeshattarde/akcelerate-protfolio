@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen } from "lucide-react";
+import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen, Sparkles } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -58,7 +58,7 @@ const TAG_OPTIONS = [
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [search, setSearch] = useState("");
@@ -66,6 +66,19 @@ export default function Products() {
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
+
+  // Get last purchased product
+  const lastPurchased = useMemo(() => {
+    try {
+      const sales = JSON.parse(localStorage.getItem("ak-sales") || "[]");
+      if (sales.length === 0) return null;
+      const last = sales[sales.length - 1];
+      const product = products.find(p => p.id === last.id);
+      if (!product) return null;
+      return { product, date: last.date };
+    } catch { return null; }
+  }, [products, purchased]);
 
   // SEO handled by SEOHead component
 
@@ -120,14 +133,24 @@ export default function Products() {
           </div>
         )}
 
+        {/* Recently Purchased Banner */}
+        {lastPurchased && !bannerDismissed && (
+          <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl border border-primary/20 bg-primary/5">
+            <Sparkles className="w-5 h-5 text-primary shrink-0" />
+            <span className="text-sm text-foreground mr-auto">
+              <strong>Recently purchased:</strong> {lastPurchased.product.name} —{" "}
+              <Link to="/my-purchases" className="text-primary underline underline-offset-2 hover:text-primary/80">
+                Go to Dashboard →
+              </Link>
+            </span>
+            <button onClick={() => setBannerDismissed(true)} className="p-1 rounded-lg hover:bg-muted transition-colors text-muted-foreground">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
         {/* HERO */}
         <PersonalizedHero />
-
-        {/* PROBLEM */}
-        <ProblemSection />
-
-        {/* COST BREAKDOWN */}
-        <CostBreakdownSection />
 
         {/* SOLUTION */}
         <SolutionSection />
