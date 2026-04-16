@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench } from "lucide-react";
+import { ArrowRight, Check, Crown, Building2, GraduationCap, Wrench, ShoppingCart } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import { PRODUCTS } from "@/data/products";
+import { ALL_ACCESS_PRICE } from "@/hooks/useCart";
 
 const plans = [
   {

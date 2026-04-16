@@ -111,6 +111,19 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             <div className="w-full py-2 rounded-lg text-center text-sm font-medium bg-green-500/10 text-green-600 border border-green-500/20">
               ✓ Purchased
             </div>
+          ) : cartQuantity > 0 ? (
+            <div className="flex gap-2">
+              <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+                <ShoppingCart className="w-3.5 h-3.5" /> In Cart
+              </div>
+              <Link
+                to={`/products/${product.slug}`}
+                className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+                title="View details"
+              >
+                <Eye className="w-4 h-4 text-muted-foreground" />
+              </Link>
+            </div>
           ) : (
             <div className="flex gap-2">
               <button
@@ -121,15 +134,10 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
               </button>
               <button
                 onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
-                className="relative flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+                className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
                 title="Add to cart"
               >
                 <ShoppingCart className="w-4 h-4 text-muted-foreground" />
-                {cartQuantity > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
-                    {cartQuantity}
-                  </span>
-                )}
               </button>
             </div>
           )}
