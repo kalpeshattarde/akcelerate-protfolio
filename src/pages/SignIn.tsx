@@ -7,7 +7,7 @@ export default function SignIn() {
         routing="path"
         path="/sign-in"
         signUpUrl="/sign-up"
-        afterSignInUrl="/products"
+        fallbackRedirectUrl="/products"
       />
     </main>
   );
