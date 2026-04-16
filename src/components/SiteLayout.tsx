@@ -38,6 +38,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         });
       }, 250);
       prevPathname.current = pathname;
+      trackPageView(pathname);
       return () => clearTimeout(timer);
     }
   }, [pathname]);
