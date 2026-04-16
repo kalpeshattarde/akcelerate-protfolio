@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { FileText, Search, X, Plus, Edit3, Trash2, Eye, Calendar, Tag } from "lucide-react";
-import { BLOG_POSTS } from "@/data/blog";
+import { blogPosts } from "@/data/blog";
 
 interface ContentItem {
   id: string;
@@ -18,7 +18,7 @@ function getContent(): ContentItem[] {
   } catch {}
 
   // Seed from blog data
-  const items: ContentItem[] = BLOG_POSTS.map(p => ({
+  const items: ContentItem[] = blogPosts.map(p => ({
     id: p.slug,
     title: p.title,
     type: "blog" as const,
