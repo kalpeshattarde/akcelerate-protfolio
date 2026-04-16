@@ -6,7 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight, Search, X, Mail
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail, Sparkles
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
@@ -60,6 +60,19 @@ export default function MyPurchases() {
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
   const orders = getOrders();
+
+  // Recommendations: score unpurchased products by tag overlap with purchased ones
+  const recommendations = useMemo(() => {
+    if (purchasedProducts.length === 0) return [];
+    const ownedTags = purchasedProducts.flatMap(p => p.tags);
+    const tagCounts = ownedTags.reduce<Record<string, number>>((acc, t) => { acc[t] = (acc[t] || 0) + 1; return acc; }, {});
+    const unpurchased = PRODUCTS.filter(p => !isPurchased(p.id));
+    const scored = unpurchased.map(p => {
+      const score = p.tags.reduce((s, t) => s + (tagCounts[t] || 0), 0);
+      return { product: p, score };
+    });
+    return scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score).slice(0, 4).map(s => s.product);
+  }, [purchasedProducts, isPurchased]);
 
   const filteredProducts = useMemo(() => {
     let result = filter === "all"
@@ -386,6 +399,35 @@ export default function MyPurchases() {
                   );
                 })}
               </div>
+
+              {/* Recommendations */}
+              {recommendations.length > 0 && (
+                <div className="mt-12">
+                  <div className="flex items-center gap-2 mb-6">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    <h3 className="font-poppins text-lg font-semibold text-foreground">Recommended for You</h3>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {recommendations.map(product => (
+                      <div key={product.id} className="rounded-2xl border border-border bg-card p-4 hover:shadow-md transition-shadow">
+                        <div className="aspect-video rounded-xl overflow-hidden bg-muted mb-3">
+                          <img src={product.previewImage} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                        </div>
+                        <h4 className="font-semibold text-sm text-foreground mb-1 truncate">{product.name}</h4>
+                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.shortDesc}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-bold text-primary">
+                            {symbol}{currency === "inr" ? product.price.inr : product.price.usd}
+                          </span>
+                          <Link to={`/products/${product.slug}`} className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                            View <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Bottom CTA */}
               <div className="mt-12 text-center rounded-2xl border border-border bg-muted/30 p-8">
