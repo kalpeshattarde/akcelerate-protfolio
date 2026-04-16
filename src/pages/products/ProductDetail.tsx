@@ -67,10 +67,37 @@ export default function ProductDetail() {
             <p className="text-muted-foreground mb-6">{product.description}</p>
 
             {purchased ? (
-              <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
-                <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                <p className="font-semibold text-foreground">You own this product</p>
-                <p className="text-sm text-muted-foreground">Full source code access granted</p>
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+                  <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                  <p className="font-semibold text-foreground">You own this product</p>
+                  <p className="text-sm text-muted-foreground">Full source code access granted</p>
+                </div>
+                <button
+                  onClick={async () => {
+                    setDownloading(true);
+                    try {
+                      const result = await downloadProductFile(product.slug, product.name, product.features);
+                      if (result.fallback) {
+                        toast.info("Demo README downloaded. Full source code will be available once uploaded.");
+                      } else {
+                        toast.success("Download started!");
+                      }
+                    } catch {
+                      toast.error("Download failed. Please try again.");
+                    } finally {
+                      setDownloading(false);
+                    }
+                  }}
+                  disabled={downloading}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  {downloading ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Preparing Download…</>
+                  ) : (
+                    <><Download className="w-4 h-4" /> Download Source Code</>
+                  )}
+                </button>
               </div>
             ) : (
               <div className="space-y-6">
