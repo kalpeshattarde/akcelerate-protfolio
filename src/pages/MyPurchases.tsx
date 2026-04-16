@@ -6,7 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
@@ -53,14 +53,26 @@ export default function MyPurchases() {
   const [downloading, setDownloading] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [filter, setFilter] = useState<"all" | "mobile-app" | "web-saas">("all");
+  const [search, setSearch] = useState("");
 
   const purchasedProducts = PRODUCTS.filter(p => isPurchased(p.id));
   const symbol = currency === "inr" ? "₹" : "$";
   const orders = getOrders();
 
-  const filteredProducts = filter === "all"
-    ? purchasedProducts
-    : purchasedProducts.filter(p => p.category === filter);
+  const filteredProducts = useMemo(() => {
+    let result = filter === "all"
+      ? purchasedProducts
+      : purchasedProducts.filter(p => p.category === filter);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.shortDesc.toLowerCase().includes(q) ||
+        p.tags.some(t => t.toLowerCase().includes(q))
+      );
+    }
+    return result;
+  }, [purchasedProducts, filter, search]);
 
   const mobileCount = purchasedProducts.filter(p => p.category === "mobile-app").length;
   const saasCount = purchasedProducts.filter(p => p.category === "web-saas").length;
