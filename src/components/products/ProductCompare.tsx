@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Plus, ChevronDown, Check, Minus, ArrowLeftRight } from "lucide-react";
+import { X, Check, Minus, ArrowLeftRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { PRODUCTS, type Product } from "@/data/products";
@@ -21,7 +21,7 @@ export default function ProductCompare({ compareList, onRemove, onClear, currenc
 
   // Collect all unique features across compared products
   const allFeatures = [...new Set(products.flatMap(p => p.features))];
-  const allTags = [...new Set(products.flatMap(p => p.tags))];
+  
 
   return (
     <>

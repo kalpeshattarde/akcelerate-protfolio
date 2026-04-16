@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowLeftRight } from "lucide-react";
 import { Heart, ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Eye } from "lucide-react";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
