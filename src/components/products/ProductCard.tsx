@@ -71,7 +71,13 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
           <div className="flex items-start justify-between gap-2 mb-2">
             <Link to={`/products/${product.slug}`}>
               <h3 className="font-poppins font-semibold text-foreground group-hover:text-primary transition-colors">
-                {product.name}
+                {product.name.includes(" – ") ? (
+                  <>
+                    <span className="font-bold">{product.name.split(" – ")[0]}</span>
+                    {" – "}
+                    <span className="font-normal">{product.name.split(" – ")[1]}</span>
+                  </>
+                ) : product.name}
               </h3>
             </Link>
             <div className="text-right whitespace-nowrap">

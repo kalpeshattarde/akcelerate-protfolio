@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
   // ──────────── MOBILE APPS ────────────
   {
     id: "m1",
-    name: "Flexa – Fitness Booking",
+    name: "Fitness Booking – Flexa",
     slug: "flexa-fitness-booking",
     category: "mobile-app",
     topSelling: true,
