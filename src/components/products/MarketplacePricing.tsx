@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Check, Zap, Crown, Building2, GraduationCap, Wrench, Briefcase } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
-const USD_TO_INR = 85;
-
 const plans = [
   {
     name: "Starter",
-    priceUsd: 29,
+    priceUsd: 19,
+    priceInr: 1499,
     period: "one-time",
     description: "Perfect for students, solo entrepreneurs & vibe coders exploring SaaS ideas.",
     icon: GraduationCap,
@@ -26,7 +25,8 @@ const plans = [
   },
   {
     name: "Pro Bundle",
-    priceUsd: 99,
+    priceUsd: 59,
+    priceInr: 4999,
     period: "one-time",
     description: "For freelancers & specialized SaaS builders shipping multiple products fast.",
     icon: Wrench,
@@ -44,15 +44,37 @@ const plans = [
     highlighted: true,
   },
   {
-    name: "AKcelerate All-Access",
-    priceUsd: 249,
-    period: "starts from",
-    description: "For agency owners who build & sell SaaS. Get everything — white-label ready.",
-    icon: Building2,
-    audience: ["Agency Owners", "White-Label Resellers"],
+    name: "All Access",
+    priceUsd: 119,
+    priceInr: 9999,
+    period: "one-time",
+    description: "Get access to every prototype in the catalog — current and future releases.",
+    icon: Crown,
+    audience: ["Builders", "Resellers", "Teams"],
     features: [
       "Access to ALL prototypes",
       "Every future release included",
+      "Full source code ownership",
+      "Commercial license for all",
+      "Free updates for 12 months",
+      "Priority support",
+    ],
+    cta: "Get All Access",
+    ctaLink: "/contact",
+    highlighted: false,
+  },
+  {
+    name: "AKcelerate All-Access",
+    priceUsd: 249,
+    priceInr: 21000,
+    period: "starts from",
+    description: "Custom SaaS or mobile app solution with all features — white-label ready.",
+    icon: Building2,
+    audience: ["Agency Owners", "White-Label Resellers", "Enterprises"],
+    features: [
+      "Access to ALL prototypes",
+      "Custom SaaS or mobile app solution",
+      "All features included",
       "White-label rights for client delivery",
       "Remove all AKcelerate branding",
       "Priority feature requests",

@@ -31,7 +31,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/fitness-mobile-app.png",
     tags: ["react-native", "fitness", "booking", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Class booking", "Membership management", "QR check-in", "Real-time availability", "Trainer profiles"],
     badge: "Top Seller",
   },
@@ -47,7 +47,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/grocery-delivery-mobile-app.png",
     tags: ["react-native", "delivery", "ecommerce", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Category browsing", "Smart personalization", "Fast checkout", "Order tracking", "Delivery management"],
     badge: "Most Popular",
   },
@@ -63,7 +63,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/habbit-tracker-mobile-app.png",
     tags: ["react-native", "productivity", "wellness", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Daily habit tracking", "Progress insights", "Streak tracking", "Gentle reminders", "Reflection prompts"],
   },
   {
@@ -78,7 +78,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/mordern-restaurant.png",
     tags: ["react-native", "restaurant", "ordering", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Online ordering", "Table reservations", "Menu browsing", "Order management", "Multi-device support"],
   },
   {
@@ -93,7 +93,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/pregnancy-tracker-mobile-app.png",
     tags: ["react-native", "health", "pregnancy", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Weekly progress", "Milestone tracking", "Health insights", "Reminders", "Personal notes"],
   },
   {
@@ -108,7 +108,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/digital-agency-mobile-app.png",
     tags: ["react-native", "social", "community", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Content feeds", "Communities", "Posts & comments", "User profiles", "Push notifications"],
   },
   {
@@ -123,7 +123,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/fashion-brand-mobile-app.png",
     tags: ["react-native", "fashion", "ecommerce", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Style discovery", "Curated collections", "Trend browsing", "Saved looks", "Personalized recommendations"],
   },
   {
@@ -138,7 +138,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/meditation-mobile-app.png",
     tags: ["react-native", "wellness", "meditation", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Guided meditation", "Sleep stories", "Breathing exercises", "Progress tracking", "Healing sounds"],
     badge: "Top Seller",
   },
@@ -154,7 +154,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/music-player-mobile-app.png",
     tags: ["react-native", "music", "streaming", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Music streaming", "Playlist management", "Sound settings", "Track discovery", "Seamless playback"],
   },
   {
@@ -169,7 +169,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/podcast-player-mobile-app.png",
     tags: ["react-native", "podcast", "audio", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Podcast subscriptions", "Episode queue", "Auto-save progress", "Recommendations", "Playback controls"],
   },
   {
@@ -184,7 +184,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/video-editing-mobile-app.png",
     tags: ["react-native", "video", "ai", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["AI video generation", "Smart editing tools", "Visual effects", "Auto transitions", "Share-ready export"],
   },
   {
@@ -199,7 +199,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/baby-growth-mobile-app.png",
     tags: ["react-native", "parenting", "health", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Feeding tracker", "Sleep schedules", "Growth milestones", "Memory logging", "Diaper tracking"],
   },
   {
@@ -214,7 +214,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/event-registration-mobile-app.png",
     tags: ["react-native", "events", "registration", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Event registration", "Schedule management", "Attendee tracking", "Confirmations", "Multi-device support"],
   },
   {
@@ -229,7 +229,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/health-clarity-mobile-app.png",
     tags: ["react-native", "health", "nutrition", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Calorie tracking", "Macro tracking", "Water tracking", "Streaks", "Progress history"],
   },
   {
@@ -244,7 +244,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/home-service-booking-mobile-app.png",
     tags: ["react-native", "services", "booking", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Service booking", "Professional search", "Real-time tracking", "Service history", "Flexible scheduling"],
   },
   {
@@ -259,7 +259,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/langauge-learning-mobile-app.png",
     tags: ["react-native", "education", "language", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Interactive lessons", "Vocabulary builder", "Pronunciation practice", "Progress tracking", "Cultural context"],
   },
   {
@@ -274,7 +274,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/laundry-service-mobile-app.png",
     tags: ["react-native", "services", "laundry", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Pickup scheduling", "Real-time tracking", "Order history", "Payment management", "Service preferences"],
   },
   {
@@ -289,7 +289,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/meal-planner-mobile-app.png",
     tags: ["react-native", "nutrition", "planning", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Meal planning", "Recipe library", "Grocery lists", "Macro tracking", "Personalized goals"],
   },
   {
@@ -304,7 +304,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/pet-care-mobile-app.png",
     tags: ["react-native", "pets", "health", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Feeding tracker", "Walk logging", "Appointment reminders", "Health notes", "Activity logs"],
   },
   {
@@ -319,7 +319,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/pharmacy-inventory-mobile-app.png",
     tags: ["react-native", "healthcare", "inventory", "mobile"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Medication tracking", "Expiry alerts", "Batch tracking", "Usage history", "Reorder points"],
   },
   {
@@ -334,7 +334,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/supplychain-vision-mobile-app.png",
     tags: ["react-native", "logistics", "supply-chain", "mobile"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Real-time tracking", "Interactive maps", "Performance metrics", "Delay alerts", "Route optimization"],
   },
   {
@@ -349,7 +349,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/tech-startup-mobile-app.png",
     tags: ["react-native", "startup", "landing-page", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Product showcase", "Waitlist signup", "Feature highlights", "Responsive design", "Early adoption flow"],
   },
   {
@@ -364,7 +364,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/to-do-list-focus-mobile-app.png",
     tags: ["react-native", "productivity", "tasks", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Task management", "Calendar integration", "Reminders", "Progress analytics", "Priority levels"],
   },
   {
@@ -379,7 +379,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/guided-breathing-mobile-app.png",
     tags: ["react-native", "wellness", "breathing", "mobile"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Guided breathing", "Gentle animations", "Session tracking", "Calendar view", "Progress history"],
   },
 
@@ -396,7 +396,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/blog-creation-saas.png",
     tags: ["react", "cms", "blog", "analytics"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Markdown editor", "Content dashboard", "Performance analytics", "Team workflows", "SEO tools"],
     badge: "Most Popular",
   },
@@ -412,7 +412,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/sales-commision-calculator-saas.png",
     tags: ["react", "sales", "commission", "finance"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Commission calculation", "Payout tracking", "Scenario simulation", "Performance metrics", "Policy management"],
   },
   {
@@ -427,7 +427,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/sales-perfonmence-saas.png",
     tags: ["react", "sales", "analytics", "dashboard"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Pipeline tracking", "Target management", "Real-time forecasting", "Historical analytics", "Team reporting"],
     badge: "Top Seller",
   },
@@ -443,7 +443,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/buiness-platform-saas.png",
     tags: ["react", "business", "landing-page", "corporate"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Service showcase", "Responsive design", "CTA optimization", "Trust signals", "SEO-ready"],
   },
   {
@@ -458,7 +458,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/contract-management-saas.png",
     tags: ["react", "legal", "contracts", "enterprise"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Contract tracking", "Approval workflows", "Audit trails", "Document repository", "Role-based access"],
   },
   {
@@ -473,7 +473,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/job-board-saas.png",
     tags: ["react", "hr", "jobs", "marketplace"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Job listings", "Advanced search", "Application tracking", "Company profiles", "Job alerts"],
   },
   {
@@ -488,7 +488,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/product-launch-saas.png",
     tags: ["react", "launch", "landing-page", "marketing"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Waitlist signup", "Feature showcase", "Customer reviews", "FAQ section", "Conversion optimized"],
   },
   {
@@ -503,7 +503,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/project-management.png",
     tags: ["react", "project-management", "agile", "collaboration"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Kanban boards", "Sprint planning", "Calendar views", "Team analytics", "Deadline tracking"],
     badge: "Top Seller",
   },
@@ -519,7 +519,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/startup-pre-launch-saas.png",
     tags: ["react", "startup", "landing-page", "seo"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Hero section", "Pricing tables", "SEO foundations", "Responsive design", "Feature sections"],
   },
   {
@@ -534,7 +534,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/video-confercening-saas.png",
     tags: ["react", "communication", "video", "collaboration"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Video meetings", "Screen sharing", "Chat", "Recording", "Participant management"],
   },
   {
@@ -549,7 +549,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/accounting-saas.png",
     tags: ["react", "accounting", "finance", "enterprise"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Bookkeeping", "Invoicing", "Bank reconciliation", "Tax workflows", "Audit logs"],
     badge: "Enterprise",
   },
@@ -565,7 +565,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/crmpro-saas.png",
     tags: ["react", "crm", "sales", "enterprise"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Visual pipeline", "Account management", "Email threads", "Activity logging", "Custom reports"],
     badge: "Most Popular",
   },
@@ -581,7 +581,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/e-learning-platform-saas.png",
     tags: ["react", "education", "lms", "courses"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Course management", "Lesson builder", "Progress tracking", "Certificates", "Student dashboard"],
   },
   {
@@ -596,7 +596,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/procure-order-management-saas.png",
     tags: ["react", "procurement", "orders", "enterprise"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Purchase orders", "Vendor management", "Approval workflows", "Spend tracking", "Audit trails"],
   },
   {
@@ -611,7 +611,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/travel-booking-saas.png",
     tags: ["react", "travel", "booking", "marketplace"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Flight search", "Hotel booking", "Car rentals", "Trip management", "Price comparison"],
   },
   {
@@ -626,7 +626,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/workout-trainer-saas.png",
     tags: ["react", "fitness", "training", "wellness"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Personalized routines", "Guided programs", "Progress tracking", "Exercise library", "Workout history"],
   },
   {
@@ -641,7 +641,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/esg-reporting-saas.png",
     tags: ["react", "esg", "compliance", "enterprise"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["ESG metrics", "Compliance tracking", "Audit readiness", "Progress dashboards", "Documentation"],
   },
   {
@@ -656,7 +656,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/gaming-trounament-saas.png",
     tags: ["react", "gaming", "tournament", "esports"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Tournament brackets", "Player registration", "Live results", "Match alerts", "Standings"],
   },
   {
@@ -671,7 +671,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/live-stock-market-saas.png",
     tags: ["react", "finance", "stocks", "trading"],
     priceTier: "enterprise",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Live charts", "Market monitoring", "Price alerts", "Asset comparison", "Trading indicators"],
   },
   {
@@ -686,7 +686,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/marketing-analytics-saas.png",
     tags: ["react", "marketing", "analytics", "dashboard"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Campaign tracking", "Channel analytics", "Visual reports", "Real-time updates", "Historical data"],
   },
   {
@@ -701,7 +701,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/mobileapp-download-saas.png",
     tags: ["react", "landing-page", "app-store", "marketing"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Download CTAs", "Feature highlights", "Platform badges", "Responsive design", "Conversion focused"],
   },
   {
@@ -716,7 +716,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/okr-tracking-saas.png",
     tags: ["react", "okr", "goals", "management"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["OKR tracking", "Goal management", "Progress scoring", "Team visibility", "Department alignment"],
   },
   {
@@ -731,7 +731,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/real-estate-listing-saas.png",
     tags: ["react", "real-estate", "listings", "marketplace"],
     priceTier: "bundle",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Property listings", "Advanced search", "Market insights", "Neighborhood explorer", "Comparison tools"],
   },
   {
@@ -746,7 +746,7 @@ export const PRODUCTS: Product[] = [
     previewImage: "/images/products/vitaltracker.png",
     tags: ["react", "health", "wellness", "dashboard"],
     priceTier: "single",
-    price: { usd: 29, inr: 2499 },
+    price: { usd: 19, inr: 1499 },
     features: ["Activity tracking", "Nutrition logging", "Hydration tracking", "Sleep monitoring", "Real-time insights"],
   },
 ];
