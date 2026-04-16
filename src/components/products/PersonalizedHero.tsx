@@ -18,7 +18,7 @@ export default function PersonalizedHero() {
       <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
         Why spend <span className="font-semibold text-foreground">$1,000–$3,000</span> and weeks wrestling with
         ChatGPT, Claude, Replit, or Bolt? Grab a <span className="font-semibold text-foreground">ready-made SaaS prototype</span> for
-        <span className="font-semibold text-primary"> $29</span> and launch today.
+        <span className="font-semibold text-primary"> $19</span> and launch today.
       </p>
 
       {/* 3 Bullet Benefits */}
