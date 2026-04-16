@@ -25,6 +25,7 @@ export default function ProductDetail() {
     if (product) trackProductView(product.slug, product.name);
   }, [product?.slug, product?.name]);
 
+  if (!product) {
     return (
       <main className="pt-28 pb-20 text-center">
         <p className="text-muted-foreground">Product not found.</p>
