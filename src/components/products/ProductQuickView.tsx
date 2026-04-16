@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -19,12 +18,11 @@ interface ProductQuickViewProps {
   onToggleFavorite: (id: string) => void;
 }
 
-const ProductQuickView = forwardRef<HTMLDivElement, ProductQuickViewProps>(function ProductQuickView({
+export default function ProductQuickView({
   product, open, onOpenChange, currency, isPurchased, isFavorite, cartQuantity,
   onPurchase, onAddToCart, onToggleFavorite,
-}, _ref) {
+}: ProductQuickViewProps) {
   if (!product) return null;
-
 
   const price = currency === "inr" ? `₹${product.price.inr.toLocaleString("en-IN")}` : `$${product.price.usd}`;
 
@@ -38,7 +36,7 @@ const ProductQuickView = forwardRef<HTMLDivElement, ProductQuickViewProps>(funct
         <div className="grid md:grid-cols-2 gap-6 mt-2">
           {/* Image */}
           <div className="relative rounded-xl overflow-hidden bg-muted aspect-[4/3]">
-            <img src={product.previewImage} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            <img src={product.previewImage} alt={product.name} className="w-full h-full object-cover" />
             {product.badge && (
               <Badge className="absolute top-3 left-3">{product.badge}</Badge>
             )}
@@ -133,6 +131,4 @@ const ProductQuickView = forwardRef<HTMLDivElement, ProductQuickViewProps>(funct
       </DialogContent>
     </Dialog>
   );
-});
-
-export default ProductQuickView;
+}

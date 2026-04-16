@@ -1,4 +1,4 @@
-import { useEffect, useRef, forwardRef } from "react";
+import { useEffect, useRef } from "react";
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   options?: IntersectionObserverInit
@@ -21,6 +21,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px", ...options }
     );
 
+    // Observe all children with .reveal class, or the element itself
     const targets = el.querySelectorAll(".reveal");
     if (targets.length > 0) {
       targets.forEach((t) => observer.observe(t));
@@ -34,15 +35,19 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   return ref;
 }
 
-export const RevealSection = forwardRef<HTMLDivElement, {
+export function RevealSection({
+  children,
+  className = "",
+  delay = 0,
+}: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-}>(({ children, className = "", delay = 0 }, forwardedRef) => {
-  const innerRef = useRef<HTMLDivElement>(null);
+}) {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = innerRef.current;
+    const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -58,26 +63,25 @@ export const RevealSection = forwardRef<HTMLDivElement, {
   }, [delay]);
 
   return (
-    <div ref={(node) => {
-      (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-      if (typeof forwardedRef === 'function') forwardedRef(node);
-      else if (forwardedRef) (forwardedRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-    }} className={`reveal ${className}`}>
+    <div ref={ref} className={`reveal ${className}`}>
       {children}
     </div>
   );
-});
-RevealSection.displayName = "RevealSection";
+}
 
-export const RevealGrid = forwardRef<HTMLDivElement, {
+export function RevealGrid({
+  children,
+  className = "",
+  stagger = 100,
+}: {
   children: React.ReactNode;
   className?: string;
   stagger?: number;
-}>(({ children, className = "", stagger = 100 }, forwardedRef) => {
-  const innerRef = useRef<HTMLDivElement>(null);
+}) {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = innerRef.current;
+    const el = ref.current;
     if (!el) return;
     const items = el.querySelectorAll(".reveal-item");
     const observer = new IntersectionObserver(
@@ -96,13 +100,8 @@ export const RevealGrid = forwardRef<HTMLDivElement, {
   }, [stagger]);
 
   return (
-    <div ref={(node) => {
-      (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-      if (typeof forwardedRef === 'function') forwardedRef(node);
-      else if (forwardedRef) (forwardedRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-    }} className={className}>
+    <div ref={ref} className={className}>
       {children}
     </div>
   );
-});
-RevealGrid.displayName = "RevealGrid";
+}

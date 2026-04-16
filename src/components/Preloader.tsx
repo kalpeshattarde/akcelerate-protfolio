@@ -2,21 +2,21 @@ import { useState, useEffect } from "react";
 import { Activity } from "lucide-react";
 
 export default function Preloader() {
-  const [phase, setPhase] = useState<"loading" | "exit" | "done">(() => {
-    // Skip preloader entirely if already seen this session
-    if (typeof window !== "undefined" && sessionStorage.getItem("ak-preloader")) return "done";
-    return "loading";
-  });
+  const [phase, setPhase] = useState<"loading" | "exit" | "done">("loading");
 
   useEffect(() => {
-    if (phase === "done") return;
-    const t1 = setTimeout(() => setPhase("exit"), 600);
+    const seen = sessionStorage.getItem("ak-preloader");
+    if (seen) {
+      setPhase("done");
+      return;
+    }
+    const t1 = setTimeout(() => setPhase("exit"), 1200);
     const t2 = setTimeout(() => {
       setPhase("done");
       sessionStorage.setItem("ak-preloader", "1");
-    }, 1000);
+    }, 1800);
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [phase]);
+  }, []);
 
   if (phase === "done") return null;
 
@@ -25,7 +25,7 @@ export default function Preloader() {
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{
         background: "hsl(var(--background))",
-        transition: "transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease",
+        transition: "transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease",
         transform: phase === "exit" ? "translateY(-100%)" : "translateY(0)",
         opacity: phase === "exit" ? 0 : 1,
       }}

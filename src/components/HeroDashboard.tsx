@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, forwardRef, useRef } from "react";
+import { useState, useEffect, memo } from "react";
 
 const tabs1 = ["🤖 Automation", "🧠 AI/ML", "📊 Analytics", "💻 SaaS"];
 const tabs2 = ["📈 Data Viz", "☁️ Cloud", "🔄 MLOps", "🎯 Strategy"];
@@ -14,50 +14,27 @@ const terminalLines = [
 
 const barHeights = [30, 45, 35, 55, 48, 65, 58, 72, 68, 80, 75, 92, 85, 70, 88, 95];
 
-// Single RAF-driven chart using CSS transforms instead of per-bar state
-function AnimatedChart({ animate }: { animate: boolean }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>();
+function AnimatedBar({ baseHeight, index, animate }: { baseHeight: number; index: number; animate: boolean }) {
+  const [h, setH] = useState(baseHeight);
 
   useEffect(() => {
-    if (!animate || !containerRef.current) return;
-    // Throttle to ~30fps for this decorative animation
-    let lastTime = 0;
-    const throttledTick = () => {
-      const now = performance.now();
-      if (now - lastTime >= 33) {
-        lastTime = now;
-        const t = Date.now();
-        const bars = containerRef.current?.children;
-        if (bars) {
-          for (let i = 0; i < bars.length; i++) {
-            const h = barHeights[i] + Math.sin(t / 800 + i * 0.7) * 12;
-            (bars[i] as HTMLElement).style.height = `${Math.max(10, Math.min(98, h))}%`;
-          }
-        }
-      }
-      rafRef.current = requestAnimationFrame(throttledTick);
-    };
-
-    rafRef.current = requestAnimationFrame(throttledTick);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [animate]);
+    if (!animate) return;
+    const interval = setInterval(() => {
+      setH(baseHeight + Math.sin(Date.now() / 800 + index * 0.7) * 12);
+    }, 120);
+    return () => clearInterval(interval);
+  }, [baseHeight, index, animate]);
 
   return (
-    <div ref={containerRef} className="flex items-end gap-1 h-full p-3 pb-2">
-      {barHeights.map((h, i) => (
-        <div
-          key={i}
-          className="flex-1 rounded-t-sm"
-          style={{
-            height: `${h}%`,
-            background: `linear-gradient(180deg, ${i < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
-            opacity: 0.5 + (i / 32),
-            willChange: "height",
-          }}
-        />
-      ))}
-    </div>
+    <div
+      className="flex-1 rounded-t-sm"
+      style={{
+        height: `${Math.max(10, Math.min(98, h))}%`,
+        background: `linear-gradient(180deg, ${index < 10 ? 'rgba(37,99,235,0.8)' : 'rgba(6,182,212,0.8)'}, rgba(37,99,235,0.2))`,
+        opacity: 0.5 + (index / 32),
+        transition: "height 0.3s ease",
+      }}
+    />
   );
 }
 
@@ -88,31 +65,28 @@ function useTypingEffect(lines: string[], speed = 40, pauseDuration = 2000) {
   return text;
 }
 
-const CountUpValue = forwardRef<HTMLSpanElement, { target: number; suffix?: string; prefix?: string }>(
-  ({ target, suffix = "", prefix = "" }, ref) => {
-    const [val, setVal] = useState(0);
+function CountUpValue({ target, suffix = "", prefix = "" }: { target: number; suffix?: string; prefix?: string }) {
+  const [val, setVal] = useState(0);
 
-    useEffect(() => {
-      const duration = 1800;
-      const steps = 40;
-      const increment = target / steps;
-      let current = 0;
-      const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          setVal(target);
-          clearInterval(interval);
-        } else {
-          setVal(Math.round(current * 10) / 10);
-        }
-      }, duration / steps);
-      return () => clearInterval(interval);
-    }, [target]);
+  useEffect(() => {
+    const duration = 1800;
+    const steps = 40;
+    const increment = target / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setVal(target);
+        clearInterval(interval);
+      } else {
+        setVal(Math.round(current * 10) / 10);
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [target]);
 
-    return <span ref={ref}>{prefix}{val % 1 === 0 ? val : val.toFixed(1)}{suffix}</span>;
-  }
-);
-CountUpValue.displayName = "CountUpValue";
+  return <>{prefix}{val % 1 === 0 ? val : val.toFixed(1)}{suffix}</>;
+}
 
 const HeroDashboard = memo(function HeroDashboard() {
   const [activeTab, setActiveTab] = useState(0);
@@ -210,9 +184,13 @@ const HeroDashboard = memo(function HeroDashboard() {
             <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full" style={{ color: "#34D399", background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.25)" }}>● Active</span>
           </div>
 
-          {/* Animated chart — single RAF instead of 16 intervals */}
+          {/* Animated chart */}
           <div className="mx-3 mb-2 rounded-lg overflow-hidden" style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.04)", height: "100px" }}>
-            <AnimatedChart animate={isVisible} />
+            <div className="flex items-end gap-1 h-full p-3 pb-2">
+              {barHeights.map((h, i) => (
+                <AnimatedBar key={i} baseHeight={h} index={i} animate={isVisible} />
+              ))}
+            </div>
           </div>
 
           {/* Pipeline steps */}
