@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuditLog, AuditEntry } from "@/lib/auditLog";
+import { useAuditLog } from "@/lib/auditLog";
 import { Search, Trash2, Download, Clock, User, FileText } from "lucide-react";
 import { downloadCSV } from "@/lib/csvExport";
 
