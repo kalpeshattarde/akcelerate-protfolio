@@ -6,7 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight, Search, X, Mail
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail, Sparkles, ShoppingCart
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
