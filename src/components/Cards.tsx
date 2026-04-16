@@ -188,5 +188,6 @@ export function PricingCard({ name, description, priceUsd, priceInr, features, h
         {cta}
       </Link>
     </GlowCard>
+    </div>
   );
 }
