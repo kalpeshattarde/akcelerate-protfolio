@@ -6,11 +6,12 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight, Search, X
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
 import { downloadProductFile } from "@/lib/downloadProduct";
+import { supabase } from "@/integrations/supabase/client";
 import SEOHead from "@/components/SEOHead";
 
 interface Order {
@@ -51,6 +52,7 @@ export default function MyPurchases() {
   const { isPurchased } = useProducts();
   const { currency } = useGeoDetection();
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [emailing, setEmailing] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [filter, setFilter] = useState<"all" | "mobile-app" | "web-saas">("all");
   const [search, setSearch] = useState("");
