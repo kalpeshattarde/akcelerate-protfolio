@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, useRef } from "react";
+import { ReactNode, useState, useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
@@ -16,52 +16,58 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const [showTop, setShowTop] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [pageKey, setPageKey] = useState(0);
-  const [transitionClass, setTransitionClass] = useState("page-enter-active");
+  const scrollBarRef = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number>(0);
   const { pathname } = useLocation();
   const prevPathname = useRef(pathname);
+  const [transitionClass, setTransitionClass] = useState("page-enter-active");
+  const [pageKey, setPageKey] = useState(0);
 
   useEffect(() => {
     if (prevPathname.current !== pathname) {
-      // Exit animation
       setTransitionClass("page-exit-active");
       const timer = setTimeout(() => {
         window.scrollTo(0, 0);
         setPageKey(k => k + 1);
         setTransitionClass("page-enter");
-        // Trigger enter animation next frame
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             setTransitionClass("page-enter-active");
           });
         });
-      }, 250);
+      }, 150); // Reduced from 250ms
       prevPathname.current = pathname;
       trackPageView(pathname);
       return () => clearTimeout(timer);
     }
   }, [pathname]);
 
+  // Use RAF-throttled scroll handler to avoid excessive state updates
   useEffect(() => {
     const onScroll = () => {
-      setShowTop(window.scrollY > 400);
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0);
+      if (rafId.current) return;
+      rafId.current = requestAnimationFrame(() => {
+        rafId.current = 0;
+        const y = window.scrollY;
+        setShowTop(y > 400);
+        if (scrollBarRef.current) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          scrollBarRef.current.style.width = docHeight > 0 ? `${(y / docHeight) * 100}%` : "0%";
+        }
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
   }, []);
 
   return (
     <>
       <Preloader />
       <div className="min-h-screen flex flex-col">
-        {/* Scroll progress bar */}
-        <div
-          className="scroll-progress"
-          style={{ width: `${scrollProgress}%` }}
-        />
+        <div ref={scrollBarRef} className="scroll-progress" style={{ width: "0%" }} />
 
         <Navbar />
         <main className="flex-1 relative">
@@ -101,7 +107,6 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </a>
         </div>
 
-        {/* Back to top */}
         {showTop && (
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
