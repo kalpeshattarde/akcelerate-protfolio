@@ -1,35 +1,21 @@
-/**
- * Downloads a product file.
- * Priority: downloadUrl (GitHub Release) → Supabase Storage → README fallback
- */
-export async function downloadProductFile(
-  slug: string,
-  productName: string,
-  features: string[],
-  downloadUrl?: string
-): Promise<{ success: boolean; fallback: boolean }> {
-  // 1. Direct download URL (GitHub Releases, etc.)
-  if (downloadUrl) {
-    const a = document.createElement("a");
-    a.href = downloadUrl;
-    a.download = `${slug}-source-code.zip`;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    return { success: true, fallback: false };
-  }
+import { supabase } from "@/integrations/supabase/client";
 
-  // 2. Try Supabase Storage
+/**
+ * Downloads a product file from Supabase Storage.
+ * Files should be uploaded to the 'product-files' bucket with path: {product-slug}.zip
+ * 
+ * Falls back to generating a README if the file doesn't exist yet.
+ */
+export async function downloadProductFile(slug: string, productName: string, features: string[]): Promise<{ success: boolean; fallback: boolean }> {
   try {
-    const { supabase } = await import("@/integrations/supabase/client");
+    // Try to get a signed URL from Supabase Storage
     const filePath = `${slug}.zip`;
     const { data, error } = await supabase.storage
       .from("product-files")
-      .createSignedUrl(filePath, 3600);
+      .createSignedUrl(filePath, 3600); // 1 hour expiry
 
     if (data?.signedUrl && !error) {
+      // Real file exists — trigger download
       const a = document.createElement("a");
       a.href = data.signedUrl;
       a.download = `${slug}-source-code.zip`;
@@ -42,7 +28,7 @@ export async function downloadProductFile(
     // Fall through to fallback
   }
 
-  // 3. Fallback: generate a README file
+  // Fallback: generate a README file
   const content = generateReadme(productName, features);
   const blob = new Blob([content], { type: "text/markdown" });
   const url = URL.createObjectURL(blob);

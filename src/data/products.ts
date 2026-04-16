@@ -15,7 +15,6 @@ export interface Product {
   price: { usd: number; inr: number };
   features: string[];
   badge?: string;
-  downloadUrl?: string;
 }
 
 export const PRODUCTS: Product[] = [
