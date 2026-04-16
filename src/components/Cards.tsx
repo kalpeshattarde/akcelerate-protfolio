@@ -148,9 +148,10 @@ export function PricingCard({ name, description, priceUsd, priceInr, features, h
   };
 
   return (
-    <GlowCard className={`glass-card p-8 relative ${highlighted ? "border-primary shadow-lg scale-105 z-10" : ""}`}>
+    <div className={highlighted ? "pt-4" : ""}>
+    <GlowCard className={`glass-card p-8 relative overflow-visible ${highlighted ? "border-primary shadow-lg z-10" : ""}`}>
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)" }}>
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold text-primary-foreground whitespace-nowrap" style={{ background: "var(--gradient-primary)" }}>
           Most Popular
         </div>
       )}
