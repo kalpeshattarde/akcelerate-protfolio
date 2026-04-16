@@ -61,6 +61,19 @@ export default function MyPurchases() {
   const symbol = currency === "inr" ? "₹" : "$";
   const orders = getOrders();
 
+  // Recommendations: score unpurchased products by tag overlap with purchased ones
+  const recommendations = useMemo(() => {
+    if (purchasedProducts.length === 0) return [];
+    const ownedTags = purchasedProducts.flatMap(p => p.tags);
+    const tagCounts = ownedTags.reduce<Record<string, number>>((acc, t) => { acc[t] = (acc[t] || 0) + 1; return acc; }, {});
+    const unpurchased = PRODUCTS.filter(p => !isPurchased(p.id));
+    const scored = unpurchased.map(p => {
+      const score = p.tags.reduce((s, t) => s + (tagCounts[t] || 0), 0);
+      return { product: p, score };
+    });
+    return scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score).slice(0, 4).map(s => s.product);
+  }, [purchasedProducts, isPurchased]);
+
   const filteredProducts = useMemo(() => {
     let result = filter === "all"
       ? purchasedProducts
