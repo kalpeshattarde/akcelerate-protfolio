@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Copy, Check, ChevronRight, FolderOpen, FileText, Code, BookOpen, Lightbulb, CheckCircle2, ArrowRight } from "lucide-react";
+import guideHeroImg from "@/assets/guide-hero.png";
 import SEOHead from "@/components/SEOHead";
 import FAQAccordion from "@/components/FAQAccordion";
 import { toast } from "sonner";
@@ -147,18 +148,25 @@ export default function Guide() {
 
           {/* ══════════════ 1. HERO ══════════════ */}
           <section id="hero" className="pt-32 pb-20 lg:pt-40 lg:pb-28">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">SaaS Prototypes — Guide</p>
-            <h1 className="font-poppins font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-foreground">
-              Use any prototype with AI<br className="hidden sm:block" /> in minutes
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Every prototype in this library includes enough context — docs, prompts, preview assets, and structured code — for Lovable or any AI builder to turn it into a more specific product. This guide shows you exactly how.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/products" className="btn-primary inline-flex items-center gap-2 text-sm">
-                Browse Prototypes <ArrowRight className="w-4 h-4" />
-              </Link>
-              <CopyButton text={SHORT_PROMPT} label="Copy Lovable Prompt" />
+            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-14">
+              <div className="flex-1">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">SaaS Prototypes — Guide</p>
+                <h1 className="font-poppins font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-foreground">
+                  Use any prototype with AI<br className="hidden sm:block" /> in minutes
+                </h1>
+                <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
+                  Every prototype in this library includes enough context — docs, prompts, preview assets, and structured code — for Lovable or any AI builder to turn it into a more specific product. This guide shows you exactly how.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link to="/products" className="btn-primary inline-flex items-center gap-2 text-sm">
+                    Browse Prototypes <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <CopyButton text={SHORT_PROMPT} label="Copy Lovable Prompt" />
+                </div>
+              </div>
+              <div className="flex-shrink-0 w-64 sm:w-80 lg:w-96">
+                <img src={guideHeroImg} alt="Organized prototype folders with code documents and AI sparkles" width={960} height={640} className="w-full h-auto drop-shadow-lg" />
+              </div>
             </div>
           </section>
 
