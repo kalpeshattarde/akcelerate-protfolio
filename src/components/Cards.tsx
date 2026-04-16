@@ -125,13 +125,14 @@ export function TestimonialCard({ quote, name, role }: TestimonialCardProps) {
 interface PricingCardProps {
   name: string;
   description: string;
-  price: string;
+  priceUsd: string;
+  priceInr: string;
   features: string[];
   highlighted: boolean;
   cta: string;
 }
 
-export function PricingCard({ name, description, price, features, highlighted, cta }: PricingCardProps) {
+export function PricingCard({ name, description, priceUsd, priceInr, features, highlighted, cta }: PricingCardProps) {
   return (
     <GlowCard className={`glass-card p-8 relative ${highlighted ? "border-primary shadow-lg scale-105 z-10" : ""}`}>
       {highlighted && (
@@ -142,8 +143,13 @@ export function PricingCard({ name, description, price, features, highlighted, c
       <h3 className="font-poppins font-bold text-xl mb-2">{name}</h3>
       <p className="text-muted-foreground text-sm mb-6">{description}</p>
       <div className="mb-6">
-        <span className="font-poppins font-bold text-3xl">{price}</span>
-        {price !== "Custom" && <span className="text-muted-foreground text-sm">/month</span>}
+        <p className="text-xs text-muted-foreground font-medium mb-1">Starts from</p>
+        <div className="flex items-baseline gap-1">
+          <span className="font-poppins font-bold text-3xl">{priceUsd}</span>
+        </div>
+        {priceInr !== "Custom" && (
+          <div className="text-sm text-muted-foreground mt-0.5">≈ {priceInr}</div>
+        )}
       </div>
       <ul className="space-y-3 mb-8">
         {features.map((f, i) => (
