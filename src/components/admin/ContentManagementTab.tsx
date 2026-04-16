@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
-import { FileText, Search, X, Plus, Edit3, Trash2, Eye, Calendar, Tag } from "lucide-react";
+import { FileText, Search, X, Plus, Edit3, Trash2, Eye, Calendar, Download } from "lucide-react";
 import { blogPosts } from "@/data/blog";
+import { downloadCSV } from "@/lib/csvExport";
 
 interface ContentItem {
   id: string;
@@ -16,22 +17,10 @@ function getContent(): ContentItem[] {
     const stored = JSON.parse(localStorage.getItem("ak-content") || "[]");
     if (stored.length > 0) return stored;
   } catch {}
-
-  // Seed from blog data
-  const items: ContentItem[] = blogPosts.map(p => ({
-    id: p.slug,
-    title: p.title,
-    type: "blog" as const,
-    status: "published" as const,
-    date: p.date,
-    excerpt: p.description,
-  }));
-  return items;
+  return blogPosts.map(p => ({ id: p.slug, title: p.title, type: "blog" as const, status: "published" as const, date: p.date, excerpt: p.description }));
 }
 
-function saveContent(items: ContentItem[]) {
-  localStorage.setItem("ak-content", JSON.stringify(items));
-}
+function saveContent(items: ContentItem[]) { localStorage.setItem("ak-content", JSON.stringify(items)); }
 
 export default function ContentManagementTab() {
   const [content, setContent] = useState<ContentItem[]>(getContent);
@@ -84,6 +73,13 @@ export default function ContentManagementTab() {
     saveContent(updated);
   };
 
+  const exportContent = () => {
+    downloadCSV("content-export.csv",
+      ["Title", "Type", "Status", "Date", "Excerpt"],
+      filtered.map(c => [c.title, c.type, c.status, new Date(c.date).toLocaleDateString(), c.excerpt])
+    );
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -91,13 +87,18 @@ export default function ContentManagementTab() {
           <FileText className="w-5 h-5 text-primary" />
           <h2 className="font-poppins text-xl font-semibold text-foreground">Content Management</h2>
         </div>
-        <button onClick={() => { setEditing(null); setForm({ title: "", type: "blog", status: "draft", excerpt: "" }); setShowForm(true); }}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-          <Plus className="w-4 h-4" /> New Content
-        </button>
+        <div className="flex gap-2">
+          <button onClick={exportContent}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-colors">
+            <Download className="w-3.5 h-3.5" /> Export
+          </button>
+          <button onClick={() => { setEditing(null); setForm({ title: "", type: "blog", status: "draft", excerpt: "" }); setShowForm(true); }}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+            <Plus className="w-4 h-4" /> New Content
+          </button>
+        </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: "Total", value: content.length },
@@ -111,7 +112,6 @@ export default function ContentManagementTab() {
         ))}
       </div>
 
-      {/* Form Modal */}
       {showForm && (
         <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
           <h3 className="font-semibold text-foreground">{editing ? "Edit Content" : "New Content"}</h3>
@@ -133,17 +133,12 @@ export default function ContentManagementTab() {
             </select>
           </div>
           <div className="flex gap-2">
-            <button onClick={handleSave} className="px-4 py-2 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90">
-              {editing ? "Update" : "Create"}
-            </button>
-            <button onClick={() => { setShowForm(false); setEditing(null); }} className="px-4 py-2 rounded-xl text-sm font-medium bg-muted text-muted-foreground hover:bg-muted/80">
-              Cancel
-            </button>
+            <button onClick={handleSave} className="px-4 py-2 rounded-xl text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90">{editing ? "Update" : "Create"}</button>
+            <button onClick={() => { setShowForm(false); setEditing(null); }} className="px-4 py-2 rounded-xl text-sm font-medium bg-muted text-muted-foreground hover:bg-muted/80">Cancel</button>
           </div>
         </div>
       )}
 
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -161,7 +156,6 @@ export default function ContentManagementTab() {
         </div>
       </div>
 
-      {/* Content List */}
       <div className="space-y-3">
         {filtered.map(item => (
           <div key={item.id} className="rounded-2xl border border-border bg-card p-4 hover:border-primary/20 transition-all">
@@ -169,12 +163,8 @@ export default function ContentManagementTab() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <h4 className="font-semibold text-foreground truncate">{item.title}</h4>
-                  <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${item.type === "blog" ? "bg-primary/10 text-primary" : item.type === "case-study" ? "bg-amber-500/10 text-amber-600" : "bg-violet-500/10 text-violet-600"}`}>
-                    {item.type}
-                  </span>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${item.status === "published" ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"}`}>
-                    {item.status}
-                  </span>
+                  <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${item.type === "blog" ? "bg-primary/10 text-primary" : item.type === "case-study" ? "bg-amber-500/10 text-amber-600" : "bg-violet-500/10 text-violet-600"}`}>{item.type}</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${item.status === "published" ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{item.status}</span>
                 </div>
                 <p className="text-sm text-muted-foreground line-clamp-1">{item.excerpt}</p>
                 <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
@@ -182,15 +172,9 @@ export default function ContentManagementTab() {
                 </div>
               </div>
               <div className="flex items-center gap-1.5">
-                <button onClick={() => toggleStatus(item.id)} className="p-2 rounded-lg hover:bg-muted transition-colors" title="Toggle status">
-                  <Eye className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button onClick={() => handleEdit(item)} className="p-2 rounded-lg hover:bg-muted transition-colors" title="Edit">
-                  <Edit3 className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button onClick={() => handleDelete(item.id)} className="p-2 rounded-lg hover:bg-red-500/10 transition-colors" title="Delete">
-                  <Trash2 className="w-4 h-4 text-red-500" />
-                </button>
+                <button onClick={() => toggleStatus(item.id)} className="p-2 rounded-lg hover:bg-muted transition-colors" title="Toggle status"><Eye className="w-4 h-4 text-muted-foreground" /></button>
+                <button onClick={() => handleEdit(item)} className="p-2 rounded-lg hover:bg-muted transition-colors" title="Edit"><Edit3 className="w-4 h-4 text-muted-foreground" /></button>
+                <button onClick={() => handleDelete(item.id)} className="p-2 rounded-lg hover:bg-red-500/10 transition-colors" title="Delete"><Trash2 className="w-4 h-4 text-red-500" /></button>
               </div>
             </div>
           </div>
