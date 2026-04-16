@@ -1,58 +1,76 @@
 
 
-# 20 High-Converting Ad Images for AKcelerate
+# Full App PR Review: Bug Fixes and Advancements
 
-## Approach
+## Issues Found
 
-Generate 20 premium ad creatives using the AI image generation skill (`lovable_ai.py`). Each image will be crafted with a detailed prompt incorporating brand colors (#2563EB, #06B6D4, #0F172A), the pulse-line motif, bold Poppins-style headings, and a dark tech-forward aesthetic.
+### 1. Security: Hardcoded Admin Credentials (Critical)
+`AdminLoginGate.tsx` has plaintext usernames and passwords in the source code, with admin state stored in `sessionStorage`. This is a major security vulnerability.
 
-## Instagram Creatives (10 images, 1080×1080 or 1080×1350)
+### 2. Console Error: ProductsTab forwardRef Warning
+`ProductsTab` is a function component being passed as a ref target by Radix TabsContent. Needs `forwardRef` wrapping.
 
-| # | Type | Headline | CTA |
-|---|------|----------|-----|
-| 1 | Pain point shock | "Your Ads Are Burning Cash. You Just Don't Know It Yet." | Book Free Audit |
-| 2 | Before vs After | "Before AKcelerate → After AKcelerate" (split layout with metrics) | See Results |
-| 3 | Bold stat visual | "87% of Ad Budgets Are Wasted on Wrong Audiences" | Fix Your Targeting |
-| 4 | Founder frustration | "Still Running Ads Without AI in 2026?" | Get Started |
-| 5 | Growth promise | "10x Your ROAS in 90 Days — Or We Work Free" | Claim Your Spot |
-| 6 | FOMO / urgency | "Only 5 Audit Slots Left This Month" | Apply Now |
-| 7 | UGC-style branded | "We Went From ₹2L/mo to ₹18L/mo in 4 Months" (testimonial card) | Learn How |
-| 8 | Offer-driven | "Free AI Growth Audit — Worth ₹50,000" | Book Now |
-| 9 | Problem-solution | "No Leads? No Pipeline? No Growth? → One Platform. All Fixed." | Start Free |
-| 10 | Authority / trust | "Trusted by 200+ Brands Across 12 Industries" | Join Them |
+### 3. Backlink / Navigation Sync Issues
+- Mobile menu is missing links to `/guide` and `/my-purchases` as standalone items (they're only in the SignedIn section, duplicating `/wishlist`)
+- Footer is missing links to `/guide`, `/my-purchases`, `/sign-in`
+- About dropdown active state doesn't include `/founder` path
+- No breadcrumb navigation on inner pages for back-navigation
 
-## X (Twitter) Creatives (10 images, 1200×675)
+### 4. OAuth / Auth Sync Issues
+- `CheckoutModal` imports `useUser` from `@clerk/clerk-react` but if Clerk key (`VITE_CLERK_PUBLISHABLE_KEY`) is missing/invalid, the entire app may break silently
+- `SignIn` and `SignUp` pages use deprecated `afterSignInUrl`/`afterSignUpUrl` props (Clerk v5 uses `fallbackRedirectUrl`)
+- No auth guard on `/my-purchases`, `/wishlist`, `/admin` routes — unauthenticated users can access them directly
 
-| # | Type | Headline | CTA |
-|---|------|----------|-----|
-| 11 | Contrarian opinion | "Most Marketing Agencies Are Just Burning Your Money" | Thread ↓ |
-| 12 | Data-driven insight | "Brands Using AI Analytics See 3.2x Higher Conversion Rates" | See the Data |
-| 13 | Pain-point statement | "You're Not Losing to Better Products. You're Losing to Better Data." | Fix This → |
-| 14 | Myth vs Reality | "MYTH: More Ad Spend = More Sales. REALITY: Smarter Spend = More Sales." | Learn More |
-| 15 | Growth hack | "The #1 Growth Lever Nobody Talks About: Predictive Customer Intelligence" | Read More |
-| 16 | Authority positioning | "We've Scaled 200+ Brands. Here's What They All Had in Common." | Discover → |
-| 17 | Thread-style preview | "5 Reasons Your Startup Isn't Growing (Thread)" | Follow @AKcelerate |
-| 18 | Bold one-liner | "Stop Guessing. Start Growing." | Get Your Audit |
-| 19 | Mistake callout | "The Biggest Mistake Founders Make With Paid Ads" | Avoid This → |
-| 20 | Strategy snapshot | "Our 3-Step Framework That Turned ₹1L Ad Spend Into ₹12L Revenue" | Get the Framework |
+### 5. General Bugs
+- Back-to-top button overlaps with floating contact buttons (both positioned `bottom-6 right-6` / `bottom-24 right-5`)
+- `AdminLoginGate` uses separate `useAdminAuth()` hooks in `AdminLoginGate` and `AdminContent`, creating two independent state instances — logging in through the gate doesn't share state with the content
 
-## Technical Execution
+## Plan
 
-1. Copy the AI gateway script to `/tmp/lovable_ai.py`
-2. For each creative, craft a detailed image generation prompt specifying:
-   - Exact dimensions (1080×1080 for IG square, 1080×1350 for IG vertical, 1200×675 for X)
-   - Dark background (#0F172A), blue-cyan gradient accents
-   - Layout structure (headline placement, CTA button, pulse-line elements)
-   - Typography style (bold geometric sans-serif)
-   - Visual elements (data waves, glow effects, device mockups, charts)
-3. Generate images using `google/gemini-3-pro-image-preview` for highest quality
-4. Save all 20 images to `/mnt/documents/` with clear naming (`ig_01_pain_point.png`, `x_11_contrarian.png`)
-5. QA each image for text readability, brand consistency, and visual quality
-6. Re-generate any that don't meet the premium standard
+### Step 1: Fix ProductsTab forwardRef Warning
+Wrap `ProductsTab` with `React.forwardRef` so Radix TabsContent can attach refs without warnings. Apply same fix to any other admin tab components that trigger this.
 
-## Output
+### Step 2: Fix AdminLoginGate Shared State
+Replace the dual `useAdminAuth()` hook pattern with React Context so the login state is shared between `AdminLoginGate` and `AdminContent`. This fixes the auth state sync bug.
 
-20 PNG files in `/mnt/documents/`:
-- `ig_01` through `ig_10` — Instagram creatives
-- `x_11` through `x_20` — X (Twitter) creatives
+### Step 3: Fix Clerk Deprecated Props
+Update `SignIn.tsx` and `SignUp.tsx` to use `fallbackRedirectUrl` instead of the deprecated `afterSignInUrl`/`afterSignUpUrl`.
+
+### Step 4: Fix About Dropdown Active State
+Add `/founder` to the active-state condition in the About dropdown trigger.
+
+### Step 5: Fix Navigation Sync (Footer + Mobile)
+- Add `/guide` and `/my-purchases` links to the Footer
+- Remove duplicate `/wishlist` from mobile menu
+- Add breadcrumb component for inner pages
+
+### Step 6: Fix Overlapping Floating Buttons
+Adjust the back-to-top button position to not overlap with the contact FAB stack.
+
+### Step 7: Security — Remove Hardcoded Credentials
+Move admin auth to use Clerk-based authentication. Check if the signed-in user's email matches an admin allowlist instead of hardcoded username/password. If Clerk integration isn't desired for admin, at minimum move credentials to environment variables.
+
+### Step 8: Suggested Advancements
+
+| Feature | Description |
+|---------|-------------|
+| **Route Guards** | Add `ProtectedRoute` wrapper for `/my-purchases`, `/wishlist`, `/admin` that redirects to `/sign-in` if not authenticated |
+| **Breadcrumbs** | Add breadcrumb navigation to all inner pages for better back-navigation |
+| **Admin Audit Log** | Track who changed what in admin (content edits, order status changes) with timestamps |
+| **SEO Meta per Page** | Ensure all 30+ routes have proper unique `<title>` and `<meta description>` tags |
+| **404 Backlinks** | Add "Go Home" and "Search" actions to the NotFound page |
+| **Dark Mode Persistence** | Current theme toggle works but Footer always uses dark styling regardless of theme |
+
+## Files to Modify
+- `src/components/admin/ProductsTab.tsx` — forwardRef
+- `src/components/admin/AdminLoginGate.tsx` — Context-based auth, remove hardcoded creds
+- `src/pages/admin/Admin.tsx` — consume auth context
+- `src/pages/SignIn.tsx` — fix deprecated props
+- `src/pages/SignUp.tsx` — fix deprecated props
+- `src/components/Navbar.tsx` — fix About active state
+- `src/components/Footer.tsx` — add missing links
+- `src/components/SiteLayout.tsx` — fix button overlap
+- `src/App.tsx` — add ProtectedRoute wrapper
+- New: `src/components/ProtectedRoute.tsx`
+- New: `src/components/Breadcrumbs.tsx`
 

@@ -161,6 +161,21 @@ export default function Products() {
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+        {/* Recently Purchased Banner */}
+        {lastPurchased && !bannerDismissed && (
+          <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl border border-primary/20 bg-primary/5">
+            <Sparkles className="w-5 h-5 text-primary shrink-0" />
+            <span className="text-sm text-foreground mr-auto">
+              <strong>Recently purchased:</strong> {lastPurchased.product.name} —{" "}
+              <Link to="/my-purchases" className="text-primary underline underline-offset-2 hover:text-primary/80">
+                Go to Dashboard →
+              </Link>
+            </span>
+            <button onClick={() => setBannerDismissed(true)} className="p-1 rounded-lg hover:bg-muted transition-colors text-muted-foreground">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* HERO */}
         <PersonalizedHero />
