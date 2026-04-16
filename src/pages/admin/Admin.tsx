@@ -1,20 +1,31 @@
+import { lazy, Suspense } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList } from "lucide-react";
-import DashboardTab from "@/components/admin/DashboardTab";
-import ConfigTab from "@/components/admin/ConfigTab";
-import ProductsTab from "@/components/admin/ProductsTab";
-import AffiliateTab from "@/components/admin/AffiliateTab";
-import GrowthTab from "@/components/admin/GrowthTab";
-import AdGeneratorTab from "@/components/admin/AdGeneratorTab";
-import AnalyticsTab from "@/components/admin/AnalyticsTab";
-import UserManagementTab from "@/components/admin/UserManagementTab";
-import OrderManagementTab from "@/components/admin/OrderManagementTab";
-import ContentManagementTab from "@/components/admin/ContentManagementTab";
-import EmailNotificationsTab from "@/components/admin/EmailNotificationsTab";
-import ActivityFeedTab from "@/components/admin/ActivityFeedTab";
-import AuditLogTab from "@/components/admin/AuditLogTab";
 import AdminLoginGate, { useAdminAuth, ROLE_LABELS } from "@/components/admin/AdminLoginGate";
 import { AuditProvider } from "@/lib/auditLog";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Lazy-load all admin tabs for bundle splitting
+const DashboardTab = lazy(() => import("@/components/admin/DashboardTab"));
+const ConfigTab = lazy(() => import("@/components/admin/ConfigTab"));
+const ProductsTab = lazy(() => import("@/components/admin/ProductsTab"));
+const AffiliateTab = lazy(() => import("@/components/admin/AffiliateTab"));
+const GrowthTab = lazy(() => import("@/components/admin/GrowthTab"));
+const AdGeneratorTab = lazy(() => import("@/components/admin/AdGeneratorTab"));
+const AnalyticsTab = lazy(() => import("@/components/admin/AnalyticsTab"));
+const UserManagementTab = lazy(() => import("@/components/admin/UserManagementTab"));
+const OrderManagementTab = lazy(() => import("@/components/admin/OrderManagementTab"));
+const ContentManagementTab = lazy(() => import("@/components/admin/ContentManagementTab"));
+const EmailNotificationsTab = lazy(() => import("@/components/admin/EmailNotificationsTab"));
+const ActivityFeedTab = lazy(() => import("@/components/admin/ActivityFeedTab"));
+const AuditLogTab = lazy(() => import("@/components/admin/AuditLogTab"));
+
+const TabFallback = () => (
+  <div className="space-y-4 p-4">
+    <Skeleton className="h-8 w-48" />
+    <Skeleton className="h-64 w-full" />
+  </div>
+);
 
 const ALL_TABS = [
   { value: "dashboard", label: "Dashboard", icon: BarChart3 },
@@ -31,6 +42,22 @@ const ALL_TABS = [
   { value: "ads", label: "Ads", icon: Megaphone },
   { value: "audit", label: "Audit Log", icon: ClipboardList },
 ];
+
+const TAB_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
+  dashboard: DashboardTab,
+  activity: ActivityFeedTab,
+  analytics: AnalyticsTab,
+  users: UserManagementTab,
+  orders: OrderManagementTab,
+  content: ContentManagementTab,
+  email: EmailNotificationsTab,
+  products: ProductsTab,
+  config: ConfigTab,
+  affiliates: AffiliateTab,
+  growth: GrowthTab,
+  ads: AdGeneratorTab,
+  audit: AuditLogTab,
+};
 
 function AdminContent() {
   const { logout, role, currentUser, hasPermission } = useAdminAuth();
@@ -69,19 +96,17 @@ function AdminContent() {
               ))}
             </TabsList>
 
-            {hasPermission("dashboard") && <TabsContent value="dashboard"><DashboardTab /></TabsContent>}
-            {hasPermission("activity") && <TabsContent value="activity"><ActivityFeedTab /></TabsContent>}
-            {hasPermission("analytics") && <TabsContent value="analytics"><AnalyticsTab /></TabsContent>}
-            {hasPermission("users") && <TabsContent value="users"><UserManagementTab /></TabsContent>}
-            {hasPermission("orders") && <TabsContent value="orders"><OrderManagementTab /></TabsContent>}
-            {hasPermission("content") && <TabsContent value="content"><ContentManagementTab /></TabsContent>}
-            {hasPermission("email") && <TabsContent value="email"><EmailNotificationsTab /></TabsContent>}
-            {hasPermission("products") && <TabsContent value="products"><ProductsTab /></TabsContent>}
-            {hasPermission("config") && <TabsContent value="config"><ConfigTab /></TabsContent>}
-            {hasPermission("affiliates") && <TabsContent value="affiliates"><AffiliateTab /></TabsContent>}
-            {hasPermission("growth") && <TabsContent value="growth"><GrowthTab /></TabsContent>}
-            {hasPermission("ads") && <TabsContent value="ads"><AdGeneratorTab /></TabsContent>}
-            {hasPermission("audit") && <TabsContent value="audit"><AuditLogTab /></TabsContent>}
+            {visibleTabs.map(t => {
+              const Component = TAB_COMPONENTS[t.value];
+              if (!Component) return null;
+              return (
+                <TabsContent key={t.value} value={t.value}>
+                  <Suspense fallback={<TabFallback />}>
+                    <Component />
+                  </Suspense>
+                </TabsContent>
+              );
+            })}
           </Tabs>
         </div>
       </main>

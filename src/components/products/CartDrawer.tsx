@@ -62,7 +62,7 @@ export default function CartDrawer({ open, onOpenChange, items, currency, total,
             )}
             {items.map(({ product }) => (
               <div key={product.id} className="flex gap-3 p-3 rounded-xl border border-border bg-card">
-                <img src={product.previewImage} alt={product.name} className="w-20 h-15 rounded-lg object-cover flex-shrink-0" />
+                <img src={product.previewImage} alt={product.name} loading="lazy" decoding="async" className="w-20 h-15 rounded-lg object-cover flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold text-foreground truncate">{product.name}</h4>
                   <p className="text-xs text-muted-foreground mt-0.5">
