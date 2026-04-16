@@ -400,6 +400,35 @@ export default function MyPurchases() {
                 })}
               </div>
 
+              {/* Recommendations */}
+              {recommendations.length > 0 && (
+                <div className="mt-12">
+                  <div className="flex items-center gap-2 mb-6">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    <h3 className="font-poppins text-lg font-semibold text-foreground">Recommended for You</h3>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {recommendations.map(product => (
+                      <div key={product.id} className="rounded-2xl border border-border bg-card p-4 hover:shadow-md transition-shadow">
+                        <div className="aspect-video rounded-xl overflow-hidden bg-muted mb-3">
+                          <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                        </div>
+                        <h4 className="font-semibold text-sm text-foreground mb-1 truncate">{product.name}</h4>
+                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.shortDesc}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-bold text-primary">
+                            {symbol}{currency === "inr" ? product.price.inr : product.price.usd}
+                          </span>
+                          <Link to={`/products/${product.slug}`} className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                            View <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Bottom CTA */}
               <div className="mt-12 text-center rounded-2xl border border-border bg-muted/30 p-8">
                 <h3 className="font-poppins text-lg font-semibold text-foreground mb-2">Want more prototypes?</h3>
