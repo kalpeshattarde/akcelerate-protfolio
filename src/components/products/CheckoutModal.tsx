@@ -5,8 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X } from "lucide-react";
+import { CheckCircle2, CreditCard, Loader2, LogIn, Shield, IndianRupee, Tag, X, Sparkles } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { BUNDLE_THRESHOLD, BUNDLE_PRICE, STARTER_PRICE } from "@/hooks/useCart";
 import { isStripeConfigured } from "@/lib/stripe";
 import { isRazorpayConfigured, openRazorpayCheckout } from "@/lib/razorpay";
 import { useDiscountCode } from "@/hooks/useDiscountCode";
@@ -196,17 +197,20 @@ export default function CheckoutModal({ open, onOpenChange, items, currency, tot
 
             {/* Order Summary */}
             <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-2">
-              {items.map(({ product, quantity }) => {
-                const price = currency === "inr" ? product.price.inr : product.price.usd;
-                return (
-                  <div key={product.id} className="flex justify-between text-sm">
-                    <span className="text-foreground">
-                      {product.name} <span className="text-muted-foreground">×{quantity}</span>
-                    </span>
-                    <span className="font-medium text-foreground">{symbol}{(price * quantity).toLocaleString()}</span>
-                  </div>
-                );
-              })}
+              {items.length >= BUNDLE_THRESHOLD && (
+                <div className="flex items-center gap-2 mb-2 p-2 rounded-lg bg-primary/10 text-sm">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-foreground font-medium">Pro Bundle — {items.length} prototypes</span>
+                </div>
+              )}
+              {items.map(({ product }) => (
+                <div key={product.id} className="flex justify-between text-sm">
+                  <span className="text-foreground">{product.name}</span>
+                  <span className="font-medium text-muted-foreground">
+                    {items.length >= BUNDLE_THRESHOLD ? "Included" : `${symbol}${(currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd).toLocaleString()}`}
+                  </span>
+                </div>
+              ))}
               {appliedDiscount?.valid && (
                 <div className="flex justify-between text-sm text-green-600">
                   <span className="flex items-center gap-1">
