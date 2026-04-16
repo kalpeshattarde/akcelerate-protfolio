@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home, ArrowLeft, Search, Mail } from "lucide-react";
 
 const NotFound = () => {
   return (
@@ -14,6 +14,8 @@ const NotFound = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/" className="btn-primary"><Home className="w-4 h-4" /> Back to Home</Link>
             <Link to="/solutions" className="btn-secondary"><ArrowLeft className="w-4 h-4" /> View Solutions</Link>
+            <Link to="/products" className="btn-secondary"><Search className="w-4 h-4" /> Browse Products</Link>
+            <Link to="/contact" className="btn-secondary"><Mail className="w-4 h-4" /> Contact Us</Link>
           </div>
         </div>
       </section>

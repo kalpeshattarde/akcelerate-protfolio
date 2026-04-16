@@ -60,6 +60,8 @@ export default function Footer() {
                 { to: "/completed-projects", label: "Completed Projects" },
                 { to: "/free-audit", label: "Free Audit" },
                 { to: "/wishlist", label: "Wishlist" },
+                { to: "/my-purchases", label: "My Purchases" },
+                { to: "/guide", label: "Guide" },
               ].map(l => (
                 <Link key={l.to} to={l.to} className="block text-sm text-slate-500 hover:text-cyan-400 transition-colors">{l.label}</Link>
               ))}

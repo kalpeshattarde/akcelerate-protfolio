@@ -179,7 +179,7 @@ export default function Navbar() {
 
             {/* About Dropdown */}
             <div className="nav-dropdown relative group">
-              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/founder" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
                 About <ChevronDown className="w-3 h-3" />
               </Link>
               <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
@@ -249,6 +249,8 @@ export default function Navbar() {
               { to: "/completed-projects", label: "Completed Projects" },
               { to: "/careers", label: "Careers" },
               { to: "/wishlist", label: "Wishlist" },
+              { to: "/my-purchases", label: "My Purchases" },
+              { to: "/guide", label: "Guide" },
             ].map(l => (
               <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
             ))}
