@@ -331,6 +331,7 @@ export default function Products() {
           onClear={cart.clearCart}
           onCheckout={handleCheckout}
           isBundle={cart.isBundle}
+          isAllAccess={cart.isAllAccess}
         />
 
         <CheckoutModal
