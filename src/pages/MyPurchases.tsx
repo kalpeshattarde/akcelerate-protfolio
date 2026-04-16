@@ -51,7 +51,7 @@ export default function MyPurchases() {
 
   const handleDownload = async (product: typeof PRODUCTS[0]) => {
     setDownloading(product.id);
-    const result = await downloadProductFile(product.slug, product.name, product.features);
+    const result = await downloadProductFile(product.slug, product.name, product.features, product.downloadUrl);
     setDownloading(null);
 
     if (result.fallback) {
