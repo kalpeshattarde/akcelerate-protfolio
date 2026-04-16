@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle, Shield, Zap } from "lucide-react";
+import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import PricingSelector from "@/components/products/PricingSelector";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import RecommendationEngine from "@/components/products/RecommendationEngine";
+import { downloadProductFile } from "@/lib/downloadProduct";
+import { toast } from "sonner";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -15,6 +17,7 @@ export default function ProductDetail() {
   const { isPurchased, purchase, products } = useProducts();
   const [finalPrice, setFinalPrice] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   if (!product) {
     return (
@@ -64,10 +67,37 @@ export default function ProductDetail() {
             <p className="text-muted-foreground mb-6">{product.description}</p>
 
             {purchased ? (
-              <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
-                <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                <p className="font-semibold text-foreground">You own this product</p>
-                <p className="text-sm text-muted-foreground">Full source code access granted</p>
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+                  <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                  <p className="font-semibold text-foreground">You own this product</p>
+                  <p className="text-sm text-muted-foreground">Full source code access granted</p>
+                </div>
+                <button
+                  onClick={async () => {
+                    setDownloading(true);
+                    try {
+                      const result = await downloadProductFile(product.slug, product.name, product.features);
+                      if (result.fallback) {
+                        toast.info("Demo README downloaded. Full source code will be available once uploaded.");
+                      } else {
+                        toast.success("Download started!");
+                      }
+                    } catch {
+                      toast.error("Download failed. Please try again.");
+                    } finally {
+                      setDownloading(false);
+                    }
+                  }}
+                  disabled={downloading}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  {downloading ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Preparing Download…</>
+                  ) : (
+                    <><Download className="w-4 h-4" /> Download Source Code</>
+                  )}
+                </button>
               </div>
             ) : (
               <div className="space-y-6">
