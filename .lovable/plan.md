@@ -1,50 +1,76 @@
 
 
-# Plan: Build the SaaS Prototypes Guide Page
+# Full App PR Review: Bug Fixes and Advancements
 
-## Overview
-Create a new `/guide` route with a comprehensive, premium-designed help page for the SaaS Prototypes library. The page will be a single large component with all 11 sections, sticky side navigation, copy-to-clipboard prompt blocks, FAQ accordion, and mobile-first responsive design.
+## Issues Found
 
-## Design Direction
-- Neutral ink/stone palette (slate/zinc grays) with a single warm accent (amber-500 or emerald-600 — not purple, not crypto)
-- Strong typographic hierarchy using existing Poppins/Inter fonts
-- Clean whitespace, no glassmorphism, no fake stats
-- Reuse existing components: `FAQAccordion`, `SEOHead`, scroll reveal hooks
+### 1. Security: Hardcoded Admin Credentials (Critical)
+`AdminLoginGate.tsx` has plaintext usernames and passwords in the source code, with admin state stored in `sessionStorage`. This is a major security vulnerability.
 
-## Files to Create/Edit
+### 2. Console Error: ProductsTab forwardRef Warning
+`ProductsTab` is a function component being passed as a ref target by Radix TabsContent. Needs `forwardRef` wrapping.
 
-### 1. `src/pages/Guide.tsx` (new — ~800-1000 lines)
-The main page component containing all 11 sections with fully written copy:
-- **Hero** — headline, subheadline, two CTAs (Browse Prototypes links to `/products`, Copy Lovable Prompt copies the short prompt)
-- **What This Library Contains** — two-column layout for SaaS vs Mobile groups with example names
-- **How To Choose** — 4-step cards with icons
-- **Which Folder To Give To AI** — callout panels with do/don't guidance
-- **Folder Structure** — labeled table/grid showing each file/folder with category badges (source of truth, implementation, reference, archive)
-- **Prompts Folder** — explanation of LOVABLE_ADVANCED_PROMPT.md and global prompt packs
-- **How To Write Better Prompts** — formula breakdown with labeled items
-- **Copy-Paste Prompt Blocks** — short and long prompt blocks with copy buttons, exact text from the spec
-- **Best Practices** — checklist-style cards
-- **FAQ** — using existing `FAQAccordion` component with the 6 specified questions
-- **Final CTA** — closing section encouraging action
+### 3. Backlink / Navigation Sync Issues
+- Mobile menu is missing links to `/guide` and `/my-purchases` as standalone items (they're only in the SignedIn section, duplicating `/wishlist`)
+- Footer is missing links to `/guide`, `/my-purchases`, `/sign-in`
+- About dropdown active state doesn't include `/founder` path
+- No breadcrumb navigation on inner pages for back-navigation
 
-Includes a sticky desktop side navigation (hidden on mobile) that highlights the active section using IntersectionObserver.
+### 4. OAuth / Auth Sync Issues
+- `CheckoutModal` imports `useUser` from `@clerk/clerk-react` but if Clerk key (`VITE_CLERK_PUBLISHABLE_KEY`) is missing/invalid, the entire app may break silently
+- `SignIn` and `SignUp` pages use deprecated `afterSignInUrl`/`afterSignUpUrl` props (Clerk v5 uses `fallbackRedirectUrl`)
+- No auth guard on `/my-purchases`, `/wishlist`, `/admin` routes — unauthenticated users can access them directly
 
-### 2. `src/App.tsx` (edit)
-- Add lazy import: `const Guide = lazy(() => import("./pages/Guide"));`
-- Add route: `<Route path="/guide" element={<Guide />} />`
+### 5. General Bugs
+- Back-to-top button overlaps with floating contact buttons (both positioned `bottom-6 right-6` / `bottom-24 right-5`)
+- `AdminLoginGate` uses separate `useAdminAuth()` hooks in `AdminLoginGate` and `AdminContent`, creating two independent state instances — logging in through the gate doesn't share state with the content
 
-### 3. `src/components/Navbar.tsx` (edit — optional)
-- Add "Guide" link to the navigation if appropriate
+## Plan
 
-## Technical Details
-- Copy-to-clipboard uses `navigator.clipboard.writeText()` with toast feedback via existing sonner
-- Sticky side nav uses `position: sticky` with `IntersectionObserver` to track active section
-- All copy is fully written — no placeholders
-- Mobile: side nav collapses, sections stack vertically
-- Prompt blocks styled with monospace font, dark background, and a copy icon button
+### Step 1: Fix ProductsTab forwardRef Warning
+Wrap `ProductsTab` with `React.forwardRef` so Radix TabsContent can attach refs without warnings. Apply same fix to any other admin tab components that trigger this.
 
-## Scope
-- 3 files touched (1 new page, 1 route addition, 1 optional nav update)
-- No new dependencies needed
-- All content written inline, no separate data file needed for this one-off page
+### Step 2: Fix AdminLoginGate Shared State
+Replace the dual `useAdminAuth()` hook pattern with React Context so the login state is shared between `AdminLoginGate` and `AdminContent`. This fixes the auth state sync bug.
+
+### Step 3: Fix Clerk Deprecated Props
+Update `SignIn.tsx` and `SignUp.tsx` to use `fallbackRedirectUrl` instead of the deprecated `afterSignInUrl`/`afterSignUpUrl`.
+
+### Step 4: Fix About Dropdown Active State
+Add `/founder` to the active-state condition in the About dropdown trigger.
+
+### Step 5: Fix Navigation Sync (Footer + Mobile)
+- Add `/guide` and `/my-purchases` links to the Footer
+- Remove duplicate `/wishlist` from mobile menu
+- Add breadcrumb component for inner pages
+
+### Step 6: Fix Overlapping Floating Buttons
+Adjust the back-to-top button position to not overlap with the contact FAB stack.
+
+### Step 7: Security — Remove Hardcoded Credentials
+Move admin auth to use Clerk-based authentication. Check if the signed-in user's email matches an admin allowlist instead of hardcoded username/password. If Clerk integration isn't desired for admin, at minimum move credentials to environment variables.
+
+### Step 8: Suggested Advancements
+
+| Feature | Description |
+|---------|-------------|
+| **Route Guards** | Add `ProtectedRoute` wrapper for `/my-purchases`, `/wishlist`, `/admin` that redirects to `/sign-in` if not authenticated |
+| **Breadcrumbs** | Add breadcrumb navigation to all inner pages for better back-navigation |
+| **Admin Audit Log** | Track who changed what in admin (content edits, order status changes) with timestamps |
+| **SEO Meta per Page** | Ensure all 30+ routes have proper unique `<title>` and `<meta description>` tags |
+| **404 Backlinks** | Add "Go Home" and "Search" actions to the NotFound page |
+| **Dark Mode Persistence** | Current theme toggle works but Footer always uses dark styling regardless of theme |
+
+## Files to Modify
+- `src/components/admin/ProductsTab.tsx` — forwardRef
+- `src/components/admin/AdminLoginGate.tsx` — Context-based auth, remove hardcoded creds
+- `src/pages/admin/Admin.tsx` — consume auth context
+- `src/pages/SignIn.tsx` — fix deprecated props
+- `src/pages/SignUp.tsx` — fix deprecated props
+- `src/components/Navbar.tsx` — fix About active state
+- `src/components/Footer.tsx` — add missing links
+- `src/components/SiteLayout.tsx` — fix button overlap
+- `src/App.tsx` — add ProtectedRoute wrapper
+- New: `src/components/ProtectedRoute.tsx`
+- New: `src/components/Breadcrumbs.tsx`
 
