@@ -14,10 +14,9 @@ export function useAdminAuth() {
   });
 
   const login = (password: string): boolean => {
-    // Hash comparison: the admin password is checked against a SHA-256 hash
-    // Default password: "akcelerate2024" — change the hash below to update
-    const ADMIN_HASH = "akcelerate2024"; // In production, compare hashed values
-    if (password === ADMIN_HASH) {
+    const ADMIN_USER = "kalpeshattarde";
+    const ADMIN_PASS = "attarde@2468";
+    if (password === ADMIN_PASS) {
       sessionStorage.setItem(ADMIN_PASS_KEY, "true");
       setAuthenticated(true);
       return true;
