@@ -7,6 +7,12 @@ export interface CartItem {
   quantity: number;
 }
 
+// Bundle pricing constants
+export const BUNDLE_THRESHOLD = 5;
+export const BUNDLE_PRICE = { usd: 59, inr: 4999 };
+export const STARTER_PRICE = { usd: 19, inr: 1499 };
+export const ALL_ACCESS_PRICE = { usd: 119, inr: 9999 };
+
 function loadCart(): Record<string, number> {
   try {
     return JSON.parse(localStorage.getItem("ak-cart") || "{}");
@@ -23,14 +29,18 @@ export function useCart() {
   const [cartMap, setCartMap] = useState<Record<string, number>>(loadCart);
   const [open, setOpen] = useState(false);
 
+  // Add to cart — max 1 per product, no duplicates
   const addToCart = useCallback((productId: string, openDrawer = true) => {
     setCartMap(prev => {
-      const next = { ...prev, [productId]: (prev[productId] || 0) + 1 };
+      if (prev[productId]) return prev; // already in cart, don't add again
+      const next = { ...prev, [productId]: 1 };
       saveCart(next);
       return next;
     });
     if (openDrawer) setOpen(true);
   }, []);
+
+  const isInCart = useCallback((productId: string) => !!cartMap[productId], [cartMap]);
 
   const removeFromCart = useCallback((productId: string) => {
     setCartMap(prev => {
@@ -41,13 +51,15 @@ export function useCart() {
     });
   }, []);
 
+  // Quantity is always 1 per product — this just removes if <= 0
   const updateQuantity = useCallback((productId: string, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId);
       return;
     }
+    // Cap at 1
     setCartMap(prev => {
-      const next = { ...prev, [productId]: quantity };
+      const next = { ...prev, [productId]: 1 };
       saveCart(next);
       return next;
     });
@@ -67,16 +79,21 @@ export function useCart() {
       .filter(Boolean) as CartItem[];
   }, [cartMap]);
 
-  const totalCount = useMemo(() => items.reduce((sum, i) => sum + i.quantity, 0), [items]);
+  const totalCount = useMemo(() => items.length, [items]);
+
+  // Pricing logic: 5+ items = Pro Bundle flat price, otherwise Starter per item
+  const isBundle = useMemo(() => items.length >= BUNDLE_THRESHOLD, [items]);
 
   const getTotal = useCallback((currency: Currency) => {
-    return items.reduce((sum, i) => {
-      const price = currency === "inr" ? i.product.price.inr : i.product.price.usd;
-      return sum + price * i.quantity;
-    }, 0);
+    if (items.length >= BUNDLE_THRESHOLD) {
+      return currency === "inr" ? BUNDLE_PRICE.inr : BUNDLE_PRICE.usd;
+    }
+    // Starter price per item
+    const perItem = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
+    return perItem * items.length;
   }, [items]);
 
   const getQuantity = useCallback((productId: string) => cartMap[productId] || 0, [cartMap]);
 
-  return { items, totalCount, getTotal, getQuantity, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen };
+  return { items, totalCount, getTotal, getQuantity, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen, isInCart, isBundle };
 }

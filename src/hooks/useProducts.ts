@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PRODUCTS } from "@/data/products";
+import { BUNDLE_THRESHOLD } from "@/hooks/useCart";
 
 function getLocalPurchased(): string[] {
   try {
@@ -9,9 +10,16 @@ function getLocalPurchased(): string[] {
   } catch { return []; }
 }
 
+function isAllAccess(): boolean {
+  try {
+    return localStorage.getItem("ak-all-access") === "true";
+  } catch { return false; }
+}
+
 export function useProducts() {
   const { user, isSignedIn } = useUser();
   const [purchased, setPurchased] = useState<string[]>(getLocalPurchased);
+  const [allAccess, setAllAccess] = useState(isAllAccess);
 
   // Sync from Supabase when user signs in
   useEffect(() => {
@@ -28,13 +36,23 @@ export function useProducts() {
         const merged = [...new Set([...getLocalPurchased(), ...ids])];
         setPurchased(merged);
         localStorage.setItem("ak-purchased", JSON.stringify(merged));
+
+        // If they purchased 5+ products, grant all access
+        if (merged.length >= BUNDLE_THRESHOLD) {
+          setAllAccess(true);
+          localStorage.setItem("ak-all-access", "true");
+        }
       }
     };
 
     fetchPurchases();
   }, [isSignedIn, user?.id]);
 
-  const isPurchased = useCallback((id: string) => purchased.includes(id), [purchased]);
+  // If all access, every product is "purchased"
+  const isPurchased = useCallback((id: string) => {
+    if (allAccess) return true;
+    return purchased.includes(id);
+  }, [purchased, allAccess]);
 
   const purchase = useCallback(async (id: string) => {
     const next = [...new Set([...purchased, id])];
@@ -56,9 +74,20 @@ export function useProducts() {
     }
   }, [purchased, isSignedIn, user?.id]);
 
+  // Grant all access (called when bundle of 5+ is purchased)
+  const grantAllAccess = useCallback(() => {
+    setAllAccess(true);
+    localStorage.setItem("ak-all-access", "true");
+    // Mark all products as purchased
+    const allIds = PRODUCTS.map(p => p.id);
+    const merged = [...new Set([...purchased, ...allIds])];
+    setPurchased(merged);
+    localStorage.setItem("ak-purchased", JSON.stringify(merged));
+  }, [purchased]);
+
   const topSelling = PRODUCTS.filter(p => p.topSelling).sort((a, b) => b.salesCount - a.salesCount);
   const mobileApps = PRODUCTS.filter(p => p.category === "mobile-app");
   const webSaas = PRODUCTS.filter(p => p.category === "web-saas");
 
-  return { products: PRODUCTS, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased };
+  return { products: PRODUCTS, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, allAccess, grantAllAccess };
 }
