@@ -6,7 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import {
   Package, Download, ExternalLink, ShoppingBag, Loader2, Clock,
   Receipt, ChevronDown, ChevronUp, BookOpen, Layers, Tag, Calendar,
-  CheckCircle2, FileCode, ArrowRight, Search, X, Mail, Sparkles, ShoppingCart
+  CheckCircle2, FileCode, ArrowRight, Search, X, Mail, Sparkles
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
@@ -411,7 +411,7 @@ export default function MyPurchases() {
                     {recommendations.map(product => (
                       <div key={product.id} className="rounded-2xl border border-border bg-card p-4 hover:shadow-md transition-shadow">
                         <div className="aspect-video rounded-xl overflow-hidden bg-muted mb-3">
-                          <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                          <img src={product.previewImage} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <h4 className="font-semibold text-sm text-foreground mb-1 truncate">{product.name}</h4>
                         <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.shortDesc}</p>
