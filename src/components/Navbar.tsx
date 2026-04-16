@@ -174,6 +174,9 @@ export default function Navbar() {
               </div>
             </div>
 
+            <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
+            <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
+
             {/* About Dropdown */}
             <div className="nav-dropdown relative group">
               <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
@@ -191,8 +194,6 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
-            <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
 
