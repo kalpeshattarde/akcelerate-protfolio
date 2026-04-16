@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail } from "lucide-react";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
 import ConfigTab from "@/components/admin/ConfigTab";
 import ProductsTab from "@/components/admin/ProductsTab";
@@ -11,48 +11,72 @@ import UserManagementTab from "@/components/admin/UserManagementTab";
 import OrderManagementTab from "@/components/admin/OrderManagementTab";
 import ContentManagementTab from "@/components/admin/ContentManagementTab";
 import EmailNotificationsTab from "@/components/admin/EmailNotificationsTab";
-import AdminLoginGate, { useAdminAuth } from "@/components/admin/AdminLoginGate";
+import ActivityFeedTab from "@/components/admin/ActivityFeedTab";
+import AdminLoginGate, { useAdminAuth, ROLE_LABELS } from "@/components/admin/AdminLoginGate";
+
+const ALL_TABS = [
+  { value: "dashboard", label: "Dashboard", icon: BarChart3 },
+  { value: "activity", label: "Activity", icon: Activity },
+  { value: "analytics", label: "Analytics", icon: Activity },
+  { value: "users", label: "Users", icon: Users },
+  { value: "orders", label: "Orders", icon: Receipt },
+  { value: "content", label: "Content", icon: FileText },
+  { value: "email", label: "Email", icon: Mail },
+  { value: "products", label: "Products", icon: Package },
+  { value: "config", label: "Config", icon: Settings },
+  { value: "affiliates", label: "Affiliates", icon: Users },
+  { value: "growth", label: "Growth", icon: TrendingUp },
+  { value: "ads", label: "Ads", icon: Megaphone },
+];
 
 function AdminContent() {
-  const { logout } = useAdminAuth();
+  const { logout, role, currentUser, hasPermission } = useAdminAuth();
+
+  const visibleTabs = ALL_TABS.filter(t => hasPermission(t.value));
 
   return (
     <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-2">
           <h1 className="font-poppins text-3xl font-bold text-foreground">Admin Panel</h1>
-          <button onClick={logout} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <LogOut className="w-4 h-4" /> Sign Out
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">{currentUser}</span>
+              <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${
+                role === "super_admin" ? "bg-red-500/10 text-red-600" :
+                role === "manager" ? "bg-amber-500/10 text-amber-600" :
+                "bg-primary/10 text-primary"
+              }`}>{ROLE_LABELS[role]}</span>
+            </div>
+            <button onClick={logout} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <LogOut className="w-4 h-4" /> Sign Out
+            </button>
+          </div>
         </div>
         <p className="text-muted-foreground mb-8">Manage products, users, orders, content, and analytics.</p>
 
         <Tabs defaultValue="dashboard">
           <TabsList className="flex-wrap h-auto gap-1 mb-8">
-            <TabsTrigger value="dashboard" className="gap-1.5"><BarChart3 className="w-4 h-4" /> Dashboard</TabsTrigger>
-            <TabsTrigger value="analytics" className="gap-1.5"><Activity className="w-4 h-4" /> Analytics</TabsTrigger>
-            <TabsTrigger value="users" className="gap-1.5"><Users className="w-4 h-4" /> Users</TabsTrigger>
-            <TabsTrigger value="orders" className="gap-1.5"><Receipt className="w-4 h-4" /> Orders</TabsTrigger>
-            <TabsTrigger value="content" className="gap-1.5"><FileText className="w-4 h-4" /> Content</TabsTrigger>
-            <TabsTrigger value="email" className="gap-1.5"><Mail className="w-4 h-4" /> Email</TabsTrigger>
-            <TabsTrigger value="products" className="gap-1.5"><Package className="w-4 h-4" /> Products</TabsTrigger>
-            <TabsTrigger value="config" className="gap-1.5"><Settings className="w-4 h-4" /> Config</TabsTrigger>
-            <TabsTrigger value="affiliates" className="gap-1.5"><Users className="w-4 h-4" /> Affiliates</TabsTrigger>
-            <TabsTrigger value="growth" className="gap-1.5"><TrendingUp className="w-4 h-4" /> Growth</TabsTrigger>
-            <TabsTrigger value="ads" className="gap-1.5"><Megaphone className="w-4 h-4" /> Ads</TabsTrigger>
+            {visibleTabs.map(t => (
+              <TabsTrigger key={t.value} value={t.value} className="gap-1.5">
+                <t.icon className="w-4 h-4" /> {t.label}
+              </TabsTrigger>
+            ))}
           </TabsList>
 
-          <TabsContent value="dashboard"><DashboardTab /></TabsContent>
-          <TabsContent value="analytics"><AnalyticsTab /></TabsContent>
-          <TabsContent value="users"><UserManagementTab /></TabsContent>
-          <TabsContent value="orders"><OrderManagementTab /></TabsContent>
-          <TabsContent value="content"><ContentManagementTab /></TabsContent>
-          <TabsContent value="email"><EmailNotificationsTab /></TabsContent>
-          <TabsContent value="products"><ProductsTab /></TabsContent>
-          <TabsContent value="config"><ConfigTab /></TabsContent>
-          <TabsContent value="affiliates"><AffiliateTab /></TabsContent>
-          <TabsContent value="growth"><GrowthTab /></TabsContent>
-          <TabsContent value="ads"><AdGeneratorTab /></TabsContent>
+          {hasPermission("dashboard") && <TabsContent value="dashboard"><DashboardTab /></TabsContent>}
+          {hasPermission("activity") && <TabsContent value="activity"><ActivityFeedTab /></TabsContent>}
+          {hasPermission("analytics") && <TabsContent value="analytics"><AnalyticsTab /></TabsContent>}
+          {hasPermission("users") && <TabsContent value="users"><UserManagementTab /></TabsContent>}
+          {hasPermission("orders") && <TabsContent value="orders"><OrderManagementTab /></TabsContent>}
+          {hasPermission("content") && <TabsContent value="content"><ContentManagementTab /></TabsContent>}
+          {hasPermission("email") && <TabsContent value="email"><EmailNotificationsTab /></TabsContent>}
+          {hasPermission("products") && <TabsContent value="products"><ProductsTab /></TabsContent>}
+          {hasPermission("config") && <TabsContent value="config"><ConfigTab /></TabsContent>}
+          {hasPermission("affiliates") && <TabsContent value="affiliates"><AffiliateTab /></TabsContent>}
+          {hasPermission("growth") && <TabsContent value="growth"><GrowthTab /></TabsContent>}
+          {hasPermission("ads") && <TabsContent value="ads"><AdGeneratorTab /></TabsContent>}
         </Tabs>
       </div>
     </main>
