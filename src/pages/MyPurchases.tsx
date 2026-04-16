@@ -259,6 +259,7 @@ export default function MyPurchases() {
                     {key === "all" ? ` (${purchasedProducts.length})` : key === "mobile-app" ? ` (${mobileCount})` : ` (${saasCount})`}
                   </button>
                 ))}
+                </div>
               </div>
 
               {/* Product Cards */}
