@@ -24,7 +24,7 @@ function getContent(): ContentItem[] {
     type: "blog" as const,
     status: "published" as const,
     date: p.date,
-    excerpt: p.excerpt,
+    excerpt: p.description,
   }));
   return items;
 }
