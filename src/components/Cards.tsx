@@ -125,14 +125,28 @@ export function TestimonialCard({ quote, name, role }: TestimonialCardProps) {
 interface PricingCardProps {
   name: string;
   description: string;
-  priceUsd: string;
-  priceInr: string;
+  priceUsd: number;
+  priceInr: number;
   features: string[];
   highlighted: boolean;
   cta: string;
+  isAnnual: boolean;
+  discountPercent: number;
 }
 
-export function PricingCard({ name, description, priceUsd, priceInr, features, highlighted, cta }: PricingCardProps) {
+export function PricingCard({ name, description, priceUsd, priceInr, features, highlighted, cta, isAnnual, discountPercent }: PricingCardProps) {
+  const isCustom = priceUsd === 0;
+  const displayUsd = isAnnual ? Math.round(priceUsd * (1 - discountPercent / 100)) : priceUsd;
+  const displayInr = isAnnual ? Math.round(priceInr * (1 - discountPercent / 100)) : priceInr;
+
+  const formatInr = (n: number) => {
+    const s = n.toString();
+    if (s.length <= 3) return s;
+    const last3 = s.slice(-3);
+    const rest = s.slice(0, -3);
+    return rest.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + last3;
+  };
+
   return (
     <GlowCard className={`glass-card p-8 relative ${highlighted ? "border-primary shadow-lg scale-105 z-10" : ""}`}>
       {highlighted && (
@@ -144,11 +158,21 @@ export function PricingCard({ name, description, priceUsd, priceInr, features, h
       <p className="text-muted-foreground text-sm mb-6">{description}</p>
       <div className="mb-6">
         <p className="text-xs text-muted-foreground font-medium mb-1">Starts from</p>
-        <div className="flex items-baseline gap-1">
-          <span className="font-poppins font-bold text-3xl">{priceUsd}</span>
-        </div>
-        {priceInr !== "Custom" && (
-          <div className="text-sm text-muted-foreground mt-0.5">≈ {priceInr}</div>
+        {isCustom ? (
+          <span className="font-poppins font-bold text-3xl">Custom</span>
+        ) : (
+          <>
+            <div className="flex items-baseline gap-2">
+              <span className="font-poppins font-bold text-3xl">${displayUsd.toLocaleString()}</span>
+              <span className="text-sm text-muted-foreground">/mo</span>
+            </div>
+            {isAnnual && (
+              <div className="text-xs text-green-600 font-medium mt-0.5">
+                Save {discountPercent}% — <span className="line-through text-muted-foreground">${priceUsd.toLocaleString()}/mo</span>
+              </div>
+            )}
+            <div className="text-sm text-muted-foreground mt-1">≈ ₹{formatInr(displayInr)}/mo</div>
+          </>
         )}
       </div>
       <ul className="space-y-3 mb-8">

@@ -1,15 +1,18 @@
+import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import FAQAccordion from "@/components/FAQAccordion";
 import { PricingCard } from "@/components/Cards";
-import { pricingPlans } from "@/data/pricing";
+import { pricingPlans, ANNUAL_DISCOUNT } from "@/data/pricing";
 import { pricingFAQ } from "@/data/faq";
 import { CheckCircle } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function PricingPage() {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
     <>
       <SEOHead title="Pricing" description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services." path="/pricing" />
@@ -21,17 +24,34 @@ export default function PricingPage() {
 
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Billing Toggle */}
+          <div className="flex items-center justify-center gap-4 mb-12">
+            <span className={`text-sm font-medium ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>Monthly</span>
+            <button
+              onClick={() => setIsAnnual(!isAnnual)}
+              className={`relative w-14 h-7 rounded-full transition-colors ${isAnnual ? "bg-primary" : "bg-muted"}`}
+              aria-label="Toggle annual billing"
+            >
+              <span className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow-md transition-transform ${isAnnual ? "translate-x-7" : ""}`} />
+            </button>
+            <span className={`text-sm font-medium ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+              Annual <span className="text-xs text-green-600 font-semibold ml-1">Save {ANNUAL_DISCOUNT}%</span>
+            </span>
+          </div>
+
           <RevealGrid className="grid md:grid-cols-3 gap-6 items-start" stagger={150}>
             {pricingPlans.map((plan, i) => (
               <div key={i} className="reveal-item">
                 <PricingCard
                   name={plan.name}
                   description={plan.description}
-                  priceUsd={plan.priceUsd}
-                  priceInr={plan.priceInr}
+                  priceUsd={plan.monthlyUsd}
+                  priceInr={plan.monthlyInr}
                   features={plan.features}
                   highlighted={plan.highlighted}
                   cta={plan.cta}
+                  isAnnual={isAnnual}
+                  discountPercent={ANNUAL_DISCOUNT}
                 />
               </div>
             ))}
