@@ -287,7 +287,7 @@ export default function MyPurchases() {
               <div className="space-y-4">
                 {filteredProducts.map(product => {
                   const price = currency === "inr" ? product.price.inr : product.price.usd;
-                  const isDownloading = downloading === product.id;
+                  const isEmailing = emailing === product.id;
                   const purchaseDate = getPurchaseDate(product.id, orders);
 
                   return (
@@ -360,6 +360,15 @@ export default function MyPurchases() {
                               >
                                 <ExternalLink className="w-3.5 h-3.5" /> View Details
                               </Link>
+                              <button
+                                onClick={() => handleEmailDownload(product)}
+                                disabled={isEmailing}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors disabled:opacity-50"
+                                title="Email download link"
+                              >
+                                {isEmailing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Mail className="w-3.5 h-3.5" />}
+                                {isEmailing ? "Sending…" : "Email Link"}
+                              </button>
                               <button
                                 onClick={() => handleDownload(product)}
                                 disabled={isDownloading}
