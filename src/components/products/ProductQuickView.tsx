@@ -36,7 +36,7 @@ export default function ProductQuickView({
         <div className="grid md:grid-cols-2 gap-6 mt-2">
           {/* Image */}
           <div className="relative rounded-xl overflow-hidden bg-muted aspect-[4/3]">
-            <img src={product.previewImage} alt={product.name} className="w-full h-full object-cover" />
+            <img src={product.previewImage} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
             {product.badge && (
               <Badge className="absolute top-3 left-3">{product.badge}</Badge>
             )}

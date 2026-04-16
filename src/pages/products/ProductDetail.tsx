@@ -50,7 +50,7 @@ export default function ProductDetail() {
           {/* Left — Image */}
           <div className="lg:col-span-3">
             <div className="aspect-video rounded-2xl bg-muted border border-border overflow-hidden">
-              <img src={product.previewImage} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.previewImage} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </div>
             <div className="mt-8">
               <h2 className="font-poppins text-lg font-semibold text-foreground mb-4">What's Included</h2>
