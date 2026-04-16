@@ -5,7 +5,7 @@ const useCases = [
   {
     icon: User,
     title: "Indie Hackers",
-    description: "Stop wasting weekends debugging AI code. Grab a prototype, customize it, and launch your micro-SaaS in a weekend. Validate ideas at $29 instead of $2,000.",
+    description: "Stop wasting weekends debugging AI code. Grab a prototype, customize it, and launch your micro-SaaS in a weekend. Validate ideas at $19 instead of $2,000.",
     bullets: [
       "Launch MVPs in 1–2 days",
       "Test market demand before investing",

@@ -16,7 +16,7 @@ interface Row {
 const rows: Row[] = [
   {
     feature: "Cost per SaaS product",
-    akcelerate: { value: "$29 one-time", status: "win" },
+    akcelerate: { value: "$19 one-time", status: "win" },
     claude: { value: "$20/mo + hours", status: "lose" },
     chatgpt: { value: "$200/mo + API", status: "lose" },
     replit: { value: "$25/mo + build", status: "lose" },
