@@ -102,5 +102,5 @@ export function useCart() {
 
   const getQuantity = useCallback((productId: string) => cartMap[productId] || 0, [cartMap]);
 
-  return { items, totalCount, getTotal, getQuantity, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen, isInCart, isBundle };
+  return { items, totalCount, getTotal, getQuantity, addToCart, removeFromCart, updateQuantity, clearCart, open, setOpen, isInCart, isBundle, isAllAccess };
 }
