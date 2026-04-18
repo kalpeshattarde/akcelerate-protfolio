@@ -98,7 +98,7 @@ export default function Footer() {
             <h4 className="font-poppins font-semibold text-foreground mb-4 text-sm tracking-wide">Industries</h4>
             <div className="space-y-2">
               {industries.slice(0, 8).map(i => (
-                <Link key={i.name} to="/industries" className="block text-sm text-muted-foreground hover:text-accent transition-colors">
+                <Link key={i.slug} to={`/industries/${i.slug}`} className="block text-sm text-muted-foreground hover:text-accent transition-colors">
                   {i.name}
                 </Link>
               ))}
