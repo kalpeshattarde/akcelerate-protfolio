@@ -18,21 +18,46 @@ import AuditLogTab from "@/components/admin/AuditLogTab";
 import AdminLoginGate, { useAdminAuth, ROLE_LABELS } from "@/components/admin/AdminLoginGate";
 import { AuditProvider } from "@/lib/auditLog";
 
-const ALL_TABS = [
-  { value: "dashboard", label: "Dashboard", icon: BarChart3 },
-  { value: "activity", label: "Activity", icon: Activity },
-  { value: "analytics", label: "Analytics", icon: Activity },
-  { value: "users", label: "Users", icon: Users },
-  { value: "orders", label: "Orders", icon: Receipt },
-  { value: "content", label: "Content", icon: FileText },
-  { value: "email", label: "Email", icon: Mail },
-  { value: "products", label: "Products", icon: Package },
-  { value: "config", label: "Config", icon: Settings },
-  { value: "affiliates", label: "Affiliates", icon: Users },
-  { value: "growth", label: "Growth", icon: TrendingUp },
-  { value: "ads", label: "Ads", icon: Megaphone },
-  { value: "audit", label: "Audit Log", icon: ClipboardList },
-];
+const TAB_SECTIONS = [
+  {
+    label: "Overview",
+    items: [
+      { value: "dashboard", label: "Dashboard", icon: BarChart3 },
+      { value: "activity", label: "Activity", icon: Activity },
+      { value: "analytics", label: "Analytics", icon: Activity },
+    ],
+  },
+  {
+    label: "Commerce",
+    items: [
+      { value: "users", label: "Users", icon: Users },
+      { value: "orders", label: "Orders", icon: Receipt },
+      { value: "products", label: "Products", icon: Package },
+    ],
+  },
+  {
+    label: "Content",
+    items: [
+      { value: "content", label: "Content", icon: FileText },
+      { value: "email", label: "Email", icon: Mail },
+    ],
+  },
+  {
+    label: "Growth",
+    items: [
+      { value: "affiliates", label: "Affiliates", icon: Users },
+      { value: "growth", label: "Growth", icon: TrendingUp },
+      { value: "ads", label: "Ads", icon: Megaphone },
+    ],
+  },
+  {
+    label: "System",
+    items: [
+      { value: "config", label: "Config", icon: Settings },
+      { value: "audit", label: "Audit Log", icon: ClipboardList },
+    ],
+  },
+] as const;
 
 function AdminContent() {
   const { logout, role, currentUser, hasPermission } = useAdminAuth();
@@ -45,7 +70,9 @@ function AdminContent() {
     localStorage.setItem("ak-admin-sidebar-collapsed", collapsed ? "1" : "0");
   }, [collapsed]);
 
-  const visibleTabs = ALL_TABS.filter(t => hasPermission(t.value));
+  const visibleSections = TAB_SECTIONS
+    .map(s => ({ ...s, items: s.items.filter(t => hasPermission(t.value)) }))
+    .filter(s => s.items.length > 0);
 
   return (
     <AuditProvider user={currentUser}>
