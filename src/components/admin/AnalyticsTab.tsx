@@ -252,6 +252,41 @@ export default function AnalyticsTab() {
                 ))}
               </tbody>
             </table>
+            {(() => {
+              const MIN_VIEWS = 100;
+              const MIN_LIFT = 5; // percentage points
+              const ctrl = abVariantData.find(r => r.variant === "control");
+              const exp = abVariantData.find(r => r.variant === "catalog-early");
+              if (!ctrl || !exp) return null;
+              const enoughData = ctrl.views >= MIN_VIEWS && exp.views >= MIN_VIEWS;
+              const lift = +(exp.cartRate - ctrl.cartRate).toFixed(1);
+              const winner = lift > 0 ? "catalog-early" : lift < 0 ? "control" : null;
+              const significant = enoughData && Math.abs(lift) >= MIN_LIFT;
+
+              if (!enoughData) {
+                const remaining = Math.max(0, MIN_VIEWS - Math.min(ctrl.views, exp.views));
+                return (
+                  <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                    <span aria-hidden>⏳</span>
+                    <span>Need 100+ views per variant for a reliable read — {remaining} more view{remaining === 1 ? "" : "s"} on the smaller arm.</span>
+                  </div>
+                );
+              }
+              if (significant && winner) {
+                return (
+                  <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20">
+                    <span aria-hidden>✓</span>
+                    <span><strong>{winner}</strong> wins by {Math.abs(lift)} pts on cart rate.</span>
+                  </div>
+                );
+              }
+              return (
+                <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-muted text-muted-foreground border border-border">
+                  <span aria-hidden>≈</span>
+                  <span>No significant winner yet (lift {lift > 0 ? "+" : ""}{lift} pts, threshold ±{MIN_LIFT}).</span>
+                </div>
+              );
+            })()}
             <p className="mt-3 text-xs text-muted-foreground">
               Cart Rate = Add to Cart / Views · Bundle Rate = Bundle Unlocked / Views
             </p>
