@@ -35,22 +35,34 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
     const newErrors: Record<string, string> = {};
 
     fields.forEach(f => {
-      if (f.required && !data.get(f.name)?.toString().trim()) {
+      const value = data.get(f.name)?.toString().trim() ?? "";
+      if (f.required && !value) {
         newErrors[f.name] = `${f.label} is required`;
+        return;
       }
-      if (f.type === "email" && data.get(f.name)) {
-        const email = data.get(f.name)!.toString();
-        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          newErrors[f.name] = "Please enter a valid email";
-        }
+      if (value.length > 255) {
+        newErrors[f.name] = `${f.label} must be under 255 characters`;
+        return;
+      }
+      if (f.type === "email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        newErrors[f.name] = "Please enter a valid email";
+      }
+      if (f.type === "tel" && value && !/^[+\d\s()-]{6,20}$/.test(value)) {
+        newErrors[f.name] = "Please enter a valid phone number";
       }
     });
+
+    const message = data.get("message")?.toString().trim() ?? "";
+    if (message.length > 2000) {
+      newErrors.message = "Message must be under 2000 characters";
+    }
 
     if (Object.keys(newErrors).length) {
       setErrors(newErrors);
       return;
     }
 
+    setErrors({});
     setSubmitted(true);
   };
 
