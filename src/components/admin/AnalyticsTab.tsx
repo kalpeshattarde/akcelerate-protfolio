@@ -427,6 +427,24 @@ export default function AnalyticsTab() {
         )}
       </ChartCard>
 
+      <ChartCard title="A/B Cart Rate Over Time (Last 7 Days)" index={1}>
+        {abDailyData.some(d => d.control > 0 || d["catalog-early"] > 0) ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={abDailyData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} unit="%" />
+              <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => `${v}%`} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Line type="monotone" dataKey="control" stroke="hsl(var(--muted-foreground))" strokeWidth={2} dot={{ r: 3 }} animationDuration={900} />
+              <Line type="monotone" dataKey="catalog-early" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 3 }} animationDuration={900} animationBegin={150} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <EmptyState icon={LineIcon} title="No A/B trend data yet" description="Cart rate per variant will appear here once events accumulate." />
+        )}
+      </ChartCard>
+
       <div className="text-center text-xs text-muted-foreground">
         {events.length} total events tracked · Data stored locally in browser
       </div>
