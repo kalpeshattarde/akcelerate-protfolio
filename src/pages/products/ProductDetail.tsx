@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { ArrowLeft, CheckCircle, Shield, Zap, Download, Loader2 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
@@ -43,8 +44,18 @@ export default function ProductDetail() {
 
   return (
     <>
-      <SEOHead title={product.name} description={product.description.slice(0, 155)} path={`/products/${slug}`} />
+      <SEOHead
+        title={product.name}
+        description={product.description.slice(0, 155)}
+        path={`/products/${slug}`}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Products", path: "/products" },
+          { name: product.name, path: `/products/${slug}` },
+        ]}
+      />
     <main className="pt-28 pb-20">
+      <Breadcrumbs items={[{ name: "Products", path: "/products" }, { name: product.name }]} className="!pt-0 mb-6" />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link to="/products" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to Products
