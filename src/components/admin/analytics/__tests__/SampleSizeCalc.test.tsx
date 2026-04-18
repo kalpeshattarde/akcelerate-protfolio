@@ -9,11 +9,11 @@ describe("requiredPerArm (80% power, α=0.05 two-sided)", () => {
     expect(n!).toBeLessThan(4000);
   });
 
-  it("textbook: 5% baseline, 6% target (small lift) → ~9,000+ per arm", () => {
+  it("textbook: 5% baseline, 6% target (small lift) → ~8,000 per arm", () => {
     const n = requiredPerArm(0.05, 0.06);
     expect(n).not.toBeNull();
-    expect(n!).toBeGreaterThan(8500);
-    expect(n!).toBeLessThan(10000);
+    expect(n!).toBeGreaterThan(7500);
+    expect(n!).toBeLessThan(9000);
   });
 
   it("large lift: 20% → 30% → ~300 per arm", () => {
