@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
 import ConfigTab from "@/components/admin/ConfigTab";
 import ProductsTab from "@/components/admin/ProductsTab";
