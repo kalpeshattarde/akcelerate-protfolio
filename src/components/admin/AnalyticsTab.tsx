@@ -195,15 +195,15 @@ export default function AnalyticsTab() {
   };
 
   const seedNeutralAbData = () => {
-    // 120 control views, 18 add_to_cart (15%)
-    // 120 catalog-early views, 16 add_to_cart (~13.3%) → ~-1.7 pts lift, below ±5 threshold
+    // 600 control views, 90 add_to_cart (15%)
+    // 600 catalog-early views, 80 add_to_cart (~13.3%) → ~-1.7 pts lift, p≈0.39 → neutral
     writeSeed([
-      ...makeEvents("products_view", "control", 120),
-      ...makeEvents("add_to_cart", "control", 18, 1000),
-      ...makeEvents("bundle_unlocked", "control", 6, 2000),
-      ...makeEvents("products_view", "catalog-early", 120),
-      ...makeEvents("add_to_cart", "catalog-early", 16, 1000),
-      ...makeEvents("bundle_unlocked", "catalog-early", 7, 2000),
+      ...makeEvents("products_view", "control", 600),
+      ...makeEvents("add_to_cart", "control", 90, 1000),
+      ...makeEvents("bundle_unlocked", "control", 30, 2000),
+      ...makeEvents("products_view", "catalog-early", 600),
+      ...makeEvents("add_to_cart", "catalog-early", 80, 1000),
+      ...makeEvents("bundle_unlocked", "catalog-early", 35, 2000),
     ]);
   };
 
