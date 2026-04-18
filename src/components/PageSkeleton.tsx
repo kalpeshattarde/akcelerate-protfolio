@@ -1,8 +1,9 @@
+import { forwardRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function PageSkeleton() {
+const PageSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div className="animate-fade-in">
+    <div ref={ref} className="animate-fade-in">
       {/* Hero skeleton */}
       <div className="py-20 px-6">
         <div className="max-w-4xl mx-auto space-y-6">
@@ -54,4 +55,3 @@ export default function PageSkeleton() {
 PageSkeleton.displayName = "PageSkeleton";
 
 export default PageSkeleton;
-
