@@ -5,6 +5,7 @@ import { Heart, ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Eye } from "lucide-
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
+import { Tilt } from "@/components/motion/MotionPrimitives";
 
 interface ProductCardProps {
   product: Product;
@@ -27,7 +28,8 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
 
   return (
     <>
-      <div className="group relative rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1">
+      <Tilt max={6} className="will-change-transform">
+      <div className="group relative rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30">
         {product.badge && (
           <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
             {product.badge}
@@ -156,6 +158,7 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
           )}
         </div>
       </div>
+      </Tilt>
 
       <ImageLightbox
         src={product.previewImage}
