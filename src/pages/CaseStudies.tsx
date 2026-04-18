@@ -5,9 +5,29 @@ import { caseStudies } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function CaseStudiesPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: caseStudies.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: c.title,
+        description: c.description,
+        about: c.industry,
+      },
+    })),
+  };
   return (
     <>
-      <SEOHead title="Case Studies" description="Real-world AI and data science results — see measurable ROI across 13+ industries." path="/case-studies" />
+      <SEOHead
+        title="Case Studies"
+        description="Real-world AI and data science results — see measurable ROI across 13+ industries."
+        path="/case-studies"
+        jsonLd={jsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Case Studies", path: "/case-studies" }]}
+      />
       <HeroPage label="Case Studies" title={<>Real Results, <span className="gradient-text">Real Impact</span></>} description="See how we've delivered measurable growth for businesses across industries." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

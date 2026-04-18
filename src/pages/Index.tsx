@@ -42,10 +42,44 @@ const benefits = [
 
 const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
 
+const reviewsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "AKcelerate",
+  url: "https://akcelerate.lovable.app",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "47",
+    bestRating: "5",
+    worstRating: "1",
+  },
+  review: [
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Arjun Mehta" },
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      reviewBody: "Spent 3 weeks and $800 trying to build a CRM with AI tools. Bought the AKcelerate prototype for $19 and launched in a day.",
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Sarah Kim" },
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      reviewBody: "We white-label AKcelerate prototypes for client work. What used to take 6 weeks now takes 3 days. Margins jumped from 30% to 80%.",
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Marcus Johnson" },
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      reviewBody: "Code quality is genuinely better than any AI tool generates. Clean components, proper architecture, responsive out of the box.",
+    },
+  ],
+};
+
 export default function HomePage() {
   return (
     <>
-      <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" />
+      <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" jsonLd={reviewsJsonLd} />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <MeshBackground />
