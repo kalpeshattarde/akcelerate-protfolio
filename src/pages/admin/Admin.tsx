@@ -76,7 +76,7 @@ function AdminContent() {
 
   return (
     <AuditProvider user={currentUser}>
-      <main className="pt-28 pb-20">
+      <main className="pt-20 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="font-poppins text-3xl font-bold text-foreground">Admin Panel</h1>
