@@ -20,7 +20,7 @@ interface CartDrawerProps {
 export default function CartDrawer({ open, onOpenChange, items, currency, total, onRemove, onClear, onCheckout, isBundle, isAllAccess }: CartDrawerProps) {
   const symbol = currency === "inr" ? "₹" : "$";
   const starterPrice = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
-  const bundlePrice = currency === "inr" ? BUNDLE_PRICE.inr : BUNDLE_PRICE.usd;
+  const bundlePerItem = currency === "inr" ? BUNDLE_PER_ITEM_PRICE.inr : BUNDLE_PER_ITEM_PRICE.usd;
   const allAccessPrice = currency === "inr" ? ALL_ACCESS_PRICE.inr : ALL_ACCESS_PRICE.usd;
 
   return (
