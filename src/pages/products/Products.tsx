@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
