@@ -140,6 +140,9 @@ export default function FunnelTab() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <CohortPicker />
+      </div>
       <ChartCard title="Funnel steps" index={0}>
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
           <p className="text-xs text-muted-foreground">
