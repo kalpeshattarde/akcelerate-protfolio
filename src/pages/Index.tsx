@@ -14,6 +14,7 @@ import HeroDashboard from "@/components/HeroDashboard";
 import MagneticButton from "@/components/MagneticButton";
 import MeshBackground from "@/components/motion/MeshBackground";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
+import PersonalizedPicks from "@/components/products/PersonalizedPicks";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -230,6 +231,9 @@ export default function HomePage() {
           </RevealGrid>
         </div>
       </section>
+
+      {/* ═══════════════════ PERSONALIZED PICKS ═══════════════════ */}
+      <PersonalizedPicks />
 
       {/* ═══════════════════ INDUSTRIES ═══════════════════ */}
       <section className="py-24 lg:py-32 section-alt">
