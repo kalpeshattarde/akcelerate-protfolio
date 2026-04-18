@@ -58,8 +58,9 @@ export default function ActivityLiveTab() {
 
   const filtered = useMemo(
     () => (filter === "all" ? events : events.filter(e => e.event === filter)),
-    [events, filter, tick],
+    [events, filter],
   );
+  void tick; // re-read on tick so time-ago labels refresh
 
   return (
     <div className="space-y-6">
