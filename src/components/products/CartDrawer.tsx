@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Trash2, ShoppingBag, Sparkles, Crown } from "lucide-react";
-import { BUNDLE_THRESHOLD, BUNDLE_PRICE, STARTER_PRICE, ALL_ACCESS_PRICE, type CartItem } from "@/hooks/useCart";
+import { BUNDLE_THRESHOLD, BUNDLE_PER_ITEM_PRICE, STARTER_PRICE, ALL_ACCESS_PRICE, type CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
 interface CartDrawerProps {
