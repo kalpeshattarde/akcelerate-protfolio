@@ -192,6 +192,30 @@ export default function Products() {
     })),
   }), [products]);
 
+  const catalogBlock = (
+    <CatalogSection
+      webSaas={webSaas}
+      mobileApps={mobileApps}
+      currency={currency}
+      isPurchased={isPurchased}
+      purchasedCount={purchased.length}
+      cart={{
+        isInCart: cart.isInCart,
+        getQuantity: cart.getQuantity,
+        isBundle: cart.isBundle,
+        totalCount: cart.totalCount,
+        setOpen: cart.setOpen,
+      }}
+      wishlist={{ isFavorite: wishlist.isFavorite }}
+      compareList={compareList}
+      onPurchase={handleBuy}
+      onAddToCart={handleAddToCartSilent}
+      onQuickView={handleQuickView}
+      onToggleFavorite={handleToggleFavorite}
+      onToggleCompare={handleToggleCompare}
+    />
+  );
+
   return (
     <>
       <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
