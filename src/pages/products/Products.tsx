@@ -155,9 +155,57 @@ export default function Products() {
     toast.success("5 top-selling prototypes added to cart!");
   };
 
+  // JSON-LD: ItemList with volume-discount PriceSpecification (5+ → $12 each)
+  const productsJsonLd = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AKcelerate SaaS Prototypes",
+    "numberOfItems": products.length,
+    "itemListElement": products.slice(0, 20).map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Product",
+        "name": p.name,
+        "description": p.shortDesc,
+        "image": p.previewImage,
+        "url": `${typeof window !== "undefined" ? window.location.origin : ""}/products/${p.slug}`,
+        "offers": [
+          {
+            "@type": "Offer",
+            "price": p.price.usd,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": p.price.usd,
+              "priceCurrency": "USD",
+              "eligibleQuantity": { "@type": "QuantitativeValue", "value": 1, "maxValue": 4 },
+            },
+          },
+          {
+            "@type": "Offer",
+            "name": "Pro Bundle (5+ products)",
+            "price": 12,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": 12,
+              "priceCurrency": "USD",
+              "eligibleQuantity": { "@type": "QuantitativeValue", "minValue": 5 },
+              "description": "Per-product price when 5 or more prototypes are purchased together",
+            },
+          },
+        ],
+      },
+    })),
+  }), [products]);
+
   return (
     <>
       <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productsJsonLd) }} />
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -284,7 +332,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredWebSaas.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}
@@ -296,7 +344,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredMobileApps.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}

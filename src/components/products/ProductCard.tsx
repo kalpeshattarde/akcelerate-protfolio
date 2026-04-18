@@ -14,6 +14,7 @@ interface ProductCardProps {
   cartQuantity?: number;
   isFavorite?: boolean;
   isComparing?: boolean;
+  bundleActive?: boolean;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
   onQuickView?: (id: string) => void;
@@ -21,7 +22,7 @@ interface ProductCardProps {
   onToggleCompare?: (id: string) => void;
 }
 
-export default function ProductCard({ product, isPurchased, cartQuantity = 0, isFavorite = false, isComparing = false, onPurchase, onAddToCart, onQuickView, onToggleFavorite, onToggleCompare }: ProductCardProps) {
+export default function ProductCard({ product, isPurchased, cartQuantity = 0, isFavorite = false, isComparing = false, bundleActive = false, onPurchase, onAddToCart, onQuickView, onToggleFavorite, onToggleCompare }: ProductCardProps) {
   const priceUsd = `$${product.price.usd}`;
   const priceInr = `₹${product.price.inr.toLocaleString("en-IN")}`;
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -33,6 +34,11 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
         {product.badge && (
           <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
             {product.badge}
+          </div>
+        )}
+        {bundleActive && cartQuantity > 0 && !isPurchased && (
+          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-500/90 text-white shadow-lg" style={{ marginTop: product.badge ? "28px" : 0 }}>
+            ✨ Pro Bundle rate applied
           </div>
         )}
 
