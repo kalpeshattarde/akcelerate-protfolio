@@ -1,11 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
-import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen, Sparkles } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -18,7 +14,7 @@ import ComparisonSection from "@/components/products/ComparisonSection";
 import SavingsSection from "@/components/products/SavingsSection";
 import UseCasesSection from "@/components/products/UseCasesSection";
 import TopSellingSection from "@/components/products/TopSellingSection";
-import ProductCard from "@/components/products/ProductCard";
+import CatalogSection from "@/components/products/CatalogSection";
 import MarketplacePricing from "@/components/products/MarketplacePricing";
 import TrustSection from "@/components/products/TrustSection";
 import ProductsFAQ from "@/components/products/ProductsFAQ";
@@ -30,50 +26,17 @@ import ProductCompare from "@/components/products/ProductCompare";
 import BundleProgressBar from "@/components/products/BundleProgressBar";
 import ProductsSubNav from "@/components/products/ProductsSubNav";
 import type { Product } from "@/data/products";
-import type { Currency } from "@/config/appConfig";
-
-type SortOption = "popular" | "price-low" | "price-high" | "name-az" | "name-za";
-
-function filterProducts(products: Product[], search: string, tags: string[]) {
-  return products.filter(p => {
-    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.shortDesc.toLowerCase().includes(search.toLowerCase());
-    const matchTags = tags.length === 0 || tags.some(t => p.tags.includes(t));
-    return matchSearch && matchTags;
-  });
-}
-
-function sortProducts(products: Product[], sort: SortOption, currency: Currency) {
-  const sorted = [...products];
-  switch (sort) {
-    case "popular": return sorted.sort((a, b) => b.salesCount - a.salesCount);
-    case "price-low": return sorted.sort((a, b) => (currency === "inr" ? a.price.inr - b.price.inr : a.price.usd - b.price.usd));
-    case "price-high": return sorted.sort((a, b) => (currency === "inr" ? b.price.inr - a.price.inr : b.price.usd - a.price.usd));
-    case "name-az": return sorted.sort((a, b) => a.name.localeCompare(b.name));
-    case "name-za": return sorted.sort((a, b) => b.name.localeCompare(a.name));
-    default: return sorted;
-  }
-}
-
-const TAG_OPTIONS = [
-  "analytics", "ai", "crm", "ecommerce", "healthcare", "finance",
-  "education", "fitness", "booking", "delivery", "saas", "mobile",
-  "dashboard", "productivity", "wellness",
-];
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products, grantAllAccess } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, products, grantAllAccess, purchased } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
-  const [search, setSearch] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [bannerDismissed, setBannerDismissed] = useState(false);
   const [compareList, setCompareList] = useState<string[]>([]);
 
-  // A/B variant: control = current order; variantB = catalog right after Solution.
+  // A/B variant: control = current order; catalog-early = catalog right after Solution.
   // Stable per-visitor assignment via localStorage.
   const [orderVariant] = useState<"control" | "catalog-early">(() => {
     try {
@@ -97,26 +60,6 @@ export default function Products() {
       trackEvent("bundle_unlocked", { variant: orderVariant, cartCount: 5 });
     }
   }, [cart.totalCount, orderVariant]);
-
-  // Get last purchased product
-  const lastPurchased = useMemo(() => {
-    try {
-      const sales = JSON.parse(localStorage.getItem("ak-sales") || "[]");
-      if (sales.length === 0) return null;
-      const last = sales[sales.length - 1];
-      const product = products.find(p => p.id === last.id);
-      if (!product) return null;
-      return { product, date: last.date };
-    } catch { return null; }
-  }, [products, purchased]);
-
-  // SEO handled by SEOHead component
-
-  const toggleTag = (tag: string) =>
-    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
-
-  const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
-  const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
   const handleBuy = (id: string) => {
     if (cart.isInCart(id)) {
@@ -249,6 +192,30 @@ export default function Products() {
     })),
   }), [products]);
 
+  const catalogBlock = (
+    <CatalogSection
+      webSaas={webSaas}
+      mobileApps={mobileApps}
+      currency={currency}
+      isPurchased={isPurchased}
+      purchasedCount={purchased.length}
+      cart={{
+        isInCart: cart.isInCart,
+        getQuantity: cart.getQuantity,
+        isBundle: cart.isBundle,
+        totalCount: cart.totalCount,
+        setOpen: cart.setOpen,
+      }}
+      wishlist={{ isFavorite: wishlist.isFavorite }}
+      compareList={compareList}
+      onPurchase={handleBuy}
+      onAddToCart={handleAddToCartSilent}
+      onQuickView={handleQuickView}
+      onToggleFavorite={handleToggleFavorite}
+      onToggleCompare={handleToggleCompare}
+    />
+  );
+
   return (
     <>
       <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
@@ -269,10 +236,11 @@ export default function Products() {
         {/* 4. SOLUTION — introduce our answer */}
         <div id="solution"><SolutionSection /></div>
 
-        {/* A/B variant: catalog-early renders Top Selling + Catalog right after Solution */}
+        {/* A/B variant: catalog-early renders Top Selling + full catalog right after Solution */}
         {orderVariant === "catalog-early" && (
           <>
             <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+            {catalogBlock}
           </>
         )}
 
@@ -290,138 +258,8 @@ export default function Products() {
           <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
         )}
 
-        {/* PRODUCT CATALOG */}
-        <div id="products-catalog" className="mt-16">
-          <div className="text-center mb-8">
-            <h2 className="font-poppins text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Browse All <span className="gradient-text">Prototypes</span>
-            </h2>
-            <p className="text-muted-foreground">40+ ready-made SaaS and mobile app prototypes</p>
-          </div>
-
-          {/* Search, Sort & Filters */}
-          <div className="mb-6 space-y-4">
-            <div className="flex items-center gap-3 max-w-2xl mx-auto">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search prototypes..."
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-border bg-card text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                />
-                {search && (
-                  <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-              <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-                <SelectTrigger className="w-44 rounded-xl">
-                  <ArrowUpDown className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="price-low">Price: Low → High</SelectItem>
-                  <SelectItem value="price-high">Price: High → Low</SelectItem>
-                  <SelectItem value="name-az">Name: A → Z</SelectItem>
-                  <SelectItem value="name-za">Name: Z → A</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-2">
-              {TAG_OPTIONS.map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                    selectedTags.includes(tag)
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
-              {selectedTags.length > 0 && (
-                <button onClick={() => setSelectedTags([])} className="px-3 py-1 rounded-full text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors">
-                  Clear all
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Category Tabs */}
-          <Tabs defaultValue="web-saas">
-            <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 mb-4">
-              <TabsTrigger value="web-saas" className="gap-2">
-                <Globe className="w-4 h-4" /> Web SaaS
-              </TabsTrigger>
-              <TabsTrigger value="mobile-app" className="gap-2">
-                <Smartphone className="w-4 h-4" /> Mobile App
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Toolbar below tabs */}
-            <div className="flex items-center gap-3 mb-8 p-3 rounded-2xl border border-border bg-card">
-              <Link to="/my-purchases" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
-                <LayoutDashboard className="w-4 h-4" /> My Purchases
-                {purchased.length > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-primary-foreground/20 text-[10px] font-bold">{purchased.length}</span>
-                )}
-              </Link>
-              <Link to="/guide" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors">
-                <BookOpen className="w-4 h-4" /> Guide
-              </Link>
-              <div className="ml-auto flex items-center gap-3">
-                {purchased.length > 0 && (
-                  <span className="text-xs text-muted-foreground hidden sm:block">
-                    You own {purchased.length} prototype{purchased.length > 1 ? "s" : ""}
-                  </span>
-                )}
-                <button
-                  onClick={() => cart.setOpen(true)}
-                  className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-background text-foreground text-sm font-medium hover:bg-muted transition-colors"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  <span className="hidden sm:inline">Cart</span>
-                  {cart.totalCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] flex items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
-                      {cart.totalCount}
-                    </span>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <TabsContent value="web-saas">
-              {filteredWebSaas.length === 0 ? (
-                <p className="text-center text-muted-foreground py-12">No prototypes match your filters.</p>
-              ) : (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredWebSaas.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-
-            <TabsContent value="mobile-app">
-              {filteredMobileApps.length === 0 ? (
-                <p className="text-center text-muted-foreground py-12">No prototypes match your filters.</p>
-              ) : (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredMobileApps.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
-        </div>
+        {/* PRODUCT CATALOG (only render here for control variant) */}
+        {orderVariant === "control" && catalogBlock}
 
         {/* 10. MARKETPLACE PRICING — convert */}
         <div id="pricing"><MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} /></div>

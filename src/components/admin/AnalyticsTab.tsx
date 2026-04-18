@@ -83,6 +83,26 @@ export default function AnalyticsTab() {
       .slice(0, 6);
   }, [events]);
 
+  // A/B variant breakdown for products page (control vs catalog-early)
+  const abVariantData = useMemo(() => {
+    const tally: Record<string, { variant: string; views: number; addToCart: number; bundleUnlocked: number }> = {
+      control: { variant: "control", views: 0, addToCart: 0, bundleUnlocked: 0 },
+      "catalog-early": { variant: "catalog-early", views: 0, addToCart: 0, bundleUnlocked: 0 },
+    };
+    events.forEach(e => {
+      const v = (e.data.variant as string) || "";
+      if (v !== "control" && v !== "catalog-early") return;
+      if (e.event === "products_view") tally[v].views++;
+      else if (e.event === "add_to_cart") tally[v].addToCart++;
+      else if (e.event === "bundle_unlocked") tally[v].bundleUnlocked++;
+    });
+    return Object.values(tally).map(row => ({
+      ...row,
+      cartRate: row.views > 0 ? +((row.addToCart / row.views) * 100).toFixed(1) : 0,
+      bundleRate: row.views > 0 ? +((row.bundleUnlocked / row.views) * 100).toFixed(1) : 0,
+    }));
+  }, [events]);
+
   const stats = [
     { label: "Page Views", numeric: counts.page_view, icon: FileText, iconClass: "text-primary" },
     { label: "Product Views", numeric: counts.product_view, icon: Eye, iconClass: "text-blue-500" },
@@ -204,6 +224,42 @@ export default function AnalyticsTab() {
           )}
         </ChartCard>
       </div>
+
+      <ChartCard title="A/B Test: Products Page Order" index={0}>
+        {abVariantData.some(r => r.views > 0) ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <th className="py-2 pr-4 font-medium">Variant</th>
+                  <th className="py-2 pr-4 font-medium">Views</th>
+                  <th className="py-2 pr-4 font-medium">Add to Cart</th>
+                  <th className="py-2 pr-4 font-medium">Bundle Unlocked</th>
+                  <th className="py-2 pr-4 font-medium">Cart Rate</th>
+                  <th className="py-2 font-medium">Bundle Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {abVariantData.map(row => (
+                  <tr key={row.variant} className="border-b border-border last:border-0">
+                    <td className="py-2 pr-4 font-mono text-xs text-foreground">{row.variant}</td>
+                    <td className="py-2 pr-4 text-foreground">{row.views}</td>
+                    <td className="py-2 pr-4 text-foreground">{row.addToCart}</td>
+                    <td className="py-2 pr-4 text-foreground">{row.bundleUnlocked}</td>
+                    <td className="py-2 pr-4 font-semibold text-primary">{row.cartRate}%</td>
+                    <td className="py-2 font-semibold text-primary">{row.bundleRate}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Cart Rate = Add to Cart / Views · Bundle Rate = Bundle Unlocked / Views
+            </p>
+          </div>
+        ) : (
+          <EmptyState icon={Activity} title="No A/B test data yet" description="Visit /products in different sessions to assign both variants." />
+        )}
+      </ChartCard>
 
       <div className="text-center text-xs text-muted-foreground">
         {events.length} total events tracked · Data stored locally in browser
