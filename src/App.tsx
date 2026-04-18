@@ -55,7 +55,7 @@ const App = () => (
         <BrowserRouter>
           <ErrorBoundary>
             <SiteLayout>
-              <Breadcrumbs />
+              
               <Suspense fallback={<PageSkeleton />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
