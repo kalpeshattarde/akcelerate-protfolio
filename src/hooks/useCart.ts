@@ -98,7 +98,8 @@ export function useCart() {
       return currency === "inr" ? ALL_ACCESS_PRICE.inr : ALL_ACCESS_PRICE.usd;
     }
     if (items.length >= BUNDLE_THRESHOLD) {
-      return currency === "inr" ? BUNDLE_PRICE.inr : BUNDLE_PRICE.usd;
+      const perItem = currency === "inr" ? BUNDLE_PER_ITEM_PRICE.inr : BUNDLE_PER_ITEM_PRICE.usd;
+      return perItem * items.length;
     }
     const perItem = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
     return perItem * items.length;
