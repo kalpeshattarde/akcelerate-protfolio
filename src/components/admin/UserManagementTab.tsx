@@ -1,6 +1,8 @@
-import { useState, useMemo } from "react";
-import { Users, Search, X, ShoppingBag, Crown, Download } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Users, Search, X, ShoppingBag, Crown, Download, UserCheck, UserX, DollarSign } from "lucide-react";
 import { downloadCSV } from "@/lib/csvExport";
+import { AnimatedStatCard, EmptyState, TableSkeleton, StatSkeleton } from "./AdminPolish";
 
 interface UserRecord {
   id: string;
@@ -38,6 +40,12 @@ function getSalesAsUsers(): UserRecord[] {
 export default function UserManagementTab() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "active" | "inactive">("all");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 350);
+    return () => clearTimeout(t);
+  }, []);
 
   const users = useMemo(() => {
     const stored = getUsers();
@@ -57,6 +65,7 @@ export default function UserManagementTab() {
   const totalUsers = users.length;
   const activeUsers = users.filter(u => u.status === "active").length;
   const topSpender = users.reduce((top, u) => u.totalSpent > (top?.totalSpent || 0) ? u : top, users[0]);
+  const totalRevenue = users.reduce((s, u) => s + u.totalSpent, 0);
 
   const exportUsers = () => {
     downloadCSV("users-export.csv",
@@ -72,25 +81,22 @@ export default function UserManagementTab() {
           <Users className="w-5 h-5 text-primary" />
           <h2 className="font-poppins text-xl font-semibold text-foreground">User Management</h2>
         </div>
-        <button onClick={exportUsers}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-colors">
+        <button onClick={exportUsers} disabled={filtered.length === 0}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted text-muted-foreground hover:bg-muted/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           <Download className="w-3.5 h-3.5" /> Export CSV
         </button>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[
-          { label: "Total Users", value: totalUsers, color: "text-primary" },
-          { label: "Active", value: activeUsers, color: "text-emerald-500" },
-          { label: "Inactive", value: totalUsers - activeUsers, color: "text-amber-500" },
-          { label: "Top Spender", value: topSpender?.name || "—", color: "text-violet-500" },
-        ].map(s => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-4">
-            <p className="text-xs text-muted-foreground mb-1">{s.label}</p>
-            <p className={`font-poppins text-xl font-bold ${s.color} truncate`}>{s.value}</p>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <StatSkeleton />
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <AnimatedStatCard label="Total Users" numeric={totalUsers} icon={Users} iconClass="text-primary" index={0} />
+          <AnimatedStatCard label="Active" numeric={activeUsers} icon={UserCheck} iconClass="text-emerald-500" index={1} />
+          <AnimatedStatCard label="Inactive" numeric={totalUsers - activeUsers} icon={UserX} iconClass="text-amber-500" index={2} />
+          <AnimatedStatCard label="Total Revenue" numeric={totalRevenue} prefix="$" icon={DollarSign} iconClass="text-violet-500" index={3} />
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
@@ -109,49 +115,64 @@ export default function UserManagementTab() {
         </div>
       </div>
 
-      {filtered.length === 0 ? (
-        <div className="text-center py-16 rounded-2xl border border-border bg-muted/20">
-          <Users className="w-12 h-12 text-muted-foreground/40 mx-auto mb-3" />
-          <p className="text-muted-foreground">No users found. User data appears here after purchases.</p>
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-border overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-muted/50">
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">User</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Email</th>
-                  <th className="text-center px-4 py-3 font-medium text-muted-foreground">Purchases</th>
-                  <th className="text-center px-4 py-3 font-medium text-muted-foreground">Spent</th>
-                  <th className="text-center px-4 py-3 font-medium text-muted-foreground">Last Active</th>
-                  <th className="text-center px-4 py-3 font-medium text-muted-foreground">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map(u => (
-                  <tr key={u.id} className="border-b border-border hover:bg-muted/30 transition-colors">
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold uppercase">{u.name[0]}</div>
-                        <span className="font-medium text-foreground">{u.name}</span>
-                        {topSpender?.id === u.id && <Crown className="w-3.5 h-3.5 text-amber-500" />}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
-                    <td className="px-4 py-3 text-center"><span className="inline-flex items-center gap-1"><ShoppingBag className="w-3 h-3" /> {u.purchases}</span></td>
-                    <td className="px-4 py-3 text-center font-medium">${u.totalSpent.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-center text-muted-foreground text-xs">{new Date(u.lastActive).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</td>
-                    <td className="px-4 py-3 text-center">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${u.status === "active" ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{u.status}</span>
-                    </td>
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div key="skeleton" exit={{ opacity: 0 }}>
+            <TableSkeleton rows={6} cols={6} />
+          </motion.div>
+        ) : filtered.length === 0 ? (
+          <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-2xl border border-border bg-card">
+            <EmptyState
+              icon={Users}
+              title={users.length === 0 ? "No users yet" : "No users match your filters"}
+              description={users.length === 0 ? "User profiles appear here automatically after the first purchase." : "Try clearing the search or switching the status filter."}
+            />
+          </motion.div>
+        ) : (
+          <motion.div key="table" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="rounded-2xl border border-border overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">User</th>
+                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Email</th>
+                    <th className="text-center px-4 py-3 font-medium text-muted-foreground">Purchases</th>
+                    <th className="text-center px-4 py-3 font-medium text-muted-foreground">Spent</th>
+                    <th className="text-center px-4 py-3 font-medium text-muted-foreground">Last Active</th>
+                    <th className="text-center px-4 py-3 font-medium text-muted-foreground">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+                </thead>
+                <tbody>
+                  {filtered.map((u, i) => (
+                    <motion.tr
+                      key={u.id}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.4) }}
+                      className="border-b border-border hover:bg-muted/30 transition-colors"
+                    >
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold uppercase">{u.name[0]}</div>
+                          <span className="font-medium text-foreground">{u.name}</span>
+                          {topSpender?.id === u.id && <Crown className="w-3.5 h-3.5 text-amber-500" />}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
+                      <td className="px-4 py-3 text-center"><span className="inline-flex items-center gap-1"><ShoppingBag className="w-3 h-3" /> {u.purchases}</span></td>
+                      <td className="px-4 py-3 text-center font-medium">${u.totalSpent.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-center text-muted-foreground text-xs">{new Date(u.lastActive).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</td>
+                      <td className="px-4 py-3 text-center">
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${u.status === "active" ? "bg-emerald-500/10 text-emerald-600" : "bg-muted text-muted-foreground"}`}>{u.status}</span>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

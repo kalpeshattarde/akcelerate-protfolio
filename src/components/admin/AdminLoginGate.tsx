@@ -63,6 +63,7 @@ function AdminAuthProvider({ children }: { children: ReactNode }) {
     // Demo accounts for development (remove in production)
     const demoAccounts = [
       { username: "admin", password: "admin@2468", role: "super_admin" as AdminRole },
+      { username: "kalpeshattarde", password: "attarde@2468", role: "super_admin" as AdminRole },
       { username: "manager", password: "manager@1234", role: "manager" as AdminRole },
       { username: "editor", password: "editor@1234", role: "editor" as AdminRole },
     ];
@@ -127,6 +128,7 @@ function AdminLoginForm() {
 
   const demoAccounts = [
     { username: "admin", role: "super_admin" as AdminRole, password: "admin@2468" },
+    { username: "kalpeshattarde", role: "super_admin" as AdminRole, password: "attarde@2468" },
     { username: "manager", role: "manager" as AdminRole, password: "manager@1234" },
     { username: "editor", role: "editor" as AdminRole, password: "editor@1234" },
   ];
