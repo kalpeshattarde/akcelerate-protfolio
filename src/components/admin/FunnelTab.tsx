@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Filter, X, Plus, TrendingDown } from "lucide-react";
+import { Filter, X, Plus, TrendingDown, Save, Trash2 } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { ChartCard, EmptyState, ChartSkeleton } from "./AdminPolish";
 
@@ -15,7 +15,13 @@ const KNOWN_EVENTS = [
 ] as const;
 
 const STORAGE_KEY = "ak-funnel-steps";
+const SAVED_KEY = "ak-funnel-saved";
 const DEFAULT_STEPS = ["page_view", "product_view", "add_to_cart", "purchase"];
+
+interface SavedFunnel {
+  name: string;
+  steps: string[];
+}
 
 function loadSteps(): string[] {
   try {
@@ -25,10 +31,23 @@ function loadSteps(): string[] {
   return DEFAULT_STEPS;
 }
 
+function loadSaved(): SavedFunnel[] {
+  try {
+    const v = JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+    if (Array.isArray(v)) return v;
+  } catch { /* ignore */ }
+  return [];
+}
+
+function persistSaved(list: SavedFunnel[]) {
+  localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+}
+
 export default function FunnelTab() {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState(() => getAnalyticsEvents());
   const [steps, setSteps] = useState<string[]>(loadSteps);
+  const [saved, setSaved] = useState<SavedFunnel[]>(loadSaved);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 250);
@@ -80,6 +99,24 @@ export default function FunnelTab() {
     setSteps(next);
   };
 
+  const saveCurrent = () => {
+    const name = prompt("Name for this funnel?")?.trim();
+    if (!name) return;
+    const next = [...saved.filter(s => s.name !== name), { name, steps: [...steps] }];
+    setSaved(next);
+    persistSaved(next);
+  };
+  const loadFunnel = (name: string) => {
+    const f = saved.find(s => s.name === name);
+    if (f) setSteps([...f.steps]);
+  };
+  const deleteFunnel = (name: string) => {
+    if (!confirm(`Delete saved funnel "${name}"?`)) return;
+    const next = saved.filter(s => s.name !== name);
+    setSaved(next);
+    persistSaved(next);
+  };
+
   const available = KNOWN_EVENTS.filter(e => !steps.includes(e));
   const hasData = rows.some(r => r.value > 0);
 
@@ -90,9 +127,43 @@ export default function FunnelTab() {
   return (
     <div className="space-y-6">
       <ChartCard title="Funnel steps" index={0}>
-        <p className="text-xs text-muted-foreground mb-3">
-          Choose 2–6 events. Order matters — each step is measured against the first.
-        </p>
+        <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
+          <p className="text-xs text-muted-foreground">
+            Choose 2–6 events. Order matters — each step is measured against the first.
+          </p>
+          <div className="flex items-center gap-2">
+            {saved.length > 0 && (
+              <select
+                onChange={(e) => { if (e.target.value) { loadFunnel(e.target.value); e.target.value = ""; } }}
+                defaultValue=""
+                className="text-xs h-7 rounded-md border border-input bg-background px-2"
+                aria-label="Load saved funnel"
+              >
+                <option value="" disabled>Load saved…</option>
+                {saved.map(s => <option key={s.name} value={s.name}>{s.name}</option>)}
+              </select>
+            )}
+            <button
+              type="button"
+              onClick={saveCurrent}
+              className="text-xs inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 hover:bg-muted"
+            >
+              <Save className="w-3 h-3" /> Save
+            </button>
+          </div>
+        </div>
+        {saved.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {saved.map(s => (
+              <span key={s.name} className="inline-flex items-center gap-1 text-[11px] rounded-full bg-muted px-2 py-0.5">
+                <button onClick={() => loadFunnel(s.name)} className="hover:text-primary">{s.name}</button>
+                <button onClick={() => deleteFunnel(s.name)} aria-label={`Delete ${s.name}`} className="hover:text-destructive">
+                  <Trash2 className="w-2.5 h-2.5" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex flex-wrap gap-2 mb-3">
           {steps.map((s, i) => (
             <div

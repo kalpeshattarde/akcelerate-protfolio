@@ -1,8 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pause, Play, Radio, Trash2, Filter as FilterIcon } from "lucide-react";
+import { Pause, Play, Radio, Trash2, Filter as FilterIcon, Bell, BellOff } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { ChartCard, EmptyState } from "./AdminPolish";
+
+const NOTIFY_KEY = "ak-live-notify";
+const NOTIFY_EVENT_KEY = "ak-live-notify-event";
+
+function playChime() {
+  try {
+    const Ctx = (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext);
+    const ctx = new Ctx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(880, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.18);
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+    o.connect(g).connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + 0.36);
+  } catch { /* ignore */ }
+}
 
 const POLL_MS = 2000;
 const MAX_DISPLAY = 50;
@@ -30,19 +51,52 @@ export default function ActivityLiveTab() {
   const [events, setEvents] = useState(() => getAnalyticsEvents().slice(-MAX_DISPLAY).reverse());
   const [paused, setPaused] = useState(false);
   const [filter, setFilter] = useState<string>("all");
+  const [notify, setNotify] = useState<boolean>(() => localStorage.getItem(NOTIFY_KEY) === "1");
+  const [notifyEvent, setNotifyEvent] = useState<string>(() => localStorage.getItem(NOTIFY_EVENT_KEY) || "purchase");
+  const [desktopGranted, setDesktopGranted] = useState<boolean>(() => typeof Notification !== "undefined" && Notification.permission === "granted");
   const lastSeenRef = useRef<string>(events[0]?.timestamp || "");
   const [tick, setTick] = useState(0);
+
+  useEffect(() => { localStorage.setItem(NOTIFY_KEY, notify ? "1" : "0"); }, [notify]);
+  useEffect(() => { localStorage.setItem(NOTIFY_EVENT_KEY, notifyEvent); }, [notifyEvent]);
+
+  const toggleNotify = async () => {
+    const next = !notify;
+    if (next && typeof Notification !== "undefined" && Notification.permission === "default") {
+      try {
+        const result = await Notification.requestPermission();
+        setDesktopGranted(result === "granted");
+      } catch { /* ignore */ }
+    }
+    setNotify(next);
+  };
 
   // Poll
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
       const next = getAnalyticsEvents().slice(-MAX_DISPLAY).reverse();
+      const lastSeen = lastSeenRef.current;
+      // Detect new matching events for notification
+      if (notify && lastSeen) {
+        const fresh = next.filter(e => e.timestamp > lastSeen && e.event === notifyEvent);
+        if (fresh.length > 0) {
+          playChime();
+          if (desktopGranted && typeof Notification !== "undefined") {
+            try {
+              new Notification(`New ${notifyEvent}`, {
+                body: `${fresh.length} new event${fresh.length > 1 ? "s" : ""} on ${fresh[0].path}`,
+                tag: `ak-live-${notifyEvent}`,
+              });
+            } catch { /* ignore */ }
+          }
+        }
+      }
       setEvents(next);
       lastSeenRef.current = next[0]?.timestamp || lastSeenRef.current;
     }, POLL_MS);
     return () => clearInterval(id);
-  }, [paused]);
+  }, [paused, notify, notifyEvent, desktopGranted]);
 
   // Re-render every 5s so "time ago" stays fresh
   useEffect(() => {
@@ -60,7 +114,7 @@ export default function ActivityLiveTab() {
     () => (filter === "all" ? events : events.filter(e => e.event === filter)),
     [events, filter],
   );
-  void tick; // re-read on tick so time-ago labels refresh
+  void tick;
 
   return (
     <div className="space-y-6">
@@ -68,7 +122,7 @@ export default function ActivityLiveTab() {
         title="Live activity"
         index={0}
         action={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="inline-flex items-center gap-1.5 text-xs">
               <span
                 className={`relative inline-flex w-2 h-2 rounded-full ${
@@ -81,6 +135,32 @@ export default function ActivityLiveTab() {
               </span>
               <span className="text-muted-foreground">{paused ? "Paused" : "Live"}</span>
             </span>
+            <div className="inline-flex items-center gap-1 text-xs">
+              <button
+                type="button"
+                onClick={toggleNotify}
+                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 transition-colors ${
+                  notify ? "border-primary/40 bg-primary/10 text-primary" : "border-border hover:bg-muted"
+                }`}
+                aria-pressed={notify}
+                title={notify ? "Notifications on" : "Notifications off"}
+              >
+                {notify ? <Bell className="w-3 h-3" /> : <BellOff className="w-3 h-3" />}
+                {notify ? "On" : "Off"}
+              </button>
+              {notify && (
+                <select
+                  value={notifyEvent}
+                  onChange={(e) => setNotifyEvent(e.target.value)}
+                  className="text-xs h-7 rounded-md border border-input bg-background px-2"
+                  aria-label="Notify on event"
+                >
+                  {["purchase", "add_to_cart", "bundle_unlocked", "recommendation_click"].map(ev => (
+                    <option key={ev} value={ev}>{ev}</option>
+                  ))}
+                </select>
+              )}
+            </div>
             <button
               type="button"
               onClick={() => setPaused(p => !p)}
