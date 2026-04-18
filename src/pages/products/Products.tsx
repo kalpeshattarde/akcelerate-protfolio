@@ -147,13 +147,22 @@ export default function Products() {
   };
 
   const handleAddBundleToCart = () => {
-    // Add top 5 products to cart for Pro Bundle pricing
-    const top5 = topSelling.slice(0, 5);
-    top5.forEach(p => {
-      if (!isPurchased(p.id)) cart.addToCart(p.id, false);
-    });
+    // Add 5 non-purchased, non-duplicate top-selling products. Walk a larger pool
+    // so we still hit the threshold even if some top-sellers are already owned.
+    const pool = [...topSelling, ...products.filter(p => !topSelling.includes(p))];
+    let added = 0;
+    for (const p of pool) {
+      if (added >= 5) break;
+      if (isPurchased(p.id) || cart.isInCart(p.id)) continue;
+      cart.addToCart(p.id, false);
+      added++;
+    }
     cart.setOpen(true);
-    toast.success("5 top-selling prototypes added to cart!");
+    if (added === 0) {
+      toast.info("All top-sellers are already in your cart or purchased.");
+    } else {
+      toast.success(`${added} top-selling prototype${added === 1 ? "" : "s"} added to cart!`);
+    }
   };
 
   // JSON-LD: ItemList with volume-discount PriceSpecification (5+ → $12 each)
