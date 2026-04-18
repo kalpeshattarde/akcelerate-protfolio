@@ -26,6 +26,7 @@ import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
+import BundleProgressBar from "@/components/products/BundleProgressBar";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -420,6 +421,11 @@ export default function Products() {
           onRemove={(id) => setCompareList(prev => prev.filter(x => x !== id))}
           onClear={() => setCompareList([])}
           currency={currency}
+        />
+        <BundleProgressBar
+          itemCount={cart.totalCount}
+          currency={currency}
+          onOpenCart={() => cart.setOpen(true)}
         />
       </div>
     </main>
