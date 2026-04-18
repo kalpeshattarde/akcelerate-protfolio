@@ -6,9 +6,35 @@ import { blogPosts } from "@/data/blog";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function BlogPage() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "AKcelerate Blog",
+      description: "Expert insights on AI, data science, and digital transformation.",
+      url: "https://akcelerate.lovable.app/blog",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: blogPosts.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://akcelerate.lovable.app/blog/${p.slug}`,
+        name: p.title,
+      })),
+    },
+  ];
   return (
     <>
-      <SEOHead title="Blog" description="Expert insights on AI, data science, digital transformation, and business growth strategies." path="/blog" />
+      <SEOHead
+        title="Blog"
+        description="Expert insights on AI, data science, digital transformation, and business growth strategies."
+        path="/blog"
+        image="/images/akcelerate-blog-og.png"
+        jsonLd={jsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog" }]}
+      />
       <HeroPage label="Blog" title={<>Insights & <span className="gradient-text">Thought Leadership</span></>} description="Expert perspectives on AI, data science, digital transformation, and business growth." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
