@@ -144,6 +144,40 @@
     @apply border-border;
   }
 
+  /* ── Global accessibility: visible keyboard focus ring ── */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Suppress focus ring for mouse users on form controls that handle their own */
+  input:focus:not(:focus-visible),
+  textarea:focus:not(:focus-visible),
+  select:focus:not(:focus-visible),
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* ── Skip-to-content link (visible on focus) ── */
+  .skip-to-content {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    z-index: 10000;
+    padding: 0.75rem 1.25rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-md);
+    transition: top 0.2s ease;
+  }
+  .skip-to-content:focus {
+    top: 1rem;
+  }
+
   body {
     @apply bg-background text-foreground font-inter antialiased;
     color: hsl(var(--ak-body));
