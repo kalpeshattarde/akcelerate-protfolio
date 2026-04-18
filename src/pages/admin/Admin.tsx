@@ -75,6 +75,12 @@ function AdminContent() {
     localStorage.setItem("ak-admin-sidebar-collapsed", collapsed ? "1" : "0");
   }, [collapsed]);
 
+  // Record the initial dashboard view (onValueChange only fires on change)
+  useEffect(() => {
+    if (currentUser) recordAdminTabView(currentUser, "dashboard");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const visibleSections = TAB_SECTIONS
     .map(s => ({ ...s, items: s.items.filter(t => hasPermission(t.value)) }))
     .filter(s => s.items.length > 0);
