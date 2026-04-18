@@ -241,8 +241,8 @@ export default function Navbar() {
             <button onClick={() => setSearchOpen(true)} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Search">
               <Search className="w-[17px] h-[17px]" />
             </button>
-            <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
-              {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" />}
+            <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95" aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} aria-pressed={theme === "dark"}>
+              {theme === "dark" ? <Sun className="w-[17px] h-[17px] theme-toggle-icon" aria-hidden="true" /> : <Moon className="w-[17px] h-[17px] theme-toggle-icon" aria-hidden="true" />}
             </button>
             <SignedOut>
               <Link to="/sign-in" className="btn-primary text-sm">
@@ -258,15 +258,15 @@ export default function Navbar() {
             <button onClick={() => setSearchOpen(true)} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Search">
               <Search className="w-5 h-5" />
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Toggle menu">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-muted-foreground hover:text-foreground" aria-label={mobileOpen ? "Close menu" : "Open menu"} aria-expanded={mobileOpen} aria-controls="mobile-menu">
               <AnimatePresence mode="wait" initial={false}>
                 {mobileOpen ? (
                   <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }} className="inline-block">
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6" aria-hidden="true" />
                   </motion.span>
                 ) : (
                   <motion.span key="m" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }} className="inline-block">
-                    <Menu className="w-6 h-6" />
+                    <Menu className="w-6 h-6" aria-hidden="true" />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -280,6 +280,7 @@ export default function Navbar() {
         {mobileOpen && (
           <motion.div
             key="mobile-menu"
+            id="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
