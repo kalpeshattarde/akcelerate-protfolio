@@ -332,7 +332,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredWebSaas.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}
@@ -344,7 +344,7 @@ export default function Products() {
               ) : (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredMobileApps.map(p => (
-                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
+                    <ProductCard key={p.id} product={p} currency={currency} isPurchased={isPurchased(p.id)} cartQuantity={cart.getQuantity(p.id)} isFavorite={wishlist.isFavorite(p.id)} isComparing={compareList.includes(p.id)} bundleActive={cart.isBundle} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} onQuickView={handleQuickView} onToggleFavorite={handleToggleFavorite} onToggleCompare={handleToggleCompare} />
                   ))}
                 </div>
               )}
