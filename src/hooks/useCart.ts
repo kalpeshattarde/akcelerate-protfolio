@@ -8,10 +8,14 @@ export interface CartItem {
 }
 
 // Bundle pricing constants
+// Pro Bundle: 5+ products → flat per-product rate
 export const BUNDLE_THRESHOLD = 5;
-export const BUNDLE_PRICE = { usd: 59, inr: 4999 };
+export const BUNDLE_PER_ITEM_PRICE = { usd: 12, inr: 999 };
 export const STARTER_PRICE = { usd: 19, inr: 1499 };
 export const ALL_ACCESS_PRICE = { usd: 119, inr: 9999 };
+
+// Back-compat alias — now represents the per-item rate, not a flat total.
+export const BUNDLE_PRICE = BUNDLE_PER_ITEM_PRICE;
 
 function loadCart(): Record<string, number> {
   try {
