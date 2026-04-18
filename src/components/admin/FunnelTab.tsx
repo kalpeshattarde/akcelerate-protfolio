@@ -3,6 +3,10 @@ import { motion } from "framer-motion";
 import { Filter, X, Plus, TrendingDown, Save, Trash2 } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { ChartCard, EmptyState, ChartSkeleton } from "./AdminPolish";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const KNOWN_EVENTS = [
   "page_view",
@@ -48,6 +52,8 @@ export default function FunnelTab() {
   const [events, setEvents] = useState(() => getAnalyticsEvents());
   const [steps, setSteps] = useState<string[]>(loadSteps);
   const [saved, setSaved] = useState<SavedFunnel[]>(loadSaved);
+  const [saveOpen, setSaveOpen] = useState(false);
+  const [saveName, setSaveName] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 250);
@@ -99,12 +105,14 @@ export default function FunnelTab() {
     setSteps(next);
   };
 
-  const saveCurrent = () => {
-    const name = prompt("Name for this funnel?")?.trim();
+  const openSave = () => { setSaveName(""); setSaveOpen(true); };
+  const confirmSave = () => {
+    const name = saveName.trim();
     if (!name) return;
     const next = [...saved.filter(s => s.name !== name), { name, steps: [...steps] }];
     setSaved(next);
     persistSaved(next);
+    setSaveOpen(false);
   };
   const loadFunnel = (name: string) => {
     const f = saved.find(s => s.name === name);
