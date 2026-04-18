@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ProductsCsvImport } from "./ProductsCsvImport";
 
 type EditField = "price.usd" | "price.inr" | "category" | "topSelling";
 
@@ -66,6 +67,7 @@ export default function ProductsTab() {
               <RotateCcw className="w-3 h-3" /> Reset all overrides ({Object.keys(overrides).length})
             </button>
           )}
+          <ProductsCsvImport />
           <button className="btn-primary text-sm gap-1.5"><Plus className="w-4 h-4" /> Add Product</button>
         </div>
       </div>
