@@ -1,8 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pause, Play, Radio, Trash2, Filter as FilterIcon } from "lucide-react";
+import { Pause, Play, Radio, Trash2, Filter as FilterIcon, Bell, BellOff } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { ChartCard, EmptyState } from "./AdminPolish";
+
+const NOTIFY_KEY = "ak-live-notify";
+const NOTIFY_EVENT_KEY = "ak-live-notify-event";
+
+function playChime() {
+  try {
+    const Ctx = (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext);
+    const ctx = new Ctx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(880, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.18);
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+    o.connect(g).connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + 0.36);
+  } catch { /* ignore */ }
+}
 
 const POLL_MS = 2000;
 const MAX_DISPLAY = 50;
