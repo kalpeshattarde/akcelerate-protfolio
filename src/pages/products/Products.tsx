@@ -269,10 +269,11 @@ export default function Products() {
         {/* 4. SOLUTION — introduce our answer */}
         <div id="solution"><SolutionSection /></div>
 
-        {/* A/B variant: catalog-early renders Top Selling + Catalog right after Solution */}
+        {/* A/B variant: catalog-early renders Top Selling + full catalog right after Solution */}
         {orderVariant === "catalog-early" && (
           <>
             <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+            {catalogBlock}
           </>
         )}
 
