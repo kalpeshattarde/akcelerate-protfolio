@@ -1,5 +1,6 @@
 import { Activity } from "lucide-react";
 import { ChartCard, EmptyState } from "../AdminPolish";
+import SampleSizeCalc from "./SampleSizeCalc";
 
 export interface AbVariantRow {
   variant: string;
@@ -66,6 +67,7 @@ export default function AbTestCard({ data, index = 0 }: Props) {
             </tbody>
           </table>
           <Banner data={data} />
+          <SampleSizeCalc data={data} />
           <p className="mt-3 text-xs text-muted-foreground">
             Cart Rate = Add to Cart / Views · Bundle Rate = Bundle Unlocked / Views
           </p>
