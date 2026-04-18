@@ -33,6 +33,48 @@ export function ChartSkeleton({ height = 250 }: { height?: number }) {
   );
 }
 
+export function TableSkeleton({ rows = 6, cols = 5 }: { rows?: number; cols?: number }) {
+  return (
+    <div className="rounded-2xl border border-border overflow-hidden">
+      <div className="bg-muted/50 px-4 py-3 flex gap-4">
+        {Array.from({ length: cols }).map((_, i) => (
+          <div key={i} className="h-3 rounded bg-muted animate-pulse flex-1" />
+        ))}
+      </div>
+      <div className="divide-y divide-border">
+        {Array.from({ length: rows }).map((_, r) => (
+          <div key={r} className="px-4 py-3 flex gap-4 items-center">
+            {Array.from({ length: cols }).map((_, c) => (
+              <div
+                key={c}
+                className="h-3 rounded bg-muted/70 animate-pulse flex-1"
+                style={{ animationDelay: `${(r * cols + c) * 40}ms` }}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function FeedSkeleton({ items = 6 }: { items?: number }) {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: items }).map((_, i) => (
+        <div key={i} className="flex items-start gap-3 p-3 rounded-xl border border-border bg-card">
+          <div className="w-8 h-8 rounded-lg bg-muted animate-pulse flex-shrink-0" />
+          <div className="flex-1 space-y-2">
+            <div className="h-3 rounded bg-muted animate-pulse w-3/4" />
+            <div className="h-2.5 rounded bg-muted/60 animate-pulse w-20" />
+          </div>
+          <div className="h-4 w-14 rounded-full bg-muted/60 animate-pulse" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ───── Empty state ───── */
 export function EmptyState({
   icon: Icon = Inbox,
