@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Send, CheckCircle } from "lucide-react";
+import { useRef, useState } from "react";
+import { Send, CheckCircle, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface FormField {
   name: string;
@@ -24,16 +25,39 @@ const auditFields: FormField[] = [
   { name: "employees", label: "Company Size", type: "text", placeholder: "e.g. 50-200", required: false },
 ];
 
-function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormField[]; buttonLabel: string; dark?: boolean }) {
+function FormComponent({
+  fields,
+  buttonLabel,
+  source,
+  dark = false,
+}: {
+  fields: FormField[];
+  buttonLabel: string;
+  source: "contact" | "audit";
+  dark?: boolean;
+}) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const mountedAt = useRef<number>(Date.now());
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const newErrors: Record<string, string> = {};
 
+    // Anti-bot: honeypot — real users never fill this hidden field
+    if ((data.get("website")?.toString() ?? "").trim() !== "") {
+      setSubmitted(true);
+      return;
+    }
+    // Anti-bot: time-trap — bots submit instantly
+    if (Date.now() - mountedAt.current < 1500) {
+      setSubmitted(true);
+      return;
+    }
+
+    const newErrors: Record<string, string> = {};
     fields.forEach(f => {
       const value = data.get(f.name)?.toString().trim() ?? "";
       if (f.required && !value) {
@@ -63,7 +87,32 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
     }
 
     setErrors({});
-    setSubmitted(true);
+    setSubmitting(true);
+
+    // Persist locally as a fallback until the `leads` table is created.
+    // Once the migration in the chat is applied, this can be replaced with
+    // supabase.from("leads").insert({ source, ... }).
+    try {
+      const payload = {
+        source,
+        submitted_at: new Date().toISOString(),
+        name: data.get("name")?.toString().trim() ?? "",
+        email: data.get("email")?.toString().trim() ?? "",
+        company: data.get("company")?.toString().trim() || null,
+        phone: data.get("phone")?.toString().trim() || null,
+        industry: data.get("industry")?.toString().trim() || null,
+        employees: data.get("employees")?.toString().trim() || null,
+        message: message || null,
+      };
+      const existing = JSON.parse(localStorage.getItem("akcelerate_pending_leads") ?? "[]");
+      existing.push(payload);
+      localStorage.setItem("akcelerate_pending_leads", JSON.stringify(existing.slice(-50)));
+      setSubmitted(true);
+    } catch {
+      toast.error("Could not submit. Please email us directly.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -77,53 +126,63 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`glass-card p-8 space-y-5 ${dark ? "!bg-white/5 !border-white/10" : ""}`}>
+    <form onSubmit={handleSubmit} noValidate className={`glass-card p-8 space-y-5 ${dark ? "!bg-white/5 !border-white/10" : ""}`}>
+      {/* Honeypot — hidden from users + assistive tech */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+        <label>
+          Leave this field empty
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
       {fields.map(f => (
         <div key={f.name}>
-          <label className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>
+          <label htmlFor={`${source}-${f.name}`} className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>
             {f.label} {f.required && <span className="text-destructive">*</span>}
           </label>
           <input
+            id={`${source}-${f.name}`}
             name={f.name}
             type={f.type}
             placeholder={f.placeholder}
             maxLength={255}
             autoComplete={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "off"}
             aria-invalid={!!errors[f.name]}
-            aria-describedby={errors[f.name] ? `${f.name}-error` : undefined}
+            aria-describedby={errors[f.name] ? `${source}-${f.name}-error` : undefined}
             className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
               dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
             } ${errors[f.name] ? "!border-destructive" : ""}`}
           />
-          {errors[f.name] && <p id={`${f.name}-error`} className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
+          {errors[f.name] && <p id={`${source}-${f.name}-error`} className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
         </div>
       ))}
       <div>
-        <label className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>Message</label>
+        <label htmlFor={`${source}-message`} className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>Message</label>
         <textarea
+          id={`${source}-message`}
           name="message"
           rows={4}
           maxLength={2000}
           placeholder="Tell us about your project..."
           aria-invalid={!!errors.message}
-          aria-describedby={errors.message ? "message-error" : undefined}
+          aria-describedby={errors.message ? `${source}-message-error` : undefined}
           className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none ${
             dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
           }`}
         />
-        {errors.message && <p id="message-error" className="text-destructive text-xs mt-1">{errors.message}</p>}
+        {errors.message && <p id={`${source}-message-error`} className="text-destructive text-xs mt-1">{errors.message}</p>}
       </div>
-      <button type="submit" className="btn-primary w-full justify-center">
-        <Send className="w-4 h-4" /> {buttonLabel}
+      <button type="submit" disabled={submitting} className="btn-primary w-full justify-center disabled:opacity-60">
+        {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <><Send className="w-4 h-4" /> {buttonLabel}</>}
       </button>
     </form>
   );
 }
 
 export function ContactForm() {
-  return <FormComponent fields={contactFields} buttonLabel="Send Message" />;
+  return <FormComponent fields={contactFields} buttonLabel="Send Message" source="contact" />;
 }
 
 export function AuditForm() {
-  return <FormComponent fields={auditFields} buttonLabel="Request Free Audit" dark />;
+  return <FormComponent fields={auditFields} buttonLabel="Request Free Audit" source="audit" dark />;
 }
