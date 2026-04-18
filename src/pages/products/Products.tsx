@@ -229,13 +229,28 @@ export default function Products() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 
-        {/* HERO */}
+        {/* 1. HERO — hook them */}
         <PersonalizedHero />
 
-        {/* SOLUTION */}
+        {/* 2. PROBLEM — agitate the pain */}
+        <ProblemSection />
+
+        {/* 3. COST BREAKDOWN — quantify the pain */}
+        <CostBreakdownSection />
+
+        {/* 4. SOLUTION — introduce our answer */}
         <SolutionSection />
 
-        {/* TOP SELLING */}
+        {/* 5. COMPARISON — us vs DIY/AI tools */}
+        <ComparisonSection />
+
+        {/* 6. SAVINGS — show ROI math */}
+        <SavingsSection />
+
+        {/* 7. USE CASES — who it's for */}
+        <UseCasesSection />
+
+        {/* 8. TOP SELLING — social proof via best products */}
         <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
 
         {/* PRODUCT CATALOG */}
@@ -371,25 +386,16 @@ export default function Products() {
           </Tabs>
         </div>
 
-        {/* COMPARISON */}
-        <ComparisonSection />
-
-        {/* SAVINGS */}
-        <SavingsSection />
-
-        {/* USE CASES */}
-        <UseCasesSection />
-
-        {/* MARKETPLACE PRICING */}
+        {/* 10. MARKETPLACE PRICING — convert */}
         <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
 
-        {/* TRUST SECTION */}
+        {/* 11. TRUST — reduce risk */}
         <TrustSection />
 
-        {/* FAQ — SEO */}
+        {/* 12. FAQ — handle objections */}
         <ProductsFAQ />
 
-        {/* FINAL CTA */}
+        {/* 13. FINAL CTA — close */}
         <FinalCTA />
 
         <CartDrawer
