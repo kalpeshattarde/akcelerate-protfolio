@@ -39,15 +39,17 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Preloader />
+      <a href="#main-content" className="skip-to-content">Skip to main content</a>
       <div className="min-h-screen flex flex-col">
         {/* Scroll progress bar */}
         <div
           className="scroll-progress"
           style={{ width: `${scrollProgress}%` }}
+          aria-hidden="true"
         />
 
         <Navbar />
-        <main className="flex-1 relative">
+        <main id="main-content" className="flex-1 relative" tabIndex={-1}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={pathname}
