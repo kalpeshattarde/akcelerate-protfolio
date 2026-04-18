@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Filter, X, Plus, TrendingDown } from "lucide-react";
+import { Filter, X, Plus, TrendingDown, Save, Trash2 } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { ChartCard, EmptyState, ChartSkeleton } from "./AdminPolish";
 
@@ -15,7 +15,13 @@ const KNOWN_EVENTS = [
 ] as const;
 
 const STORAGE_KEY = "ak-funnel-steps";
+const SAVED_KEY = "ak-funnel-saved";
 const DEFAULT_STEPS = ["page_view", "product_view", "add_to_cart", "purchase"];
+
+interface SavedFunnel {
+  name: string;
+  steps: string[];
+}
 
 function loadSteps(): string[] {
   try {
@@ -23,6 +29,18 @@ function loadSteps(): string[] {
     if (Array.isArray(v) && v.length >= 2) return v;
   } catch { /* ignore */ }
   return DEFAULT_STEPS;
+}
+
+function loadSaved(): SavedFunnel[] {
+  try {
+    const v = JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+    if (Array.isArray(v)) return v;
+  } catch { /* ignore */ }
+  return [];
+}
+
+function persistSaved(list: SavedFunnel[]) {
+  localStorage.setItem(SAVED_KEY, JSON.stringify(list));
 }
 
 export default function FunnelTab() {
