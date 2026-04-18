@@ -113,27 +113,41 @@ function AdminContent() {
                 >
                   {collapsed ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
                 </button>
-                {visibleTabs.map(t => {
-                  const trigger = (
-                    <TabsTrigger
-                      key={t.value}
-                      value={t.value}
-                      aria-label={t.label}
-                      className={`gap-2 w-full data-[state=active]:bg-background data-[state=active]:shadow-sm ${
-                        collapsed ? "lg:justify-center lg:px-2 justify-start" : "justify-start"
+                {visibleSections.map((section, sIdx) => (
+                  <div key={section.label} className="flex flex-col gap-1 w-full">
+                    {sIdx > 0 && (
+                      <div className={`hidden lg:block h-px bg-border/70 my-1 ${collapsed ? "mx-2" : "mx-1"}`} />
+                    )}
+                    <div
+                      className={`px-2 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70 ${
+                        collapsed ? "lg:hidden" : ""
                       }`}
                     >
-                      <t.icon className="w-4 h-4 shrink-0" />
-                      <span className={`truncate ${collapsed ? "lg:hidden" : ""}`}>{t.label}</span>
-                    </TabsTrigger>
-                  );
-                  return collapsed ? (
-                    <Tooltip key={t.value}>
-                      <TooltipTrigger asChild>{trigger}</TooltipTrigger>
-                      <TooltipContent side="right">{t.label}</TooltipContent>
-                    </Tooltip>
-                  ) : trigger;
-                })}
+                      {section.label}
+                    </div>
+                    {section.items.map(t => {
+                      const trigger = (
+                        <TabsTrigger
+                          key={t.value}
+                          value={t.value}
+                          aria-label={t.label}
+                          className={`gap-2 w-full data-[state=active]:bg-background data-[state=active]:shadow-sm ${
+                            collapsed ? "lg:justify-center lg:px-2 justify-start" : "justify-start"
+                          }`}
+                        >
+                          <t.icon className="w-4 h-4 shrink-0" />
+                          <span className={`truncate ${collapsed ? "lg:hidden" : ""}`}>{t.label}</span>
+                        </TabsTrigger>
+                      );
+                      return collapsed ? (
+                        <Tooltip key={t.value}>
+                          <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+                          <TooltipContent side="right">{t.label}</TooltipContent>
+                        </Tooltip>
+                      ) : trigger;
+                    })}
+                  </div>
+                ))}
               </TabsList>
             </TooltipProvider>
 
