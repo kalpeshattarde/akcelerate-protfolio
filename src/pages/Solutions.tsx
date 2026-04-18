@@ -9,9 +9,34 @@ import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function SolutionsPage() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "AKcelerate Solutions",
+      description: "8 specialized AI and digital solution areas.",
+      url: "https://akcelerate.lovable.app/solutions",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: solutions.map((s, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://akcelerate.lovable.app/solutions/${s.slug}`,
+        name: s.title,
+      })),
+    },
+  ];
   return (
     <>
-      <SEOHead title="Solutions" description="8 specialized AI and digital solution areas designed to drive measurable business growth." path="/solutions" />
+      <SEOHead
+        title="Solutions"
+        description="8 specialized AI and digital solution areas designed to drive measurable business growth."
+        path="/solutions"
+        jsonLd={jsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }]}
+      />
       <HeroPage
         label="Solutions"
         title={<>Comprehensive <span className="gradient-text">AI & Digital Solutions</span></>}

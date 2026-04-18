@@ -23,9 +23,34 @@ const lifecycle = [
 ];
 
 export default function ServicesPage() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "AKcelerate Services",
+      description: "Deep-tech AI/ML implementation services.",
+      url: "https://akcelerate.lovable.app/services",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: services.map((s, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://akcelerate.lovable.app/services/${s.slug}`,
+        name: s.title,
+      })),
+    },
+  ];
   return (
     <>
-      <SEOHead title="Services" description="Deep-tech AI/ML implementation services including predictive maintenance, quality analytics, and supply chain optimization." path="/services" />
+      <SEOHead
+        title="Services"
+        description="Deep-tech AI/ML implementation services including predictive maintenance, quality analytics, and supply chain optimization."
+        path="/services"
+        jsonLd={jsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]}
+      />
       <HeroPage
         label="Services"
         title={<>Deep-Tech <span className="gradient-text">Implementation Services</span></>}
