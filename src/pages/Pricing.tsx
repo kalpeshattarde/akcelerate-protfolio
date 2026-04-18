@@ -13,9 +13,25 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 export default function PricingPage() {
   const [isAnnual, setIsAnnual] = useState(false);
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: pricingFAQ.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
   return (
     <>
-      <SEOHead title="Pricing" description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services." path="/pricing" />
+      <SEOHead
+        title="Pricing"
+        description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services."
+        path="/pricing"
+        jsonLd={faqJsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]}
+      />
       <HeroPage
         label="Pricing"
         title={<>Transparent <span className="gradient-text">Pricing Plans</span></>}

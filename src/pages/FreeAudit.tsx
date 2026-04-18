@@ -9,9 +9,25 @@ import { CheckCircle, Clock, Target, TrendingUp } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function FreeAuditPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: auditFAQ.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
   return (
     <>
-      <SEOHead title="Free AI Audit" description="Get a free AI readiness audit — discover how AI and automation can transform your business." path="/free-audit" />
+      <SEOHead
+        title="Free AI Audit"
+        description="Get a free AI readiness audit — discover how AI and automation can transform your business."
+        path="/free-audit"
+        jsonLd={faqJsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Free Audit", path: "/free-audit" }]}
+      />
       <HeroDark
         label="Free AI Audit"
         title={<>Get a Free <span className="gradient-text">AI Readiness Audit</span></>}
