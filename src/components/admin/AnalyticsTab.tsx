@@ -1,12 +1,25 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Eye, ShoppingBag, MousePointerClick, FileText } from "lucide-react";
+import { Eye, ShoppingBag, MousePointerClick, FileText, Activity, BarChart3, PieChart as PieIcon, ListOrdered } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
+import { AnimatedStatCard, ChartCard, ChartSkeleton, EmptyState, StatSkeleton } from "./AdminPolish";
 
 const COLORS = ["hsl(var(--primary))", "hsl(var(--accent))", "#f59e0b", "#10b981", "#8b5cf6", "#ef4444"];
+const tooltipStyle = {
+  backgroundColor: "hsl(var(--popover))",
+  border: "1px solid hsl(var(--border))",
+  borderRadius: 12,
+  fontSize: 12,
+};
 
 export default function AnalyticsTab() {
+  const [loading, setLoading] = useState(true);
   const events = useMemo(() => getAnalyticsEvents(), []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 350);
+    return () => clearTimeout(t);
+  }, []);
 
   const counts = useMemo(() => {
     const c = { page_view: 0, product_view: 0, purchase: 0, recommendation_click: 0 };
@@ -16,7 +29,6 @@ export default function AnalyticsTab() {
     return c;
   }, [events]);
 
-  // Top viewed products
   const topViewed = useMemo(() => {
     const map: Record<string, { name: string; views: number }> = {};
     events.filter(e => e.event === "product_view").forEach(e => {
@@ -28,7 +40,6 @@ export default function AnalyticsTab() {
     return Object.values(map).sort((a, b) => b.views - a.views).slice(0, 8);
   }, [events]);
 
-  // Top pages
   const topPages = useMemo(() => {
     const map: Record<string, number> = {};
     events.filter(e => e.event === "page_view").forEach(e => {
@@ -41,7 +52,6 @@ export default function AnalyticsTab() {
       .slice(0, 10);
   }, [events]);
 
-  // Events over time (last 7 days)
   const dailyData = useMemo(() => {
     const days: Record<string, { date: string; views: number; purchases: number }> = {};
     const now = new Date();
@@ -61,7 +71,6 @@ export default function AnalyticsTab() {
     return Object.values(days);
   }, [events]);
 
-  // Recommendation click sources
   const recClicks = useMemo(() => {
     const map: Record<string, number> = {};
     events.filter(e => e.event === "recommendation_click").forEach(e => {
@@ -75,73 +84,91 @@ export default function AnalyticsTab() {
   }, [events]);
 
   const stats = [
-    { label: "Page Views", value: counts.page_view, icon: FileText, color: "text-primary" },
-    { label: "Product Views", value: counts.product_view, icon: Eye, color: "text-blue-500" },
-    { label: "Purchases", value: counts.purchase, icon: ShoppingBag, color: "text-green-500" },
-    { label: "Rec. Clicks", value: counts.recommendation_click, icon: MousePointerClick, color: "text-amber-500" },
+    { label: "Page Views", numeric: counts.page_view, icon: FileText, iconClass: "text-primary" },
+    { label: "Product Views", numeric: counts.product_view, icon: Eye, iconClass: "text-blue-500" },
+    { label: "Purchases", numeric: counts.purchase, icon: ShoppingBag, iconClass: "text-green-500" },
+    { label: "Rec. Clicks", numeric: counts.recommendation_click, icon: MousePointerClick, iconClass: "text-amber-500" },
   ];
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <StatSkeleton />
+        <div className="grid lg:grid-cols-2 gap-6">
+          <ChartSkeleton />
+          <ChartSkeleton />
+        </div>
+        <div className="grid lg:grid-cols-2 gap-6">
+          <ChartSkeleton height={200} />
+          <ChartSkeleton height={200} />
+        </div>
+      </div>
+    );
+  }
+
+  const hasDaily = dailyData.some(d => d.views > 0 || d.purchases > 0);
 
   return (
     <div className="space-y-8">
-      {/* Stats */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map(s => (
-          <div key={s.label} className="rounded-xl border border-border bg-card p-5">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-muted-foreground">{s.label}</span>
-              <s.icon className={`w-4 h-4 ${s.color}`} />
-            </div>
-            <div className="text-2xl font-bold text-foreground">{s.value.toLocaleString()}</div>
-          </div>
+        {stats.map((s, i) => (
+          <AnimatedStatCard
+            key={s.label}
+            label={s.label}
+            numeric={s.numeric}
+            icon={s.icon}
+            iconClass={s.iconClass}
+            index={i}
+          />
         ))}
       </div>
 
-      {/* Charts Row */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Daily Activity */}
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold text-foreground mb-4">Activity (Last 7 Days)</h3>
-          {dailyData.some(d => d.views > 0 || d.purchases > 0) ? (
+        <ChartCard title="Activity (Last 7 Days)" index={0}>
+          {hasDaily ? (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={dailyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={12} />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                <Tooltip />
-                <Bar dataKey="views" name="Views" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="purchases" name="Purchases" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "hsl(var(--muted) / 0.3)" }} />
+                <Bar dataKey="views" name="Views" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} animationDuration={900} animationEasing="ease-out" />
+                <Bar dataKey="purchases" name="Purchases" fill="#10b981" radius={[4, 4, 0, 0]} animationDuration={900} animationBegin={200} animationEasing="ease-out" />
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-sm text-muted-foreground py-12 text-center">No activity data yet. Events will appear as users browse.</p>
+            <EmptyState
+              icon={Activity}
+              title="No activity yet"
+              description="Events will appear here as users browse the site."
+            />
           )}
-        </div>
+        </ChartCard>
 
-        {/* Recommendation Clicks Pie */}
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold text-foreground mb-4">Recommendation Clicks</h3>
+        <ChartCard title="Recommendation Clicks" index={1}>
           {recClicks.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
-                <Pie data={recClicks} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} label={({ name, value }) => `${name} (${value})`}>
+                <Pie data={recClicks} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} label={({ name, value }) => `${name} (${value})`} animationDuration={900} animationEasing="ease-out">
                   {recClicks.map((_, i) => (
                     <Cell key={i} fill={COLORS[i % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={tooltipStyle} />
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-sm text-muted-foreground py-12 text-center">No recommendation clicks yet.</p>
+            <EmptyState
+              icon={PieIcon}
+              title="No recommendation clicks yet"
+              description="Track which suggestions convert best."
+            />
           )}
-        </div>
+        </ChartCard>
       </div>
 
-      {/* Tables Row */}
       <div className="grid lg:grid-cols-2 gap-6">
-        {/* Top Viewed Products */}
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold text-foreground mb-4">Top Viewed Products</h3>
+        <ChartCard title="Top Viewed Products" index={0}>
           {topViewed.length > 0 ? (
             <div className="space-y-2">
               {topViewed.map((p, i) => (
@@ -155,13 +182,11 @@ export default function AnalyticsTab() {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground py-6 text-center">No product views tracked yet.</p>
+            <EmptyState icon={BarChart3} title="No product views tracked yet" />
           )}
-        </div>
+        </ChartCard>
 
-        {/* Top Pages */}
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-semibold text-foreground mb-4">Top Pages</h3>
+        <ChartCard title="Top Pages" index={1}>
           {topPages.length > 0 ? (
             <div className="space-y-2">
               {topPages.map((p, i) => (
@@ -175,12 +200,11 @@ export default function AnalyticsTab() {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground py-6 text-center">No page views tracked yet.</p>
+            <EmptyState icon={ListOrdered} title="No page views tracked yet" />
           )}
-        </div>
+        </ChartCard>
       </div>
 
-      {/* Total events count */}
       <div className="text-center text-xs text-muted-foreground">
         {events.length} total events tracked · Data stored locally in browser
       </div>
