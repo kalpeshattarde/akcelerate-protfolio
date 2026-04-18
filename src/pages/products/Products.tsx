@@ -269,6 +269,13 @@ export default function Products() {
         {/* 4. SOLUTION — introduce our answer */}
         <div id="solution"><SolutionSection /></div>
 
+        {/* A/B variant: catalog-early renders Top Selling + Catalog right after Solution */}
+        {orderVariant === "catalog-early" && (
+          <>
+            <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+          </>
+        )}
+
         {/* 5. COMPARISON — us vs DIY/AI tools */}
         <ComparisonSection />
 
@@ -278,8 +285,10 @@ export default function Products() {
         {/* 7. USE CASES — who it's for */}
         <UseCasesSection />
 
-        {/* 8. TOP SELLING — social proof via best products */}
-        <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+        {/* 8. TOP SELLING (control only — catalog-early already rendered it above) */}
+        {orderVariant === "control" && (
+          <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+        )}
 
         {/* PRODUCT CATALOG */}
         <div id="products-catalog" className="mt-16">
