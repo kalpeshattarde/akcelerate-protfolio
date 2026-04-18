@@ -133,6 +133,7 @@ export default function Products() {
     }
     cart.addToCart(id, false);
     const product = [...webSaas, ...mobileApps].find(p => p.id === id);
+    trackEvent("add_to_cart", { id, name: product?.name, variant: orderVariant });
     toast.success(`${product?.name || "Product"} added to cart`, { duration: 2000 });
   };
 
