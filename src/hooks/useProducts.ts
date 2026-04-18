@@ -3,6 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PRODUCTS } from "@/data/products";
 import { BUNDLE_THRESHOLD } from "@/hooks/useCart";
+import { applyProductOverrides } from "@/lib/productOverrides";
 
 function getLocalPurchased(): string[] {
   try {
@@ -20,6 +21,18 @@ export function useProducts() {
   const { user, isSignedIn } = useUser();
   const [purchased, setPurchased] = useState<string[]>(getLocalPurchased);
   const [allAccess, setAllAccess] = useState(isAllAccess);
+  const [overridesTick, setOverridesTick] = useState(0);
+
+  // Listen for admin override updates so /products refreshes live
+  useEffect(() => {
+    const refresh = () => setOverridesTick(t => t + 1);
+    window.addEventListener("ak-products-updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("ak-products-updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, []);
 
   // Sync from Supabase when user signs in
   useEffect(() => {
@@ -85,9 +98,13 @@ export function useProducts() {
     localStorage.setItem("ak-purchased", JSON.stringify(merged));
   }, [purchased]);
 
-  const topSelling = PRODUCTS.filter(p => p.topSelling).sort((a, b) => b.salesCount - a.salesCount);
-  const mobileApps = PRODUCTS.filter(p => p.category === "mobile-app");
-  const webSaas = PRODUCTS.filter(p => p.category === "web-saas");
+  // Apply admin overrides (price, category, topSelling) to the seed catalog.
+  // overridesTick ensures recompute when admin pushes a bulk edit or CSV import.
+  const products = applyProductOverrides(PRODUCTS);
+  void overridesTick;
+  const topSelling = products.filter(p => p.topSelling).sort((a, b) => b.salesCount - a.salesCount);
+  const mobileApps = products.filter(p => p.category === "mobile-app");
+  const webSaas = products.filter(p => p.category === "web-saas");
 
-  return { products: PRODUCTS, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, allAccess, grantAllAccess };
+  return { products, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, allAccess, grantAllAccess };
 }
