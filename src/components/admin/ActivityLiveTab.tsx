@@ -50,7 +50,7 @@ const EVENT_COLORS: Record<string, string> = {
 };
 
 export default function ActivityLiveTab() {
-  const [events, setEvents] = useState(() => getAnalyticsEvents().slice(-MAX_DISPLAY).reverse());
+  const [events, setEvents] = useState(() => filterEventsByCohort(getSelectedCohortId()).slice(-MAX_DISPLAY).reverse());
   const [paused, setPaused] = useState(false);
   const [filter, setFilter] = useState<string>("all");
   const [notify, setNotify] = useState<boolean>(() => localStorage.getItem(NOTIFY_KEY) === "1");
@@ -77,7 +77,7 @@ export default function ActivityLiveTab() {
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
-      const next = getAnalyticsEvents().slice(-MAX_DISPLAY).reverse();
+      const next = filterEventsByCohort(getSelectedCohortId()).slice(-MAX_DISPLAY).reverse();
       const lastSeen = lastSeenRef.current;
       // Detect new matching events for notification
       if (notify && lastSeen) {
