@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
@@ -27,6 +28,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
 import BundleProgressBar from "@/components/products/BundleProgressBar";
+import ProductsSubNav from "@/components/products/ProductsSubNav";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -71,6 +73,31 @@ export default function Products() {
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [compareList, setCompareList] = useState<string[]>([]);
 
+  // A/B variant: control = current order; variantB = catalog right after Solution.
+  // Stable per-visitor assignment via localStorage.
+  const [orderVariant] = useState<"control" | "catalog-early">(() => {
+    try {
+      const existing = localStorage.getItem("ak-ab-products-order");
+      if (existing === "control" || existing === "catalog-early") return existing;
+      const v = Math.random() < 0.5 ? "control" : "catalog-early";
+      localStorage.setItem("ak-ab-products-order", v);
+      return v;
+    } catch {
+      return "control";
+    }
+  });
+
+  useEffect(() => {
+    trackEvent("products_view", { variant: orderVariant });
+  }, [orderVariant]);
+
+  // Fire bundle-unlock event exactly once per session when threshold is crossed
+  useEffect(() => {
+    if (cart.totalCount === 5) {
+      trackEvent("bundle_unlocked", { variant: orderVariant, cartCount: 5 });
+    }
+  }, [cart.totalCount, orderVariant]);
+
   // Get last purchased product
   const lastPurchased = useMemo(() => {
     try {
@@ -106,6 +133,7 @@ export default function Products() {
     }
     cart.addToCart(id, false);
     const product = [...webSaas, ...mobileApps].find(p => p.id === id);
+    trackEvent("add_to_cart", { id, name: product?.name, variant: orderVariant });
     toast.success(`${product?.name || "Product"} added to cart`, { duration: 2000 });
   };
 
@@ -233,13 +261,13 @@ export default function Products() {
         <PersonalizedHero />
 
         {/* 2. PROBLEM — agitate the pain */}
-        <ProblemSection />
+        <div id="problem"><ProblemSection /></div>
 
         {/* 3. COST BREAKDOWN — quantify the pain */}
-        <CostBreakdownSection />
+        <div id="cost-breakdown"><CostBreakdownSection /></div>
 
         {/* 4. SOLUTION — introduce our answer */}
-        <SolutionSection />
+        <div id="solution"><SolutionSection /></div>
 
         {/* 5. COMPARISON — us vs DIY/AI tools */}
         <ComparisonSection />
@@ -387,13 +415,13 @@ export default function Products() {
         </div>
 
         {/* 10. MARKETPLACE PRICING — convert */}
-        <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
+        <div id="pricing"><MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} /></div>
 
         {/* 11. TRUST — reduce risk */}
         <TrustSection />
 
         {/* 12. FAQ — handle objections */}
-        <ProductsFAQ />
+        <div id="faq"><ProductsFAQ /></div>
 
         {/* 13. FINAL CTA — close */}
         <FinalCTA />
@@ -452,6 +480,7 @@ export default function Products() {
           onOpenCart={() => cart.setOpen(true)}
           onQuickFill={handleAddBundleToCart}
         />
+        <ProductsSubNav />
       </div>
     </main>
     </>
