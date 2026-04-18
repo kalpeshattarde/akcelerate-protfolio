@@ -51,13 +51,13 @@ export default function CartDrawer({ open, onOpenChange, items, currency, total,
               <div className="flex items-center gap-2 p-3 rounded-xl bg-primary/10 border border-primary/20 text-sm">
                 <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
                 <span className="text-foreground">
-                  <strong>Pro Bundle active!</strong> {items.length} prototypes for just {symbol}{bundlePrice.toLocaleString()}
+                  <strong>Pro Bundle active!</strong> {items.length} prototypes at just {symbol}{bundlePerItem.toLocaleString()} each
                 </span>
               </div>
             )}
             {!isBundle && !isAllAccess && items.length > 0 && (
               <div className="flex items-center gap-2 p-3 rounded-xl bg-muted border border-border text-sm text-muted-foreground">
-                Add {BUNDLE_THRESHOLD - items.length} more to unlock <strong className="text-foreground">Pro Bundle ({symbol}{bundlePrice.toLocaleString()})</strong>
+                Add {BUNDLE_THRESHOLD - items.length} more to unlock <strong className="text-foreground">Pro Bundle ({symbol}{bundlePerItem.toLocaleString()} per product)</strong>
               </div>
             )}
             {items.map(({ product }) => (
