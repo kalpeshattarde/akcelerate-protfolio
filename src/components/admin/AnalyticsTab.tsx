@@ -128,8 +128,63 @@ export default function AnalyticsTab() {
 
   const hasDaily = dailyData.some(d => d.views > 0 || d.purchases > 0);
 
+  const seedAbTestData = () => {
+    const STORAGE_KEY = "ak-analytics";
+    const now = Date.now();
+    type Evt = { event: string; data: Record<string, unknown>; timestamp: string; path: string };
+    const existing: Evt[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+    const make = (event: string, variant: string, count: number, offsetMs = 0): Evt[] =>
+      Array.from({ length: count }, (_, i) => ({
+        event,
+        data: { variant },
+        timestamp: new Date(now - offsetMs - i * 1000).toISOString(),
+        path: "/products",
+      }));
+
+    // 120 control views, 18 add_to_cart (15% cart rate), 6 bundle_unlocked (5%)
+    // 110 catalog-early views, 24 add_to_cart (~21.8%, +6.8 pts → green winner)
+    const seeded = [
+      ...make("products_view", "control", 120),
+      ...make("add_to_cart", "control", 18, 1000),
+      ...make("bundle_unlocked", "control", 6, 2000),
+      ...make("products_view", "catalog-early", 110),
+      ...make("add_to_cart", "catalog-early", 24, 1000),
+      ...make("bundle_unlocked", "catalog-early", 8, 2000),
+    ];
+
+    const combined = [...existing, ...seeded].slice(-500);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(combined));
+    window.location.reload();
+  };
+
+  const clearAbTestData = () => {
+    const STORAGE_KEY = "ak-analytics";
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]") as Array<{ data?: { variant?: string } }>;
+    const filtered = existing.filter(e => !e.data || (e.data.variant !== "control" && e.data.variant !== "catalog-early"));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    window.location.reload();
+  };
+
   return (
     <div className="space-y-8">
+      {import.meta.env.DEV && (
+        <div className="flex items-center gap-2 p-3 rounded-xl border border-dashed border-border bg-muted/30">
+          <span className="text-xs font-mono text-muted-foreground mr-auto">DEV ONLY · Preview A/B card states</span>
+          <button
+            onClick={seedAbTestData}
+            className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+          >
+            Seed A/B test data
+          </button>
+          <button
+            onClick={clearAbTestData}
+            className="px-3 py-1.5 rounded-lg border border-border bg-background text-foreground text-xs font-medium hover:bg-muted transition-colors"
+          >
+            Clear A/B data
+          </button>
+        </div>
+      )}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
           <AnimatedStatCard
