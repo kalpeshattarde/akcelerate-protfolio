@@ -9,6 +9,7 @@ import { ArrowLeft, List } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToBlog } from "@/lib/relatedContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 function TableOfContents({ sections }: { sections: { heading: string }[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
