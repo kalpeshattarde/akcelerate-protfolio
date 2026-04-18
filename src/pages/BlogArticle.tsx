@@ -79,7 +79,12 @@ export default function BlogArticlePage() {
     author: { "@type": "Person", name: post.author },
     datePublished: post.date,
     articleSection: post.category,
-    publisher: { "@type": "Organization", name: "AKcelerate" },
+    image: `https://akcelerate.lovable.app/images/akcelerate-blog-og.png`,
+    publisher: {
+      "@type": "Organization",
+      name: "AKcelerate",
+      logo: { "@type": "ImageObject", url: "https://akcelerate.lovable.app/images/logo-800x800.svg" },
+    },
   };
   return (
     <>
@@ -87,6 +92,7 @@ export default function BlogArticlePage() {
         title={post.title}
         description={post.description}
         path={`/blog/${slug}`}
+        image="/images/akcelerate-blog-og.png"
         jsonLd={articleJsonLd}
         breadcrumbs={[
           { name: "Home", path: "/" },
