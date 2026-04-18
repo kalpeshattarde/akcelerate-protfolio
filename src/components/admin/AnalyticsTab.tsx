@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Eye, ShoppingBag, MousePointerClick, FileText, Activity, BarChart3, PieChart as PieIcon, ListOrdered } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
+import { Eye, ShoppingBag, MousePointerClick, FileText, Activity, BarChart3, PieChart as PieIcon, ListOrdered, LineChart as LineIcon } from "lucide-react";
 import { getAnalyticsEvents } from "@/lib/analytics";
 import { AnimatedStatCard, ChartCard, ChartSkeleton, EmptyState, StatSkeleton } from "./AdminPolish";
 
@@ -100,6 +100,31 @@ export default function AnalyticsTab() {
       ...row,
       cartRate: row.views > 0 ? +((row.addToCart / row.views) * 100).toFixed(1) : 0,
       bundleRate: row.views > 0 ? +((row.bundleUnlocked / row.views) * 100).toFixed(1) : 0,
+    }));
+  }, [events]);
+
+  // Daily cart rate per variant (last 7 days) for trend chart
+  const abDailyData = useMemo(() => {
+    const days: Record<string, { date: string; cV: number; cC: number; eV: number; eC: number }> = {};
+    const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      days[key] = { date: d.toLocaleDateString("en", { month: "short", day: "numeric" }), cV: 0, cC: 0, eV: 0, eC: 0 };
+    }
+    events.forEach(e => {
+      const v = (e.data.variant as string) || "";
+      if (v !== "control" && v !== "catalog-early") return;
+      const key = e.timestamp.slice(0, 10);
+      if (!days[key]) return;
+      if (e.event === "products_view") { if (v === "control") days[key].cV++; else days[key].eV++; }
+      else if (e.event === "add_to_cart") { if (v === "control") days[key].cC++; else days[key].eC++; }
+    });
+    return Object.values(days).map(d => ({
+      date: d.date,
+      control: d.cV > 0 ? +((d.cC / d.cV) * 100).toFixed(1) : 0,
+      "catalog-early": d.eV > 0 ? +((d.eC / d.eV) * 100).toFixed(1) : 0,
     }));
   }, [events]);
 
@@ -344,14 +369,30 @@ export default function AnalyticsTab() {
             </table>
             {(() => {
               const MIN_VIEWS = 100;
-              const MIN_LIFT = 5; // percentage points
+              const ALPHA = 0.05;
               const ctrl = abVariantData.find(r => r.variant === "control");
               const exp = abVariantData.find(r => r.variant === "catalog-early");
               if (!ctrl || !exp) return null;
               const enoughData = ctrl.views >= MIN_VIEWS && exp.views >= MIN_VIEWS;
               const lift = +(exp.cartRate - ctrl.cartRate).toFixed(1);
               const winner = lift > 0 ? "catalog-early" : lift < 0 ? "control" : null;
-              const significant = enoughData && Math.abs(lift) >= MIN_LIFT;
+
+              // Two-proportion z-test (pooled). Returns two-tailed p-value.
+              // Abramowitz & Stegun 26.2.17 approximation for normal CDF.
+              const normalCdf = (z: number) => {
+                const t = 1 / (1 + 0.2316419 * Math.abs(z));
+                const d = 0.3989422804014327 * Math.exp(-z * z / 2);
+                const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+                return z > 0 ? 1 - p : p;
+              };
+              const p1 = ctrl.addToCart / Math.max(ctrl.views, 1);
+              const p2 = exp.addToCart / Math.max(exp.views, 1);
+              const pPool = (ctrl.addToCart + exp.addToCart) / Math.max(ctrl.views + exp.views, 1);
+              const se = Math.sqrt(pPool * (1 - pPool) * (1 / Math.max(ctrl.views, 1) + 1 / Math.max(exp.views, 1)));
+              const z = se > 0 ? (p2 - p1) / se : 0;
+              const pValue = 2 * (1 - normalCdf(Math.abs(z)));
+              const pStr = pValue < 0.001 ? "<0.001" : pValue.toFixed(3);
+              const significant = enoughData && pValue < ALPHA;
 
               if (!enoughData) {
                 const remaining = Math.max(0, MIN_VIEWS - Math.min(ctrl.views, exp.views));
@@ -366,14 +407,14 @@ export default function AnalyticsTab() {
                 return (
                   <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20">
                     <span aria-hidden>✓</span>
-                    <span><strong>{winner}</strong> wins by {Math.abs(lift)} pts on cart rate.</span>
+                    <span><strong>{winner}</strong> wins by {Math.abs(lift)} pts on cart rate (p={pStr}, z={z.toFixed(2)}).</span>
                   </div>
                 );
               }
               return (
                 <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-muted text-muted-foreground border border-border">
                   <span aria-hidden>≈</span>
-                  <span>No significant winner yet (lift {lift > 0 ? "+" : ""}{lift} pts, threshold ±{MIN_LIFT}).</span>
+                  <span>No significant winner yet (lift {lift > 0 ? "+" : ""}{lift} pts, p={pStr}, threshold α={ALPHA}).</span>
                 </div>
               );
             })()}
@@ -383,6 +424,24 @@ export default function AnalyticsTab() {
           </div>
         ) : (
           <EmptyState icon={Activity} title="No A/B test data yet" description="Visit /products in different sessions to assign both variants." />
+        )}
+      </ChartCard>
+
+      <ChartCard title="A/B Cart Rate Over Time (Last 7 Days)" index={1}>
+        {abDailyData.some(d => d.control > 0 || d["catalog-early"] > 0) ? (
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={abDailyData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} unit="%" />
+              <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => `${v}%`} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Line type="monotone" dataKey="control" stroke="hsl(var(--muted-foreground))" strokeWidth={2} dot={{ r: 3 }} animationDuration={900} />
+              <Line type="monotone" dataKey="catalog-early" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 3 }} animationDuration={900} animationBegin={150} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <EmptyState icon={LineIcon} title="No A/B trend data yet" description="Cart rate per variant will appear here once events accumulate." />
         )}
       </ChartCard>
 
