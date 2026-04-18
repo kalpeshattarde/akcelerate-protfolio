@@ -36,6 +36,14 @@ const ALL_TABS = [
 
 function AdminContent() {
   const { logout, role, currentUser, hasPermission } = useAdminAuth();
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("ak-admin-sidebar-collapsed") === "1";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("ak-admin-sidebar-collapsed", collapsed ? "1" : "0");
+  }, [collapsed]);
 
   const visibleTabs = ALL_TABS.filter(t => hasPermission(t.value));
 
