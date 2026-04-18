@@ -35,9 +35,6 @@ export default function Products() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [compareList, setCompareList] = useState<string[]>([]);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [compareList, setCompareList] = useState<string[]>([]);
 
   // A/B variant: control = current order; catalog-early = catalog right after Solution.
   // Stable per-visitor assignment via localStorage.
