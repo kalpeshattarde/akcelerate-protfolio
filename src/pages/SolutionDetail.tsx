@@ -9,6 +9,7 @@ import { getSolution, solutions } from "@/data/solutions";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToSolution } from "@/lib/relatedContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -51,6 +52,7 @@ export default function SolutionDetailPage() {
           { name: solution.title, path: `/solutions/${slug}` },
         ]}
       />
+      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions" }, { name: solution.title }]} />
       <HeroPage
         label="Solutions"
         title={<><span className="gradient-text">{solution.title}</span></>}

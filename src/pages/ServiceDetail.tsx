@@ -8,6 +8,7 @@ import { getService } from "@/data/services";
 import { CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToService } from "@/lib/relatedContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams();
@@ -47,6 +48,7 @@ export default function ServiceDetailPage() {
           { name: service.title, path: `/services/${slug}` },
         ]}
       />
+      <Breadcrumbs items={[{ name: "Services", path: "/services" }, { name: service.title }]} />
       <HeroPage label="Services" title={<><span className="gradient-text">{service.title}</span></>} description={service.description} />
 
       <section className="py-16 border-b border-border">

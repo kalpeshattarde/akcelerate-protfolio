@@ -9,6 +9,7 @@ import { ArrowLeft, List } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToBlog } from "@/lib/relatedContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 function TableOfContents({ sections }: { sections: { heading: string }[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -93,6 +94,7 @@ export default function BlogArticlePage() {
           { name: post.title, path: `/blog/${slug}` },
         ]}
       />
+      <Breadcrumbs items={[{ name: "Blog", path: "/blog" }, { name: post.title }]} />
       <HeroPage label={post.category} title={<>{post.title}</>} description={`${post.date} · ${post.readTime} · By ${post.author}`} />
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -4,6 +4,7 @@ import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import RelatedLinks from "@/components/RelatedLinks";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { CheckCircle } from "lucide-react";
 import { getIndustry } from "@/data/industries";
 import { services } from "@/data/services";
@@ -73,6 +74,7 @@ export default function IndustryDetailPage() {
           { name: industry.name, path: `/industries/${industry.slug}` },
         ]}
       />
+      <Breadcrumbs items={[{ name: "Industries", path: "/industries" }, { name: industry.name }]} />
       <HeroPage label="Industry" title={<><span className="gradient-text">{industry.name}</span></>} description={industry.description} />
 
       <section className="py-20 lg:py-28">
