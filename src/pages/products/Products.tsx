@@ -388,13 +388,13 @@ export default function Products() {
         </div>
 
         {/* 10. MARKETPLACE PRICING — convert */}
-        <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
+        <div id="pricing"><MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} /></div>
 
         {/* 11. TRUST — reduce risk */}
         <TrustSection />
 
         {/* 12. FAQ — handle objections */}
-        <ProductsFAQ />
+        <div id="faq"><ProductsFAQ /></div>
 
         {/* 13. FINAL CTA — close */}
         <FinalCTA />
