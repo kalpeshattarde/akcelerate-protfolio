@@ -121,11 +121,23 @@ export default function AnalyticsTab() {
       if (e.event === "products_view") { if (v === "control") days[key].cV++; else days[key].eV++; }
       else if (e.event === "add_to_cart") { if (v === "control") days[key].cC++; else days[key].eC++; }
     });
-    return Object.values(days).map(d => ({
-      date: d.date,
-      control: d.cV > 0 ? +((d.cC / d.cV) * 100).toFixed(1) : 0,
-      "catalog-early": d.eV > 0 ? +((d.eC / d.eV) * 100).toFixed(1) : 0,
-    }));
+    return Object.values(days).map(d => {
+      const ci = (c: number, n: number) => {
+        if (n === 0) return { rate: 0, low: 0, high: 0 };
+        const p = c / n;
+        const m = 1.96 * Math.sqrt((p * (1 - p)) / n);
+        return { rate: +(p * 100).toFixed(1), low: +(Math.max(0, p - m) * 100).toFixed(1), high: +(Math.min(1, p + m) * 100).toFixed(1) };
+      };
+      const c = ci(d.cC, d.cV);
+      const e = ci(d.eC, d.eV);
+      return {
+        date: d.date,
+        control: c.rate,
+        controlBand: [c.low, c.high] as [number, number],
+        "catalog-early": e.rate,
+        expBand: [e.low, e.high] as [number, number],
+      };
+    });
   }, [events]);
 
   const stats = [
