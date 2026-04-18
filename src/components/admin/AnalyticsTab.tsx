@@ -17,11 +17,18 @@ const tooltipStyle = {
 
 export default function AnalyticsTab() {
   const [loading, setLoading] = useState(true);
-  const events = useMemo(() => getAnalyticsEvents(), []);
+  const [events, setEvents] = useState(() => getAnalyticsEvents());
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 350);
-    return () => clearTimeout(t);
+    const refresh = () => setEvents(getAnalyticsEvents());
+    window.addEventListener("ak-analytics-updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("ak-analytics-updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
   }, []);
 
   const counts = useMemo(() => {

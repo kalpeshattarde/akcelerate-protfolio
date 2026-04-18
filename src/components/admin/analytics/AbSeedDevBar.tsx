@@ -16,7 +16,7 @@ const writeSeed = (seeded: Evt[]) => {
   const existing: Evt[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   const combined = [...existing, ...seeded].slice(-5000);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(combined));
-  window.location.reload();
+  window.dispatchEvent(new Event("ak-analytics-updated"));
 };
 
 const seedAbTestData = () => {
@@ -57,7 +57,7 @@ const clearAbTestData = () => {
   const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]") as Array<{ data?: { variant?: string } }>;
   const filtered = existing.filter(e => !e.data || (e.data.variant !== "control" && e.data.variant !== "catalog-early"));
   localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-  window.location.reload();
+  window.dispatchEvent(new Event("ak-analytics-updated"));
 };
 
 export default function AbSeedDevBar() {
