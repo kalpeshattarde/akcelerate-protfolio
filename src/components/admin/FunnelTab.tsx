@@ -47,6 +47,7 @@ export default function FunnelTab() {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState(() => getAnalyticsEvents());
   const [steps, setSteps] = useState<string[]>(loadSteps);
+  const [saved, setSaved] = useState<SavedFunnel[]>(loadSaved);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 250);
@@ -96,6 +97,24 @@ export default function FunnelTab() {
     const next = [...steps];
     [next[idx], next[j]] = [next[j], next[idx]];
     setSteps(next);
+  };
+
+  const saveCurrent = () => {
+    const name = prompt("Name for this funnel?")?.trim();
+    if (!name) return;
+    const next = [...saved.filter(s => s.name !== name), { name, steps: [...steps] }];
+    setSaved(next);
+    persistSaved(next);
+  };
+  const loadFunnel = (name: string) => {
+    const f = saved.find(s => s.name === name);
+    if (f) setSteps([...f.steps]);
+  };
+  const deleteFunnel = (name: string) => {
+    if (!confirm(`Delete saved funnel "${name}"?`)) return;
+    const next = saved.filter(s => s.name !== name);
+    setSaved(next);
+    persistSaved(next);
   };
 
   const available = KNOWN_EVENTS.filter(e => !steps.includes(e));
