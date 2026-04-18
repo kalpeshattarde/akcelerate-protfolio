@@ -55,18 +55,50 @@ export default function ProductsTab() {
     setSelected(new Set());
   };
 
+  const exportOverrides = () => {
+    const map = getProductOverrides();
+    const rows = Object.entries(map).map(([id, o]) => {
+      const base = PRODUCTS.find(p => p.id === id);
+      return {
+        id,
+        name: base?.name || "",
+        price_usd: o.price?.usd ?? "",
+        price_inr: o.price?.inr ?? "",
+        category: o.category ?? "",
+        top_seller: o.topSelling == null ? "" : (o.topSelling ? "true" : "false"),
+        sales_count: o.salesCount ?? "",
+      };
+    });
+    const csv = Papa.unparse(rows);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `product-overrides-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-foreground">Product Catalog</h3>
         <div className="flex items-center gap-2">
           {Object.keys(overrides).length > 0 && (
-            <button
-              onClick={resetAll}
-              className="text-xs inline-flex items-center gap-1 text-muted-foreground hover:text-destructive transition-colors"
-            >
-              <RotateCcw className="w-3 h-3" /> Reset all overrides ({Object.keys(overrides).length})
-            </button>
+            <>
+              <button
+                onClick={exportOverrides}
+                className="text-xs inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Download className="w-3 h-3" /> Export overrides
+              </button>
+              <button
+                onClick={resetAll}
+                className="text-xs inline-flex items-center gap-1 text-muted-foreground hover:text-destructive transition-colors"
+              >
+                <RotateCcw className="w-3 h-3" /> Reset all ({Object.keys(overrides).length})
+              </button>
+            </>
           )}
           <ProductsCsvImport />
           <button className="btn-primary text-sm gap-1.5"><Plus className="w-4 h-4" /> Add Product</button>
