@@ -186,68 +186,52 @@ export default function Navbar() {
             <Link to="/" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Home</Link>
 
             {/* Solutions Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/solutions" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/solutions") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Solutions <ChevronDown className="w-3 h-3" />
+            <MegaDropdown label="Solutions" to="/solutions" active={location.pathname.startsWith("/solutions")} width={340}>
+              <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
+                <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[340px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
-                  </Link>
-                  <div className="border-t border-border my-1" />
-                  {solutionLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+              <div className="border-t border-border my-1" />
+              {solutionLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             {/* Services Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/services" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/services") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Services <ChevronDown className="w-3 h-3" />
+            <MegaDropdown label="Services" to="/services" active={location.pathname.startsWith("/services")} width={300}>
+              <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
+                <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
-                  </Link>
-                  <div className="border-t border-border my-1" />
-                  {serviceLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+              <div className="border-t border-border my-1" />
+              {serviceLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
             <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
 
             {/* About Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/founder" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                About <ChevronDown className="w-3 h-3" />
-              </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  {aboutLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <MegaDropdown
+              label="About"
+              to="/about"
+              active={location.pathname === "/about" || location.pathname === "/founder" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog")}
+              width={300}
+            >
+              {aboutLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
