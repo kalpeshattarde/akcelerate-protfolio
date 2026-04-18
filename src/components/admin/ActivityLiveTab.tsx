@@ -120,6 +120,9 @@ export default function ActivityLiveTab() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <CohortPicker />
+      </div>
       <ChartCard
         title="Live activity"
         index={0}
