@@ -8,7 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import SiteLayout from "@/components/SiteLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PageSkeleton from "@/components/PageSkeleton";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 
