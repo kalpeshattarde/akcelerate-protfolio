@@ -1,1 +1,13 @@
-project_id = "zmmhxdlhsahebgzfpzxo"
+project_id = "vlfleuwpsulnaamblfij"
+
+[functions.create-checkout-session]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.send-purchase-email]
+verify_jwt = false
+
+[functions.send-download-email]
+verify_jwt = false
