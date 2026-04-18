@@ -49,4 +49,9 @@ export default function PageSkeleton() {
       </div>
     </div>
   );
-}
+});
+
+PageSkeleton.displayName = "PageSkeleton";
+
+export default PageSkeleton;
+
