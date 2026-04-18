@@ -422,6 +422,11 @@ export default function Products() {
           onClear={() => setCompareList([])}
           currency={currency}
         />
+        <BundleProgressBar
+          itemCount={cart.totalCount}
+          currency={currency}
+          onOpenCart={() => cart.setOpen(true)}
+        />
       </div>
     </main>
     </>
