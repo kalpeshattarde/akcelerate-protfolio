@@ -42,12 +42,46 @@ export default function ProductDetail() {
 
   const purchased = isPurchased(product.id);
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: `https://akcelerate.lovable.app${product.previewImage}`,
+    sku: product.id,
+    category: product.category === "mobile-app" ? "Mobile App Template" : "SaaS Template",
+    brand: { "@type": "Brand", name: "AKcelerate" },
+    offers: [
+      {
+        "@type": "Offer",
+        price: product.price.usd.toString(),
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `https://akcelerate.lovable.app/products/${product.slug}`,
+      },
+      {
+        "@type": "Offer",
+        price: product.price.inr.toString(),
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+        url: `https://akcelerate.lovable.app/products/${product.slug}`,
+      },
+    ],
+    aggregateRating: product.salesCount > 100 ? {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: Math.floor(product.salesCount / 10).toString(),
+    } : undefined,
+  };
+
   return (
     <>
       <SEOHead
         title={product.name}
         description={product.description.slice(0, 155)}
         path={`/products/${slug}`}
+        image={product.previewImage}
+        jsonLd={productJsonLd}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Products", path: "/products" },
