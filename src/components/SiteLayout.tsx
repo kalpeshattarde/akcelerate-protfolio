@@ -5,6 +5,7 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Preloader from "./Preloader";
+import OnboardingTour from "./OnboardingTour";
 import { trackPageView } from "@/lib/analytics";
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -102,6 +103,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <ArrowUp className="w-5 h-5 text-primary-foreground" />
           </button>
         )}
+        <OnboardingTour />
       </div>
     </>
   );
