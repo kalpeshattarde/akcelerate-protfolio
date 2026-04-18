@@ -36,6 +36,11 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             {product.badge}
           </div>
         )}
+        {bundleActive && cartQuantity > 0 && !isPurchased && (
+          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-500/90 text-white shadow-lg" style={{ marginTop: product.badge ? "28px" : 0 }}>
+            ✨ Pro Bundle rate applied
+          </div>
+        )}
 
         <div className="relative aspect-[4/3] bg-muted overflow-hidden">
           <Link to={`/products/${product.slug}`}>
