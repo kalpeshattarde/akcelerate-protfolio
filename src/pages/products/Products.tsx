@@ -453,6 +453,7 @@ export default function Products() {
           onOpenCart={() => cart.setOpen(true)}
           onQuickFill={handleAddBundleToCart}
         />
+        <ProductsSubNav />
       </div>
     </main>
     </>
