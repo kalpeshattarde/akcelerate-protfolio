@@ -7,6 +7,8 @@ import { getBlogPost, blogPosts } from "@/data/blog";
 import { BlogCard } from "@/components/Cards";
 import { ArrowLeft, List } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
+import RelatedLinks from "@/components/RelatedLinks";
+import { relatedToBlog } from "@/lib/relatedContent";
 
 function TableOfContents({ sections }: { sections: { heading: string }[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -67,6 +69,7 @@ export default function BlogArticlePage() {
   const post = getBlogPost(slug || "");
   if (!post) return <div className="min-h-screen flex items-center justify-center pt-32"><div className="text-center"><h1 className="font-poppins font-bold text-4xl mb-4">Article Not Found</h1><Link to="/blog" className="btn-primary">View All Articles</Link></div></div>;
   const related = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+  const cross = relatedToBlog(post.slug);
   return (
     <>
       <SEOHead title={post.title} description={post.description} path={`/blog/${slug}`} />
@@ -116,6 +119,8 @@ export default function BlogArticlePage() {
           </div>
         </section>
       )}
+      <RelatedLinks label="Services" title="Services Powering These Insights" items={cross.services} kind="service" />
+      <RelatedLinks label="Solutions" title="Explore Matching Solutions" items={cross.solutions} kind="solution" alt />
       <CTASection title="Ready to Turn Insights Into Action?" description="Book a free consultation to discuss strategies for your business." primaryCta={{ label: "Contact Us", to: "/contact" }} dark />
     </>
   );

@@ -6,10 +6,13 @@ import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { getService } from "@/data/services";
 import { CheckCircle } from "lucide-react";
+import RelatedLinks from "@/components/RelatedLinks";
+import { relatedToService } from "@/lib/relatedContent";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams();
   const service = getService(slug || "");
+  const cross = service ? relatedToService(service.slug) : { solutions: [], blog: [] };
 
   if (!service) {
     return (
@@ -94,6 +97,8 @@ export default function ServiceDetailPage() {
         </div>
       </section>
 
+      <RelatedLinks label="Solutions" title="Pair With These Solutions" items={cross.solutions} kind="solution" />
+      <RelatedLinks label="Insights" title="Read More on This Topic" items={cross.blog} kind="blog" alt />
       <CTASection
         title={`Ready for ${service.title}?`}
         description="Book a free consultation and let's discuss how to implement this for your business."
