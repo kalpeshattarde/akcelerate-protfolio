@@ -127,9 +127,43 @@ export default function FunnelTab() {
   return (
     <div className="space-y-6">
       <ChartCard title="Funnel steps" index={0}>
-        <p className="text-xs text-muted-foreground mb-3">
-          Choose 2–6 events. Order matters — each step is measured against the first.
-        </p>
+        <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
+          <p className="text-xs text-muted-foreground">
+            Choose 2–6 events. Order matters — each step is measured against the first.
+          </p>
+          <div className="flex items-center gap-2">
+            {saved.length > 0 && (
+              <select
+                onChange={(e) => { if (e.target.value) { loadFunnel(e.target.value); e.target.value = ""; } }}
+                defaultValue=""
+                className="text-xs h-7 rounded-md border border-input bg-background px-2"
+                aria-label="Load saved funnel"
+              >
+                <option value="" disabled>Load saved…</option>
+                {saved.map(s => <option key={s.name} value={s.name}>{s.name}</option>)}
+              </select>
+            )}
+            <button
+              type="button"
+              onClick={saveCurrent}
+              className="text-xs inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 hover:bg-muted"
+            >
+              <Save className="w-3 h-3" /> Save
+            </button>
+          </div>
+        </div>
+        {saved.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {saved.map(s => (
+              <span key={s.name} className="inline-flex items-center gap-1 text-[11px] rounded-full bg-muted px-2 py-0.5">
+                <button onClick={() => loadFunnel(s.name)} className="hover:text-primary">{s.name}</button>
+                <button onClick={() => deleteFunnel(s.name)} aria-label={`Delete ${s.name}`} className="hover:text-destructive">
+                  <Trash2 className="w-2.5 h-2.5" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex flex-wrap gap-2 mb-3">
           {steps.map((s, i) => (
             <div
