@@ -60,16 +60,22 @@ function AdminContent() {
           </div>
           <p className="text-muted-foreground mb-8">Manage products, users, orders, content, and analytics.</p>
 
-          <Tabs defaultValue="dashboard">
-            <TabsList className="flex-wrap h-auto gap-1 mb-8">
+          <Tabs defaultValue="dashboard" orientation="vertical" className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+            <TabsList className="flex lg:flex-col flex-row flex-wrap lg:flex-nowrap h-auto gap-1 p-2 lg:w-56 lg:sticky lg:top-28 bg-muted/60 backdrop-blur rounded-xl border border-border lg:items-stretch">
               {visibleTabs.map(t => (
-                <TabsTrigger key={t.value} value={t.value} className="gap-1.5">
-                  <t.icon className="w-4 h-4" /> {t.label}
+                <TabsTrigger
+                  key={t.value}
+                  value={t.value}
+                  className="gap-2 justify-start w-full data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <t.icon className="w-4 h-4 shrink-0" />
+                  <span className="truncate">{t.label}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {hasPermission("dashboard") && <TabsContent value="dashboard"><DashboardTab /></TabsContent>}
+            <div className="flex-1 min-w-0 w-full">
+            {hasPermission("dashboard") && <TabsContent value="dashboard" className="mt-0"><DashboardTab /></TabsContent>}
             {hasPermission("activity") && <TabsContent value="activity"><ActivityFeedTab /></TabsContent>}
             {hasPermission("analytics") && <TabsContent value="analytics"><AnalyticsTab /></TabsContent>}
             {hasPermission("users") && <TabsContent value="users"><UserManagementTab /></TabsContent>}
