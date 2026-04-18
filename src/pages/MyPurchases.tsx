@@ -97,7 +97,7 @@ export default function MyPurchases() {
 
   if (!isLoaded) {
     return (
-      <main className="pt-20 pb-20 text-center">
+      <main className="pt-28 pb-20 text-center">
         <Loader2 className="w-6 h-6 animate-spin mx-auto text-primary" />
       </main>
     );
@@ -147,7 +147,7 @@ export default function MyPurchases() {
   return (
     <>
       <SEOHead title="My Purchases — AKcelerate" description="Access your purchased prototypes, download source code, and manage your library." path="/my-purchases" />
-      <main className="pt-20 pb-20">
+      <main className="pt-28 pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}

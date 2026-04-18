@@ -76,7 +76,7 @@ function AdminContent() {
 
   return (
     <AuditProvider user={currentUser}>
-      <main className="pt-20 pb-20">
+      <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="font-poppins text-3xl font-bold text-foreground">Admin Panel</h1>
@@ -86,7 +86,7 @@ function AdminContent() {
           <Tabs defaultValue="dashboard" orientation="vertical" className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
             <TooltipProvider delayDuration={0}>
               <TabsList
-                className={`flex lg:flex-col flex-row flex-wrap lg:flex-nowrap h-auto gap-1 p-2 lg:sticky lg:top-20 bg-muted/60 backdrop-blur rounded-xl border border-border lg:items-stretch transition-[width] duration-300 ease-out ${
+                className={`flex lg:flex-col flex-row flex-wrap lg:flex-nowrap h-auto gap-1 p-2 lg:sticky lg:top-28 bg-muted/60 backdrop-blur rounded-xl border border-border lg:items-stretch transition-[width] duration-300 ease-out ${
                   collapsed ? "lg:w-16" : "lg:w-56"
                 }`}
               >

@@ -32,7 +32,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <main className="pt-20 pb-20 text-center">
+      <main className="pt-28 pb-20 text-center">
         <p className="text-muted-foreground">Product not found.</p>
         <Link to="/products" className="text-primary mt-4 inline-block">← Back to Products</Link>
       </main>
@@ -44,7 +44,7 @@ export default function ProductDetail() {
   return (
     <>
       <SEOHead title={product.name} description={product.description.slice(0, 155)} path={`/products/${slug}`} />
-    <main className="pt-20 pb-20">
+    <main className="pt-28 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link to="/products" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to Products

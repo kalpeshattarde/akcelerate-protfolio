@@ -134,7 +134,7 @@ function AdminLoginForm() {
   ];
 
   return (
-    <main className="pt-20 pb-20 min-h-screen flex items-center justify-center">
+    <main className="pt-28 pb-20 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-sm mx-auto px-4">
         <div className="rounded-2xl border border-border bg-card p-8 shadow-lg">
           <div className="flex justify-center mb-6">
