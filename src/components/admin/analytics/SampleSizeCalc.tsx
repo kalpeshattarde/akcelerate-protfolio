@@ -11,7 +11,7 @@ import type { AbVariantRow } from "./AbTestCard";
 const Z_ALPHA = 1.96; // two-sided α=0.05
 const Z_BETA = 0.8416; // 80% power
 
-function requiredPerArm(p1: number, p2: number): number | null {
+export function requiredPerArm(p1: number, p2: number): number | null {
   const delta = Math.abs(p2 - p1);
   if (delta < 1e-6) return null;
   const pBar = (p1 + p2) / 2;
