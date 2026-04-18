@@ -1,11 +1,16 @@
 export interface Industry {
+  slug: string;
   name: string;
   icon: string;
   description: string;
   useCases: string[];
 }
 
-export const industries: Industry[] = [
+function slugify(s: string) {
+  return s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+const _raw: Omit<Industry, "slug">[] = [
   { name: "Manufacturing", icon: "Factory", description: "Predictive maintenance, quality AI, OEE optimization, and supply chain intelligence for Industry 4.0.", useCases: ["Predictive Maintenance", "Quality Control AI", "Supply Chain Optimization", "Energy Management"] },
   { name: "Banking & Finance", icon: "Building2", description: "Fraud detection, risk analytics, algorithmic trading, and regulatory compliance automation.", useCases: ["Fraud Detection", "Risk Scoring", "Automated Reporting", "Customer Analytics"] },
   { name: "Healthcare", icon: "Heart", description: "Clinical analytics, patient outcome prediction, operational efficiency, and compliance reporting.", useCases: ["Patient Analytics", "Clinical Decision Support", "Operational Optimization", "Compliance Automation"] },
@@ -15,6 +20,10 @@ export const industries: Industry[] = [
   { name: "Education & EdTech", icon: "GraduationCap", description: "Learning analytics, student engagement prediction, curriculum optimization, and platform development.", useCases: ["Learning Analytics", "Student Engagement", "Platform Development", "Content Optimization"] },
   { name: "SaaS & Technology", icon: "Code", description: "Product analytics, churn prediction, feature prioritization, and scalable architecture design.", useCases: ["Product Analytics", "Churn Prediction", "Feature Prioritization", "Architecture Design"] },
 ];
+
+export const industries: Industry[] = _raw.map(i => ({ ...i, slug: slugify(i.name) }));
+
+export const getIndustry = (slug: string) => industries.find(i => i.slug === slug);
 
 export const caseStudies = [
   {

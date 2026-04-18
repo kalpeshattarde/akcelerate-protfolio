@@ -70,9 +70,29 @@ export default function BlogArticlePage() {
   if (!post) return <div className="min-h-screen flex items-center justify-center pt-32"><div className="text-center"><h1 className="font-poppins font-bold text-4xl mb-4">Article Not Found</h1><Link to="/blog" className="btn-primary">View All Articles</Link></div></div>;
   const related = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3);
   const cross = relatedToBlog(post.slug);
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    author: { "@type": "Person", name: post.author },
+    datePublished: post.date,
+    articleSection: post.category,
+    publisher: { "@type": "Organization", name: "AKcelerate" },
+  };
   return (
     <>
-      <SEOHead title={post.title} description={post.description} path={`/blog/${slug}`} />
+      <SEOHead
+        title={post.title}
+        description={post.description}
+        path={`/blog/${slug}`}
+        jsonLd={articleJsonLd}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: post.title, path: `/blog/${slug}` },
+        ]}
+      />
       <HeroPage label={post.category} title={<>{post.title}</>} description={`${post.date} · ${post.readTime} · By ${post.author}`} />
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
