@@ -275,61 +275,81 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-background border-t border-border shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
-            {[
-              { to: "/", label: "Home" },
-              { to: "/solutions", label: "Solutions" },
-              { to: "/services", label: "Services" },
-              { to: "/industries", label: "Industries" },
-              { to: "/case-studies", label: "Case Studies" },
-              { to: "/insights", label: "Insights" },
-              { to: "/blog", label: "Blog" },
-              { to: "/pricing", label: "Pricing" },
-              { to: "/products", label: "Products" },
-              { to: "/about", label: "About" },
-              { to: "/founder", label: "Founder" },
-              { to: "/contact", label: "Contact" },
-              { to: "/free-audit", label: "Free Audit" },
-              { to: "/resources", label: "Resources" },
-              { to: "/gallery", label: "Gallery" },
-              { to: "/completed-projects", label: "Completed Projects" },
-              { to: "/careers", label: "Careers" },
-              { to: "/wishlist", label: "Wishlist" },
-              { to: "/my-purchases", label: "My Purchases" },
-              { to: "/guide", label: "Guide" },
-            ].map(l => (
-              <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
-            ))}
-            <SignedIn>
-              <div className="pt-3 border-t border-border mt-3 space-y-1">
-                {[
-                  { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
-                  { to: "/wishlist", label: "Wishlist", icon: Heart },
-                  { to: "/guide", label: "Guide", icon: BookOpen },
-                ].map(l => (
-                  <Link key={l.to} to={l.to} className="flex items-center gap-2.5 py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all text-sm">
-                    <l.icon className="w-4 h-4" /> {l.label}
-                  </Link>
-                ))}
-                <div className="flex items-center gap-3 pt-2">
-                  <UserButton afterSignOutUrl="/" />
+      {/* Mobile Menu — spring slide */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.6 }}
+            className="lg:hidden overflow-hidden bg-background border-t border-border shadow-lg"
+          >
+            <motion.div
+              className="max-w-7xl mx-auto px-4 py-4 space-y-1"
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.025, delayChildren: 0.05 } } }}
+            >
+              {[
+                { to: "/", label: "Home" },
+                { to: "/solutions", label: "Solutions" },
+                { to: "/services", label: "Services" },
+                { to: "/industries", label: "Industries" },
+                { to: "/case-studies", label: "Case Studies" },
+                { to: "/insights", label: "Insights" },
+                { to: "/blog", label: "Blog" },
+                { to: "/pricing", label: "Pricing" },
+                { to: "/products", label: "Products" },
+                { to: "/about", label: "About" },
+                { to: "/founder", label: "Founder" },
+                { to: "/contact", label: "Contact" },
+                { to: "/free-audit", label: "Free Audit" },
+                { to: "/resources", label: "Resources" },
+                { to: "/gallery", label: "Gallery" },
+                { to: "/completed-projects", label: "Completed Projects" },
+                { to: "/careers", label: "Careers" },
+                { to: "/wishlist", label: "Wishlist" },
+                { to: "/my-purchases", label: "My Purchases" },
+                { to: "/guide", label: "Guide" },
+              ].map(l => (
+                <motion.div
+                  key={l.to}
+                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
+                </motion.div>
+              ))}
+              <SignedIn>
+                <div className="pt-3 border-t border-border mt-3 space-y-1">
+                  {[
+                    { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
+                    { to: "/wishlist", label: "Wishlist", icon: Heart },
+                    { to: "/guide", label: "Guide", icon: BookOpen },
+                  ].map(l => (
+                    <Link key={l.to} to={l.to} className="flex items-center gap-2.5 py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all text-sm">
+                      <l.icon className="w-4 h-4" /> {l.label}
+                    </Link>
+                  ))}
+                  <div className="flex items-center gap-3 pt-2">
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
                 </div>
+              </SignedIn>
+              <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
+                <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
+                  {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
+                </button>
+                <SignedOut>
+                  <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
+                </SignedOut>
               </div>
-            </SignedIn>
-            <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
-              <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95">
-                {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
-              </button>
-              <SignedOut>
-                <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
-              </SignedOut>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
     </nav>
   );
