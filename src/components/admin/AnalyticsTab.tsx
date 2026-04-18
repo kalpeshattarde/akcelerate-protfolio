@@ -7,6 +7,8 @@ import AbSeedDevBar from "./analytics/AbSeedDevBar";
 import AbTestCard, { type AbVariantRow } from "./analytics/AbTestCard";
 import AbTrendChart, { type AbDailyRow } from "./analytics/AbTrendChart";
 import AdminUsageHeatmap from "./AdminUsageHeatmap";
+import ExperimentManager from "./analytics/ExperimentManager";
+import { getExperiments, type Experiment } from "@/lib/experiments";
 
 const COLORS = ["hsl(var(--primary))", "hsl(var(--accent))", "#f59e0b", "#10b981", "#8b5cf6", "#ef4444"];
 const tooltipStyle = {
@@ -273,8 +275,7 @@ export default function AnalyticsTab() {
         </ChartCard>
       </div>
 
-      <AbTestCard data={abVariantData} index={0} />
-      <AbTrendChart data={abDailyData} index={1} />
+      <ExperimentsSection abVariantData={abVariantData} abDailyData={abDailyData} />
 
       <AdminUsageHeatmap />
 
