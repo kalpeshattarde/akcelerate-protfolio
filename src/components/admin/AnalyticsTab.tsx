@@ -201,6 +201,12 @@ export default function AnalyticsTab() {
             Seed sparse data
           </button>
           <button
+            onClick={seedNeutralAbData}
+            className="px-3 py-1.5 rounded-lg bg-muted text-foreground text-xs font-semibold hover:bg-muted/80 border border-border transition-colors"
+          >
+            Seed neutral data
+          </button>
+          <button
             onClick={seedAbTestData}
             className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
           >
