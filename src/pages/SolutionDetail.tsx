@@ -7,6 +7,8 @@ import StatsRow from "@/components/StatsRow";
 import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import RelatedLinks from "@/components/RelatedLinks";
+import { relatedToSolution } from "@/lib/relatedContent";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -24,6 +26,7 @@ export default function SolutionDetailPage() {
   }
 
   const related = solution.relatedSlugs.map(s => solutions.find(x => x.slug === s)).filter(Boolean);
+  const cross = relatedToSolution(solution.slug);
 
   return (
     <>
@@ -113,6 +116,8 @@ export default function SolutionDetailPage() {
         </section>
       )}
 
+      <RelatedLinks label="Services" title="Specialized Services for This Solution" items={cross.services} kind="service" alt />
+      <RelatedLinks label="Insights" title="Further Reading" items={cross.blog} kind="blog" />
       <CTASection
         title={`Ready to Get Started with ${solution.title}?`}
         description="Book a free consultation and let's discuss how this solution can transform your business."

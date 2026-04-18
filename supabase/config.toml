@@ -11,3 +11,15 @@ verify_jwt = false
 
 [functions.send-download-email]
 verify_jwt = false
+
+[functions.admin-stats]
+verify_jwt = false
+
+[functions.sync-purchase]
+verify_jwt = false
+
+[functions.log-activity]
+verify_jwt = false
+
+[functions.send-email]
+verify_jwt = false
