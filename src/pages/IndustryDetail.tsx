@@ -74,6 +74,7 @@ export default function IndustryDetailPage() {
           { name: industry.name, path: `/industries/${industry.slug}` },
         ]}
       />
+      <Breadcrumbs items={[{ name: "Industries", path: "/industries" }, { name: industry.name }]} />
       <HeroPage label="Industry" title={<><span className="gradient-text">{industry.name}</span></>} description={industry.description} />
 
       <section className="py-20 lg:py-28">
