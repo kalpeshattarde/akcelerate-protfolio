@@ -83,6 +83,26 @@ export default function AnalyticsTab() {
       .slice(0, 6);
   }, [events]);
 
+  // A/B variant breakdown for products page (control vs catalog-early)
+  const abVariantData = useMemo(() => {
+    const tally: Record<string, { variant: string; views: number; addToCart: number; bundleUnlocked: number }> = {
+      control: { variant: "control", views: 0, addToCart: 0, bundleUnlocked: 0 },
+      "catalog-early": { variant: "catalog-early", views: 0, addToCart: 0, bundleUnlocked: 0 },
+    };
+    events.forEach(e => {
+      const v = (e.data.variant as string) || "";
+      if (v !== "control" && v !== "catalog-early") return;
+      if (e.event === "products_view") tally[v].views++;
+      else if (e.event === "add_to_cart") tally[v].addToCart++;
+      else if (e.event === "bundle_unlocked") tally[v].bundleUnlocked++;
+    });
+    return Object.values(tally).map(row => ({
+      ...row,
+      cartRate: row.views > 0 ? +((row.addToCart / row.views) * 100).toFixed(1) : 0,
+      bundleRate: row.views > 0 ? +((row.bundleUnlocked / row.views) * 100).toFixed(1) : 0,
+    }));
+  }, [events]);
+
   const stats = [
     { label: "Page Views", numeric: counts.page_view, icon: FileText, iconClass: "text-primary" },
     { label: "Product Views", numeric: counts.product_view, icon: Eye, iconClass: "text-blue-500" },
