@@ -2,7 +2,62 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import SearchModal from "./SearchModal";
+
+/* Animated mega-menu dropdown */
+function MegaDropdown({
+  label,
+  to,
+  active,
+  children,
+  width = 340,
+}: {
+  label: string;
+  to: string;
+  active: boolean;
+  children: React.ReactNode;
+  width?: number;
+}) {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<number | null>(null);
+
+  const onEnter = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const onLeave = () => {
+    closeTimer.current = window.setTimeout(() => setOpen(false), 120);
+  };
+
+  return (
+    <div className="relative" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+      <Link
+        to={to}
+        className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${active ? "text-primary font-semibold" : "text-muted-foreground"}`}
+      >
+        {label}
+        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </Link>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-full left-0 pt-2 z-50"
+            style={{ minWidth: width }}
+          >
+            <div className="bg-popover/95 backdrop-blur-xl border border-border rounded-2xl shadow-2xl p-2 space-y-0.5">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
@@ -131,68 +186,52 @@ export default function Navbar() {
             <Link to="/" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Home</Link>
 
             {/* Solutions Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/solutions" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/solutions") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Solutions <ChevronDown className="w-3 h-3" />
+            <MegaDropdown label="Solutions" to="/solutions" active={location.pathname.startsWith("/solutions")} width={340}>
+              <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
+                <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[340px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
-                  </Link>
-                  <div className="border-t border-border my-1" />
-                  {solutionLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+              <div className="border-t border-border my-1" />
+              {solutionLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             {/* Services Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/services" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname.startsWith("/services") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                Services <ChevronDown className="w-3 h-3" />
+            <MegaDropdown label="Services" to="/services" active={location.pathname.startsWith("/services")} width={300}>
+              <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
+                <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
               </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
-                    <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
-                  </Link>
-                  <div className="border-t border-border my-1" />
-                  {serviceLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+              <div className="border-t border-border my-1" />
+              {serviceLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
             <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
 
             {/* About Dropdown */}
-            <div className="nav-dropdown relative group">
-              <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${location.pathname === "/about" || location.pathname === "/founder" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog") ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                About <ChevronDown className="w-3 h-3" />
-              </Link>
-              <div className="nav-dropdown-menu absolute top-full left-0 pt-2 min-w-[300px]">
-                <div className="bg-popover border border-border rounded-2xl shadow-lg p-2 space-y-0.5">
-                  {aboutLinks.map(s => (
-                    <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                      <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <MegaDropdown
+              label="About"
+              to="/about"
+              active={location.pathname === "/about" || location.pathname === "/founder" || location.pathname === "/industries" || location.pathname === "/case-studies" || location.pathname.startsWith("/insights") || location.pathname.startsWith("/blog")}
+              width={300}
+            >
+              {aboutLinks.map(s => (
+                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
+                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
+                </Link>
+              ))}
+            </MegaDropdown>
 
             <Link to="/contact" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/contact" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Contact</Link>
           </div>
@@ -219,68 +258,98 @@ export default function Navbar() {
             <button onClick={() => setSearchOpen(true)} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Search">
               <Search className="w-5 h-5" />
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-muted-foreground hover:text-foreground">
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Toggle menu">
+              <AnimatePresence mode="wait" initial={false}>
+                {mobileOpen ? (
+                  <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }} className="inline-block">
+                    <X className="w-6 h-6" />
+                  </motion.span>
+                ) : (
+                  <motion.span key="m" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }} className="inline-block">
+                    <Menu className="w-6 h-6" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-background border-t border-border shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
-            {[
-              { to: "/", label: "Home" },
-              { to: "/solutions", label: "Solutions" },
-              { to: "/services", label: "Services" },
-              { to: "/industries", label: "Industries" },
-              { to: "/case-studies", label: "Case Studies" },
-              { to: "/insights", label: "Insights" },
-              { to: "/blog", label: "Blog" },
-              { to: "/pricing", label: "Pricing" },
-              { to: "/products", label: "Products" },
-              { to: "/about", label: "About" },
-              { to: "/founder", label: "Founder" },
-              { to: "/contact", label: "Contact" },
-              { to: "/free-audit", label: "Free Audit" },
-              { to: "/resources", label: "Resources" },
-              { to: "/gallery", label: "Gallery" },
-              { to: "/completed-projects", label: "Completed Projects" },
-              { to: "/careers", label: "Careers" },
-              { to: "/wishlist", label: "Wishlist" },
-              { to: "/my-purchases", label: "My Purchases" },
-              { to: "/guide", label: "Guide" },
-            ].map(l => (
-              <Link key={l.to} to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
-            ))}
-            <SignedIn>
-              <div className="pt-3 border-t border-border mt-3 space-y-1">
-                {[
-                  { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
-                  { to: "/wishlist", label: "Wishlist", icon: Heart },
-                  { to: "/guide", label: "Guide", icon: BookOpen },
-                ].map(l => (
-                  <Link key={l.to} to={l.to} className="flex items-center gap-2.5 py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all text-sm">
-                    <l.icon className="w-4 h-4" /> {l.label}
-                  </Link>
-                ))}
-                <div className="flex items-center gap-3 pt-2">
-                  <UserButton afterSignOutUrl="/" />
+      {/* Mobile Menu — spring slide */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.6 }}
+            className="lg:hidden overflow-hidden bg-background border-t border-border shadow-lg"
+          >
+            <motion.div
+              className="max-w-7xl mx-auto px-4 py-4 space-y-1"
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.025, delayChildren: 0.05 } } }}
+            >
+              {[
+                { to: "/", label: "Home" },
+                { to: "/solutions", label: "Solutions" },
+                { to: "/services", label: "Services" },
+                { to: "/industries", label: "Industries" },
+                { to: "/case-studies", label: "Case Studies" },
+                { to: "/insights", label: "Insights" },
+                { to: "/blog", label: "Blog" },
+                { to: "/pricing", label: "Pricing" },
+                { to: "/products", label: "Products" },
+                { to: "/about", label: "About" },
+                { to: "/founder", label: "Founder" },
+                { to: "/contact", label: "Contact" },
+                { to: "/free-audit", label: "Free Audit" },
+                { to: "/resources", label: "Resources" },
+                { to: "/gallery", label: "Gallery" },
+                { to: "/completed-projects", label: "Completed Projects" },
+                { to: "/careers", label: "Careers" },
+                { to: "/wishlist", label: "Wishlist" },
+                { to: "/my-purchases", label: "My Purchases" },
+                { to: "/guide", label: "Guide" },
+              ].map(l => (
+                <motion.div
+                  key={l.to}
+                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link to={l.to} className="block py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all">{l.label}</Link>
+                </motion.div>
+              ))}
+              <SignedIn>
+                <div className="pt-3 border-t border-border mt-3 space-y-1">
+                  {[
+                    { to: "/my-purchases", label: "My Purchases", icon: ShoppingBag },
+                    { to: "/wishlist", label: "Wishlist", icon: Heart },
+                    { to: "/guide", label: "Guide", icon: BookOpen },
+                  ].map(l => (
+                    <Link key={l.to} to={l.to} className="flex items-center gap-2.5 py-2.5 px-4 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all text-sm">
+                      <l.icon className="w-4 h-4" /> {l.label}
+                    </Link>
+                  ))}
+                  <div className="flex items-center gap-3 pt-2">
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
                 </div>
+              </SignedIn>
+              <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
+                <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95" aria-label="Toggle theme">
+                  {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
+                </button>
+                <SignedOut>
+                  <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
+                </SignedOut>
               </div>
-            </SignedIn>
-            <div className="flex items-center gap-3 pt-3 border-t border-border mt-3">
-              <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-muted transition-all duration-300 text-muted-foreground hover:scale-110 active:scale-95">
-                {theme === "dark" ? <Sun className="w-5 h-5 theme-toggle-icon" /> : <Moon className="w-5 h-5 theme-toggle-icon" />}
-              </button>
-              <SignedOut>
-                <Link to="/sign-in" className="btn-primary text-sm flex-1 justify-center">Sign In</Link>
-              </SignedOut>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
     </nav>
   );
