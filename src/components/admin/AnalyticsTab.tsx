@@ -285,3 +285,52 @@ export default function AnalyticsTab() {
     </div>
   );
 }
+
+function ExperimentsSection({
+  abVariantData,
+  abDailyData,
+}: {
+  abVariantData: AbVariantRow[];
+  abDailyData: AbDailyRow[];
+}) {
+  const [experiments, setExperiments] = useState<Experiment[]>(() => getExperiments());
+  const refresh = () => setExperiments(getExperiments());
+
+  useEffect(() => {
+    window.addEventListener("ak-experiments-updated", refresh);
+    return () => window.removeEventListener("ak-experiments-updated", refresh);
+  }, []);
+
+  const running = experiments.filter(e => e.status === "running");
+
+  return (
+    <div className="space-y-4">
+      <ExperimentManager experiments={experiments} onChange={refresh} />
+      {running.map((exp, idx) => {
+        // Currently only the "products-page-order" experiment has wired-up data;
+        // others render a placeholder card until their tracking is added.
+        const isWired = exp.id === "products-page-order";
+        return (
+          <div key={exp.id} className="space-y-4">
+            <div className="px-1 text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground">{exp.name}</span>
+              {!isWired && <span className="ml-2 italic">— tracking not yet wired; metadata only</span>}
+            </div>
+            {isWired ? (
+              <>
+                <AbTestCard data={abVariantData} index={idx * 2} />
+                <AbTrendChart data={abDailyData} index={idx * 2 + 1} />
+              </>
+            ) : (
+              <div className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+                <p className="font-medium text-foreground mb-1">{exp.metric}</p>
+                <p className="text-xs">{exp.hypothesis}</p>
+                <p className="text-[11px] mt-2">Variants: {exp.variants.map(v => `${v.label} (${v.weight}%)`).join(" · ")}</p>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
