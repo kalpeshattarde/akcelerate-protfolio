@@ -276,6 +276,8 @@ export default function AnalyticsTab() {
       <AbTestCard data={abVariantData} index={0} />
       <AbTrendChart data={abDailyData} index={1} />
 
+      <AdminUsageHeatmap />
+
       <div className="text-center text-xs text-muted-foreground">
         {events.length} total events tracked · Data stored locally in browser
       </div>
