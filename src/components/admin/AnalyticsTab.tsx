@@ -103,6 +103,31 @@ export default function AnalyticsTab() {
     }));
   }, [events]);
 
+  // Daily cart rate per variant (last 7 days) for trend chart
+  const abDailyData = useMemo(() => {
+    const days: Record<string, { date: string; cV: number; cC: number; eV: number; eC: number }> = {};
+    const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      days[key] = { date: d.toLocaleDateString("en", { month: "short", day: "numeric" }), cV: 0, cC: 0, eV: 0, eC: 0 };
+    }
+    events.forEach(e => {
+      const v = (e.data.variant as string) || "";
+      if (v !== "control" && v !== "catalog-early") return;
+      const key = e.timestamp.slice(0, 10);
+      if (!days[key]) return;
+      if (e.event === "products_view") { if (v === "control") days[key].cV++; else days[key].eV++; }
+      else if (e.event === "add_to_cart") { if (v === "control") days[key].cC++; else days[key].eC++; }
+    });
+    return Object.values(days).map(d => ({
+      date: d.date,
+      control: d.cV > 0 ? +((d.cC / d.cV) * 100).toFixed(1) : 0,
+      "catalog-early": d.eV > 0 ? +((d.eC / d.eV) * 100).toFixed(1) : 0,
+    }));
+  }, [events]);
+
   const stats = [
     { label: "Page Views", numeric: counts.page_view, icon: FileText, iconClass: "text-primary" },
     { label: "Product Views", numeric: counts.product_view, icon: Eye, iconClass: "text-blue-500" },
