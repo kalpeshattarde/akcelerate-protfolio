@@ -27,6 +27,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
 import BundleProgressBar from "@/components/products/BundleProgressBar";
+import ProductsSubNav from "@/components/products/ProductsSubNav";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
@@ -233,13 +234,13 @@ export default function Products() {
         <PersonalizedHero />
 
         {/* 2. PROBLEM — agitate the pain */}
-        <ProblemSection />
+        <div id="problem"><ProblemSection /></div>
 
         {/* 3. COST BREAKDOWN — quantify the pain */}
-        <CostBreakdownSection />
+        <div id="cost-breakdown"><CostBreakdownSection /></div>
 
         {/* 4. SOLUTION — introduce our answer */}
-        <SolutionSection />
+        <div id="solution"><SolutionSection /></div>
 
         {/* 5. COMPARISON — us vs DIY/AI tools */}
         <ComparisonSection />
