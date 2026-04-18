@@ -1,9 +1,11 @@
-import { ReactNode, useState, useEffect, useRef } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp, Mail, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Preloader from "./Preloader";
+import OnboardingTour from "./OnboardingTour";
 import { trackPageView } from "@/lib/analytics";
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -17,30 +19,11 @@ function WhatsAppIcon({ className }: { className?: string }) {
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const [showTop, setShowTop] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [pageKey, setPageKey] = useState(0);
-  const [transitionClass, setTransitionClass] = useState("page-enter-active");
   const { pathname } = useLocation();
-  const prevPathname = useRef(pathname);
 
   useEffect(() => {
-    if (prevPathname.current !== pathname) {
-      // Exit animation
-      setTransitionClass("page-exit-active");
-      const timer = setTimeout(() => {
-        window.scrollTo(0, 0);
-        setPageKey(k => k + 1);
-        setTransitionClass("page-enter");
-        // Trigger enter animation next frame
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setTransitionClass("page-enter-active");
-          });
-        });
-      }, 250);
-      prevPathname.current = pathname;
-      trackPageView(pathname);
-      return () => clearTimeout(timer);
-    }
+    window.scrollTo(0, 0);
+    trackPageView(pathname);
   }, [pathname]);
 
   useEffect(() => {
@@ -65,9 +48,17 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
         <Navbar />
         <main className="flex-1 relative">
-          <div key={pageKey} className={transitionClass}>
-            {children}
-          </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </main>
         <Footer />
 
@@ -112,6 +103,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <ArrowUp className="w-5 h-5 text-primary-foreground" />
           </button>
         )}
+        <OnboardingTour />
       </div>
     </>
   );

@@ -12,6 +12,8 @@ import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
 import HeroDashboard from "@/components/HeroDashboard";
 import MagneticButton from "@/components/MagneticButton";
+import MeshBackground from "@/components/motion/MeshBackground";
+import { Magnetic } from "@/components/motion/MotionPrimitives";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
@@ -45,9 +47,8 @@ export default function HomePage() {
       <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <MeshBackground />
         <div className="absolute inset-0 hero-grid-bg" />
-        <div className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.07)" }} />
-        <div className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.07)" }} />
         {[
           { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
           { size: 3, color: "rgba(6,182,212,0.8)", left: "22%", top: "80%", dur: "8s", delay: "1.2s" },
@@ -75,12 +76,12 @@ export default function HomePage() {
                 We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
-                <MagneticButton>
+                <Magnetic strength={20}>
                   <Link to="/solutions" className="btn-primary"><Play className="w-4 h-4" /> Explore Solutions</Link>
-                </MagneticButton>
-                <MagneticButton>
+                </Magnetic>
+                <Magnetic strength={14}>
                   <Link to="/contact" className="btn-secondary">Book a Consultation <ArrowRight className="w-4 h-4" /></Link>
-                </MagneticButton>
+                </Magnetic>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {heroStats.map((s, i) => (
