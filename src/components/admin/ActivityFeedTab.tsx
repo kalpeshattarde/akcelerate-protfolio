@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Activity, ShoppingCart, UserPlus, FileText, Mail, Package, Clock } from "lucide-react";
+import { EmptyState, FeedSkeleton } from "./AdminPolish";
 
 interface ActivityItem {
   id: string;
@@ -64,11 +66,21 @@ function timeAgo(dateStr: string) {
 }
 
 export default function ActivityFeedTab() {
-  const [activities, setActivities] = useState<ActivityItem[]>(getActivityFeed);
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [filter, setFilter] = useState<"all" | ActivityItem["type"]>("all");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setActivities(getActivityFeed());
+      setLoading(false);
+    }, 350);
+    return () => clearTimeout(t);
+  }, []);
 
   // Simulate live activity every 30s
   useEffect(() => {
+    if (loading) return;
     const messages = [
       { type: "purchase" as const, message: "New purchase: Travel Booking App by visitor", icon: "cart" as const },
       { type: "signup" as const, message: "New user registered: demo@lovable.dev", icon: "user" as const },
@@ -90,7 +102,7 @@ export default function ActivityFeedTab() {
       });
     }, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [loading]);
 
   const filtered = filter === "all" ? activities : activities.filter(a => a.type === filter);
 
@@ -107,40 +119,55 @@ export default function ActivityFeedTab() {
       {/* Filter */}
       <div className="flex gap-2 flex-wrap">
         {(["all", "purchase", "signup", "content", "email", "product", "order_status"] as const).map(f => (
-          <button key={f} onClick={() => setFilter(f)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
+          <button key={f} onClick={() => setFilter(f)} disabled={loading}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-50 ${filter === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
             {f === "all" ? "All" : f === "order_status" ? "Orders" : f.charAt(0).toUpperCase() + f.slice(1) + "s"}
           </button>
         ))}
       </div>
 
       {/* Feed */}
-      <div className="space-y-2">
-        {filtered.length === 0 ? (
-          <div className="text-center py-16 rounded-2xl border border-border bg-muted/20">
-            <Activity className="w-12 h-12 text-muted-foreground/40 mx-auto mb-3" />
-            <p className="text-muted-foreground">No activity to show.</p>
-          </div>
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div key="skeleton" exit={{ opacity: 0 }}>
+            <FeedSkeleton items={6} />
+          </motion.div>
+        ) : filtered.length === 0 ? (
+          <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-2xl border border-border bg-card">
+            <EmptyState
+              icon={Activity}
+              title={activities.length === 0 ? "No activity yet" : `No ${filter === "order_status" ? "order" : filter} events`}
+              description={activities.length === 0 ? "Live events from purchases, signups, and content updates will stream here in real time." : "Switch the filter to view other event types."}
+            />
+          </motion.div>
         ) : (
-          filtered.map((item, idx) => {
-            const Icon = ICON_MAP[item.icon] || Clock;
-            return (
-              <div key={item.id} className={`flex items-start gap-3 p-3 rounded-xl border border-border bg-card hover:border-primary/20 transition-all ${idx === 0 ? "ring-1 ring-primary/10" : ""}`}>
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${TYPE_COLORS[item.type]}`}>
-                  <Icon className="w-4 h-4" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-foreground">{item.message}</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{timeAgo(item.timestamp)}</p>
-                </div>
-                <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full flex-shrink-0 ${TYPE_COLORS[item.type]}`}>
-                  {item.type === "order_status" ? "order" : item.type}
-                </span>
-              </div>
-            );
-          })
+          <motion.div key="feed" className="space-y-2">
+            {filtered.map((item, idx) => {
+              const Icon = ICON_MAP[item.icon] || Clock;
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: Math.min(idx * 0.04, 0.4) }}
+                  className={`flex items-start gap-3 p-3 rounded-xl border border-border bg-card hover:border-primary/20 transition-all ${idx === 0 ? "ring-1 ring-primary/10" : ""}`}
+                >
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${TYPE_COLORS[item.type]}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-foreground">{item.message}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{timeAgo(item.timestamp)}</p>
+                  </div>
+                  <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full flex-shrink-0 ${TYPE_COLORS[item.type]}`}>
+                    {item.type === "order_status" ? "order" : item.type}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }
