@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
 import ConfigTab from "@/components/admin/ConfigTab";
 import ProductsTab from "@/components/admin/ProductsTab";
@@ -34,6 +36,14 @@ const ALL_TABS = [
 
 function AdminContent() {
   const { logout, role, currentUser, hasPermission } = useAdminAuth();
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("ak-admin-sidebar-collapsed") === "1";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("ak-admin-sidebar-collapsed", collapsed ? "1" : "0");
+  }, [collapsed]);
 
   const visibleTabs = ALL_TABS.filter(t => hasPermission(t.value));
 
@@ -61,18 +71,44 @@ function AdminContent() {
           <p className="text-muted-foreground mb-8">Manage products, users, orders, content, and analytics.</p>
 
           <Tabs defaultValue="dashboard" orientation="vertical" className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
-            <TabsList className="flex lg:flex-col flex-row flex-wrap lg:flex-nowrap h-auto gap-1 p-2 lg:w-56 lg:sticky lg:top-28 bg-muted/60 backdrop-blur rounded-xl border border-border lg:items-stretch">
-              {visibleTabs.map(t => (
-                <TabsTrigger
-                  key={t.value}
-                  value={t.value}
-                  className="gap-2 justify-start w-full data-[state=active]:bg-background data-[state=active]:shadow-sm"
+            <TooltipProvider delayDuration={0}>
+              <TabsList
+                className={`flex lg:flex-col flex-row flex-wrap lg:flex-nowrap h-auto gap-1 p-2 lg:sticky lg:top-28 bg-muted/60 backdrop-blur rounded-xl border border-border lg:items-stretch transition-[width] duration-300 ease-out ${
+                  collapsed ? "lg:w-16" : "lg:w-56"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setCollapsed(c => !c)}
+                  aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                  aria-pressed={collapsed}
+                  className="hidden lg:flex items-center justify-center w-full h-8 mb-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-background/70 transition-colors"
                 >
-                  <t.icon className="w-4 h-4 shrink-0" />
-                  <span className="truncate">{t.label}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
+                  {collapsed ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+                </button>
+                {visibleTabs.map(t => {
+                  const trigger = (
+                    <TabsTrigger
+                      key={t.value}
+                      value={t.value}
+                      aria-label={t.label}
+                      className={`gap-2 w-full data-[state=active]:bg-background data-[state=active]:shadow-sm ${
+                        collapsed ? "lg:justify-center lg:px-2 justify-start" : "justify-start"
+                      }`}
+                    >
+                      <t.icon className="w-4 h-4 shrink-0" />
+                      <span className={`truncate ${collapsed ? "lg:hidden" : ""}`}>{t.label}</span>
+                    </TabsTrigger>
+                  );
+                  return collapsed ? (
+                    <Tooltip key={t.value}>
+                      <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+                      <TooltipContent side="right">{t.label}</TooltipContent>
+                    </Tooltip>
+                  ) : trigger;
+                })}
+              </TabsList>
+            </TooltipProvider>
 
             <div className="flex-1 min-w-0 w-full">
             {hasPermission("dashboard") && <TabsContent value="dashboard" className="mt-0"><DashboardTab /></TabsContent>}
