@@ -8,6 +8,7 @@ import { useProducts } from "@/hooks/useProducts";
 import PricingSelector from "@/components/products/PricingSelector";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import RecommendationEngine from "@/components/products/RecommendationEngine";
+import { recordProductView } from "@/components/products/PersonalizedPicks";
 import { downloadProductFile } from "@/lib/downloadProduct";
 import { toast } from "sonner";
 import { trackProductView, trackPurchase } from "@/lib/analytics";
@@ -21,10 +22,13 @@ export default function ProductDetail() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
-  // Track product view
+  // Track product view + record for personalization
   useEffect(() => {
-    if (product) trackProductView(product.slug, product.name);
-  }, [product?.slug, product?.name]);
+    if (product) {
+      trackProductView(product.slug, product.name);
+      recordProductView(product.id);
+    }
+  }, [product?.slug, product?.name, product?.id]);
 
   if (!product) {
     return (
