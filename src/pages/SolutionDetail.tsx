@@ -28,9 +28,29 @@ export default function SolutionDetailPage() {
   const related = solution.relatedSlugs.map(s => solutions.find(x => x.slug === s)).filter(Boolean);
   const cross = relatedToSolution(solution.slug);
 
+  const solutionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: solution.title,
+    description: solution.description,
+    provider: { "@type": "Organization", name: "AKcelerate" },
+    serviceType: solution.features?.slice(0, 5),
+    areaServed: solution.industries,
+  };
+
   return (
     <>
-      <SEOHead title={solution.title} description={solution.description} path={`/solutions/${slug}`} />
+      <SEOHead
+        title={solution.title}
+        description={solution.description}
+        path={`/solutions/${slug}`}
+        jsonLd={solutionJsonLd}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Solutions", path: "/solutions" },
+          { name: solution.title, path: `/solutions/${slug}` },
+        ]}
+      />
       <HeroPage
         label="Solutions"
         title={<><span className="gradient-text">{solution.title}</span></>}

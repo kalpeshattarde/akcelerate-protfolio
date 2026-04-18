@@ -25,9 +25,28 @@ export default function ServiceDetailPage() {
     );
   }
 
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.description,
+    provider: { "@type": "Organization", name: "AKcelerate" },
+    serviceType: service.features?.slice(0, 5),
+  };
+
   return (
     <>
-      <SEOHead title={service.title} description={service.description} path={`/services/${slug}`} />
+      <SEOHead
+        title={service.title}
+        description={service.description}
+        path={`/services/${slug}`}
+        jsonLd={serviceJsonLd}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+          { name: service.title, path: `/services/${slug}` },
+        ]}
+      />
       <HeroPage label="Services" title={<><span className="gradient-text">{service.title}</span></>} description={service.description} />
 
       <section className="py-16 border-b border-border">
