@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Pause, Play, Radio, Trash2, Filter as FilterIcon, Bell, BellOff } from "lucide-react";
-import { getAnalyticsEvents } from "@/lib/analytics";
+// getAnalyticsEvents intentionally not imported — cohort filter wraps it
 import { filterEventsByCohort, getSelectedCohortId } from "@/lib/cohorts";
 import { ChartCard, EmptyState } from "./AdminPolish";
 import CohortPicker from "./CohortPicker";
