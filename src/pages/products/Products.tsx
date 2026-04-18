@@ -29,12 +29,12 @@ import type { Product } from "@/data/products";
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, products, grantAllAccess } = useProducts();
+  const { topSelling, mobileApps, webSaas, isPurchased, purchase, products, grantAllAccess, purchased } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
-  const [search, setSearch] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sort, setSort] = useState<SortOption>("popular");
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [compareList, setCompareList] = useState<string[]>([]);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [compareList, setCompareList] = useState<string[]>([]);
