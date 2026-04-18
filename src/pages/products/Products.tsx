@@ -37,10 +37,9 @@ export default function Products() {
   const [sort, setSort] = useState<SortOption>("popular");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [bannerDismissed, setBannerDismissed] = useState(false);
   const [compareList, setCompareList] = useState<string[]>([]);
 
-  // A/B variant: control = current order; variantB = catalog right after Solution.
+  // A/B variant: control = current order; catalog-early = catalog right after Solution.
   // Stable per-visitor assignment via localStorage.
   const [orderVariant] = useState<"control" | "catalog-early">(() => {
     try {
@@ -64,26 +63,6 @@ export default function Products() {
       trackEvent("bundle_unlocked", { variant: orderVariant, cartCount: 5 });
     }
   }, [cart.totalCount, orderVariant]);
-
-  // Get last purchased product
-  const lastPurchased = useMemo(() => {
-    try {
-      const sales = JSON.parse(localStorage.getItem("ak-sales") || "[]");
-      if (sales.length === 0) return null;
-      const last = sales[sales.length - 1];
-      const product = products.find(p => p.id === last.id);
-      if (!product) return null;
-      return { product, date: last.date };
-    } catch { return null; }
-  }, [products, purchased]);
-
-  // SEO handled by SEOHead component
-
-  const toggleTag = (tag: string) =>
-    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
-
-  const filteredWebSaas = useMemo(() => sortProducts(filterProducts(webSaas, search, selectedTags), sort, currency), [webSaas, search, selectedTags, sort, currency]);
-  const filteredMobileApps = useMemo(() => sortProducts(filterProducts(mobileApps, search, selectedTags), sort, currency), [mobileApps, search, selectedTags, sort, currency]);
 
   const handleBuy = (id: string) => {
     if (cart.isInCart(id)) {
