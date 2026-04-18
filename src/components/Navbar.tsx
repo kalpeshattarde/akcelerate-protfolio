@@ -2,7 +2,62 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import SearchModal from "./SearchModal";
+
+/* Animated mega-menu dropdown */
+function MegaDropdown({
+  label,
+  to,
+  active,
+  children,
+  width = 340,
+}: {
+  label: string;
+  to: string;
+  active: boolean;
+  children: React.ReactNode;
+  width?: number;
+}) {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<number | null>(null);
+
+  const onEnter = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const onLeave = () => {
+    closeTimer.current = window.setTimeout(() => setOpen(false), 120);
+  };
+
+  return (
+    <div className="relative" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+      <Link
+        to={to}
+        className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${active ? "text-primary font-semibold" : "text-muted-foreground"}`}
+      >
+        {label}
+        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </Link>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-full left-0 pt-2 z-50"
+            style={{ minWidth: width }}
+          >
+            <div className="bg-popover/95 backdrop-blur-xl border border-border rounded-2xl shadow-2xl p-2 space-y-0.5">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 const solutionLinks = [
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
