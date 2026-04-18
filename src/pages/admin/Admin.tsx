@@ -134,6 +134,43 @@ function AdminContent() {
                     })}
                   </div>
                 ))}
+
+                <div className="hidden lg:block h-px bg-border/70 my-2 mx-1" />
+                <div className={`flex flex-col gap-2 px-1 pb-1 ${collapsed ? "lg:items-center" : ""}`}>
+                  <div className={`flex items-center gap-2 min-w-0 ${collapsed ? "lg:flex-col lg:gap-1" : ""}`}>
+                    <Shield className="w-4 h-4 text-muted-foreground shrink-0" />
+                    <div className={`flex flex-col min-w-0 ${collapsed ? "lg:hidden" : ""}`}>
+                      <span className="text-xs font-medium text-foreground truncate">{currentUser}</span>
+                      <span className={`text-[9px] font-semibold uppercase tracking-wider ${
+                        role === "super_admin" ? "text-red-600" :
+                        role === "manager" ? "text-amber-600" :
+                        "text-primary"
+                      }`}>{ROLE_LABELS[role]}</span>
+                    </div>
+                  </div>
+                  {collapsed ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={logout}
+                          aria-label="Sign Out"
+                          className="hidden lg:inline-flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-background/70 transition-colors"
+                        >
+                          <LogOut className="w-4 h-4" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">Sign Out</TooltipContent>
+                    </Tooltip>
+                  ) : null}
+                  <button
+                    onClick={logout}
+                    className={`inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors px-2 py-1.5 rounded-md hover:bg-background/70 ${
+                      collapsed ? "lg:hidden" : ""
+                    }`}
+                  >
+                    <LogOut className="w-3.5 h-3.5" /> Sign Out
+                  </button>
+                </div>
               </TabsList>
             </TooltipProvider>
 
