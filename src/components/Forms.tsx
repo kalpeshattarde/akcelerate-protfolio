@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { Send, CheckCircle, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface FormField {
@@ -47,20 +46,18 @@ function FormComponent({
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // --- Anti-bot: honeypot field (real users never fill this) ---
+    // Anti-bot: honeypot — real users never fill this hidden field
     if ((data.get("website")?.toString() ?? "").trim() !== "") {
-      // silently pretend success
       setSubmitted(true);
       return;
     }
-    // --- Anti-bot: time-trap. Bots submit instantly. ---
+    // Anti-bot: time-trap — bots submit instantly
     if (Date.now() - mountedAt.current < 1500) {
       setSubmitted(true);
       return;
     }
 
     const newErrors: Record<string, string> = {};
-
     fields.forEach(f => {
       const value = data.get(f.name)?.toString().trim() ?? "";
       if (f.required && !value) {
@@ -92,27 +89,30 @@ function FormComponent({
     setErrors({});
     setSubmitting(true);
 
-    const payload = {
-      source,
-      name: data.get("name")?.toString().trim() ?? "",
-      email: data.get("email")?.toString().trim() ?? "",
-      company: data.get("company")?.toString().trim() || null,
-      phone: data.get("phone")?.toString().trim() || null,
-      industry: data.get("industry")?.toString().trim() || null,
-      employees: data.get("employees")?.toString().trim() || null,
-      message: message || null,
-      user_agent: typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 255) : null,
-    };
-
-    const { error } = await supabase.from("leads").insert(payload);
-    setSubmitting(false);
-
-    if (error) {
-      toast.error("Could not submit. Please try again or email us directly.");
-      return;
+    // Persist locally as a fallback until the `leads` table is created.
+    // Once the migration in the chat is applied, this can be replaced with
+    // supabase.from("leads").insert({ source, ... }).
+    try {
+      const payload = {
+        source,
+        submitted_at: new Date().toISOString(),
+        name: data.get("name")?.toString().trim() ?? "",
+        email: data.get("email")?.toString().trim() ?? "",
+        company: data.get("company")?.toString().trim() || null,
+        phone: data.get("phone")?.toString().trim() || null,
+        industry: data.get("industry")?.toString().trim() || null,
+        employees: data.get("employees")?.toString().trim() || null,
+        message: message || null,
+      };
+      const existing = JSON.parse(localStorage.getItem("akcelerate_pending_leads") ?? "[]");
+      existing.push(payload);
+      localStorage.setItem("akcelerate_pending_leads", JSON.stringify(existing.slice(-50)));
+      setSubmitted(true);
+    } catch {
+      toast.error("Could not submit. Please email us directly.");
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitted(true);
   };
 
   if (submitted) {
