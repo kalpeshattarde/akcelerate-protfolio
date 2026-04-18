@@ -32,16 +32,17 @@ const plans = [
   },
   {
     name: "Pro Bundle",
-    priceUsd: 59,
-    priceInr: 4999,
-    period: "one-time",
-    description: "For freelancers & specialized SaaS builders shipping multiple products fast.",
+    priceUsd: 12,
+    priceInr: 999,
+    period: "per product (5+ products)",
+    description: "For freelancers & specialized SaaS builders shipping multiple products fast. Add 5 or more to unlock this rate automatically.",
     icon: Wrench,
     audience: ["Freelancers", "SaaS Builders", "Agency Owners"],
     features: [
-      "Pick any 5 prototypes",
+      "Pick any 5 or more prototypes",
+      "Just $12 / ₹999 per product",
       "Full source code ownership",
-      "Commercial license for all 5",
+      "Commercial license for every prototype",
       "Priority support & customization help",
       "Custom branding kit",
       "Free updates for 12 months",
@@ -118,7 +119,7 @@ export default function MarketplacePricing({ onAddAllToCart, onAddBundleToCart }
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $19. Five for $59. All access for $119. Custom solutions from $249.
+            One prototype for $19. $12 each when you grab 5 or more. All access for $119. Custom solutions from $249.
             <br />
             <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>

@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Trash2, ShoppingBag, Sparkles, Crown } from "lucide-react";
-import { BUNDLE_THRESHOLD, BUNDLE_PRICE, STARTER_PRICE, ALL_ACCESS_PRICE, type CartItem } from "@/hooks/useCart";
+import { BUNDLE_THRESHOLD, BUNDLE_PER_ITEM_PRICE, STARTER_PRICE, ALL_ACCESS_PRICE, type CartItem } from "@/hooks/useCart";
 import type { Currency } from "@/config/appConfig";
 
 interface CartDrawerProps {
@@ -20,7 +20,7 @@ interface CartDrawerProps {
 export default function CartDrawer({ open, onOpenChange, items, currency, total, onRemove, onClear, onCheckout, isBundle, isAllAccess }: CartDrawerProps) {
   const symbol = currency === "inr" ? "₹" : "$";
   const starterPrice = currency === "inr" ? STARTER_PRICE.inr : STARTER_PRICE.usd;
-  const bundlePrice = currency === "inr" ? BUNDLE_PRICE.inr : BUNDLE_PRICE.usd;
+  const bundlePerItem = currency === "inr" ? BUNDLE_PER_ITEM_PRICE.inr : BUNDLE_PER_ITEM_PRICE.usd;
   const allAccessPrice = currency === "inr" ? ALL_ACCESS_PRICE.inr : ALL_ACCESS_PRICE.usd;
 
   return (
@@ -51,13 +51,13 @@ export default function CartDrawer({ open, onOpenChange, items, currency, total,
               <div className="flex items-center gap-2 p-3 rounded-xl bg-primary/10 border border-primary/20 text-sm">
                 <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
                 <span className="text-foreground">
-                  <strong>Pro Bundle active!</strong> {items.length} prototypes for just {symbol}{bundlePrice.toLocaleString()}
+                  <strong>Pro Bundle active!</strong> {items.length} prototypes at just {symbol}{bundlePerItem.toLocaleString()} each
                 </span>
               </div>
             )}
             {!isBundle && !isAllAccess && items.length > 0 && (
               <div className="flex items-center gap-2 p-3 rounded-xl bg-muted border border-border text-sm text-muted-foreground">
-                Add {BUNDLE_THRESHOLD - items.length} more to unlock <strong className="text-foreground">Pro Bundle ({symbol}{bundlePrice.toLocaleString()})</strong>
+                Add {BUNDLE_THRESHOLD - items.length} more to unlock <strong className="text-foreground">Pro Bundle ({symbol}{bundlePerItem.toLocaleString()} per product)</strong>
               </div>
             )}
             {items.map(({ product }) => (
