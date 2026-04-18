@@ -48,6 +48,7 @@ export default function ServicesPage() {
         title="Services"
         description="Deep-tech AI/ML implementation services including predictive maintenance, quality analytics, and supply chain optimization."
         path="/services"
+        image="/images/akcelerate-services-og.png"
         jsonLd={jsonLd}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]}
       />

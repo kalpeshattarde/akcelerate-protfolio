@@ -31,6 +31,7 @@ export default function BlogPage() {
         title="Blog"
         description="Expert insights on AI, data science, digital transformation, and business growth strategies."
         path="/blog"
+        image="/images/akcelerate-blog-og.png"
         jsonLd={jsonLd}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog" }]}
       />
