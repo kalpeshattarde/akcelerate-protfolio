@@ -4,6 +4,7 @@ import { HeroPage } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import CTASection from "@/components/CTASection";
 import RelatedLinks from "@/components/RelatedLinks";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { CheckCircle } from "lucide-react";
 import { getIndustry } from "@/data/industries";
 import { services } from "@/data/services";
