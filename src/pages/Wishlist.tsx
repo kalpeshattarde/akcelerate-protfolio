@@ -31,7 +31,7 @@ export default function Wishlist() {
   };
 
   return (
-    <main className="pt-28 pb-20">
+    <main className="pt-20 pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 mb-2">
           <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">

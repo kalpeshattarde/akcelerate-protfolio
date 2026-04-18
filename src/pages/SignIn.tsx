@@ -3,7 +3,7 @@ import SEOHead from "@/components/SEOHead";
 
 export default function SignIn() {
   return (
-    <main className="pt-28 pb-20 flex justify-center">
+    <main className="pt-20 pb-20 flex justify-center">
       <ClerkSignIn
         routing="path"
         path="/sign-in"

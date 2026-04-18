@@ -46,7 +46,7 @@ export default function Breadcrumbs() {
   }));
 
   return (
-    <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-2">
+    <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-2">
       <motion.ol
         key={pathname}
         className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
