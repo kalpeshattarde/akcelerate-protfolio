@@ -172,15 +172,15 @@ export default function AnalyticsTab() {
   };
 
   const seedAbTestData = () => {
-    // 120 control views, 18 add_to_cart (15%), 6 bundle_unlocked
-    // 110 catalog-early views, 24 add_to_cart (~21.8%, +6.8 pts → green winner)
+    // 600 control views, 90 add_to_cart (15%), 30 bundle_unlocked
+    // 550 catalog-early views, 120 add_to_cart (~21.8%, +6.8 pts → z≈3.0, p≈0.003 → green winner)
     writeSeed([
-      ...makeEvents("products_view", "control", 120),
-      ...makeEvents("add_to_cart", "control", 18, 1000),
-      ...makeEvents("bundle_unlocked", "control", 6, 2000),
-      ...makeEvents("products_view", "catalog-early", 110),
-      ...makeEvents("add_to_cart", "catalog-early", 24, 1000),
-      ...makeEvents("bundle_unlocked", "catalog-early", 8, 2000),
+      ...makeEvents("products_view", "control", 600),
+      ...makeEvents("add_to_cart", "control", 90, 1000),
+      ...makeEvents("bundle_unlocked", "control", 30, 2000),
+      ...makeEvents("products_view", "catalog-early", 550),
+      ...makeEvents("add_to_cart", "catalog-early", 120, 1000),
+      ...makeEvents("bundle_unlocked", "catalog-early", 40, 2000),
     ]);
   };
 
