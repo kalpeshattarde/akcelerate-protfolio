@@ -88,6 +88,7 @@ function AdminContent() {
             {hasPermission("growth") && <TabsContent value="growth"><GrowthTab /></TabsContent>}
             {hasPermission("ads") && <TabsContent value="ads"><AdGeneratorTab /></TabsContent>}
             {hasPermission("audit") && <TabsContent value="audit"><AuditLogTab /></TabsContent>}
+            </div>
           </Tabs>
         </div>
       </main>
