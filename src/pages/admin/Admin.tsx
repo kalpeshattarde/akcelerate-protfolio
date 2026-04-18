@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen, Filter, Radio } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
+import FunnelTab from "@/components/admin/FunnelTab";
+import ActivityLiveTab from "@/components/admin/ActivityLiveTab";
+import { recordAdminTabView } from "@/lib/adminUsage";
 import ConfigTab from "@/components/admin/ConfigTab";
 import ProductsTab from "@/components/admin/ProductsTab";
 import AffiliateTab from "@/components/admin/AffiliateTab";
