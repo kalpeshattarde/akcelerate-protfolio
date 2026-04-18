@@ -426,6 +426,7 @@ export default function Products() {
           itemCount={cart.totalCount}
           currency={currency}
           onOpenCart={() => cart.setOpen(true)}
+          onQuickFill={handleAddBundleToCart}
         />
       </div>
     </main>
