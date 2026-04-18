@@ -87,6 +87,10 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
             name={f.name}
             type={f.type}
             placeholder={f.placeholder}
+            maxLength={255}
+            autoComplete={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "off"}
+            aria-invalid={!!errors[f.name]}
+            aria-describedby={errors[f.name] ? `${f.name}-error` : undefined}
             className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
               dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
             } ${errors[f.name] ? "!border-destructive" : ""}`}
