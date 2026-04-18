@@ -25,12 +25,12 @@ export default function Footer() {
             </div>
             <div className="flex gap-3">
               {[
-                { icon: Linkedin, href: "https://www.linkedin.com/company/akceleratehq/" },
-                { icon: Twitter, href: "https://x.com/akcelerateHQ" },
-                { icon: Instagram, href: "https://www.instagram.com/akceleratehq/" },
-              ].map((s, i) => (
-                <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center transition-colors hover:text-accent">
-                  <s.icon className="w-4 h-4" />
+                { icon: Linkedin, href: "https://www.linkedin.com/company/akceleratehq/", label: "LinkedIn" },
+                { icon: Twitter, href: "https://x.com/akcelerateHQ", label: "Twitter / X" },
+                { icon: Instagram, href: "https://www.instagram.com/akceleratehq/", label: "Instagram" },
+              ].map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`AKcelerate on ${s.label}`} className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center transition-colors hover:text-accent">
+                  <s.icon className="w-4 h-4" aria-hidden="true" />
                 </a>
               ))}
             </div>
