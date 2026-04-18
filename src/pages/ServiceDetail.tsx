@@ -8,6 +8,7 @@ import { getService } from "@/data/services";
 import { CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToService } from "@/lib/relatedContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams();
