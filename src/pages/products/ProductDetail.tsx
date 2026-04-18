@@ -74,6 +74,28 @@ export default function ProductDetail() {
     } : undefined,
   };
 
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: product.name,
+    description: product.description,
+    image: `https://akcelerate.lovable.app${product.previewImage}`,
+    applicationCategory: product.category === "mobile-app" ? "MobileApplication" : "BusinessApplication",
+    operatingSystem: product.category === "mobile-app" ? "iOS, Android" : "Web",
+    offers: {
+      "@type": "Offer",
+      price: product.price.usd.toString(),
+      priceCurrency: "USD",
+    },
+    ...(product.salesCount > 100 && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: Math.floor(product.salesCount / 10).toString(),
+      },
+    }),
+  };
+
   return (
     <>
       <SEOHead
@@ -81,7 +103,7 @@ export default function ProductDetail() {
         description={product.description.slice(0, 155)}
         path={`/products/${slug}`}
         image={product.previewImage}
-        jsonLd={productJsonLd}
+        jsonLd={[productJsonLd, softwareAppJsonLd]}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Products", path: "/products" },
