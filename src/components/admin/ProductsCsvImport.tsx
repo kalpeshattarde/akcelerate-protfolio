@@ -67,6 +67,25 @@ export function ProductsCsvImport({ onImported }: { onImported?: (count: number)
     setMapping({});
   };
 
+  const downloadSample = () => {
+    const sample = PRODUCTS.slice(0, 10).map(p => ({
+      id: p.id,
+      price_usd: p.price.usd,
+      price_inr: p.price.inr,
+      category: p.category,
+      top_seller: p.topSelling ? "true" : "false",
+      sales_count: p.salesCount,
+    }));
+    const csv = Papa.unparse(sample);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "products-sample.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleFile = (file: File) => {
     setFileName(file.name);
     Papa.parse<Record<string, string>>(file, {
