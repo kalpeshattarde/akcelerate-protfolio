@@ -95,7 +95,7 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
               dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
             } ${errors[f.name] ? "!border-destructive" : ""}`}
           />
-          {errors[f.name] && <p className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
+          {errors[f.name] && <p id={`${f.name}-error`} className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
         </div>
       ))}
       <div>
@@ -103,11 +103,15 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
         <textarea
           name="message"
           rows={4}
+          maxLength={2000}
           placeholder="Tell us about your project..."
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
           className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none ${
             dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
           }`}
         />
+        {errors.message && <p id="message-error" className="text-destructive text-xs mt-1">{errors.message}</p>}
       </div>
       <button type="submit" className="btn-primary w-full justify-center">
         <Send className="w-4 h-4" /> {buttonLabel}
