@@ -27,7 +27,9 @@ const TAB_SECTIONS = [
     items: [
       { value: "dashboard", label: "Dashboard", icon: BarChart3 },
       { value: "activity", label: "Activity", icon: Activity },
+      { value: "live", label: "Live", icon: Radio },
       { value: "analytics", label: "Analytics", icon: Activity },
+      { value: "funnel", label: "Funnel", icon: Filter },
     ],
   },
   {
