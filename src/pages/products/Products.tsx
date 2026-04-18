@@ -26,6 +26,7 @@ import CartDrawer from "@/components/products/CartDrawer";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
+import BundleProgressBar from "@/components/products/BundleProgressBar";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 
