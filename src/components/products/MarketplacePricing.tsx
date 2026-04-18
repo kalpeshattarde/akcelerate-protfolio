@@ -119,7 +119,7 @@ export default function MarketplacePricing({ onAddAllToCart, onAddBundleToCart }
             Simple Pricing. <span className="gradient-text">Insane Value.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One prototype for $19. Five for $59. All access for $119. Custom solutions from $249.
+            One prototype for $19. $12 each when you grab 5 or more. All access for $119. Custom solutions from $249.
             <br />
             <span className="font-medium text-foreground">Compare that to $3,000+ with AI tools.</span>
           </p>
