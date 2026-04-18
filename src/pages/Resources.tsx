@@ -11,9 +11,33 @@ export default function ResourcesPage() {
     { title: "ROI Calculator", desc: "Estimate the return on investment from AI implementation.", type: "Spreadsheet" },
     { title: "MLOps Best Practices Guide", desc: "Comprehensive guide to operationalizing ML models.", type: "PDF" },
   ];
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: resources.map((r, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Course",
+        name: r.title,
+        description: r.desc,
+        provider: {
+          "@type": "Organization",
+          name: "AKcelerate",
+          sameAs: "https://akcelerate.lovable.app",
+        },
+      },
+    })),
+  };
   return (
     <>
-      <SEOHead title="Resources" description="Guides, tools, and resources for AI adoption, data strategy, and digital transformation." path="/resources" />
+      <SEOHead
+        title="Resources"
+        description="Guides, tools, and resources for AI adoption, data strategy, and digital transformation."
+        path="/resources"
+        jsonLd={courseJsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Resources", path: "/resources" }]}
+      />
       <HeroPage label="Resources" title={<>Free <span className="gradient-text">Resources & Downloads</span></>} description="Practical guides, templates, and tools to accelerate your AI journey." />
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

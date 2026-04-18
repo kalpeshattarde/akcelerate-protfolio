@@ -6,9 +6,45 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";
 
 export default function ContactPage() {
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "AKcelerate",
+    image: "https://akcelerate.lovable.app/images/akcelerate-og.png",
+    url: "https://akcelerate.lovable.app",
+    telephone: "+91-8208555380",
+    email: "akceleratehq@gmail.com",
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Mumbai",
+      addressRegion: "Maharashtra",
+      addressCountry: "IN",
+    },
+    geo: { "@type": "GeoCoordinates", latitude: 19.076, longitude: 72.8777 },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "19:00",
+      },
+    ],
+    sameAs: [
+      "https://www.linkedin.com/company/akceleratehq/",
+      "https://x.com/akcelerateHQ",
+      "https://www.instagram.com/akceleratehq/",
+    ],
+  };
   return (
     <>
-      <SEOHead title="Contact" description="Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours." path="/contact" />
+      <SEOHead
+        title="Contact"
+        description="Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours."
+        path="/contact"
+        jsonLd={localBusinessJsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]}
+      />
       <HeroPage
         label="Contact"
         title={<>Let's Build Something <span className="gradient-text">Great Together</span></>}
