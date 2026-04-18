@@ -1,7 +1,8 @@
 export const CONFIG = {
   pricing: {
     single: { usd: 19, inr: 1499 },
-    bundle: { usd: 59, inr: 4999 },
+    bundle: { usd: 12, inr: 999 }, // per-product rate when buying 5+
+    bundleThreshold: 5,
     enterprise: { usd: 249, inr: 21000 },
   },
   discounts: {
