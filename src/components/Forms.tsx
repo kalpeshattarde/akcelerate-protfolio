@@ -35,22 +35,34 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
     const newErrors: Record<string, string> = {};
 
     fields.forEach(f => {
-      if (f.required && !data.get(f.name)?.toString().trim()) {
+      const value = data.get(f.name)?.toString().trim() ?? "";
+      if (f.required && !value) {
         newErrors[f.name] = `${f.label} is required`;
+        return;
       }
-      if (f.type === "email" && data.get(f.name)) {
-        const email = data.get(f.name)!.toString();
-        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          newErrors[f.name] = "Please enter a valid email";
-        }
+      if (value.length > 255) {
+        newErrors[f.name] = `${f.label} must be under 255 characters`;
+        return;
+      }
+      if (f.type === "email" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        newErrors[f.name] = "Please enter a valid email";
+      }
+      if (f.type === "tel" && value && !/^[+\d\s()-]{6,20}$/.test(value)) {
+        newErrors[f.name] = "Please enter a valid phone number";
       }
     });
+
+    const message = data.get("message")?.toString().trim() ?? "";
+    if (message.length > 2000) {
+      newErrors.message = "Message must be under 2000 characters";
+    }
 
     if (Object.keys(newErrors).length) {
       setErrors(newErrors);
       return;
     }
 
+    setErrors({});
     setSubmitted(true);
   };
 
@@ -75,11 +87,15 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
             name={f.name}
             type={f.type}
             placeholder={f.placeholder}
+            maxLength={255}
+            autoComplete={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "off"}
+            aria-invalid={!!errors[f.name]}
+            aria-describedby={errors[f.name] ? `${f.name}-error` : undefined}
             className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
               dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
             } ${errors[f.name] ? "!border-destructive" : ""}`}
           />
-          {errors[f.name] && <p className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
+          {errors[f.name] && <p id={`${f.name}-error`} className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
         </div>
       ))}
       <div>
@@ -87,11 +103,15 @@ function FormComponent({ fields, buttonLabel, dark = false }: { fields: FormFiel
         <textarea
           name="message"
           rows={4}
+          maxLength={2000}
           placeholder="Tell us about your project..."
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
           className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none ${
             dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
           }`}
         />
+        {errors.message && <p id="message-error" className="text-destructive text-xs mt-1">{errors.message}</p>}
       </div>
       <button type="submit" className="btn-primary w-full justify-center">
         <Send className="w-4 h-4" /> {buttonLabel}
