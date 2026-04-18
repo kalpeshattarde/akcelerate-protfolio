@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Filter, X, Plus, TrendingDown, Save, Trash2 } from "lucide-react";
-import { getAnalyticsEvents } from "@/lib/analytics";
+// getAnalyticsEvents intentionally not imported — cohort filter wraps it
+import { filterEventsByCohort, getSelectedCohortId } from "@/lib/cohorts";
 import { ChartCard, EmptyState, ChartSkeleton } from "./AdminPolish";
+import CohortPicker from "./CohortPicker";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,7 +51,7 @@ function persistSaved(list: SavedFunnel[]) {
 
 export default function FunnelTab() {
   const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState(() => getAnalyticsEvents());
+  const [events, setEvents] = useState(() => filterEventsByCohort(getSelectedCohortId()));
   const [steps, setSteps] = useState<string[]>(loadSteps);
   const [saved, setSaved] = useState<SavedFunnel[]>(loadSaved);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -57,12 +59,16 @@ export default function FunnelTab() {
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 250);
-    const refresh = () => setEvents(getAnalyticsEvents());
+    const refresh = () => setEvents(filterEventsByCohort(getSelectedCohortId()));
     window.addEventListener("ak-analytics-updated", refresh);
+    window.addEventListener("ak-cohort-selected", refresh);
+    window.addEventListener("ak-cohorts-updated", refresh);
     window.addEventListener("storage", refresh);
     return () => {
       clearTimeout(t);
       window.removeEventListener("ak-analytics-updated", refresh);
+      window.removeEventListener("ak-cohort-selected", refresh);
+      window.removeEventListener("ak-cohorts-updated", refresh);
       window.removeEventListener("storage", refresh);
     };
   }, []);
@@ -134,6 +140,9 @@ export default function FunnelTab() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <CohortPicker />
+      </div>
       <ChartCard title="Funnel steps" index={0}>
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
           <p className="text-xs text-muted-foreground">

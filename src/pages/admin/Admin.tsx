@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen, Filter, Radio } from "lucide-react";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen, Filter, Radio, Users2 } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
 import FunnelTab from "@/components/admin/FunnelTab";
 import ActivityLiveTab from "@/components/admin/ActivityLiveTab";
+import CohortsTab from "@/components/admin/CohortsTab";
 import { recordAdminTabView } from "@/lib/adminUsage";
 import ConfigTab from "@/components/admin/ConfigTab";
 import ProductsTab from "@/components/admin/ProductsTab";
@@ -30,6 +31,7 @@ const TAB_SECTIONS = [
       { value: "live", label: "Live", icon: Radio },
       { value: "analytics", label: "Analytics", icon: Activity },
       { value: "funnel", label: "Funnel", icon: Filter },
+      { value: "cohorts", label: "Cohorts", icon: Users2 },
     ],
   },
   {
@@ -196,6 +198,7 @@ function AdminContent() {
             {hasPermission("activity") && <TabsContent value="live"><ActivityLiveTab /></TabsContent>}
             {hasPermission("analytics") && <TabsContent value="analytics"><AnalyticsTab /></TabsContent>}
             {hasPermission("analytics") && <TabsContent value="funnel"><FunnelTab /></TabsContent>}
+            {hasPermission("analytics") && <TabsContent value="cohorts"><CohortsTab /></TabsContent>}
             {hasPermission("users") && <TabsContent value="users"><UserManagementTab /></TabsContent>}
             {hasPermission("orders") && <TabsContent value="orders"><OrderManagementTab /></TabsContent>}
             {hasPermission("content") && <TabsContent value="content"><ContentManagementTab /></TabsContent>}

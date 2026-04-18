@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import Papa from "papaparse";
-import { Upload, FileText, CheckCircle2, AlertTriangle, X } from "lucide-react";
+import { Upload, FileText, CheckCircle2, AlertTriangle, X, Download } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -65,6 +65,25 @@ export function ProductsCsvImport({ onImported }: { onImported?: (count: number)
     setHeaders([]);
     setRows([]);
     setMapping({});
+  };
+
+  const downloadSample = () => {
+    const sample = PRODUCTS.slice(0, 10).map(p => ({
+      id: p.id,
+      price_usd: p.price.usd,
+      price_inr: p.price.inr,
+      category: p.category,
+      top_seller: p.topSelling ? "true" : "false",
+      sales_count: p.salesCount,
+    }));
+    const csv = Papa.unparse(sample);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "products-sample.csv";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleFile = (file: File) => {
@@ -191,6 +210,13 @@ export function ProductsCsvImport({ onImported }: { onImported?: (count: number)
               <div className="mt-4 text-[11px] text-muted-foreground">
                 Expected headers (any subset): <span className="font-mono">id, price_usd, price_inr, category, top_seller, sales_count</span>
               </div>
+              <button
+                type="button"
+                onClick={downloadSample}
+                className="mt-3 inline-flex items-center gap-1 text-xs text-primary hover:underline"
+              >
+                <Download className="w-3 h-3" /> Download sample CSV
+              </button>
             </div>
           ) : (
             <div className="space-y-4">

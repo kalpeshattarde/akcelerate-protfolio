@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Pause, Play, Radio, Trash2, Filter as FilterIcon, Bell, BellOff } from "lucide-react";
-import { getAnalyticsEvents } from "@/lib/analytics";
+// getAnalyticsEvents intentionally not imported — cohort filter wraps it
+import { filterEventsByCohort, getSelectedCohortId } from "@/lib/cohorts";
 import { ChartCard, EmptyState } from "./AdminPolish";
+import CohortPicker from "./CohortPicker";
 
 const NOTIFY_KEY = "ak-live-notify";
 const NOTIFY_EVENT_KEY = "ak-live-notify-event";
@@ -48,7 +50,7 @@ const EVENT_COLORS: Record<string, string> = {
 };
 
 export default function ActivityLiveTab() {
-  const [events, setEvents] = useState(() => getAnalyticsEvents().slice(-MAX_DISPLAY).reverse());
+  const [events, setEvents] = useState(() => filterEventsByCohort(getSelectedCohortId()).slice(-MAX_DISPLAY).reverse());
   const [paused, setPaused] = useState(false);
   const [filter, setFilter] = useState<string>("all");
   const [notify, setNotify] = useState<boolean>(() => localStorage.getItem(NOTIFY_KEY) === "1");
@@ -75,7 +77,7 @@ export default function ActivityLiveTab() {
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
-      const next = getAnalyticsEvents().slice(-MAX_DISPLAY).reverse();
+      const next = filterEventsByCohort(getSelectedCohortId()).slice(-MAX_DISPLAY).reverse();
       const lastSeen = lastSeenRef.current;
       // Detect new matching events for notification
       if (notify && lastSeen) {
@@ -118,6 +120,9 @@ export default function ActivityLiveTab() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <CohortPicker />
+      </div>
       <ChartCard
         title="Live activity"
         index={0}
