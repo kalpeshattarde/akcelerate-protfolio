@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import Papa from "papaparse";
-import { Upload, FileText, CheckCircle2, AlertTriangle, X } from "lucide-react";
+import { Upload, FileText, CheckCircle2, AlertTriangle, X, Download } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -191,6 +191,13 @@ export function ProductsCsvImport({ onImported }: { onImported?: (count: number)
               <div className="mt-4 text-[11px] text-muted-foreground">
                 Expected headers (any subset): <span className="font-mono">id, price_usd, price_inr, category, top_seller, sales_count</span>
               </div>
+              <button
+                type="button"
+                onClick={downloadSample}
+                className="mt-3 inline-flex items-center gap-1 text-xs text-primary hover:underline"
+              >
+                <Download className="w-3 h-3" /> Download sample CSV
+              </button>
             </div>
           ) : (
             <div className="space-y-4">
