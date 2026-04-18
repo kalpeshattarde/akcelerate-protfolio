@@ -1,11 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
-import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Smartphone, Globe, Search, X, ShoppingCart, ArrowUpDown, LayoutDashboard, BookOpen, Sparkles } from "lucide-react";
 import { useGeoDetection } from "@/hooks/useGeoDetection";
 import { useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
@@ -18,7 +14,7 @@ import ComparisonSection from "@/components/products/ComparisonSection";
 import SavingsSection from "@/components/products/SavingsSection";
 import UseCasesSection from "@/components/products/UseCasesSection";
 import TopSellingSection from "@/components/products/TopSellingSection";
-import ProductCard from "@/components/products/ProductCard";
+import CatalogSection from "@/components/products/CatalogSection";
 import MarketplacePricing from "@/components/products/MarketplacePricing";
 import TrustSection from "@/components/products/TrustSection";
 import ProductsFAQ from "@/components/products/ProductsFAQ";
@@ -30,35 +26,6 @@ import ProductCompare from "@/components/products/ProductCompare";
 import BundleProgressBar from "@/components/products/BundleProgressBar";
 import ProductsSubNav from "@/components/products/ProductsSubNav";
 import type { Product } from "@/data/products";
-import type { Currency } from "@/config/appConfig";
-
-type SortOption = "popular" | "price-low" | "price-high" | "name-az" | "name-za";
-
-function filterProducts(products: Product[], search: string, tags: string[]) {
-  return products.filter(p => {
-    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.shortDesc.toLowerCase().includes(search.toLowerCase());
-    const matchTags = tags.length === 0 || tags.some(t => p.tags.includes(t));
-    return matchSearch && matchTags;
-  });
-}
-
-function sortProducts(products: Product[], sort: SortOption, currency: Currency) {
-  const sorted = [...products];
-  switch (sort) {
-    case "popular": return sorted.sort((a, b) => b.salesCount - a.salesCount);
-    case "price-low": return sorted.sort((a, b) => (currency === "inr" ? a.price.inr - b.price.inr : a.price.usd - b.price.usd));
-    case "price-high": return sorted.sort((a, b) => (currency === "inr" ? b.price.inr - a.price.inr : b.price.usd - a.price.usd));
-    case "name-az": return sorted.sort((a, b) => a.name.localeCompare(b.name));
-    case "name-za": return sorted.sort((a, b) => b.name.localeCompare(a.name));
-    default: return sorted;
-  }
-}
-
-const TAG_OPTIONS = [
-  "analytics", "ai", "crm", "ecommerce", "healthcare", "finance",
-  "education", "fitness", "booking", "delivery", "saas", "mobile",
-  "dashboard", "productivity", "wellness",
-];
 
 export default function Products() {
   const { currency } = useGeoDetection();
