@@ -153,7 +153,7 @@ export default function FunnelTab() {
             )}
             <button
               type="button"
-              onClick={saveCurrent}
+              onClick={openSave}
               className="text-xs inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 hover:bg-muted"
             >
               <Save className="w-3 h-3" /> Save
