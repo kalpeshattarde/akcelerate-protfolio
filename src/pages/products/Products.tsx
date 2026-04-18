@@ -386,25 +386,16 @@ export default function Products() {
           </Tabs>
         </div>
 
-        {/* COMPARISON */}
-        <ComparisonSection />
-
-        {/* SAVINGS */}
-        <SavingsSection />
-
-        {/* USE CASES */}
-        <UseCasesSection />
-
-        {/* MARKETPLACE PRICING */}
+        {/* 10. MARKETPLACE PRICING — convert */}
         <MarketplacePricing onAddAllToCart={handleAddAllToCart} onAddBundleToCart={handleAddBundleToCart} />
 
-        {/* TRUST SECTION */}
+        {/* 11. TRUST — reduce risk */}
         <TrustSection />
 
-        {/* FAQ — SEO */}
+        {/* 12. FAQ — handle objections */}
         <ProductsFAQ />
 
-        {/* FINAL CTA */}
+        {/* 13. FINAL CTA — close */}
         <FinalCTA />
 
         <CartDrawer
