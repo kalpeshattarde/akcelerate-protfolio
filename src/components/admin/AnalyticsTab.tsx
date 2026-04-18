@@ -369,14 +369,30 @@ export default function AnalyticsTab() {
             </table>
             {(() => {
               const MIN_VIEWS = 100;
-              const MIN_LIFT = 5; // percentage points
+              const ALPHA = 0.05;
               const ctrl = abVariantData.find(r => r.variant === "control");
               const exp = abVariantData.find(r => r.variant === "catalog-early");
               if (!ctrl || !exp) return null;
               const enoughData = ctrl.views >= MIN_VIEWS && exp.views >= MIN_VIEWS;
               const lift = +(exp.cartRate - ctrl.cartRate).toFixed(1);
               const winner = lift > 0 ? "catalog-early" : lift < 0 ? "control" : null;
-              const significant = enoughData && Math.abs(lift) >= MIN_LIFT;
+
+              // Two-proportion z-test (pooled). Returns two-tailed p-value.
+              // Abramowitz & Stegun 26.2.17 approximation for normal CDF.
+              const normalCdf = (z: number) => {
+                const t = 1 / (1 + 0.2316419 * Math.abs(z));
+                const d = 0.3989422804014327 * Math.exp(-z * z / 2);
+                const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+                return z > 0 ? 1 - p : p;
+              };
+              const p1 = ctrl.addToCart / Math.max(ctrl.views, 1);
+              const p2 = exp.addToCart / Math.max(exp.views, 1);
+              const pPool = (ctrl.addToCart + exp.addToCart) / Math.max(ctrl.views + exp.views, 1);
+              const se = Math.sqrt(pPool * (1 - pPool) * (1 / Math.max(ctrl.views, 1) + 1 / Math.max(exp.views, 1)));
+              const z = se > 0 ? (p2 - p1) / se : 0;
+              const pValue = 2 * (1 - normalCdf(Math.abs(z)));
+              const pStr = pValue < 0.001 ? "<0.001" : pValue.toFixed(3);
+              const significant = enoughData && pValue < ALPHA;
 
               if (!enoughData) {
                 const remaining = Math.max(0, MIN_VIEWS - Math.min(ctrl.views, exp.views));
@@ -391,14 +407,14 @@ export default function AnalyticsTab() {
                 return (
                   <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20">
                     <span aria-hidden>✓</span>
-                    <span><strong>{winner}</strong> wins by {Math.abs(lift)} pts on cart rate.</span>
+                    <span><strong>{winner}</strong> wins by {Math.abs(lift)} pts on cart rate (p={pStr}, z={z.toFixed(2)}).</span>
                   </div>
                 );
               }
               return (
                 <div className="mt-3 flex items-start gap-2 text-xs p-2.5 rounded-lg bg-muted text-muted-foreground border border-border">
                   <span aria-hidden>≈</span>
-                  <span>No significant winner yet (lift {lift > 0 ? "+" : ""}{lift} pts, threshold ±{MIN_LIFT}).</span>
+                  <span>No significant winner yet (lift {lift > 0 ? "+" : ""}{lift} pts, p={pStr}, threshold α={ALPHA}).</span>
                 </div>
               );
             })()}
