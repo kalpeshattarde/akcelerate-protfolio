@@ -277,6 +277,35 @@ export default function FunnelTab() {
           />
         )}
       </ChartCard>
+
+      <Dialog open={saveOpen} onOpenChange={setSaveOpen}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Save funnel</DialogTitle>
+            <DialogDescription>
+              Save the current {steps.length}-step configuration so you can switch back to it later.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="funnel-name" className="text-xs">Name</Label>
+            <Input
+              id="funnel-name"
+              autoFocus
+              value={saveName}
+              onChange={(e) => setSaveName(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && saveName.trim()) confirmSave(); }}
+              placeholder="e.g. Checkout flow"
+            />
+            <p className="text-[11px] text-muted-foreground">
+              Steps: {steps.join(" → ")}
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setSaveOpen(false)}>Cancel</Button>
+            <Button disabled={!saveName.trim()} onClick={confirmSave}>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
