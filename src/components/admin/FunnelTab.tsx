@@ -51,7 +51,7 @@ function persistSaved(list: SavedFunnel[]) {
 
 export default function FunnelTab() {
   const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState(() => getAnalyticsEvents());
+  const [events, setEvents] = useState(() => filterEventsByCohort(getSelectedCohortId()));
   const [steps, setSteps] = useState<string[]>(loadSteps);
   const [saved, setSaved] = useState<SavedFunnel[]>(loadSaved);
   const [saveOpen, setSaveOpen] = useState(false);
@@ -59,12 +59,16 @@ export default function FunnelTab() {
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 250);
-    const refresh = () => setEvents(getAnalyticsEvents());
+    const refresh = () => setEvents(filterEventsByCohort(getSelectedCohortId()));
     window.addEventListener("ak-analytics-updated", refresh);
+    window.addEventListener("ak-cohort-selected", refresh);
+    window.addEventListener("ak-cohorts-updated", refresh);
     window.addEventListener("storage", refresh);
     return () => {
       clearTimeout(t);
       window.removeEventListener("ak-analytics-updated", refresh);
+      window.removeEventListener("ak-cohort-selected", refresh);
+      window.removeEventListener("ak-cohorts-updated", refresh);
       window.removeEventListener("storage", refresh);
     };
   }, []);
