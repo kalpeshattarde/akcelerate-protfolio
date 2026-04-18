@@ -12,9 +12,45 @@ const jobs = [
 ];
 
 export default function CareersPage() {
+  const today = new Date().toISOString().split("T")[0];
+  const validThrough = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const jobsJsonLd = jobs.map((j) => ({
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: j.title,
+    description: j.desc,
+    datePosted: today,
+    validThrough,
+    employmentType: "FULL_TIME",
+    hiringOrganization: {
+      "@type": "Organization",
+      name: "AKcelerate",
+      sameAs: "https://akcelerate.lovable.app",
+      logo: "https://akcelerate.lovable.app/images/logo-800x800.svg",
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: j.location.includes("Mumbai") ? "Mumbai" : "Remote",
+        addressRegion: "Maharashtra",
+        addressCountry: "IN",
+      },
+    },
+    ...(j.location.toLowerCase().includes("remote") && {
+      jobLocationType: "TELECOMMUTE",
+      applicantLocationRequirements: { "@type": "Country", name: "India" },
+    }),
+  }));
   return (
     <>
-      <SEOHead title="Careers" description="Join AKcelerate — explore open roles in AI, data science, and full-stack development." path="/careers" />
+      <SEOHead
+        title="Careers"
+        description="Join AKcelerate — explore open roles in AI, data science, and full-stack development."
+        path="/careers"
+        jsonLd={jobsJsonLd}
+        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Careers", path: "/careers" }]}
+      />
       <HeroPage label="Careers" title={<>Join the <span className="gradient-text">AKcelerate Team</span></>} description="Help businesses grow with AI. We're looking for passionate builders and problem-solvers." />
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
