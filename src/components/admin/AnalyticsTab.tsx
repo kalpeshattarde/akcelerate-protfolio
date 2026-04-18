@@ -6,6 +6,7 @@ import { AnimatedStatCard, ChartCard, ChartSkeleton, EmptyState, StatSkeleton } 
 import AbSeedDevBar from "./analytics/AbSeedDevBar";
 import AbTestCard, { type AbVariantRow } from "./analytics/AbTestCard";
 import AbTrendChart, { type AbDailyRow } from "./analytics/AbTrendChart";
+import AdminUsageHeatmap from "./AdminUsageHeatmap";
 
 const COLORS = ["hsl(var(--primary))", "hsl(var(--accent))", "#f59e0b", "#10b981", "#8b5cf6", "#ef4444"];
 const tooltipStyle = {
@@ -274,6 +275,8 @@ export default function AnalyticsTab() {
 
       <AbTestCard data={abVariantData} index={0} />
       <AbTrendChart data={abDailyData} index={1} />
+
+      <AdminUsageHeatmap />
 
       <div className="text-center text-xs text-muted-foreground">
         {events.length} total events tracked · Data stored locally in browser
