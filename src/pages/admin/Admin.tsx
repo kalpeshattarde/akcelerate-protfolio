@@ -187,7 +187,9 @@ function AdminContent() {
             <div className="flex-1 min-w-0 w-full">
             {hasPermission("dashboard") && <TabsContent value="dashboard" className="mt-0"><DashboardTab /></TabsContent>}
             {hasPermission("activity") && <TabsContent value="activity"><ActivityFeedTab /></TabsContent>}
+            {hasPermission("activity") && <TabsContent value="live"><ActivityLiveTab /></TabsContent>}
             {hasPermission("analytics") && <TabsContent value="analytics"><AnalyticsTab /></TabsContent>}
+            {hasPermission("analytics") && <TabsContent value="funnel"><FunnelTab /></TabsContent>}
             {hasPermission("users") && <TabsContent value="users"><UserManagementTab /></TabsContent>}
             {hasPermission("orders") && <TabsContent value="orders"><OrderManagementTab /></TabsContent>}
             {hasPermission("content") && <TabsContent value="content"><ContentManagementTab /></TabsContent>}
