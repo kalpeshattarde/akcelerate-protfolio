@@ -73,6 +73,31 @@ export default function Products() {
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [compareList, setCompareList] = useState<string[]>([]);
 
+  // A/B variant: control = current order; variantB = catalog right after Solution.
+  // Stable per-visitor assignment via localStorage.
+  const [orderVariant] = useState<"control" | "catalog-early">(() => {
+    try {
+      const existing = localStorage.getItem("ak-ab-products-order");
+      if (existing === "control" || existing === "catalog-early") return existing;
+      const v = Math.random() < 0.5 ? "control" : "catalog-early";
+      localStorage.setItem("ak-ab-products-order", v);
+      return v;
+    } catch {
+      return "control";
+    }
+  });
+
+  useEffect(() => {
+    trackEvent("products_view", { variant: orderVariant });
+  }, [orderVariant]);
+
+  // Fire bundle-unlock event exactly once per session when threshold is crossed
+  useEffect(() => {
+    if (cart.totalCount === 5) {
+      trackEvent("bundle_unlocked", { variant: orderVariant, cartCount: 5 });
+    }
+  }, [cart.totalCount, orderVariant]);
+
   // Get last purchased product
   const lastPurchased = useMemo(() => {
     try {
