@@ -60,17 +60,14 @@ function MegaDropdown({
 }
 
 const solutionLinks = [
-  { to: "/solutions/ai-agents", title: "AI Agents", desc: "Sales, support & internal copilots", icon: Bot },
-  { to: "/solutions/automation-systems", title: "Automation Systems", desc: "n8n, CRM, email & API workflows", icon: Workflow },
-  { to: "/solutions/mvp-21day", title: "21-Day MVP", desc: "Idea to live AI MVP in 21 days", icon: Rocket },
-  { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
-  { to: "/solutions/ai-ml", title: "AI / ML Solutions", desc: "ML models, NLP & generative AI", icon: Activity },
-  { to: "/solutions/business-consulting", title: "Business Consulting", desc: "AI strategy & digital transformation", icon: Radio },
-  { to: "/solutions/saas-dev", title: "Website & SaaS Dev", desc: "Custom apps, MVPs & dashboards", icon: Monitor },
-  { to: "/solutions/automated-analytics", title: "Automated Analytics", desc: "Real-time reporting & KPI tracking", icon: BarChart3 },
-  { to: "/solutions/data-visualization", title: "Data Visualization", desc: "Power BI, Tableau & BI dashboards", icon: LayoutDashboard },
+  { to: "/solutions/automation-systems", title: "Automation Systems & AI Agents", desc: "n8n workflows + sales, support & internal copilots", icon: Workflow },
+  { to: "/solutions/ai-ml", title: "AI / ML & MLOps", desc: "Models, generative AI & production MLOps", icon: Activity },
+  { to: "/solutions/automated-analytics", title: "Analytics & Visualization", desc: "Power BI, Tableau & real-time dashboards", icon: BarChart3 },
   { to: "/solutions/cloud-devops", title: "Cloud & DevOps", desc: "AWS, Azure, GCP & CI/CD pipelines", icon: Cloud },
-  { to: "/solutions/mlops", title: "MLOps", desc: "Model deployment, monitoring & MLflow", icon: Settings },
+  { to: "/solutions/website-dev", title: "Website Development", desc: "Marketing sites, landing pages & eCommerce", icon: Globe },
+  { to: "/solutions/saas-dev", title: "App & SaaS Development", desc: "Custom apps, MVPs & dashboards", icon: Monitor },
+  { to: "/solutions/consulting", title: "Consulting", desc: "AI strategy & digital transformation", icon: Radio },
+  { to: "/solutions/mvp-21day", title: "21-Day MVP", desc: "Idea to live AI MVP in 21 days", icon: Rocket },
 ];
 
 
