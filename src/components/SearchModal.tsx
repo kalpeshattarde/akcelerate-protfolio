@@ -1,21 +1,22 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Search, FileText, Package, Newspaper, ArrowRight } from "lucide-react";
+import { Search, FileText, Package, Newspaper, ArrowRight, Layers } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { blogPosts } from "@/data/blog";
+import { solutions } from "@/data/solutions";
 
 interface SearchResult {
   title: string;
   description: string;
   path: string;
-  type: "page" | "product" | "blog";
+  type: "page" | "product" | "blog" | "solution";
 }
 
 const PAGES: SearchResult[] = [
   { title: "Home", description: "Main landing page", path: "/", type: "page" },
   { title: "Solutions", description: "All solution areas", path: "/solutions", type: "page" },
-  
+
   { title: "Industries", description: "Sectors we specialise in", path: "/industries", type: "page" },
   { title: "Pricing", description: "Plans & pricing", path: "/pricing", type: "page" },
   { title: "Products", description: "Mobile & SaaS products", path: "/products", type: "page" },
@@ -35,8 +36,18 @@ const PAGES: SearchResult[] = [
   { title: "Terms of Service", description: "Terms & conditions", path: "/terms", type: "page" },
 ];
 
+// Solution entries are derived from the canonical `solutions` data so the
+// search index always mirrors the live sitemap (removed slugs cannot appear).
+const SOLUTION_ITEMS: SearchResult[] = solutions.map((s) => ({
+  title: s.title,
+  description: s.description,
+  path: `/solutions/${s.slug}`,
+  type: "solution" as const,
+}));
+
 const allItems: SearchResult[] = [
   ...PAGES,
+  ...SOLUTION_ITEMS,
   ...PRODUCTS.map(p => ({
     title: p.name,
     description: p.shortDesc,
@@ -51,7 +62,7 @@ const allItems: SearchResult[] = [
   })),
 ];
 
-const typeIcon = { page: FileText, product: Package, blog: Newspaper };
+const typeIcon = { page: FileText, product: Package, blog: Newspaper, solution: Layers };
 
 interface Props {
   open: boolean;
