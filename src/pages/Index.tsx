@@ -15,6 +15,11 @@ import MagneticButton from "@/components/MagneticButton";
 import MeshBackground from "@/components/motion/MeshBackground";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
 import PersonalizedPicks from "@/components/products/PersonalizedPicks";
+import WhatWeBuild from "@/components/home/WhatWeBuild";
+import AIAgentsSection from "@/components/home/AIAgentsSection";
+import AutomationShowcase from "@/components/home/AutomationShowcase";
+import CustomAISection from "@/components/home/CustomAISection";
+import BuildersClub from "@/components/home/BuildersClub";
 
 const heroStats = [
   { value: "25+", label: "Projects Delivered" },
