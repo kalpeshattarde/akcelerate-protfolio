@@ -230,7 +230,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ BENEFITS ═══════════════════ */}
+      {/* ═══════════════════ WHAT WE BUILD ═══════════════════ */}
+      <WhatWeBuild />
+
       <section className="py-24 lg:py-32 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
@@ -277,6 +279,15 @@ export default function HomePage() {
           </RevealGrid>
         </div>
       </section>
+
+      {/* ═══════════════════ AI AGENTS ═══════════════════ */}
+      <AIAgentsSection />
+
+      {/* ═══════════════════ AUTOMATION SHOWCASE ═══════════════════ */}
+      <AutomationShowcase />
+
+      {/* ═══════════════════ CUSTOM AI ═══════════════════ */}
+      <CustomAISection />
 
       {/* ═══════════════════ PERSONALIZED PICKS ═══════════════════ */}
       <PersonalizedPicks />
@@ -374,6 +385,9 @@ export default function HomePage() {
       </section>
 
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
+
+      {/* ═══════════════════ BUILDERS CLUB ═══════════════════ */}
+      <BuildersClub />
 
       <CTASection
         title="Ready to Accelerate Your Growth?"
