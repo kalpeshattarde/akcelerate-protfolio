@@ -163,6 +163,8 @@ export default function SolutionsPage() {
         </div>
       </section>
 
+      <CTASection
+        title="Ready to Transform Your Business?"
         description="Let's discuss which solutions can drive the most impact for your organization."
         primaryCta={{ label: "Book Free Audit", to: "/free-audit" }}
         secondaryCta={{ label: "View Pricing", to: "/pricing" }}
