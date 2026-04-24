@@ -86,7 +86,12 @@ const reviewsJsonLd = [
 export default function HomePage() {
   return (
     <>
-      <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" jsonLd={reviewsJsonLd} />
+      <SEOHead
+        title="AI MVPs in 21 Days · AI Agents, n8n Automation & Custom AI"
+        description="AKcelerate ships AI-powered MVPs in 21 days — full-stack apps, AI agents, n8n automations, RAG systems, and custom AI built on your data. 315% average ROI."
+        path="/"
+        jsonLd={reviewsJsonLd}
+      />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <MeshBackground />
@@ -108,14 +113,14 @@ export default function HomePage() {
             <div className="animate-fade-in-up">
               <div className="hero-badge">
                 <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-                AI · Data · Automation · Consulting
+                AI-Powered MVPs in 21 Days
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
-                Increase Revenue & Profit<br />with{" "}
-                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
+                We Build AI-Powered MVPs<br />for Your Idea in{" "}
+                <span className="hero-gradient-text">21 Days</span>
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
-                We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
+                From concept to launch — full-stack web apps, n8n automations, AI agents, and custom AI trained on your data. Fast, focused, and ROI-driven.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
                 <Magnetic strength={20}>
