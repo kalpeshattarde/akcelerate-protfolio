@@ -22,6 +22,7 @@ const SCAN_EXT = new Set([".ts", ".tsx", ".js", ".mjs", ".jsx", ".html", ".xml",
 // Files exempt from the scan (this script defines the patterns it checks).
 const EXEMPT_FILES = new Set([
   resolve(root, "scripts/check-no-services.mjs"),
+  resolve(root, "src/components/__tests__/Navbar.solutions.test.tsx"),
 ]);
 
 // Substrings that legitimately contain "services" but are not a /services route or

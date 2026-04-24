@@ -36,7 +36,7 @@ while ((nm = nameRe.exec(industriesText)) !== null && industries.length < 20) {
 }
 
 const staticRoutes = [
-  "/", "/about", "/services", "/solutions", "/case-studies", "/completed-projects",
+  "/", "/about", "/solutions", "/case-studies", "/completed-projects",
   "/industries", "/insights", "/blog", "/pricing", "/contact", "/founder",
   "/free-audit", "/resources", "/gallery", "/careers", "/privacy", "/terms",
   "/products", "/guide",
