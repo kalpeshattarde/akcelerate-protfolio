@@ -17,7 +17,7 @@ export default function TopSellingPage() {
     toast.success("Purchased!");
   };
   const handleAddToCart = (id: string) => {
-    cart.add(id);
+    cart.addToCart(id);
     toast.success("Added to cart");
   };
 
