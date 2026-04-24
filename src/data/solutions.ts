@@ -1,4 +1,4 @@
-import { Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings } from "lucide-react";
+import { Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Bot, Workflow, Rocket } from "lucide-react";
 
 export interface Solution {
   slug: string;
@@ -189,6 +189,72 @@ export const solutions: Solution[] = [
     ],
     industries: ["AI/ML Companies", "Enterprise", "Fintech", "Healthcare", "Manufacturing"],
     relatedSlugs: ["ai-ml", "cloud-devops", "automated-analytics"],
+  },
+  {
+    slug: "ai-agents",
+    title: "AI Agents as a Service",
+    shortTitle: "AI Agents",
+    description: "Autonomous LLM-powered agents — sales, support, and internal copilots that think, act, and execute across your stack.",
+    icon: "Bot",
+    features: ["Sales & SDR Agents", "Support Bots with RAG", "Internal Copilots", "CRM & Database Actions", "Multi-Step Reasoning", "n8n + API Integrations"],
+    benefits: [
+      { title: "Always-On Agents", description: "Agents that handle tasks 24/7 without breaks, holidays, or burnout.", metric: "24/7", metricLabel: "autonomous coverage" },
+      { title: "Lower Ops Cost", description: "Replace repetitive manual workflows with agents that execute end-to-end.", metric: "65%", metricLabel: "ops cost reduction" },
+      { title: "Faster Response", description: "Sub-second responses across support, sales, and internal Q&A.", metric: "10x", metricLabel: "faster response time" },
+    ],
+    process: [
+      { step: 1, title: "Use-Case Discovery", description: "Identify the highest-leverage agent workflow." },
+      { step: 2, title: "Tools & Memory", description: "Wire APIs, databases, RAG sources and memory." },
+      { step: 3, title: "Build Agent", description: "Develop reasoning loops, guardrails, and tool calls." },
+      { step: 4, title: "Pilot & Tune", description: "Run alongside humans, measure quality, refine prompts." },
+      { step: 5, title: "Scale", description: "Roll out to production with monitoring and human handoff." },
+    ],
+    industries: ["SaaS", "E-commerce", "Fintech", "Support-heavy businesses", "Agencies"],
+    relatedSlugs: ["automation-systems", "ai-ml", "mvp-21day"],
+  },
+  {
+    slug: "automation-systems",
+    title: "Automation Systems",
+    shortTitle: "Automation Systems",
+    description: "n8n, API workflows, CRM and email automation — eliminate repetitive work and connect every tool in your stack.",
+    icon: "Workflow",
+    features: ["n8n Workflow Engineering", "CRM & Email Automation", "API & Webhook Pipelines", "Data Sync & ETL", "Approval Workflows", "AI-Augmented Steps"],
+    benefits: [
+      { title: "Hours Saved Weekly", description: "Hand off repetitive admin to bulletproof automations.", metric: "20hrs", metricLabel: "saved per week" },
+      { title: "Zero Manual Errors", description: "Deterministic workflows eliminate copy-paste mistakes.", metric: "99%", metricLabel: "process accuracy" },
+      { title: "Connect Everything", description: "Bridge SaaS tools, internal DBs, and AI models in one flow.", metric: "200+", metricLabel: "integrations supported" },
+    ],
+    process: [
+      { step: 1, title: "Workflow Audit", description: "Map every manual step worth automating." },
+      { step: 2, title: "Design", description: "Diagram triggers, branches, and failure paths." },
+      { step: 3, title: "Build in n8n", description: "Develop, version, and test each node." },
+      { step: 4, title: "Deploy", description: "Self-hosted or cloud n8n with monitoring." },
+      { step: 5, title: "Iterate", description: "Add new branches as your business evolves." },
+    ],
+    industries: ["Agencies", "E-commerce", "SaaS", "Operations-heavy SMBs", "Startups"],
+    relatedSlugs: ["ai-agents", "business-automation", "mvp-21day"],
+  },
+  {
+    slug: "mvp-21day",
+    title: "21-Day MVP Build System",
+    shortTitle: "21-Day MVP",
+    description: "From idea to live product in 21 days — full-stack web app, payments, auth, and a launch-ready landing page.",
+    icon: "Rocket",
+    features: ["Discovery + Scope in Week 1", "Full-Stack Build in Week 2", "Polish, QA & Launch in Week 3", "Auth, Payments, Admin", "Landing Page Included", "Source Code Handover"],
+    benefits: [
+      { title: "Launch in 21 Days", description: "A predictable, fixed-timeline MVP delivery system.", metric: "21", metricLabel: "days to launch" },
+      { title: "Founder-Ready Output", description: "Production-grade code, not a throwaway prototype.", metric: "100%", metricLabel: "code ownership" },
+      { title: "Validated Faster", description: "Test your idea with real users in weeks, not months.", metric: "4x", metricLabel: "faster validation" },
+    ],
+    process: [
+      { step: 1, title: "Day 1–3 — Discovery", description: "Lock scope, user journeys, and the core MVP feature set." },
+      { step: 2, title: "Day 4–7 — Design", description: "Wireframes, branding, and clickable prototype." },
+      { step: 3, title: "Day 8–17 — Build", description: "Full-stack development with weekly demos." },
+      { step: 4, title: "Day 18–20 — QA", description: "End-to-end testing, performance tuning, security pass." },
+      { step: 5, title: "Day 21 — Launch", description: "Deploy, set up analytics, hand over the keys." },
+    ],
+    industries: ["Founders", "Startups", "Bootstrapped SaaS", "Indie Hackers", "Innovation Teams"],
+    relatedSlugs: ["saas-dev", "ai-agents", "automation-systems"],
   },
 ];
 
