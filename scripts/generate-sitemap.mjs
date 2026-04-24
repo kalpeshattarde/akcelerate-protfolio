@@ -38,7 +38,8 @@ const staticRoutes = [
   "/", "/about", "/solutions", "/case-studies", "/completed-projects",
   "/industries", "/insights", "/blog", "/pricing", "/contact", "/founder",
   "/free-audit", "/resources", "/gallery", "/careers", "/privacy", "/terms",
-  "/products", "/guide",
+  "/products", "/top-selling", "/guide",
+  "/ai-agents", "/automations", "/build-mvp",
 ];
 
 const urls = [

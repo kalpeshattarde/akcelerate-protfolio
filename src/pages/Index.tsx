@@ -87,8 +87,8 @@ export default function HomePage() {
   return (
     <>
       <SEOHead
-        title="AI MVPs in 21 Days · AI Agents, n8n Automation & Custom AI"
-        description="AKcelerate ships AI-powered MVPs in 21 days — full-stack apps, AI agents, n8n automations, RAG systems, and custom AI built on your data. 315% average ROI."
+        title="AI Product Studio + Automation Engine + Marketplace"
+        description="AKcelerate ships AI MVPs in 21 days, builds n8n automations & AI agents, and runs a SaaS template marketplace. AI Product Studio for founders, businesses & enterprises."
         path="/"
         jsonLd={reviewsJsonLd}
       />
@@ -113,21 +113,24 @@ export default function HomePage() {
             <div className="animate-fade-in-up">
               <div className="hero-badge">
                 <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-                AI-Powered MVPs in 21 Days
+                AI Product Studio + Automation + Marketplace
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
-                We Build AI-Powered MVPs<br />for Your Idea in{" "}
-                <span className="hero-gradient-text">21 Days</span>
+                Build AI Products, Automations<br />& Systems —{" "}
+                <span className="hero-gradient-text">Fast</span>
               </h1>
-              <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
-                From concept to launch — full-stack web apps, n8n automations, AI agents, and custom AI trained on your data. Fast, focused, and ROI-driven.
+              <p className="text-lg leading-relaxed mb-3 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
+                From idea → AI MVP in 21 days. Automate your business, ship custom AI, and launch faster than your competitors.
+              </p>
+              <p className="text-sm leading-relaxed mb-8 max-w-xl text-muted-foreground">
+                Full-stack web apps · n8n automations · AI agents · custom AI trained on your data.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
                 <Magnetic strength={20}>
-                  <Link to="/solutions" className="btn-primary"><Play className="w-4 h-4" /> Explore Solutions</Link>
+                  <Link to="/free-audit" className="btn-primary"><Play className="w-4 h-4" /> Start Free Audit</Link>
                 </Magnetic>
                 <Magnetic strength={14}>
-                  <Link to="/contact" className="btn-secondary">Book a Consultation <ArrowRight className="w-4 h-4" /></Link>
+                  <Link to="/products" className="btn-secondary">Explore Products <ArrowRight className="w-4 h-4" /></Link>
                 </Magnetic>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

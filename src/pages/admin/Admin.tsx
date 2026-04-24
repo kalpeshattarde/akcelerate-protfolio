@@ -12,6 +12,8 @@ import ProductsTab from "@/components/admin/ProductsTab";
 import AffiliateTab from "@/components/admin/AffiliateTab";
 import GrowthTab from "@/components/admin/GrowthTab";
 import AdGeneratorTab from "@/components/admin/AdGeneratorTab";
+import OfferGeneratorTab from "@/components/admin/OfferGeneratorTab";
+import LandingPageGeneratorTab from "@/components/admin/LandingPageGeneratorTab";
 import AnalyticsTab from "@/components/admin/AnalyticsTab";
 import UserManagementTab from "@/components/admin/UserManagementTab";
 import OrderManagementTab from "@/components/admin/OrderManagementTab";
@@ -54,7 +56,9 @@ const TAB_SECTIONS = [
     items: [
       { value: "affiliates", label: "Affiliates", icon: Users },
       { value: "growth", label: "Growth", icon: TrendingUp },
-      { value: "ads", label: "Ads", icon: Megaphone },
+      { value: "ads", label: "Ad Generator", icon: Megaphone },
+      { value: "offers", label: "Offer Generator", icon: Megaphone },
+      { value: "landing", label: "Landing Generator", icon: Megaphone },
     ],
   },
   {
@@ -208,6 +212,8 @@ function AdminContent() {
             {hasPermission("affiliates") && <TabsContent value="affiliates"><AffiliateTab /></TabsContent>}
             {hasPermission("growth") && <TabsContent value="growth"><GrowthTab /></TabsContent>}
             {hasPermission("ads") && <TabsContent value="ads"><AdGeneratorTab /></TabsContent>}
+            {hasPermission("ads") && <TabsContent value="offers"><OfferGeneratorTab /></TabsContent>}
+            {hasPermission("ads") && <TabsContent value="landing"><LandingPageGeneratorTab /></TabsContent>}
             {hasPermission("audit") && <TabsContent value="audit"><AuditLogTab /></TabsContent>}
             </div>
           </Tabs>

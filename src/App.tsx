@@ -42,6 +42,9 @@ const SignUp = lazy(() => import("./pages/SignUp"));
 const MyPurchases = lazy(() => import("./pages/MyPurchases"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Guide = lazy(() => import("./pages/Guide"));
+const AIAgents = lazy(() => import("./pages/AIAgents"));
+const Automations = lazy(() => import("./pages/Automations"));
+const BuildMVP = lazy(() => import("./pages/BuildMVP"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -89,6 +92,9 @@ const App = () => (
                   <Route path="/my-purchases" element={<ProtectedRoute><MyPurchases /></ProtectedRoute>} />
                   <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
                   <Route path="/guide" element={<Guide />} />
+                  <Route path="/ai-agents" element={<AIAgents />} />
+                  <Route path="/automations" element={<Automations />} />
+                  <Route path="/build-mvp" element={<BuildMVP />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
