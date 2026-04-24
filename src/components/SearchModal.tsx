@@ -15,7 +15,7 @@ interface SearchResult {
 const PAGES: SearchResult[] = [
   { title: "Home", description: "Main landing page", path: "/", type: "page" },
   { title: "Solutions", description: "All solution areas", path: "/solutions", type: "page" },
-  { title: "Services", description: "Implementation & consulting", path: "/services", type: "page" },
+  
   { title: "Industries", description: "Sectors we specialise in", path: "/industries", type: "page" },
   { title: "Pricing", description: "Plans & pricing", path: "/pricing", type: "page" },
   { title: "Products", description: "Mobile & SaaS products", path: "/products", type: "page" },
