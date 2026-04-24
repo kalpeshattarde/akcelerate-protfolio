@@ -9,7 +9,7 @@ import TopSellingSection from "@/components/products/TopSellingSection";
 
 export default function TopSellingPage() {
   const { currency } = useGeoDetection();
-  const { topSelling, isPurchased, purchase } = useProducts();
+  const { topSelling, topSellingLoading, isPurchased, purchase } = useProducts();
   const cart = useCart();
 
   const handleBuy = (id: string) => {
@@ -61,6 +61,7 @@ export default function TopSellingPage() {
             isPurchased={isPurchased}
             onPurchase={handleBuy}
             onAddToCart={handleAddToCart}
+            loading={topSellingLoading}
             hideViewAll
           />
 
