@@ -26,8 +26,8 @@ export default function PricingPage() {
   return (
     <>
       <SEOHead
-        title="Pricing"
-        description="Transparent pricing plans for AI consulting, data analytics, and digital transformation services."
+        title="AI Consulting & Automation Pricing — From $249/mo"
+        description="Transparent pricing for AI consulting, n8n automation, and AI agent development. Plans from $249/mo. 14-day money-back guarantee. No hidden fees."
         path="/pricing"
         jsonLd={faqJsonLd}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]}
@@ -35,7 +35,7 @@ export default function PricingPage() {
       <HeroPage
         label="Pricing"
         title={<>Transparent <span className="gradient-text">Pricing Plans</span></>}
-        description="Choose the engagement model that fits your business. No hidden fees, no surprises."
+        description="Choose the engagement that fits — from one-off audits to a dedicated AI pod. 14-day money-back. No hidden fees. Cancel any time."
       />
 
       <section className="py-20 lg:py-28">

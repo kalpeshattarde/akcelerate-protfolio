@@ -218,7 +218,7 @@ export default function Products() {
 
   return (
     <>
-      <SEOHead title="SaaS Prototypes" description="40+ production-ready SaaS prototypes for $19. CRM, dashboards, mobile apps & more. Launch in days, not months." path="/products" />
+      <SEOHead title="40+ Production-Ready SaaS Templates from $19" description="Launch in days, not months. 40+ production-grade SaaS prototypes (CRM, dashboards, mobile apps, AI tools) for $19 each — or $12 each when you grab 5+. Full source code, yours forever." path="/products" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productsJsonLd) }} />
       <main className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

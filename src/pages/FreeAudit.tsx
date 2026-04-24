@@ -22,16 +22,16 @@ export default function FreeAuditPage() {
   return (
     <>
       <SEOHead
-        title="Free AI Audit"
-        description="Get a free AI readiness audit — discover how AI and automation can transform your business."
+        title="Free AI Readiness Audit — 60-min, No Sales Pitch"
+        description="Get a free 60-minute AI audit: 5 prioritized AI opportunities, ROI estimate, and a 90-day roadmap — yours to keep. No obligation, no pitch."
         path="/free-audit"
         jsonLd={faqJsonLd}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: "Free Audit", path: "/free-audit" }]}
       />
       <HeroDark
         label="Free AI Audit"
-        title={<>Get a Free <span className="gradient-text">AI Readiness Audit</span></>}
-        description="Discover how AI, data science, and automation can transform your business. Our expert team will analyze your opportunities and deliver a prioritized action plan — completely free."
+        title={<>Get the AI roadmap your competitors are paying <span className="gradient-text">$5,000 for</span>.</>}
+        description="60-minute audit. 5 prioritized AI opportunities. ROI estimate. A 90-day implementation roadmap — yours to keep. No sales pitch, no obligation."
       >
         <AuditForm />
       </HeroDark>
