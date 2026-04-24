@@ -7,7 +7,7 @@ import FAQAccordion from "@/components/FAQAccordion";
 import { PricingCard } from "@/components/Cards";
 import { pricingPlans, ANNUAL_DISCOUNT } from "@/data/pricing";
 import { pricingFAQ } from "@/data/faq";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ShieldCheck, RefreshCw, Lock, Award } from "lucide-react";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 
 export default function PricingPage() {
@@ -60,6 +60,7 @@ export default function PricingPage() {
               <div key={i} className="reveal-item">
                 <PricingCard
                   name={plan.name}
+                  outcome={plan.outcome}
                   description={plan.description}
                   priceUsd={plan.monthlyUsd}
                   priceInr={plan.monthlyInr}
@@ -68,10 +69,32 @@ export default function PricingPage() {
                   cta={plan.cta}
                   isAnnual={isAnnual}
                   discountPercent={ANNUAL_DISCOUNT}
+                  socialProof={plan.socialProof}
+                  badge={plan.badge}
                 />
               </div>
             ))}
           </RevealGrid>
+
+          {/* Trust badges row — money-back, secure, compliance */}
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {[
+              { Icon: RefreshCw, title: "14-day money back", desc: "Full refund, no questions asked" },
+              { Icon: ShieldCheck, title: "SOC 2 aligned", desc: "Enterprise security controls" },
+              { Icon: Lock, title: "Secure payments", desc: "Stripe-powered, PCI-DSS" },
+              { Icon: Award, title: "92% retention", desc: "Clients renew & expand" },
+            ].map(({ Icon, title, desc }) => (
+              <div key={title} className="flex items-start gap-3 p-4 rounded-xl border border-border bg-card/50">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-foreground">{title}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
