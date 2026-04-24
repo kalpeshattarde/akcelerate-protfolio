@@ -155,8 +155,8 @@ export default function ContactPage() {
             </RevealSection>
             <RevealSection delay={200}>
               {productMismatch && (
-                <div className="mb-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 flex gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div className="mb-4 p-4 rounded-xl border border-destructive/30 bg-destructive/5 flex gap-3">
+                  <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
                   <div className="text-sm">
                     <p className="font-medium text-foreground mb-1">
                       We couldn't find that product
