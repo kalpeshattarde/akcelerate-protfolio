@@ -6,11 +6,12 @@ import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToSolution } from "@/lib/relatedContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { buildSolutionBreadcrumbs, visibleSolutionBreadcrumbs } from "@/lib/solutionBreadcrumbs";
+import FAQAccordion from "@/components/FAQAccordion";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -221,13 +222,33 @@ export default function SolutionDetailPage() {
       {related.length > 0 && (
         <section className="py-20 lg:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader label="Related" title={<>Explore Related <span className="gradient-text">Solutions</span></>} />
+            <SectionHeader
+              label="Related"
+              title={<>Explore Related <span className="gradient-text">Solutions</span></>}
+              description="Pair this solution with other capabilities for a fully-integrated rollout."
+            />
             <div className="grid md:grid-cols-3 gap-6">
-              {related.map(s => s && <SolutionCard key={s.slug} slug={s.slug} title={s.title} description={s.description} icon={s.icon} />)}
+              {related.map((s) => (
+                <div key={s.slug} className="flex flex-col gap-3">
+                  <SolutionCard slug={s.slug} title={s.title} description={s.description} icon={s.icon} />
+                  <Link
+                    to={`/contact?intent=quote&service=${s.slug}`}
+                    className="btn-ghost self-start text-sm"
+                    aria-label={`Talk to us about ${s.title}`}
+                  >
+                    Talk to us about {s.shortTitle} <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
+
+      {/* Per-solution FAQ (also emitted as FAQPage JSON-LD above) */}
+      <section className="section-alt">
+        <FAQAccordion items={solutionFaq} title={`${solution.title} — FAQ`} />
+      </section>
 
       <RelatedLinks label="Insights" title="Further Reading" items={cross.blog} kind="blog" />
       <CTASection
