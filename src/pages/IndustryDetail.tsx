@@ -49,12 +49,16 @@ export default function IndustryDetailPage() {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "WebPage",
     name: `AI & Data Solutions for ${industry.name}`,
     description: industry.description,
-    provider: { "@type": "Organization", name: "AKcelerate" },
-    areaServed: industry.name,
-    serviceType: industry.useCases,
+    url: `https://akcelerate.lovable.app/industries/${industry.slug}`,
+    about: { "@type": "Thing", name: industry.name, description: industry.description },
+    mainEntity: {
+      "@type": "ItemList",
+      name: `${industry.name} Use Cases`,
+      itemListElement: industry.useCases.map((u, i) => ({ "@type": "ListItem", position: i + 1, name: u })),
+    },
   };
 
   return (

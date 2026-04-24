@@ -64,12 +64,12 @@ const reviewsJsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "AKcelerate Services",
+    name: "AKcelerate Solutions",
     itemListElement: [
-      { "@type": "Service", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", provider: { "@type": "Organization", name: "AKcelerate" } },
-      { "@type": "Service", position: 2, name: "AI Agents as a Service", description: "Autonomous LLM-powered agents that automate workflows and integrate with CRMs, databases, and SaaS tools.", provider: { "@type": "Organization", name: "AKcelerate" } },
-      { "@type": "Service", position: 3, name: "n8n Automation & Workflows", description: "Custom n8n workflows, AI video pipelines, voice agents, and content automation.", provider: { "@type": "Organization", name: "AKcelerate" } },
-      { "@type": "Service", position: 4, name: "Custom AI & RAG Systems", description: "RAG pipelines, model fine-tuning, and AI training pipelines built on your data.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "ListItem", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", url: "https://akcelerate.lovable.app/solutions/saas-dev" },
+      { "@type": "ListItem", position: 2, name: "AI Agents & AI / ML Solutions", description: "Autonomous LLM-powered agents that automate workflows and integrate with CRMs, databases, and SaaS tools.", url: "https://akcelerate.lovable.app/solutions/ai-ml" },
+      { "@type": "ListItem", position: 3, name: "n8n Automation & Workflows", description: "Custom n8n workflows, AI video pipelines, voice agents, and content automation.", url: "https://akcelerate.lovable.app/solutions/business-automation" },
+      { "@type": "ListItem", position: 4, name: "Custom AI & RAG Systems", description: "RAG pipelines, model fine-tuning, and AI training pipelines built on your data.", url: "https://akcelerate.lovable.app/solutions/mlops" },
     ],
   },
   {
