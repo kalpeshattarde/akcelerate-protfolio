@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeftRight } from "lucide-react";
-import { Heart, ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Eye } from "lucide-react";
+import { Heart, ShoppingCart, Star, TrendingUp, Zap, ZoomIn, Eye, Wand2 } from "lucide-react";
 import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
@@ -133,33 +133,53 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
               ✓ Purchased
             </div>
           ) : cartQuantity > 0 ? (
-            <div className="flex gap-2">
-              <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary border border-primary/20">
-                <ShoppingCart className="w-3.5 h-3.5" /> In Cart
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+                  <ShoppingCart className="w-3.5 h-3.5" /> In Cart
+                </div>
+                <Link
+                  to={`/products/${product.slug}`}
+                  className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+                  title="View details"
+                >
+                  <Eye className="w-4 h-4 text-muted-foreground" />
+                </Link>
               </div>
               <Link
-                to={`/products/${product.slug}`}
-                className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
-                title="View details"
+                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}`}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                title="Request a customized version"
               >
-                <Eye className="w-4 h-4 text-muted-foreground" />
+                <Wand2 className="w-3.5 h-3.5" /> Customize for My Business
               </Link>
             </div>
           ) : (
-            <div className="flex gap-2">
-              <button
-                onClick={(e) => { e.preventDefault(); onPurchase?.(product.id); }}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <button
+                  onClick={(e) => { e.preventDefault(); onPurchase?.(product.id); }}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  <Zap className="w-3.5 h-3.5" /> Buy Now
+                </button>
+                <button
+                  onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
+                  className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
+                  title="Add to cart"
+                >
+                  <ShoppingCart className="w-4 h-4 text-muted-foreground" />
+                </button>
+              </div>
+              <Link
+                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}`}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                title="Build a custom version with our team"
               >
-                <Zap className="w-3.5 h-3.5" /> Buy Now
-              </button>
-              <button
-                onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
-                className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
-                title="Add to cart"
-              >
-                <ShoppingCart className="w-4 h-4 text-muted-foreground" />
-              </button>
+                <Wand2 className="w-3.5 h-3.5" /> Customize for My Business
+              </Link>
             </div>
           )}
         </div>
