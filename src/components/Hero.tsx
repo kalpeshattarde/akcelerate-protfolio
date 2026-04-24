@@ -44,8 +44,8 @@ function ParallaxParticles() {
             width: p.size,
             height: p.size,
             background: i % 2 === 0
-              ? "rgba(37,99,235,0.3)"
-              : "rgba(6,182,212,0.3)",
+              ? "hsl(var(--primary) / 0.3)"
+              : "hsl(var(--accent) / 0.3)",
             animationDuration: `${3 + p.speed * 4}s`,
             animationDelay: `${p.delay}s`,
           }}
