@@ -23,12 +23,28 @@ const DEFAULT_DESC = "AKcelerate delivers AI consulting, data analytics, and dig
 const DEFAULT_IMAGE = "/images/akcelerate-og.png";
 
 const SEOHead = ({ title, description, path, image, jsonLd, breadcrumbs }: SEOHeadProps) => {
-  const fullTitle = title ? `${title} — ${SITE}` : `${SITE} — AI & Digital Solutions`;
+  const fullTitle = title ? `${title} | ${SITE}` : `${SITE} — AI Product Studio, Automations & SaaS Marketplace`;
   const desc = description || DEFAULT_DESC;
   const canonical = path ? `${SITE_URL}${path}` : undefined;
   const ogImage = (image || DEFAULT_IMAGE).startsWith("http") ? (image || DEFAULT_IMAGE) : `${SITE_URL}${image || DEFAULT_IMAGE}`;
 
   const schemas: Record<string, unknown>[] = [];
+
+  // Sitewide WebSite schema with SearchAction (sitelinks search box eligibility)
+  if (path === "/") {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE,
+      url: SITE_URL,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/?q={search_term_string}` },
+        "query-input": "required name=search_term_string",
+      },
+    });
+  }
+
   if (jsonLd) {
     if (Array.isArray(jsonLd)) schemas.push(...jsonLd);
     else schemas.push(jsonLd);
@@ -54,6 +70,7 @@ const SEOHead = ({ title, description, path, image, jsonLd, breadcrumbs }: SEOHe
       <meta property="og:description" content={desc} />
       <meta property="og:type" content="website" />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:site_name" content={SITE} />
       {canonical && <meta property="og:url" content={canonical} />}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
