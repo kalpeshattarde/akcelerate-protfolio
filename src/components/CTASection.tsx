@@ -7,23 +7,34 @@ interface CTASectionProps {
   description: string;
   primaryCta?: { label: string; to: string };
   secondaryCta?: { label: string; to: string };
+  /**
+   * Use a feature/spotlight background variant.
+   * Theme-aware: soft brand-tinted in light mode, dark gradient in dark mode.
+   */
   dark?: boolean;
 }
 
 export default function CTASection({ title, description, primaryCta, secondaryCta, dark = false }: CTASectionProps) {
   return (
-    <section className={`py-20 lg:py-28 relative overflow-hidden ${dark ? "" : "section-alt"}`}
-      style={dark ? { background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)" } : undefined}>
+    <section
+      className={`py-20 lg:py-28 relative overflow-hidden ${dark ? "cta-feature" : "section-alt"}`}
+    >
       {dark && (
         <>
-          <div className="absolute -top-[150px] -right-[150px] w-[400px] h-[400px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(37,99,235,0.12)" }} />
-          <div className="absolute -bottom-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{ background: "rgba(6,182,212,0.08)" }} />
+          <div
+            className="absolute -top-[150px] -right-[150px] w-[400px] h-[400px] rounded-full blur-[80px] pointer-events-none"
+            style={{ background: "hsl(var(--primary) / 0.18)" }}
+          />
+          <div
+            className="absolute -bottom-[100px] -left-[100px] w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none"
+            style={{ background: "hsl(var(--accent) / 0.12)" }}
+          />
         </>
       )}
       <RevealSection>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : "text-foreground"}`}>{title}</h2>
-          <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : "text-muted-foreground"}`}>{description}</p>
+          <h2 className="font-poppins font-bold text-3xl lg:text-4xl mb-5 text-foreground">{title}</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto text-muted-foreground">{description}</p>
           <div className="flex flex-wrap justify-center gap-4">
             {primaryCta && (
               <Link to={primaryCta.to} className="btn-primary">
@@ -31,7 +42,7 @@ export default function CTASection({ title, description, primaryCta, secondaryCt
               </Link>
             )}
             {secondaryCta && (
-              <Link to={secondaryCta.to} className={`btn-secondary ${dark ? "!text-slate-300 !border-slate-600 hover:!bg-white/5" : ""}`}>
+              <Link to={secondaryCta.to} className="btn-secondary">
                 {secondaryCta.label}
               </Link>
             )}
