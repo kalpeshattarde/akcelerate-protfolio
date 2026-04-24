@@ -1,4 +1,4 @@
-import { Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Bot, Workflow, Rocket } from "lucide-react";
+import { Activity, Radio, Monitor, BarChart3, Cloud, Workflow, Rocket, Globe } from "lucide-react";
 
 export interface Solution {
   slug: string;
