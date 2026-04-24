@@ -29,15 +29,35 @@ export default function SolutionDetailPage() {
   const related = solution.relatedSlugs.map(s => solutions.find(x => x.slug === s)).filter(Boolean);
   const cross = relatedToSolution(solution.slug);
 
-  const solutionJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: solution.title,
-    description: solution.description,
-    provider: { "@type": "Organization", name: "AKcelerate" },
-    serviceType: solution.features?.slice(0, 5),
-    areaServed: solution.industries,
-  };
+  const solutionJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: `${solution.title} — AKcelerate Solutions`,
+      description: solution.description,
+      url: `https://akcelerate.lovable.app/solutions/${slug}`,
+      isPartOf: {
+        "@type": "CollectionPage",
+        name: "AKcelerate Solutions",
+        url: "https://akcelerate.lovable.app/solutions",
+      },
+      about: {
+        "@type": "Thing",
+        name: solution.title,
+        description: solution.description,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `${solution.title} Capabilities`,
+      itemListElement: solution.features.map((f, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: f,
+      })),
+    },
+  ];
 
   return (
     <>
