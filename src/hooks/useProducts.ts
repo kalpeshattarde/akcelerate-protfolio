@@ -102,7 +102,10 @@ export function useProducts() {
   // overridesTick ensures recompute when admin pushes a bulk edit or CSV import.
   const products = applyProductOverrides(PRODUCTS);
   void overridesTick;
-  const topSelling = products.filter(p => p.topSelling).sort((a, b) => b.salesCount - a.salesCount);
+  const topSelling = products
+    .filter(p => p.topSelling)
+    .sort((a, b) => b.salesCount - a.salesCount)
+    .slice(0, 3);
   const mobileApps = products.filter(p => p.category === "mobile-app");
   const webSaas = products.filter(p => p.category === "web-saas");
 
