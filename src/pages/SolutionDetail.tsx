@@ -67,13 +67,9 @@ export default function SolutionDetailPage() {
         description={solution.description}
         path={`/solutions/${slug}`}
         jsonLd={solutionJsonLd}
-        breadcrumbs={[
-          { name: "Home", path: "/" },
-          { name: "Solutions", path: "/solutions" },
-          { name: solution.title, path: `/solutions/${slug}` },
-        ]}
+        breadcrumbs={buildSolutionBreadcrumbs(slug)}
       />
-      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions" }, { name: solution.title }]} />
+      <Breadcrumbs items={visibleSolutionBreadcrumbs(slug)} />
       <HeroPage
         label="Solutions"
         title={<><span className="gradient-text">{solution.title}</span></>}
