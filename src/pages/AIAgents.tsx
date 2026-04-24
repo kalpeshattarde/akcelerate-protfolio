@@ -108,7 +108,7 @@ export default function AIAgents() {
         </div>
       </section>
 
-      <CTASection />
+      <CTASection title="Ready to deploy your first AI agent?" description="From use-case discovery to production rollout — we'll have your agent live in weeks." primaryCta={{ label: "Book a Call", to: "/contact?intent=ai-agents" }} secondaryCta={{ label: "View Solutions", to: "/solutions" }} dark />
     </>
   );
 }

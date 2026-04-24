@@ -108,7 +108,7 @@ export default function Automations() {
         </div>
       </section>
 
-      <CTASection />
+      <CTASection title="Ready to automate your busywork?" description="Tell us your repetitive workflow — we'll scope an n8n automation that pays for itself." primaryCta={{ label: "Plan My Automation", to: "/contact?intent=automation" }} secondaryCta={{ label: "View Solutions", to: "/solutions" }} dark />
     </>
   );
 }

@@ -116,7 +116,7 @@ export default function BuildMVP() {
         </div>
       </section>
 
-      <CTASection />
+      <CTASection title="Your MVP. Live in 21 days." description="Lock a slot, share your idea, and ship a real product before the month ends." primaryCta={{ label: "Start My MVP", to: "/contact?intent=mvp" }} secondaryCta={{ label: "See Past Builds", to: "/completed-projects" }} dark />
     </>
   );
 }
