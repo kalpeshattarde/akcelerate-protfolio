@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchModal from "./SearchModal";
 
@@ -70,12 +70,6 @@ const solutionLinks = [
   { to: "/solutions/mlops", title: "MLOps", desc: "Model deployment, monitoring & MLflow", icon: Settings },
 ];
 
-const serviceLinks = [
-  { to: "/services/predictive-maintenance", title: "Predictive Maintenance", desc: "AI-driven equipment health", icon: Wrench },
-  { to: "/services/quality-analytics", title: "Quality Analytics", desc: "Defect detection & QC AI", icon: CheckSquare },
-  { to: "/services/supply-chain-analytics", title: "Supply Chain Analytics", desc: "End-to-end supply intelligence", icon: Truck },
-  { to: "/services/energy-management", title: "Energy Management", desc: "AI-optimised energy usage", icon: Zap },
-];
 
 const aboutLinks = [
   { to: "/about", title: "About AKcelerate", desc: "Our story, team & mission", icon: Users },
@@ -200,20 +194,6 @@ export default function Navbar() {
               ))}
             </MegaDropdown>
 
-            {/* Services Dropdown */}
-            <MegaDropdown label="Services" to="/services" active={location.pathname.startsWith("/services")} width={300}>
-              <Link to="/services" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Settings className="w-4 h-4 text-primary" /></div>
-                <div><div className="text-sm font-medium text-foreground">All Services</div><div className="text-xs text-muted-foreground">Implementation & consulting</div></div>
-              </Link>
-              <div className="border-t border-border my-1" />
-              {serviceLinks.map(s => (
-                <Link key={s.to} to={s.to} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-muted hover:translate-x-0.5 transition-all">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><s.icon className="w-4 h-4 text-primary" /></div>
-                  <div><div className="text-sm font-medium text-foreground">{s.title}</div><div className="text-xs text-muted-foreground">{s.desc}</div></div>
-                </Link>
-              ))}
-            </MegaDropdown>
 
             <Link to="/products" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname.startsWith("/products") ? "text-primary font-semibold" : "text-muted-foreground"}`}>Products</Link>
             <Link to="/pricing" className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === "/pricing" ? "text-primary font-semibold" : "text-muted-foreground"}`}>Pricing</Link>
@@ -296,7 +276,7 @@ export default function Navbar() {
               {[
                 { to: "/", label: "Home" },
                 { to: "/solutions", label: "Solutions" },
-                { to: "/services", label: "Services" },
+                
                 { to: "/industries", label: "Industries" },
                 { to: "/case-studies", label: "Case Studies" },
                 { to: "/insights", label: "Insights" },

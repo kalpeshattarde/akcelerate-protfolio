@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
-import { services } from "@/data/services";
+
 import { solutions } from "@/data/solutions";
 import { industries } from "@/data/industries";
 import { blogPosts } from "@/data/blog";
@@ -70,17 +70,6 @@ export default function Footer() {
 
         {/* Mega menu: deep links by category */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-12 pb-12 border-b border-border">
-          <div>
-            <h4 className="font-poppins font-semibold text-foreground mb-4 text-sm tracking-wide">Services</h4>
-            <div className="space-y-2">
-              {services.map(s => (
-                <Link key={s.slug} to={`/services/${s.slug}`} className="block text-sm text-muted-foreground hover:text-accent transition-colors">
-                  {s.title}
-                </Link>
-              ))}
-              <Link to="/services" className="block text-sm font-medium text-primary hover:text-accent transition-colors pt-1">All Services →</Link>
-            </div>
-          </div>
 
           <div>
             <h4 className="font-poppins font-semibold text-foreground mb-4 text-sm tracking-wide">Solutions</h4>

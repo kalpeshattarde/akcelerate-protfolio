@@ -147,7 +147,6 @@ export default function BlogArticlePage() {
           </div>
         </section>
       )}
-      <RelatedLinks label="Services" title="Services Powering These Insights" items={cross.services} kind="service" />
       <RelatedLinks label="Solutions" title="Explore Matching Solutions" items={cross.solutions} kind="solution" alt />
       <CTASection title="Ready to Turn Insights Into Action?" description="Book a free consultation to discuss strategies for your business." primaryCta={{ label: "Contact Us", to: "/contact" }} dark />
     </>

@@ -7,7 +7,7 @@ import RelatedLinks from "@/components/RelatedLinks";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { CheckCircle } from "lucide-react";
 import { getIndustry } from "@/data/industries";
-import { services } from "@/data/services";
+
 import { solutions } from "@/data/solutions";
 import { blogPosts } from "@/data/blog";
 import type { RelatedLink } from "@/components/RelatedLinks";
@@ -36,10 +36,6 @@ export default function IndustryDetailPage() {
   }
 
   const tags = tagsFor(`${industry.name} ${industry.description} ${industry.useCases.join(" ")}`);
-  const relatedServices: RelatedLink[] = [...services]
-    .map(s => ({ s, n: score(tags, tagsFor(`${s.title} ${s.description} ${s.features.join(" ")}`)) }))
-    .sort((a, b) => b.n - a.n).slice(0, 3)
-    .map(x => ({ to: `/services/${x.s.slug}`, title: x.s.title, description: x.s.description, meta: "Service" }));
 
   const relatedSolutions: RelatedLink[] = [...solutions]
     .map(s => ({ s, n: score(tags, tagsFor(`${s.title} ${s.description} ${s.industries.join(" ")} ${s.features.join(" ")}`)) }))
@@ -91,7 +87,7 @@ export default function IndustryDetailPage() {
         </div>
       </section>
 
-      <RelatedLinks label="Services" title={`Services for ${industry.name}`} items={relatedServices} kind="service" alt />
+      
       <RelatedLinks label="Solutions" title="Recommended Solutions" items={relatedSolutions} kind="solution" />
       <RelatedLinks label="Insights" title="Industry Articles" items={relatedBlog} kind="blog" alt />
 
