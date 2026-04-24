@@ -22,8 +22,8 @@ export default function CTASection({ title, description, primaryCta, secondaryCt
       )}
       <RevealSection>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : ""}`}>{title}</h2>
-          <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : ""}`} style={!dark ? { color: "#64748B" } : undefined}>{description}</p>
+          <h2 className={`font-poppins font-bold text-3xl lg:text-4xl mb-5 ${dark ? "text-white" : "text-foreground"}`}>{title}</h2>
+          <p className={`text-lg mb-8 max-w-2xl mx-auto ${dark ? "text-slate-400" : "text-muted-foreground"}`}>{description}</p>
           <div className="flex flex-wrap justify-center gap-4">
             {primaryCta && (
               <Link to={primaryCta.to} className="btn-primary">
