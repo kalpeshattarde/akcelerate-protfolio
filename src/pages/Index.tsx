@@ -66,10 +66,10 @@ const reviewsJsonLd = [
     "@type": "ItemList",
     name: "AKcelerate Solutions",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", url: "https://akcelerate.lovable.app/solutions/saas-dev" },
-      { "@type": "ListItem", position: 2, name: "AI Agents & AI / ML Solutions", description: "Autonomous LLM-powered agents that automate workflows and integrate with CRMs, databases, and SaaS tools.", url: "https://akcelerate.lovable.app/solutions/ai-ml" },
-      { "@type": "ListItem", position: 3, name: "n8n Automation & Workflows", description: "Custom n8n workflows, AI video pipelines, voice agents, and content automation.", url: "https://akcelerate.lovable.app/solutions/business-automation" },
-      { "@type": "ListItem", position: 4, name: "Custom AI & RAG Systems", description: "RAG pipelines, model fine-tuning, and AI training pipelines built on your data.", url: "https://akcelerate.lovable.app/solutions/mlops" },
+      { "@type": "ListItem", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", url: "https://akcelerate.lovable.app/solutions/mvp-21day" },
+      { "@type": "ListItem", position: 2, name: "AI / ML & MLOps", description: "Custom ML, generative AI and production-grade MLOps pipelines.", url: "https://akcelerate.lovable.app/solutions/ai-ml" },
+      { "@type": "ListItem", position: 3, name: "Automation Systems & AI Agents", description: "n8n workflows and autonomous LLM agents wired into your stack.", url: "https://akcelerate.lovable.app/solutions/automation-systems" },
+      { "@type": "ListItem", position: 4, name: "App & SaaS Development", description: "Custom web and mobile apps, MVPs and SaaS products.", url: "https://akcelerate.lovable.app/solutions/saas-dev" },
     ],
   },
   {
