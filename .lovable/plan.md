@@ -1,76 +1,115 @@
+# SEO + Marketing Upgrade — Add Missing Sections from Reference Site
 
+Adopt the high-converting elements from the reference (21-day MVP, AI Agents service, n8n automations, Custom AI, Builders Community) into AKcelerate's existing brand system (Poppins/Inter, #2563EB primary, #06B6D4 accent, glass cards, gradient text). No copying of competitor copy verbatim — rewrite with AKcelerate voice and stats.
 
-# Full App PR Review: Bug Fixes and Advancements
+---
 
-## Issues Found
+## 1. Homepage Hero — Add "21-Day MVP" Positioning Layer
 
-### 1. Security: Hardcoded Admin Credentials (Critical)
-`AdminLoginGate.tsx` has plaintext usernames and passwords in the source code, with admin state stored in `sessionStorage`. This is a major security vulnerability.
+**File:** `src/pages/Index.tsx` (HERO section)
 
-### 2. Console Error: ProductsTab forwardRef Warning
-`ProductsTab` is a function component being passed as a ref target by Radix TabsContent. Needs `forwardRef` wrapping.
+- Add a small badge above the H1: **"AI-Powered MVPs in 21 Days"** (using existing `.hero-badge` style).
+- Keep current H1 ("Increase Revenue & Profit…") but add a secondary line under the subtitle: *"From concept to launch — full-stack apps, n8n automations, and custom AI. Fast, focused, and ROI-driven."*
+- Add a third hero stat tile row item: **"21-Day MVP"** alongside existing stats.
+- No layout breakage — re-uses `hero-stat-card` and `Magnetic` button wrappers.
 
-### 3. Backlink / Navigation Sync Issues
-- Mobile menu is missing links to `/guide` and `/my-purchases` as standalone items (they're only in the SignedIn section, duplicating `/wishlist`)
-- Footer is missing links to `/guide`, `/my-purchases`, `/sign-in`
-- About dropdown active state doesn't include `/founder` path
-- No breadcrumb navigation on inner pages for back-navigation
+---
 
-### 4. OAuth / Auth Sync Issues
-- `CheckoutModal` imports `useUser` from `@clerk/clerk-react` but if Clerk key (`VITE_CLERK_PUBLISHABLE_KEY`) is missing/invalid, the entire app may break silently
-- `SignIn` and `SignUp` pages use deprecated `afterSignInUrl`/`afterSignUpUrl` props (Clerk v5 uses `fallbackRedirectUrl`)
-- No auth guard on `/my-purchases`, `/wishlist`, `/admin` routes — unauthenticated users can access them directly
+## 2. New Section — "What We Build" (4-tile capability grid)
 
-### 5. General Bugs
-- Back-to-top button overlaps with floating contact buttons (both positioned `bottom-6 right-6` / `bottom-24 right-5`)
-- `AdminLoginGate` uses separate `useAdminAuth()` hooks in `AdminLoginGate` and `AdminContent`, creating two independent state instances — logging in through the gate doesn't share state with the content
+**File:** `src/components/home/WhatWeBuild.tsx` (new) + import in `src/pages/Index.tsx` after Process section.
 
-## Plan
+Four glass cards with icons + bullets + "Get a Quote →" link to `/contact?intent=quote&service=<slug>`:
 
-### Step 1: Fix ProductsTab forwardRef Warning
-Wrap `ProductsTab` with `React.forwardRef` so Radix TabsContent can attach refs without warnings. Apply same fix to any other admin tab components that trigger this.
+| Tile | Icon | Bullets | CTA target |
+|---|---|---|---|
+| Websites & Landing Pages | Globe | Responsive · SEO-ready · Fast performance | `/contact?service=websites` |
+| MVP App Development | Rocket | 21-day delivery · Full-stack · Launch-ready | `/contact?service=mvp` |
+| n8n Automations | Workflow | Workflows · AI integrations · No-code + code | `/contact?service=automation` |
+| Custom AI | Brain | RAG · Fine-tuning · Production-ready | `/contact?service=custom-ai` |
 
-### Step 2: Fix AdminLoginGate Shared State
-Replace the dual `useAdminAuth()` hook pattern with React Context so the login state is shared between `AdminLoginGate` and `AdminContent`. This fixes the auth state sync bug.
+Uses `RevealGrid` + `glass-card` + brand gradient hover states (matches existing benefits section pattern).
 
-### Step 3: Fix Clerk Deprecated Props
-Update `SignIn.tsx` and `SignUp.tsx` to use `fallbackRedirectUrl` instead of the deprecated `afterSignInUrl`/`afterSignUpUrl`.
+---
 
-### Step 4: Fix About Dropdown Active State
-Add `/founder` to the active-state condition in the About dropdown trigger.
+## 3. New Section — "AI Agents as a Service"
 
-### Step 5: Fix Navigation Sync (Footer + Mobile)
-- Add `/guide` and `/my-purchases` links to the Footer
-- Remove duplicate `/wishlist` from mobile menu
-- Add breadcrumb component for inner pages
+**File:** `src/components/home/AIAgentsSection.tsx` (new) + import in `src/pages/Index.tsx` before Industries section.
 
-### Step 6: Fix Overlapping Floating Buttons
-Adjust the back-to-top button position to not overlap with the contact FAB stack.
+Two-column layout (matches existing hero grid):
+- **Left:** Heading "AI Agents That Think, Act & Execute", description, two grouped feature lists ("What AI agents can do" / "Where they automate"), CTA → `/contact?intent=ai-agents`.
+- **Right:** Animated dashboard-style card showing agent flow (re-use `ak-dark-card` styling from process dashboard).
+- Integration row: pill chips for "CRMs · Databases · SaaS Tools · Messaging · n8n".
 
-### Step 7: Security — Remove Hardcoded Credentials
-Move admin auth to use Clerk-based authentication. Check if the signed-in user's email matches an admin allowlist instead of hardcoded username/password. If Clerk integration isn't desired for admin, at minimum move credentials to environment variables.
+---
 
-### Step 8: Suggested Advancements
+## 4. New Section — "Automate Everything That Slows You Down"
 
-| Feature | Description |
-|---------|-------------|
-| **Route Guards** | Add `ProtectedRoute` wrapper for `/my-purchases`, `/wishlist`, `/admin` that redirects to `/sign-in` if not authenticated |
-| **Breadcrumbs** | Add breadcrumb navigation to all inner pages for better back-navigation |
-| **Admin Audit Log** | Track who changed what in admin (content edits, order status changes) with timestamps |
-| **SEO Meta per Page** | Ensure all 30+ routes have proper unique `<title>` and `<meta description>` tags |
-| **404 Backlinks** | Add "Go Home" and "Search" actions to the NotFound page |
-| **Dark Mode Persistence** | Current theme toggle works but Footer always uses dark styling regardless of theme |
+**File:** `src/components/home/AutomationShowcase.tsx` (new) + import after AI Agents section.
 
-## Files to Modify
-- `src/components/admin/ProductsTab.tsx` — forwardRef
-- `src/components/admin/AdminLoginGate.tsx` — Context-based auth, remove hardcoded creds
-- `src/pages/admin/Admin.tsx` — consume auth context
-- `src/pages/SignIn.tsx` — fix deprecated props
-- `src/pages/SignUp.tsx` — fix deprecated props
-- `src/components/Navbar.tsx` — fix About active state
-- `src/components/Footer.tsx` — add missing links
-- `src/components/SiteLayout.tsx` — fix button overlap
-- `src/App.tsx` — add ProtectedRoute wrapper
-- New: `src/components/ProtectedRoute.tsx`
-- New: `src/components/Breadcrumbs.tsx`
+4-card grid (Instagram Content · AI Video Generation · Voice Agent · Custom n8n Workflows) — each with bullets and **"Set Up My Automation →"** CTA → `/contact?intent=automation&type=<slug>`.
 
+Re-uses `glass-card` + `feature-icon` + `gradient-text` tokens.
+
+---
+
+## 5. New Section — "Custom AI That Knows Your Business"
+
+**File:** `src/components/home/CustomAISection.tsx` (new) + import after Automation Showcase.
+
+5-card grid (RAG · Model Fine-Tuning · AI Training Pipelines · Voice Agents · Custom AI Dashboard) with **"Build This For Me →"** CTA → `/contact?intent=custom-ai&capability=<slug>`.
+
+---
+
+## 6. New Section — "AKcelerate Builders Club" (Community)
+
+**File:** `src/components/home/BuildersClub.tsx` (new) + import before final CTA section.
+
+- Two-column dark gradient block (matches dark CTA style):
+  - **Left:** Heading "Join the AKcelerate Builders Community", curriculum chips (n8n · RAG · Fine-tuning · AI Video · Voice Agents · Landing Pages), countdown stub ("Next session: every Sunday 9 PM IST").
+  - **Right:** Two CTAs — *Join WhatsApp Channel* (external link placeholder) + *Register for Cohort* (→ `/contact?intent=cohort`).
+- "Join 500+ AI Builders" social proof tagline.
+
+---
+
+## 7. SEO Enhancements (Senior SEO Engineer hat)
+
+- **Index.tsx `<SEOHead>`:** Update title to *"AI MVPs in 21 Days · AI Consulting & Data Solutions | AKcelerate"* and description to include keywords: *21-day MVP, AI agents, n8n automation, RAG, custom AI, data analytics*.
+- **Add `Service` JSON-LD** schema array (in `reviewsJsonLd` graph) covering 4 service tiles for rich-result eligibility.
+- **Add `FAQPage` JSON-LD** in addition to existing FAQ accordion (currently rendered visually only) — improves SERP real-estate.
+- **Add `BreadcrumbList` JSON-LD** to Index (single root crumb) and verify `Breadcrumbs.tsx` is used on detail pages.
+- **`public/sitemap.xml`:** add `/top-selling` route (currently missing) and bump `lastmod`. Update `scripts/generate-sitemap.mjs` to auto-include it.
+- **`public/robots.txt`:** confirm sitemap line points to canonical domain.
+- **`index.html`:** add Open Graph + Twitter card meta defaults (`og:type=website`, `og:image=/images/akcelerate-og.svg`, `twitter:card=summary_large_image`) so `SEOHead` overrides page-by-page but root has good defaults.
+- **Internal linking:** ensure each new section's CTA links into Contact with tracked params (already aligned with existing `?intent=...&product=...` analytics convention).
+
+---
+
+## 8. Analytics Wiring
+
+In each new CTA, fire `analytics.track` events:
+- `home_service_tile_click` `{ service }`
+- `home_ai_agents_cta_click`
+- `home_automation_cta_click` `{ type }`
+- `home_custom_ai_cta_click` `{ capability }`
+- `home_builders_club_cta_click` `{ destination }`
+
+Reuses existing `src/lib/analytics.ts` patterns.
+
+---
+
+## Technical Notes
+
+- All new components are presentational, no new dependencies, no backend changes, no migrations.
+- All copy is original AKcelerate voice — not copied verbatim from reference.
+- All sections wrapped in `RevealSection` / `RevealGrid` for consistent scroll-in animations.
+- Mobile-first responsive: grids collapse to 1 col `< md`, 2 col `md`, 4 col `lg`.
+- Estimated new files: 5 components. Modified files: `Index.tsx`, `index.html`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`.
+
+---
+
+## Out of Scope (ask if you want these added)
+
+- Live WhatsApp/cohort countdown logic (currently a static stub).
+- Founder/personal-brand block (you already have `/founder`).
+- Pricing-table redesign for the 4 new service tiles (can be a follow-up).
