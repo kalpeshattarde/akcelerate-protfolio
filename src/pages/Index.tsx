@@ -22,9 +22,9 @@ import CustomAISection from "@/components/home/CustomAISection";
 import BuildersClub from "@/components/home/BuildersClub";
 
 const heroStats = [
+  { value: "21 Days", label: "MVP Delivery" },
   { value: "25+", label: "Projects Delivered" },
   { value: "13+", label: "Industries Served" },
-  { value: "8+", label: "Solution Areas" },
   { value: "315%", label: "Average Client ROI" },
 ];
 
@@ -47,18 +47,41 @@ const benefits = [
 
 const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
 
-const reviewsJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "AKcelerate",
-  url: "https://akcelerate.lovable.app",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "47",
-    bestRating: "5",
-    worstRating: "1",
+const reviewsJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "AKcelerate",
+    url: "https://akcelerate.lovable.app",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "47",
+      bestRating: "5",
+      worstRating: "1",
+    },
   },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "AKcelerate Services",
+    itemListElement: [
+      { "@type": "Service", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 2, name: "AI Agents as a Service", description: "Autonomous LLM-powered agents that automate workflows and integrate with CRMs, databases, and SaaS tools.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 3, name: "n8n Automation & Workflows", description: "Custom n8n workflows, AI video pipelines, voice agents, and content automation.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 4, name: "Custom AI & RAG Systems", description: "RAG pipelines, model fine-tuning, and AI training pipelines built on your data.", provider: { "@type": "Organization", name: "AKcelerate" } },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: "How fast can you deliver an MVP?", acceptedAnswer: { "@type": "Answer", text: "We ship production-ready MVPs in 21 days using our proven discovery → build → launch playbook." } },
+      { "@type": "Question", name: "Do you build AI agents?", acceptedAnswer: { "@type": "Answer", text: "Yes — we design, build, and deploy custom AI agents that integrate with CRMs, databases, n8n, and your SaaS stack." } },
+      { "@type": "Question", name: "What kinds of automations do you build?", acceptedAnswer: { "@type": "Answer", text: "Instagram content bots, AI video pipelines, voice receptionists, and any custom n8n workflow." } },
+    ],
+  },
+];
   review: [
     {
       "@type": "Review",
