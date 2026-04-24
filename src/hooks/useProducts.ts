@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PRODUCTS } from "@/data/products";
 import { BUNDLE_THRESHOLD } from "@/hooks/useCart";
 import { applyProductOverrides } from "@/lib/productOverrides";
+import { readTopSellingCache, writeTopSellingCache } from "@/lib/topSellingCache";
 
 function getLocalPurchased(): string[] {
   try {
@@ -102,10 +103,31 @@ export function useProducts() {
   // overridesTick ensures recompute when admin pushes a bulk edit or CSV import.
   const products = applyProductOverrides(PRODUCTS);
   void overridesTick;
-  const topSelling = products
-    .filter(p => p.topSelling)
-    .sort((a, b) => b.salesCount - a.salesCount)
-    .slice(0, 3);
+
+  // Compute the top 3 sellers from the catalog, then cache the IDs (5 min TTL)
+  // so repeat visits hydrate the section instantly.
+  const topSelling = useMemo(() => {
+    const computed = products
+      .filter(p => p.topSelling)
+      .sort((a, b) => b.salesCount - a.salesCount)
+      .slice(0, 3);
+
+    if (computed.length > 0) {
+      writeTopSellingCache(computed.map(p => p.id));
+      return computed;
+    }
+
+    // Fallback: try the cached IDs (e.g. while overrides are still loading)
+    const cachedIds = readTopSellingCache();
+    if (cachedIds && cachedIds.length > 0) {
+      return cachedIds
+        .map(id => products.find(p => p.id === id))
+        .filter((p): p is typeof products[number] => Boolean(p))
+        .slice(0, 3);
+    }
+    return computed;
+  }, [products]);
+
   const mobileApps = products.filter(p => p.category === "mobile-app");
   const webSaas = products.filter(p => p.category === "web-saas");
 
