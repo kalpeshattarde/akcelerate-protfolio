@@ -11,7 +11,6 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
-import MagneticButton from "@/components/MagneticButton";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
 import PersonalizedPicks from "@/components/products/PersonalizedPicks";
 import WhatWeBuild from "@/components/home/WhatWeBuild";
@@ -130,13 +129,13 @@ export default function HomePage() {
               <p className="text-sm leading-relaxed mb-8 max-w-xl text-muted-foreground">
                 Full-stack web apps · n8n automations · AI agents · custom AI trained on your data.
               </p>
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-12">
                 <Magnetic strength={20}>
-                  <Link to="/free-audit" className="btn-primary"><Play className="w-4 h-4" /> Start Free Audit</Link>
+                  <Link to="/free-audit" className="btn-primary"><Play className="w-4 h-4" /> Get my free 60-min AI audit</Link>
                 </Magnetic>
-                <Magnetic strength={14}>
-                  <Link to="/products" className="btn-secondary">Explore Products <ArrowRight className="w-4 h-4" /></Link>
-                </Magnetic>
+                <Link to="/products" className="text-sm font-medium text-foreground/80 hover:text-primary inline-flex items-center gap-1 underline-offset-4 hover:underline">
+                  or browse 40+ ready-made prototypes <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
               <div className="hero-stat-strip">
                 {heroStats.map((s, i) => (
@@ -156,6 +155,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════ TRUST STRIP ═══════════════════ */}
+      <TrustStrip />
 
       {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section className="py-24 lg:py-32">
@@ -396,14 +398,17 @@ export default function HomePage() {
 
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
 
+      {/* ═══════════════════ FOUNDER CARD ═══════════════════ */}
+      <FounderCard />
+
       {/* ═══════════════════ BUILDERS CLUB ═══════════════════ */}
       <BuildersClub />
 
       <CTASection
-        title="Ready to Accelerate Your Growth?"
-        description="Book a free audit and discover how AI, data science, and digital solutions can transform your business — in weeks, not months."
-        primaryCta={{ label: "Book Free Audit", to: "/free-audit" }}
-        secondaryCta={{ label: "Explore Solutions", to: "/solutions" }}
+        title="Ready to ship your AI product?"
+        description="Book a free 60-min audit. We'll map 5 high-ROI AI opportunities, estimate the build cost, and hand you a 90-day roadmap — yours to keep."
+        primaryCta={{ label: "Get my free audit", to: "/free-audit" }}
+        secondaryCta={{ label: "See pricing", to: "/pricing" }}
         dark
       />
     </>
