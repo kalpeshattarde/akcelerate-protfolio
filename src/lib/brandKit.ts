@@ -5,22 +5,24 @@ export interface BrandKit {
   colors: {
     primary: string;   // HSL string e.g. "217 91% 60%"
     accent: string;
-    background: string;
-    foreground: string; // body/heading text
+    background: string;       // light mode background
+    foreground: string;       // light mode text/headings
+    backgroundDark: string;   // dark mode background
+    foregroundDark: string;   // dark mode text/headings
   };
   typography: {
-    heading: string;   // Google Font family name
+    heading: string;
     body: string;
-    weights: string;   // e.g. "400;500;600;700"
+    weights: string;
   };
   logos: {
-    light: string | null;   // data URL or http URL
+    light: string | null;
     dark: string | null;
     favicon: string | null;
   };
   brand: {
     tagline: string;
-    voice: string;        // free-form notes
+    voice: string;
   };
 }
 
@@ -32,6 +34,8 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
     accent: "187 92% 43%",
     background: "0 0% 100%",
     foreground: "222 47% 11%",
+    backgroundDark: "220 20% 7%",
+    foregroundDark: "210 40% 98%",
   },
   typography: {
     heading: "Poppins",
