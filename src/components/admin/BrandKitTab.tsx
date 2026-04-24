@@ -155,8 +155,10 @@ export default function BrandKitTab() {
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <ColorField label="Primary" value={kit.colors.primary} onChange={v => update("colors", { primary: v })} />
           <ColorField label="Accent" value={kit.colors.accent} onChange={v => update("colors", { accent: v })} />
-          <ColorField label="Background (light)" value={kit.colors.background} onChange={v => update("colors", { background: v })} />
-          <ColorField label="Foreground / Headings (light)" value={kit.colors.foreground} onChange={v => update("colors", { foreground: v })} />
+          <ColorField label="Background — Light" value={kit.colors.background} onChange={v => update("colors", { background: v })} />
+          <ColorField label="Foreground — Light" value={kit.colors.foreground} onChange={v => update("colors", { foreground: v })} />
+          <ColorField label="Background — Dark" value={kit.colors.backgroundDark} onChange={v => update("colors", { backgroundDark: v })} />
+          <ColorField label="Foreground — Dark" value={kit.colors.foregroundDark} onChange={v => update("colors", { foregroundDark: v })} />
         </CardContent>
       </Card>
 
