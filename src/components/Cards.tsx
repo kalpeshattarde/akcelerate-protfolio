@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, LucideIcon } from "lucide-react";
+import { ArrowRight, Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Workflow, Rocket, Globe, Bot, LucideIcon } from "lucide-react";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ReactNode } from "react";
 
 const iconMap: Record<string, LucideIcon> = {
-  Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings,
+  Layers, Activity, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Workflow, Rocket, Globe, Bot,
 };
 
 function GlowCard({ children, className = "" }: { children: ReactNode; className?: string }) {
