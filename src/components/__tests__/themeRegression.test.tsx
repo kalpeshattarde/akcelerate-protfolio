@@ -16,7 +16,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const ROOT = resolve(__dirname, "../..");
+const ROOT = resolve(__dirname, "../../..");
 
 // Files we expect to be 100% theme-aware
 const FILES = [
