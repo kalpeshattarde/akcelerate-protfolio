@@ -1,32 +1,7 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle2, Workflow } from "lucide-react";
-import SEOHead from "@/components/SEOHead";
-import { HeroPage } from "@/components/Hero";
+import { Workflow } from "lucide-react";
+import LandingTemplate from "@/components/LandingTemplate";
 import AutomationShowcase from "@/components/home/AutomationShowcase";
-import CTASection from "@/components/CTASection";
-import { SectionHeader } from "@/components/SectionHeader";
-import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
-
-const problems = [
-  "Manual copy-paste between CRM, email, and spreadsheets",
-  "Lead handoffs slip through the cracks",
-  "Reports take hours every week to assemble",
-  "Approval workflows live in scattered DMs",
-];
-
-const approach = [
-  "Audit every manual step worth automating",
-  "Design triggers, branches, and failure paths",
-  "Build in n8n with versioning + observability",
-  "Deploy self-hosted or cloud, monitor, iterate",
-];
-
-const deliverables = [
-  "Live n8n workflows tailored to your ops",
-  "CRM + email + database integrations",
-  "Error alerts and retry logic",
-  "Documentation + handover training",
-];
+import heroImage from "@/assets/hero-automations.jpg";
 
 const jsonLd = [
   {
@@ -40,75 +15,123 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: "Do you use n8n or Zapier?", acceptedAnswer: { "@type": "Answer", text: "We build production workflows in n8n (self-hosted or cloud) for full control, versioning, and AI integrations." } },
-      { "@type": "Question", name: "What can you automate?", acceptedAnswer: { "@type": "Answer", text: "CRM updates, lead routing, email sequences, content generation, data sync, approval flows, and custom AI pipelines." } },
+      {
+        "@type": "Question",
+        name: "Do you use n8n or Zapier?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "We build production workflows in n8n (self-hosted or cloud) for full control, versioning, and AI integrations.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What can you automate?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "CRM updates, lead routing, email sequences, content generation, data sync, approval flows, and custom AI pipelines.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Will my team be able to maintain it?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes — we hand over visual n8n workflows with documentation and training so your team can extend them.",
+        },
+      },
     ],
   },
 ];
 
 export default function Automations() {
   return (
-    <>
-      <SEOHead
-        title="Automation Systems · n8n Workflows, CRM & AI Integrations"
-        description="Custom n8n automations that connect your CRM, email, databases, and AI models. Eliminate manual work and ship deterministic workflows."
-        path="/automations"
-        jsonLd={jsonLd}
-        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Automations", path: "/automations" }]}
-      />
-      <HeroPage
-        label="Automation Systems"
-        title={<>Automate Everything That <span className="gradient-text">Slows You Down</span></>}
-        description="Custom n8n workflows powered by AI — connect every tool, eliminate manual work, ship deterministic systems."
-      />
-
-      <AutomationShowcase />
-
-      <section className="py-24 lg:py-32 section-alt">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealSection>
-            <SectionHeader label="The Problem" title={<>Manual Work <span className="gradient-text">Costs You Hours</span></>} description="The repetitive tasks where automation pays back fastest." />
-          </RevealSection>
-          <RevealGrid className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto" stagger={80}>
-            {problems.map((p) => (
-              <div key={p} className="reveal-item glass-card p-5 flex items-start gap-3">
-                <Workflow className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-muted-foreground">{p}</span>
-              </div>
-            ))}
-          </RevealGrid>
-        </div>
-      </section>
-
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10">
-          <RevealSection>
-            <h2 className="font-poppins font-bold text-3xl mb-5">Our Approach</h2>
-            <ul className="space-y-3">
-              {approach.map((a) => (
-                <li key={a} className="flex items-start gap-3 text-muted-foreground">
-                  <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />{a}
-                </li>
-              ))}
-            </ul>
-          </RevealSection>
-          <RevealSection delay={150}>
-            <h2 className="font-poppins font-bold text-3xl mb-5">What You Get</h2>
-            <ul className="space-y-3">
-              {deliverables.map((d) => (
-                <li key={d} className="flex items-start gap-3 text-muted-foreground">
-                  <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />{d}
-                </li>
-              ))}
-            </ul>
-            <Link to="/contact?intent=automation" className="btn-primary mt-8 inline-flex">
-              Set Up My Automation <ArrowRight className="w-4 h-4" />
-            </Link>
-          </RevealSection>
-        </div>
-      </section>
-
-      <CTASection title="Ready to automate your busywork?" description="Tell us your repetitive workflow — we'll scope an n8n automation that pays for itself." primaryCta={{ label: "Plan My Automation", to: "/contact?intent=automation" }} secondaryCta={{ label: "View Solutions", to: "/solutions" }} dark />
-    </>
+    <LandingTemplate
+      seo={{
+        title: "Automation Systems · n8n Workflows, CRM & AI Integrations",
+        description:
+          "Custom n8n automations that connect your CRM, email, databases, and AI models. Eliminate manual work and ship deterministic workflows.",
+        path: "/automations",
+        jsonLd,
+        breadcrumbs: [
+          { name: "Home", path: "/" },
+          { name: "Automations", path: "/automations" },
+        ],
+      }}
+      hero={{
+        label: "Automation Systems",
+        title: (
+          <>
+            Automate Everything That <span className="gradient-text">Slows You Down</span>
+          </>
+        ),
+        description:
+          "Custom n8n workflows powered by AI — connect every tool, eliminate manual work, ship deterministic systems.",
+      }}
+      heroImage={{ src: heroImage, alt: "Workflow automation graph connecting apps, email and databases" }}
+      showcase={<AutomationShowcase />}
+      problem={{
+        title: (
+          <>
+            Manual Work <span className="gradient-text">Costs You Hours</span>
+          </>
+        ),
+        description: "The repetitive tasks where automation pays back fastest.",
+        icon: Workflow,
+        items: [
+          "Manual copy-paste between CRM, email, and spreadsheets",
+          "Lead handoffs slip through the cracks",
+          "Reports take hours every week to assemble",
+          "Approval workflows live in scattered DMs",
+        ],
+      }}
+      approach={{
+        title: "Our Approach",
+        items: [
+          "Audit every manual step worth automating",
+          "Design triggers, branches, and failure paths",
+          "Build in n8n with versioning + observability",
+          "Deploy self-hosted or cloud, monitor, iterate",
+        ],
+      }}
+      deliverables={{
+        title: "What You Get",
+        items: [
+          "Live n8n workflows tailored to your ops",
+          "CRM + email + database integrations",
+          "Error alerts and retry logic",
+          "Documentation + handover training",
+        ],
+        ctaLabel: "Set Up My Automation",
+        ctaTo: "/contact?intent=automation",
+      }}
+      faq={{
+        title: "Automations — FAQ",
+        items: [
+          {
+            question: "How long does an automation take to ship?",
+            answer:
+              "Most single workflows ship in 1–2 weeks. Multi-system orchestrations with AI steps typically run 3–6 weeks.",
+          },
+          {
+            question: "Do you self-host n8n or use cloud?",
+            answer:
+              "Both. We recommend self-hosted on your VPS for cost and control; cloud is great for fast pilots.",
+          },
+          {
+            question: "Can automations call AI models?",
+            answer:
+              "Yes — we wire OpenAI, Gemini, and open models directly into n8n nodes for content, classification, and decision steps.",
+          },
+        ],
+      }}
+      finalCta={{
+        title: "Ready to automate your busywork?",
+        description: "Tell us your repetitive workflow — we'll scope an n8n automation that pays for itself.",
+        primaryLabel: "Plan My Automation",
+        primaryTo: "/contact?intent=automation",
+        secondaryLabel: "View Solutions",
+        secondaryTo: "/solutions",
+      }}
+    />
   );
 }
