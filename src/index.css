@@ -179,7 +179,8 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
     color: hsl(var(--ak-body));
     font-weight: 400;
     line-height: 1.65;
