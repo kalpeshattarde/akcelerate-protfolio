@@ -6,10 +6,11 @@ import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToSolution } from "@/lib/relatedContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { buildSolutionBreadcrumbs, visibleSolutionBreadcrumbs } from "@/lib/solutionBreadcrumbs";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
@@ -66,13 +67,9 @@ export default function SolutionDetailPage() {
         description={solution.description}
         path={`/solutions/${slug}`}
         jsonLd={solutionJsonLd}
-        breadcrumbs={[
-          { name: "Home", path: "/" },
-          { name: "Solutions", path: "/solutions" },
-          { name: solution.title, path: `/solutions/${slug}` },
-        ]}
+        breadcrumbs={buildSolutionBreadcrumbs(slug)}
       />
-      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions" }, { name: solution.title }]} />
+      <Breadcrumbs items={visibleSolutionBreadcrumbs(slug)} />
       <HeroPage
         label="Solutions"
         title={<><span className="gradient-text">{solution.title}</span></>}

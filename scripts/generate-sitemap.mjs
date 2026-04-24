@@ -18,7 +18,6 @@ function slugsFromFile(relPath, pattern) {
 }
 
 const slugRe = /slug:\s*["']([a-z0-9-]+)["']/g;
-const services = slugsFromFile("src/data/services.ts", new RegExp(slugRe.source, "g"));
 const solutions = slugsFromFile("src/data/solutions.ts", new RegExp(slugRe.source, "g"));
 const blog = slugsFromFile("src/data/blog.ts", new RegExp(slugRe.source, "g"));
 const products = slugsFromFile("src/data/products.ts", new RegExp(slugRe.source, "g"));
@@ -36,7 +35,7 @@ while ((nm = nameRe.exec(industriesText)) !== null && industries.length < 20) {
 }
 
 const staticRoutes = [
-  "/", "/about", "/services", "/solutions", "/case-studies", "/completed-projects",
+  "/", "/about", "/solutions", "/case-studies", "/completed-projects",
   "/industries", "/insights", "/blog", "/pricing", "/contact", "/founder",
   "/free-audit", "/resources", "/gallery", "/careers", "/privacy", "/terms",
   "/products", "/guide",
@@ -44,7 +43,6 @@ const staticRoutes = [
 
 const urls = [
   ...staticRoutes.map(r => ({ loc: r, priority: r === "/" ? 1.0 : 0.7 })),
-  ...services.map(s => ({ loc: `/services/${s}`, priority: 0.8 })),
   ...solutions.map(s => ({ loc: `/solutions/${s}`, priority: 0.8 })),
   ...industries.map(s => ({ loc: `/industries/${s}`, priority: 0.7 })),
   ...blog.map(s => ({ loc: `/blog/${s}`, priority: 0.6 })),
