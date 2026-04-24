@@ -1,114 +1,73 @@
-# AKcelerate Hybrid Studio Expansion
+# Premium Visual Upgrade — AKcelerate
 
-The site already has strong foundations (WhatWeBuild, AIAgentsSection, AutomationShowcase, CustomAISection, BuildersClub, 21-day MVP hero, intent-aware Contact links). This plan **extends** those without removing or duplicating.
+Make the site look like a $100M AI startup (think Linear, Vercel, Stripe, Cal.com, ElevenLabs) **without changing the blue/cyan brand, Poppins/Inter fonts, or any logic**. Focus is purely on visual refinement: typography rhythm, depth, density, micro-interactions, and editorial polish.
 
-## 1. Global Positioning Update
+## What makes a site feel "premium" vs "average"
 
-- **Tagline shift**: "AI-Powered MVPs in 21 Days" → secondary line "AI Product Studio · Automation Engine · Marketplace"
-- Update `<SEOHead>` title/description on `Index.tsx`, `About.tsx`, `Solutions.tsx` to reflect the hybrid positioning.
-- Update hero badge in `Index.tsx` to: "AI Product Studio + Automation + Marketplace".
-- Keep the 21-day MVP H1 (it converts) but add a secondary subtitle line.
+Average sites have: flat shadows, uniform card sizes, generic gradients, repetitive section padding, oversized headlines without hierarchy, low contrast between sections.
 
-## 2. Three New Landing Routes
+Premium sites have: layered shadows with colored ambient glow, **bento-style asymmetric grids**, tight letter-spacing on display headings, generous whitespace combined with **occasional dense data-rich modules**, subtle noise/grain, gradient borders on hero elements, cursor-aware interactions, and editorial section transitions.
 
-Create dedicated pages reusing existing section components:
+## Scope (8 focused changes)
 
-| Route | Purpose | Reuses |
-|---|---|---|
-| `/ai-agents` | Agents-as-a-Service deep dive | `AIAgentsSection`, new pricing block, FAQ, CTA |
-| `/automations` | n8n + workflow automation | `AutomationShowcase`, use cases, FAQ |
-| `/build-mvp` | 21-day MVP service page | Process timeline from Index, deliverables, pricing |
+### 1. Typography polish (`src/index.css`)
+- Bump display headings (h1, hero) to tracking `-0.035em` and add `font-feature-settings: "ss01","cv11"` for Inter ligatures.
+- Add a `.text-display` utility (clamp-based fluid sizing 3rem → 5.5rem) for hero h1.
+- Add `.eyebrow` class — small-caps, gradient underline accent, replaces flat `.section-label` on premium sections.
+- Tighten body line-height from 1.7 → 1.6 on dense modules; keep 1.7 for long-form prose.
 
-Each page:
-- `HeroPage` header + `SEOHead` with `Service`-equivalent `WebPage` + `FAQPage` JSON-LD (no `@type:Service` per existing constraint)
-- Problem → Approach → Deliverables → CTA structure
-- Add to `App.tsx` lazy routes, `Navbar` mobile menu, `sitemap.xml`, and `scripts/generate-sitemap.mjs`
+### 2. Layered "aurora" shadows + depth tokens (`src/index.css`)
+- Add new tokens:
+  - `--shadow-elevated`: 3-layer shadow (close, mid, far) for cards
+  - `--shadow-aurora`: colored ambient blue→cyan glow for hero/CTA elements
+  - `--shadow-inset-top`: subtle top highlight (1px white inset) for premium card feel
+- Apply `--shadow-elevated` to `.glass-card`, `.hero-stat-card`, `.ak-dark-card`. Replace flat `box-shadow` calls.
 
-## 3. Solutions Data Extension
+### 3. Hero refinement (`src/pages/Index.tsx` + `src/index.css`)
+- Replace flat `.hero-badge` with **glass-pill**: backdrop-blur, gradient ring border, animated dot.
+- Wrap headline in `.text-display` with one accent word in `hero-gradient-text` (already exists) — increase contrast.
+- Stat cards: convert 2×2 grid to a single horizontal **stat-strip** with vertical dividers (more editorial, less "card soup").
+- Add a thin gradient hairline below hero (`border-bottom: 1px solid` with conic gradient mask) instead of plain section break.
 
-Add **3 new entries** to `src/data/solutions.ts` (the canonical service module after services.ts removal):
+### 4. Bento section for "What We Build" (`src/components/home/WhatWeBuild.tsx`)
+- Convert the existing equal-grid into a **bento layout**: 1 large feature card (col-span-2 row-span-2) + 4 smaller cards. This single change reads as the biggest "premium" upgrade.
+- Add subtle gradient border on the large card via `::before` mask.
 
-- `ai-agents` — AI Agents as a Service (sales, support, internal copilots)
-- `automation-systems` — n8n, API workflows, CRM/email automation
-- `mvp-21day` — 21-Day MVP Build System
+### 5. Section rhythm + dividers (`src/index.css` + `Index.tsx`)
+- Replace flat `section-alt` background with **subtle radial-mesh** (tiny 0.04-opacity orbs anchored at corners).
+- Add `.section-divider-glow` — gradient hairline + tiny center dot for editorial breaks between sections.
+- Vary section vertical padding: alternate `py-24` / `py-32` / `py-20` instead of uniform `py-24 lg:py-32` everywhere — creates rhythm.
 
-Each follows the existing `Solution` interface (features, benefits, process, industries, relatedSlugs). Add icons + update `solutionLinks` in `Navbar.tsx` mega menu and `solutionBreadcrumbs.ts` mapping.
+### 6. Premium CTA buttons (`src/index.css`)
+- `.btn-primary`: keep gradient but add **inset top highlight** (`inset 0 1px 0 rgba(255,255,255,0.25)`) and **outer aurora glow** on hover (multi-color shadow). This is the single most-noticed "premium" tell.
+- `.btn-secondary`: switch from solid border to **gradient-border via mask** (border-image alternative) so border itself shimmers blue→cyan.
+- Add `.btn-ghost` variant for tertiary actions (currently missing — text + arrow only).
 
-## 4. Marketplace Upgrade
+### 7. Card micro-interactions (`src/index.css`)
+- Glass card hover: add a **3D tilt-on-hover** via CSS `transform: perspective(1000px) rotateX/Y` driven by existing `--mouse-x/--mouse-y` vars (already tracked).
+- Add a subtle **gradient border reveal** on hover (currently only the spotlight glow appears).
+- Tighten card padding from `p-7` to `p-6` and increase internal type-scale — denser, more designed feel.
 
-Extend `src/data/products.ts` schema:
-- Add optional `category` field with values: `ai-agent | automation | saas-mvp | template`
-- Add optional `tags: string[]` (e.g. `["AI", "automation", "SaaS"]`)
-- Add optional `useCases: string[]` shown on `ProductDetail.tsx`
+### 8. Process section + stats refinement (`src/pages/Index.tsx`)
+- Convert numbered process circles to **gradient-ring numbers** (transparent center, conic-gradient ring) — more sophisticated than solid circles.
+- Connector line between steps: animate a moving dot along the gradient (CSS `@keyframes` translateX) — implies flow.
+- Impact stat cards: remove individual colored backgrounds, unify on dark glass surface with colored accent bar on top — looks like a real analytics dashboard.
 
-UI changes:
-- `CatalogSection.tsx` / `ProductsSubNav.tsx` — add category filter chips
-- `ProductCard.tsx` — render colored tag pills
-- `ProductDetail.tsx` — new "Use Cases" section before pricing
-- `BundleProgressBar.tsx` already exists — verify "5+ for bundle discount" copy matches `appConfig.ts` (already does)
+## Files to modify
 
-## 5. Intent-Based Personalization
+- `src/index.css` — most changes (tokens, classes, animations)
+- `src/pages/Index.tsx` — hero stat-strip, section padding rhythm, process refinement
+- `src/components/home/WhatWeBuild.tsx` — bento conversion
+- `src/components/Hero.tsx` — apply `.text-display` + glass-pill badge
 
-Extend `src/hooks/usePersonalization.ts`:
-- Add `intent` detection from URL params (`?intent=founder|business|enterprise`) persisted to localStorage
-- Return `recommendedProductCategory`, `heroVariant`, `ctaLabel` per intent:
-  - **Founder** → MVP content, "Build My MVP" CTA
-  - **Business owner** → Automation content, "Automate My Business" CTA
-  - **Enterprise** → Consulting content, "Book Strategy Call" CTA
-- Wire into `Index.tsx` hero subtitle + `PersonalizedPicks` filtering
+No new dependencies. No brand-color, font, or layout-structure changes. No logic, route, or data changes.
 
-Add a small intent picker on the hero (3 chips: "I'm a Founder / Business Owner / Enterprise") that updates state instantly without reload.
+## Out of scope (intentionally)
+- Dark-mode-only tweaks (light is the default, that's where premium feel matters most for B2B)
+- Replacing icon sets, illustrations, or hero image
+- Adding new sections or removing existing ones
+- 3D/WebGL effects (overkill, hurts performance)
 
-## 6. Admin AI Generators
-
-`AdGeneratorTab.tsx` already exists. Add two siblings under `src/components/admin/`:
-- `OfferGeneratorTab.tsx` — generates promo offers (headline + discount + urgency)
-- `LandingPageGeneratorTab.tsx` — generates hero copy + 3 feature blocks + CTA for a given product
-
-All three use a shared edge function `supabase/functions/generate-marketing/index.ts` calling Lovable AI (`google/gemini-3-flash-preview`) with tool-calling for structured output. Wire tabs into `Admin.tsx`.
-
-Reuses existing `LOVABLE_API_KEY` (Lovable Cloud already enabled).
-
-## 7. Footer + Navigation Wiring
-
-- Add new routes to mobile menu in `Navbar.tsx`
-- Add a "Studio" footer column in `Footer.tsx`: AI Agents · Automations · Build MVP · Custom AI
-- Update `Solutions` mega menu to include the 3 new solution slugs
-- Update `Navbar.solutions.test.tsx` to validate new links
-
-## 8. SEO / Schema / Sitemap
-
-- Update `Index.tsx` `ItemList` JSON-LD to include the 3 new solution entries
-- Add new routes to `public/sitemap.xml` and `scripts/generate-sitemap.mjs`
-- Each new landing page gets `WebPage` + `FAQPage` JSON-LD (no `Service`/`serviceType` per `check-no-services.mjs` guard)
-- Re-run `npm run prebuild` mentally — all new content uses `WebPage`/`ItemList`/`ListItem`
-
-## What stays untouched
-
-- Auth (Clerk), Stripe/Razorpay, Admin shell, existing manufacturing benefits/tech sections, all `/solutions/*` detail pages, Lovable Cloud edge functions
-
-## Files Touched
-
-**Create**:
-- `src/pages/AIAgents.tsx`, `src/pages/Automations.tsx`, `src/pages/BuildMVP.tsx`
-- `src/components/admin/OfferGeneratorTab.tsx`, `src/components/admin/LandingPageGeneratorTab.tsx`
-- `src/lib/intentDetection.ts`
-- `supabase/functions/generate-marketing/index.ts`
-
-**Modify**:
-- `src/pages/Index.tsx` (hero subtitle, intent chips, JSON-LD)
-- `src/data/solutions.ts` (3 new solutions)
-- `src/data/products.ts` + `src/hooks/useProducts.ts` (category/tags/useCases)
-- `src/components/Navbar.tsx`, `src/components/Footer.tsx`
-- `src/components/products/ProductCard.tsx`, `CatalogSection.tsx`, `pages/products/ProductDetail.tsx`
-- `src/hooks/usePersonalization.ts`
-- `src/lib/solutionBreadcrumbs.ts`
-- `src/pages/admin/Admin.tsx`
-- `src/App.tsx`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`
-- `src/components/__tests__/Navbar.solutions.test.tsx`
-
-## Open Questions (optional)
-
-1. Should the intent chips persist across sessions, or reset each visit?
-2. For new landing pages — do you want pricing tables embedded or just CTA → Contact?
-3. Should the AI generators write results back to the DB (e.g. saved campaigns) or just display copy-to-clipboard?
+## Expected before/after feel
+- Before: "nice indie SaaS"
+- After: "well-funded AI startup that ships"

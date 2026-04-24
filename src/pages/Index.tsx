@@ -115,7 +115,7 @@ export default function HomePage() {
                 <span className="w-2 h-2 rounded-full bg-accent inline-block" />
                 AI Product Studio + Automation + Marketplace
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
+              <h1 className="text-display mb-6">
                 Build AI Products, Automations<br />& Systems —{" "}
                 <span className="hero-gradient-text">Fast</span>
               </h1>
@@ -133,11 +133,11 @@ export default function HomePage() {
                   <Link to="/products" className="btn-secondary">Explore Products <ArrowRight className="w-4 h-4" /></Link>
                 </Magnetic>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="hero-stat-strip">
                 {heroStats.map((s, i) => (
-                  <div key={i} className="hero-stat-card text-center">
+                  <div key={i}>
                     <div className="stat-number" style={{ fontSize: s.value.length > 4 ? "1.5rem" : "1.75rem" }}><AnimatedStat value={s.value} /></div>
-                    <div className="text-xs mt-1 text-muted-foreground">{s.label}</div>
+                    <div className="text-[11px] mt-1 text-muted-foreground tracking-wide uppercase">{s.label}</div>
                   </div>
                 ))}
               </div>
