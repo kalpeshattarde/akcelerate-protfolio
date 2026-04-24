@@ -1,32 +1,42 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { HeroPage } from "@/components/Hero";
 import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { ContactForm } from "@/components/Forms";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, AlertTriangle } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";
 import { PRODUCTS } from "@/data/products";
 import CustomizeSummary from "@/components/products/CustomizeSummary";
 import CustomizationBrief from "@/components/products/CustomizationBrief";
 import { trackEvent } from "@/lib/analytics";
 
+const SAFE_PARAM = /^[\w\s.,'\-–&()/+]{1,120}$/;
+const SAFE_ID = /^[a-zA-Z0-9_-]{1,40}$/;
+
 export default function ContactPage() {
   const [searchParams] = useSearchParams();
-  const intent = searchParams.get("intent");
-  const productNameParam = searchParams.get("product") ?? "";
-  const productIdParam = searchParams.get("productId") ?? "";
+  const intentRaw = searchParams.get("intent") ?? "";
+  const productNameRaw = searchParams.get("product") ?? "";
+  const productIdRaw = searchParams.get("productId") ?? "";
+
+  const intent = intentRaw === "customize" ? "customize" : null;
+  const productNameParam = SAFE_PARAM.test(productNameRaw) ? productNameRaw : "";
+  const productIdParam = SAFE_ID.test(productIdRaw) ? productIdRaw : "";
   const isCustomize = intent === "customize";
 
   // Match by id first, then by exact name (decoded by useSearchParams)
   const product = useMemo(() => {
     if (!isCustomize) return null;
     return (
-      PRODUCTS.find((p) => p.id === productIdParam) ||
-      PRODUCTS.find((p) => p.name === productNameParam) ||
+      (productIdParam && PRODUCTS.find((p) => p.id === productIdParam)) ||
+      (productNameParam && PRODUCTS.find((p) => p.name === productNameParam)) ||
       null
     );
   }, [isCustomize, productIdParam, productNameParam]);
+
+  const customizeParamsProvided = isCustomize && (productNameParam || productIdParam);
+  const productMismatch = customizeParamsProvided && !product;
 
   const [mode, setMode] = useState<"quick" | "brief">(isCustomize ? "brief" : "quick");
 
