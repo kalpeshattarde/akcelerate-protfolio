@@ -29,14 +29,12 @@ function FormComponent({
   fields,
   buttonLabel,
   source,
-  dark = false,
   defaults = {},
   defaultMessage = "",
 }: {
   fields: FormField[];
   buttonLabel: string;
   source: "contact" | "audit";
-  dark?: boolean;
   defaults?: Record<string, string>;
   defaultMessage?: string;
 }) {
@@ -121,16 +119,16 @@ function FormComponent({
 
   if (submitted) {
     return (
-      <div className={`glass-card p-10 text-center ${dark ? "!bg-white/5 !border-white/10" : ""}`}>
+      <div className="glass-card p-10 text-center">
         <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
-        <h3 className={`font-poppins font-bold text-2xl mb-2 ${dark ? "text-white" : ""}`}>Thank You!</h3>
-        <p className={dark ? "text-white/70" : "text-muted-foreground"}>We'll get back to you within 24 hours.</p>
+        <h3 className="font-poppins font-bold text-2xl mb-2 text-foreground">Thank You!</h3>
+        <p className="text-muted-foreground">We'll get back to you within 24 hours.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className={`glass-card p-8 space-y-5 ${dark ? "!bg-white/5 !border-white/10" : ""}`}>
+    <form onSubmit={handleSubmit} noValidate className="glass-card p-8 space-y-5">
       {/* Honeypot — hidden from users + assistive tech */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
         <label>
@@ -141,7 +139,7 @@ function FormComponent({
 
       {fields.map(f => (
         <div key={f.name}>
-          <label htmlFor={`${source}-${f.name}`} className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>
+          <label htmlFor={`${source}-${f.name}`} className="block text-sm font-medium mb-1.5 text-foreground">
             {f.label} {f.required && <span className="text-destructive">*</span>}
           </label>
           <input
@@ -154,15 +152,15 @@ function FormComponent({
             autoComplete={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "off"}
             aria-invalid={!!errors[f.name]}
             aria-describedby={errors[f.name] ? `${source}-${f.name}-error` : undefined}
-            className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 ${
-              dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
-            } ${errors[f.name] ? "!border-destructive" : ""}`}
+            className={`w-full px-4 py-3 rounded-xl text-sm transition-all border bg-background border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 hover:border-primary/30 ${
+              errors[f.name] ? "!border-destructive" : ""
+            }`}
           />
           {errors[f.name] && <p id={`${source}-${f.name}-error`} className="text-destructive text-xs mt-1">{errors[f.name]}</p>}
         </div>
       ))}
       <div>
-        <label htmlFor={`${source}-message`} className={`block text-sm font-medium mb-1.5 ${dark ? "text-white/80" : "text-foreground"}`}>Message</label>
+        <label htmlFor={`${source}-message`} className="block text-sm font-medium mb-1.5 text-foreground">Message</label>
         <textarea
           id={`${source}-message`}
           name="message"
@@ -172,9 +170,7 @@ function FormComponent({
           placeholder="Tell us about your project..."
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? `${source}-message-error` : undefined}
-          className={`w-full px-4 py-3 rounded-xl text-sm transition-all border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none ${
-            dark ? "bg-white/5 border-white/10 text-white placeholder:text-white/40" : "bg-background border-border text-foreground placeholder:text-muted-foreground"
-          }`}
+          className="w-full px-4 py-3 rounded-xl text-sm transition-all border bg-background border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 hover:border-primary/30 resize-none"
         />
         {errors.message && <p id={`${source}-message-error`} className="text-destructive text-xs mt-1">{errors.message}</p>}
       </div>
