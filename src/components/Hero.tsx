@@ -44,8 +44,8 @@ function ParallaxParticles() {
             width: p.size,
             height: p.size,
             background: i % 2 === 0
-              ? "rgba(37,99,235,0.3)"
-              : "rgba(6,182,212,0.3)",
+              ? "hsl(var(--primary) / 0.3)"
+              : "hsl(var(--accent) / 0.3)",
             animationDuration: `${3 + p.speed * 4}s`,
             animationDelay: `${p.delay}s`,
           }}
@@ -71,7 +71,7 @@ export function HeroPrimary({ badge, title, description, primaryCta, secondaryCt
     <section
       ref={ref}
       className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
+      style={{ background: "var(--gradient-hero)" }}
     >
       {/* Parallax background layers */}
       <div
@@ -80,19 +80,19 @@ export function HeroPrimary({ badge, title, description, primaryCta, secondaryCt
       />
       <div
         className="absolute -top-[200px] -left-[200px] w-[700px] h-[700px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
-        style={{ background: "rgba(37,99,235,0.07)", transform: `translateY(${offset * 0.8}px)` }}
+        style={{ background: "hsl(var(--primary) / 0.07)", transform: `translateY(${offset * 0.8}px)` }}
       />
       <div
         className="absolute -bottom-[150px] -right-[100px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none transition-transform duration-100"
-        style={{ background: "rgba(6,182,212,0.07)", transform: `translateY(${offset * 0.6}px)` }}
+        style={{ background: "hsl(var(--accent) / 0.07)", transform: `translateY(${offset * 0.6}px)` }}
       />
       <ParallaxParticles />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             {badge && <div className="hero-badge">{badge}</div>}
-            <h1 className="font-poppins font-bold text-4xl md:text-5xl lg:text-[3.25rem] leading-tight mb-6">{title}</h1>
-            <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "#475569" }}>{description}</p>
+            <h1 className="font-poppins font-bold text-4xl md:text-5xl lg:text-[3.25rem] leading-tight mb-6 text-foreground">{title}</h1>
+            <p className="text-lg leading-relaxed mb-8 max-w-xl text-muted-foreground">{description}</p>
             <div className="flex flex-wrap gap-4">
               {primaryCta && <Link to={primaryCta.to} className="btn-primary">{primaryCta.label} <ArrowRight className="w-4 h-4" /></Link>}
               {secondaryCta && <Link to={secondaryCta.to} className="btn-secondary">{secondaryCta.label}</Link>}
@@ -118,7 +118,7 @@ export function HeroPage({ label, title, description }: HeroPageProps) {
     <section
       ref={ref}
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #EFF6FF 0%, #F0FDFF 55%, #ECFEFF 100%)" }}
+      style={{ background: "var(--gradient-hero)" }}
     >
       <div
         className="absolute inset-0 hero-grid-bg"
@@ -126,12 +126,12 @@ export function HeroPage({ label, title, description }: HeroPageProps) {
       />
       <div
         className="absolute -top-[150px] -left-[150px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
-        style={{ background: "rgba(37,99,235,0.06)", transform: `translateY(${offset * 0.7}px)` }}
+        style={{ background: "hsl(var(--primary) / 0.06)", transform: `translateY(${offset * 0.7}px)` }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {label && <span className="section-label">{label}</span>}
-        <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5">{title}</h1>
-        <p className="text-lg max-w-2xl mx-auto" style={{ color: "#64748B" }}>{description}</p>
+        <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5 text-foreground">{title}</h1>
+        <p className="text-lg max-w-2xl mx-auto text-muted-foreground">{description}</p>
       </div>
     </section>
   );
