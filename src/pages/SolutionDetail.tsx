@@ -10,6 +10,7 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToSolution } from "@/lib/relatedContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { buildSolutionBreadcrumbs, visibleSolutionBreadcrumbs } from "@/lib/solutionBreadcrumbs";
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
