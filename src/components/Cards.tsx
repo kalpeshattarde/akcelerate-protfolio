@@ -106,6 +106,7 @@ export function TestimonialCard({ quote, name, role }: TestimonialCardProps) {
 interface PricingCardProps {
   name: string;
   description: string;
+  outcome?: string;
   priceUsd: number;
   priceInr: number;
   features: string[];
@@ -113,9 +114,11 @@ interface PricingCardProps {
   cta: string;
   isAnnual: boolean;
   discountPercent: number;
+  socialProof?: string;
+  badge?: string;
 }
 
-export function PricingCard({ name, description, priceUsd, priceInr, features, highlighted, cta, isAnnual, discountPercent }: PricingCardProps) {
+export function PricingCard({ name, description, outcome, priceUsd, priceInr, features, highlighted, cta, isAnnual, discountPercent, socialProof, badge }: PricingCardProps) {
   const isCustom = priceUsd === 0;
   const displayUsd = isAnnual ? Math.round(priceUsd * (1 - discountPercent / 100)) : priceUsd;
   const displayInr = isAnnual ? Math.round(priceInr * (1 - discountPercent / 100)) : priceInr;
@@ -129,46 +132,62 @@ export function PricingCard({ name, description, priceUsd, priceInr, features, h
   };
 
   return (
-    <div className={highlighted ? "pt-4" : ""}>
-    <GlowCard className={`glass-card p-8 relative overflow-visible ${highlighted ? "border-primary shadow-lg z-10" : ""}`}>
-      {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-semibold text-primary-foreground whitespace-nowrap" style={{ background: "var(--gradient-primary)" }}>
-          Most Popular
-        </div>
-      )}
-      <h3 className="font-poppins font-bold text-xl mb-2">{name}</h3>
-      <p className="text-muted-foreground text-sm mb-6">{description}</p>
-      <div className="mb-6">
-        <p className="text-xs text-muted-foreground font-medium mb-1">Starts from</p>
-        {isCustom ? (
-          <span className="font-poppins font-bold text-3xl">Custom</span>
-        ) : (
-          <>
-            <div className="flex items-baseline gap-2">
-              <span className="font-poppins font-bold text-3xl">${displayUsd.toLocaleString()}</span>
-              <span className="text-sm text-muted-foreground">/mo</span>
-            </div>
-            {isAnnual && (
-              <div className="text-xs text-green-600 font-medium mt-0.5">
-                Save {discountPercent}% — <span className="line-through text-muted-foreground">${priceUsd.toLocaleString()}/mo</span>
-              </div>
-            )}
-            <div className="text-sm text-muted-foreground mt-1">≈ ₹{formatInr(displayInr)}/mo</div>
-          </>
+    <div className={highlighted ? "pt-5" : ""}>
+      <GlowCard className={`glass-card p-8 relative overflow-visible ${highlighted ? "border-primary shadow-2xl shadow-primary/20 z-10 scale-[1.02]" : ""}`}>
+        {highlighted && (
+          <div
+            className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold text-primary-foreground whitespace-nowrap shadow-lg uppercase tracking-wider"
+            style={{ background: "var(--gradient-primary)", letterSpacing: "0.08em" }}
+          >
+            ★ {badge || "Most Popular"}
+          </div>
         )}
-      </div>
-      <ul className="space-y-3 mb-8">
-        {features.map((f, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-            <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
-            {f}
-          </li>
-        ))}
-      </ul>
-      <Link to="/contact" className={highlighted ? "btn-primary w-full justify-center" : "btn-secondary w-full justify-center"}>
-        {cta}
-      </Link>
-    </GlowCard>
+
+        <h3 className="font-poppins font-bold text-2xl mb-1">{name}</h3>
+        {outcome && (
+          <p className="text-sm font-medium text-foreground/80 mb-3">{outcome}</p>
+        )}
+        <p className="text-muted-foreground text-xs mb-6 leading-relaxed">{description}</p>
+
+        <div className="mb-6 pb-6 border-b border-border">
+          <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider mb-1">{isCustom ? "Pricing" : "Starts from"}</p>
+          {isCustom ? (
+            <span className="font-poppins font-bold text-3xl">Custom</span>
+          ) : (
+            <>
+              <div className="flex items-baseline gap-2">
+                <span className="font-poppins font-bold text-4xl">${displayUsd.toLocaleString()}</span>
+                <span className="text-sm text-muted-foreground">/mo</span>
+              </div>
+              {isAnnual && (
+                <div className="text-xs text-green-600 font-semibold mt-1">
+                  Save {discountPercent}% — <span className="line-through text-muted-foreground font-normal">${priceUsd.toLocaleString()}/mo</span>
+                </div>
+              )}
+              <div className="text-xs text-muted-foreground mt-1">≈ ₹{formatInr(displayInr)}/mo</div>
+            </>
+          )}
+        </div>
+
+        <ul className="space-y-3 mb-7">
+          {features.map((f, i) => (
+            <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/85">
+              <svg className="w-4 h-4 text-accent flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <Link to={isCustom ? "/contact" : "/free-audit"} className={highlighted ? "btn-primary w-full justify-center" : "btn-secondary w-full justify-center"}>
+          {cta}
+        </Link>
+
+        {socialProof && (
+          <p className="text-[11px] text-center text-muted-foreground mt-3 font-medium">
+            {socialProof}
+          </p>
+        )}
+      </GlowCard>
     </div>
   );
 }

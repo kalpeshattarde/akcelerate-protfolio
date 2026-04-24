@@ -15,11 +15,20 @@ export default function PersonalizedHero() {
       </h1>
 
       {/* Subheadline */}
-      <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+      <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed">
         Why spend <span className="font-semibold text-foreground">$1,000–$3,000</span> and weeks wrestling with
-        ChatGPT, Claude, Replit, or Bolt? Grab a <span className="font-semibold text-foreground">ready-made SaaS prototype</span> for
-        <span className="font-semibold text-primary"> $19</span> and launch today.
+        ChatGPT, Claude, Replit, or Bolt? Grab a <span className="font-semibold text-foreground">production-grade SaaS prototype</span> and launch today.
       </p>
+
+      {/* Anchor + bundle pricing */}
+      <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 mb-8">
+        <span className="text-sm font-medium text-foreground">
+          <span className="line-through text-muted-foreground">$19</span>{" "}
+          <span className="font-bold text-primary text-lg">$12</span> each
+        </span>
+        <span className="w-1 h-1 rounded-full bg-muted-foreground/40" />
+        <span className="text-sm font-semibold text-foreground">when you grab 5+ prototypes</span>
+      </div>
 
       {/* 3 Bullet Benefits */}
       <div className="flex flex-wrap justify-center gap-6 mb-10">

@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
@@ -10,9 +11,6 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
-import HeroDashboard from "@/components/HeroDashboard";
-import MagneticButton from "@/components/MagneticButton";
-import MeshBackground from "@/components/motion/MeshBackground";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
 import PersonalizedPicks from "@/components/products/PersonalizedPicks";
 import WhatWeBuild from "@/components/home/WhatWeBuild";
@@ -20,6 +18,12 @@ import AIAgentsSection from "@/components/home/AIAgentsSection";
 import AutomationShowcase from "@/components/home/AutomationShowcase";
 import CustomAISection from "@/components/home/CustomAISection";
 import BuildersClub from "@/components/home/BuildersClub";
+import TrustStrip from "@/components/home/TrustStrip";
+import FounderCard from "@/components/home/FounderCard";
+
+// Lazy-load heavy below-the-fold-ish hero visuals to protect LCP
+const HeroDashboard = lazy(() => import("@/components/HeroDashboard"));
+const MeshBackground = lazy(() => import("@/components/motion/MeshBackground"));
 
 const heroStats = [
   { value: "21 Days", label: "MVP Delivery" },
@@ -87,14 +91,14 @@ export default function HomePage() {
   return (
     <>
       <SEOHead
-        title="AI Product Studio + Automation Engine + Marketplace"
-        description="AKcelerate ships AI MVPs in 21 days, builds n8n automations & AI agents, and runs a SaaS template marketplace. AI Product Studio for founders, businesses & enterprises."
+        title="AI MVP Development in 21 Days"
+        description="AKcelerate ships production-grade AI MVPs in 21 days, builds n8n automations & custom AI agents, and runs a 40+ SaaS template marketplace. Book a free AI audit →"
         path="/"
         jsonLd={reviewsJsonLd}
       />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <MeshBackground />
+        <Suspense fallback={null}><MeshBackground /></Suspense>
         <div className="absolute inset-0 hero-grid-bg" />
         {[
           { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
@@ -125,13 +129,13 @@ export default function HomePage() {
               <p className="text-sm leading-relaxed mb-8 max-w-xl text-muted-foreground">
                 Full-stack web apps · n8n automations · AI agents · custom AI trained on your data.
               </p>
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-12">
                 <Magnetic strength={20}>
-                  <Link to="/free-audit" className="btn-primary"><Play className="w-4 h-4" /> Start Free Audit</Link>
+                  <Link to="/free-audit" className="btn-primary"><Play className="w-4 h-4" /> Get my free 60-min AI audit</Link>
                 </Magnetic>
-                <Magnetic strength={14}>
-                  <Link to="/products" className="btn-secondary">Explore Products <ArrowRight className="w-4 h-4" /></Link>
-                </Magnetic>
+                <Link to="/products" className="text-sm font-medium text-foreground/80 hover:text-primary inline-flex items-center gap-1 underline-offset-4 hover:underline">
+                  or browse 40+ ready-made prototypes <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
               <div className="hero-stat-strip">
                 {heroStats.map((s, i) => (
@@ -144,11 +148,16 @@ export default function HomePage() {
             </div>
 
             <div className="animated-border">
-              <HeroDashboard />
+              <Suspense fallback={<div className="aspect-video rounded-xl bg-muted/30 animate-pulse" />}>
+                <HeroDashboard />
+              </Suspense>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════ TRUST STRIP ═══════════════════ */}
+      <TrustStrip />
 
       {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section className="py-24 lg:py-32">
@@ -389,14 +398,17 @@ export default function HomePage() {
 
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
 
+      {/* ═══════════════════ FOUNDER CARD ═══════════════════ */}
+      <FounderCard />
+
       {/* ═══════════════════ BUILDERS CLUB ═══════════════════ */}
       <BuildersClub />
 
       <CTASection
-        title="Ready to Accelerate Your Growth?"
-        description="Book a free audit and discover how AI, data science, and digital solutions can transform your business — in weeks, not months."
-        primaryCta={{ label: "Book Free Audit", to: "/free-audit" }}
-        secondaryCta={{ label: "Explore Solutions", to: "/solutions" }}
+        title="Ready to ship your AI product?"
+        description="Book a free 60-min audit. We'll map 5 high-ROI AI opportunities, estimate the build cost, and hand you a 90-day roadmap — yours to keep."
+        primaryCta={{ label: "Get my free audit", to: "/free-audit" }}
+        secondaryCta={{ label: "See pricing", to: "/pricing" }}
         dark
       />
     </>
