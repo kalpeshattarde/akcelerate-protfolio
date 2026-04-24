@@ -151,22 +151,22 @@ export function HeroDark({ label, title, description, children }: HeroDarkProps)
     <section
       ref={ref}
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)" }}
+      style={{ background: "var(--gradient-hero)" }}
     >
       <div
-        className="absolute inset-0 opacity-30 hero-grid-bg"
+        className="absolute inset-0 opacity-40 hero-grid-bg"
         style={{ transform: `translateY(${offset * 0.4}px)` }}
       />
       <div
         className="absolute -top-[150px] -right-[150px] w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
-        style={{ background: "rgba(37,99,235,0.15)", transform: `translateY(${offset * 0.7}px)` }}
+        style={{ background: "hsl(var(--primary) / 0.12)", transform: `translateY(${offset * 0.7}px)` }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             {label && <span className="section-label">{label}</span>}
-            <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5 text-white">{title}</h1>
-            <p className="text-lg text-slate-400 max-w-xl">{description}</p>
+            <h1 className="font-poppins font-bold text-3xl md:text-5xl leading-tight mb-5 text-foreground">{title}</h1>
+            <p className="text-lg text-muted-foreground max-w-xl">{description}</p>
           </div>
           {children && <div>{children}</div>}
         </div>
