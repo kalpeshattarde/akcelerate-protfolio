@@ -110,9 +110,15 @@
   </url>
   <url>
     <loc>https://akcelerate.lovable.app/products</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-04-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://akcelerate.lovable.app/top-selling</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://akcelerate.lovable.app/guide</loc>

@@ -15,11 +15,16 @@ import MagneticButton from "@/components/MagneticButton";
 import MeshBackground from "@/components/motion/MeshBackground";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
 import PersonalizedPicks from "@/components/products/PersonalizedPicks";
+import WhatWeBuild from "@/components/home/WhatWeBuild";
+import AIAgentsSection from "@/components/home/AIAgentsSection";
+import AutomationShowcase from "@/components/home/AutomationShowcase";
+import CustomAISection from "@/components/home/CustomAISection";
+import BuildersClub from "@/components/home/BuildersClub";
 
 const heroStats = [
+  { value: "21 Days", label: "MVP Delivery" },
   { value: "25+", label: "Projects Delivered" },
   { value: "13+", label: "Industries Served" },
-  { value: "8+", label: "Solution Areas" },
   { value: "315%", label: "Average Client ROI" },
 ];
 
@@ -42,44 +47,51 @@ const benefits = [
 
 const techStack = ["Python", "TensorFlow", "PyTorch", "React", "Node.js", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Power BI", "Tableau", "Snowflake", "Apache Kafka", "MLflow", "PostgreSQL", "Scikit-learn", "OpenCV", "dbt", "Airflow"];
 
-const reviewsJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "AKcelerate",
-  url: "https://akcelerate.lovable.app",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "47",
-    bestRating: "5",
-    worstRating: "1",
+const reviewsJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "AKcelerate",
+    url: "https://akcelerate.lovable.app",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "47",
+      bestRating: "5",
+      worstRating: "1",
+    },
   },
-  review: [
-    {
-      "@type": "Review",
-      author: { "@type": "Person", name: "Arjun Mehta" },
-      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-      reviewBody: "Spent 3 weeks and $800 trying to build a CRM with AI tools. Bought the AKcelerate prototype for $19 and launched in a day.",
-    },
-    {
-      "@type": "Review",
-      author: { "@type": "Person", name: "Sarah Kim" },
-      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-      reviewBody: "We white-label AKcelerate prototypes for client work. What used to take 6 weeks now takes 3 days. Margins jumped from 30% to 80%.",
-    },
-    {
-      "@type": "Review",
-      author: { "@type": "Person", name: "Marcus Johnson" },
-      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-      reviewBody: "Code quality is genuinely better than any AI tool generates. Clean components, proper architecture, responsive out of the box.",
-    },
-  ],
-};
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "AKcelerate Services",
+    itemListElement: [
+      { "@type": "Service", position: 1, name: "MVP App Development in 21 Days", description: "Full-stack web app delivery for non-tech founders in 21 days.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 2, name: "AI Agents as a Service", description: "Autonomous LLM-powered agents that automate workflows and integrate with CRMs, databases, and SaaS tools.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 3, name: "n8n Automation & Workflows", description: "Custom n8n workflows, AI video pipelines, voice agents, and content automation.", provider: { "@type": "Organization", name: "AKcelerate" } },
+      { "@type": "Service", position: 4, name: "Custom AI & RAG Systems", description: "RAG pipelines, model fine-tuning, and AI training pipelines built on your data.", provider: { "@type": "Organization", name: "AKcelerate" } },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: "How fast can you deliver an MVP?", acceptedAnswer: { "@type": "Answer", text: "We ship production-ready MVPs in 21 days using our proven discovery → build → launch playbook." } },
+      { "@type": "Question", name: "Do you build AI agents?", acceptedAnswer: { "@type": "Answer", text: "Yes — we design, build, and deploy custom AI agents that integrate with CRMs, databases, n8n, and your SaaS stack." } },
+      { "@type": "Question", name: "What kinds of automations do you build?", acceptedAnswer: { "@type": "Answer", text: "Instagram content bots, AI video pipelines, voice receptionists, and any custom n8n workflow." } },
+    ],
+  },
+];
 
 export default function HomePage() {
   return (
     <>
-      <SEOHead title="AI & Digital Solutions" description="AKcelerate delivers AI consulting, data analytics, and digital transformation solutions for enterprise growth." path="/" jsonLd={reviewsJsonLd} />
+      <SEOHead
+        title="AI MVPs in 21 Days · AI Agents, n8n Automation & Custom AI"
+        description="AKcelerate ships AI-powered MVPs in 21 days — full-stack apps, AI agents, n8n automations, RAG systems, and custom AI built on your data. 315% average ROI."
+        path="/"
+        jsonLd={reviewsJsonLd}
+      />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
         <MeshBackground />
@@ -101,14 +113,14 @@ export default function HomePage() {
             <div className="animate-fade-in-up">
               <div className="hero-badge">
                 <span className="w-2 h-2 rounded-full bg-accent inline-block" />
-                AI · Data · Automation · Consulting
+                AI-Powered MVPs in 21 Days
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.12] mb-6 font-poppins">
-                Increase Revenue & Profit<br />with{" "}
-                <span className="hero-gradient-text">AI, Data Science & Digital Solutions</span>
+                We Build AI-Powered MVPs<br />for Your Idea in{" "}
+                <span className="hero-gradient-text">21 Days</span>
               </h1>
               <p className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: "hsl(var(--ak-body))" }}>
-                We help businesses increase revenue and profit using AI, data science, and digital solutions. Our mission is simple: turn data into measurable business results.
+                From concept to launch — full-stack web apps, n8n automations, AI agents, and custom AI trained on your data. Fast, focused, and ROI-driven.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
                 <Magnetic strength={20}>
@@ -218,7 +230,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ BENEFITS ═══════════════════ */}
+      {/* ═══════════════════ WHAT WE BUILD ═══════════════════ */}
+      <WhatWeBuild />
+
       <section className="py-24 lg:py-32 section-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealSection>
@@ -265,6 +279,15 @@ export default function HomePage() {
           </RevealGrid>
         </div>
       </section>
+
+      {/* ═══════════════════ AI AGENTS ═══════════════════ */}
+      <AIAgentsSection />
+
+      {/* ═══════════════════ AUTOMATION SHOWCASE ═══════════════════ */}
+      <AutomationShowcase />
+
+      {/* ═══════════════════ CUSTOM AI ═══════════════════ */}
+      <CustomAISection />
 
       {/* ═══════════════════ PERSONALIZED PICKS ═══════════════════ */}
       <PersonalizedPicks />
@@ -362,6 +385,9 @@ export default function HomePage() {
       </section>
 
       <FAQAccordion items={generalFAQ} title="Frequently Asked Questions" />
+
+      {/* ═══════════════════ BUILDERS CLUB ═══════════════════ */}
+      <BuildersClub />
 
       <CTASection
         title="Ready to Accelerate Your Growth?"
