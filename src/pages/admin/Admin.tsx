@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen, Filter, Radio, Users2 } from "lucide-react";
+import { BarChart3, Settings, Package, Users, TrendingUp, Megaphone, Activity, LogOut, Receipt, FileText, Mail, Shield, ClipboardList, PanelLeftClose, PanelLeftOpen, Filter, Radio, Users2, Palette } from "lucide-react";
 import DashboardTab from "@/components/admin/DashboardTab";
 import FunnelTab from "@/components/admin/FunnelTab";
 import ActivityLiveTab from "@/components/admin/ActivityLiveTab";
@@ -21,6 +21,7 @@ import ContentManagementTab from "@/components/admin/ContentManagementTab";
 import EmailNotificationsTab from "@/components/admin/EmailNotificationsTab";
 import ActivityFeedTab from "@/components/admin/ActivityFeedTab";
 import AuditLogTab from "@/components/admin/AuditLogTab";
+import BrandKitTab from "@/components/admin/BrandKitTab";
 import AdminLoginGate, { useAdminAuth, ROLE_LABELS } from "@/components/admin/AdminLoginGate";
 import { AuditProvider } from "@/lib/auditLog";
 
@@ -64,6 +65,7 @@ const TAB_SECTIONS = [
   {
     label: "System",
     items: [
+      { value: "brand", label: "Brand Kit", icon: Palette },
       { value: "config", label: "Config", icon: Settings },
       { value: "audit", label: "Audit Log", icon: ClipboardList },
     ],
@@ -209,6 +211,7 @@ function AdminContent() {
             {hasPermission("email") && <TabsContent value="email"><EmailNotificationsTab /></TabsContent>}
             {hasPermission("products") && <TabsContent value="products"><ProductsTab /></TabsContent>}
             {hasPermission("config") && <TabsContent value="config"><ConfigTab /></TabsContent>}
+            {hasPermission("brand") && <TabsContent value="brand"><BrandKitTab /></TabsContent>}
             {hasPermission("affiliates") && <TabsContent value="affiliates"><AffiliateTab /></TabsContent>}
             {hasPermission("growth") && <TabsContent value="growth"><GrowthTab /></TabsContent>}
             {hasPermission("ads") && <TabsContent value="ads"><AdGeneratorTab /></TabsContent>}
