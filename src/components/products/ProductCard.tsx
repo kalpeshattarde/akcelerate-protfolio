@@ -6,6 +6,7 @@ import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
 import { Tilt } from "@/components/motion/MotionPrimitives";
+import { trackEvent } from "@/lib/analytics";
 
 interface ProductCardProps {
   product: Product;
