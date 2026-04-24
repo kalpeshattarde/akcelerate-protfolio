@@ -16,7 +16,7 @@ interface LandingTemplateProps {
     title: string;
     description: string;
     path: string;
-    jsonLd: object[];
+    jsonLd: Record<string, unknown>[];
     breadcrumbs: { name: string; path: string }[];
   };
   hero: {
