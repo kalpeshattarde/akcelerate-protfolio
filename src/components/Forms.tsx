@@ -186,5 +186,5 @@ export function ContactForm({ defaults, defaultMessage }: { defaults?: Record<st
 }
 
 export function AuditForm() {
-  return <FormComponent fields={auditFields} buttonLabel="Request Free Audit" source="audit" dark />;
+  return <FormComponent fields={auditFields} buttonLabel="Request Free Audit" source="audit" />;
 }
