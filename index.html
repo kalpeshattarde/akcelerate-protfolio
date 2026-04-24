@@ -71,6 +71,9 @@
         background: #fff;
         transition: opacity 0.5s ease, visibility 0.5s ease;
       }
+      html.dark #preloader { background: hsl(220, 20%, 7%); }
+      html.dark #preloader .logo-text { color: #F1F5F9; }
+      html.dark #preloader .loader-bar { background: #334155; }
       #preloader.fade-out {
         opacity: 0;
         visibility: hidden;
@@ -109,12 +112,6 @@
       @keyframes preloader-slide {
         0% { transform: translateX(-100%); }
         100% { transform: translateX(350%); }
-      }
-
-      @media (prefers-color-scheme: dark) {
-        #preloader { background: hsl(220, 20%, 7%); }
-        #preloader .logo-text { color: #F1F5F9; }
-        #preloader .loader-bar { background: #334155; }
       }
     </style>
   </head>
