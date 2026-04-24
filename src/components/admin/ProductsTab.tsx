@@ -143,7 +143,22 @@ export default function ProductsTab() {
                   </td>
                   <td className="p-3 text-foreground">${p.price.usd}</td>
                   <td className="p-3 text-foreground">{p.salesCount}</td>
-                  <td className="p-3">{p.topSelling ? "⭐" : "—"}</td>
+                  <td className="p-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        applyBulkPatch([p.id], { topSelling: !p.topSelling });
+                      }}
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium transition-colors ${
+                        p.topSelling
+                          ? "bg-primary/15 text-primary hover:bg-primary/25"
+                          : "bg-muted text-muted-foreground hover:bg-muted/70"
+                      }`}
+                      title={p.topSelling ? "Remove from Top Selling" : "Mark as Top Seller"}
+                    >
+                      {p.topSelling ? "⭐ Top" : "Mark top"}
+                    </button>
+                  </td>
                   <td className="p-3 text-right">
                     <button className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground"><Edit className="w-4 h-4" /></button>
                     <button className="p-1.5 rounded-lg hover:bg-destructive/10 text-destructive ml-1"><Trash2 className="w-4 h-4" /></button>

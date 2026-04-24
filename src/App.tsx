@@ -37,6 +37,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Products = lazy(() => import("./pages/products/Products"));
 const ProductDetail = lazy(() => import("./pages/products/ProductDetail"));
+const TopSelling = lazy(() => import("./pages/products/TopSelling"));
 const Admin = lazy(() => import("./pages/admin/Admin"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -82,6 +83,7 @@ const App = () => (
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/products" element={<Products />} />
+                  <Route path="/top-selling" element={<TopSelling />} />
                   <Route path="/products/:slug" element={<ProductDetail />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/sign-in/*" element={<SignIn />} />
