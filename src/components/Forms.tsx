@@ -30,11 +30,15 @@ function FormComponent({
   buttonLabel,
   source,
   dark = false,
+  defaults = {},
+  defaultMessage = "",
 }: {
   fields: FormField[];
   buttonLabel: string;
   source: "contact" | "audit";
   dark?: boolean;
+  defaults?: Record<string, string>;
+  defaultMessage?: string;
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -145,6 +149,7 @@ function FormComponent({
             name={f.name}
             type={f.type}
             placeholder={f.placeholder}
+            defaultValue={defaults[f.name] ?? ""}
             maxLength={255}
             autoComplete={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "off"}
             aria-invalid={!!errors[f.name]}
@@ -163,6 +168,7 @@ function FormComponent({
           name="message"
           rows={4}
           maxLength={2000}
+          defaultValue={defaultMessage}
           placeholder="Tell us about your project..."
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? `${source}-message-error` : undefined}
@@ -179,8 +185,8 @@ function FormComponent({
   );
 }
 
-export function ContactForm() {
-  return <FormComponent fields={contactFields} buttonLabel="Send Message" source="contact" />;
+export function ContactForm({ defaults, defaultMessage }: { defaults?: Record<string, string>; defaultMessage?: string } = {}) {
+  return <FormComponent fields={contactFields} buttonLabel="Send Message" source="contact" defaults={defaults} defaultMessage={defaultMessage} />;
 }
 
 export function AuditForm() {

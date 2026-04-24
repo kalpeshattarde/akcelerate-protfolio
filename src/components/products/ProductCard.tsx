@@ -6,6 +6,7 @@ import type { Product } from "@/data/products";
 import type { Currency } from "@/config/appConfig";
 import ImageLightbox from "./ImageLightbox";
 import { Tilt } from "@/components/motion/MotionPrimitives";
+import { trackEvent } from "@/lib/analytics";
 
 interface ProductCardProps {
   product: Product;
@@ -147,8 +148,18 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
                 </Link>
               </div>
               <Link
-                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}`}
-                onClick={(e) => e.stopPropagation()}
+                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}&productId=${product.id}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  trackEvent("customize_cta_click", {
+                    intent: "customize",
+                    productId: product.id,
+                    product: product.name,
+                    slug: product.slug,
+                    category: product.category,
+                    location: "product_card_in_cart",
+                  });
+                }}
                 className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
                 title="Request a customized version"
               >
@@ -173,8 +184,18 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
                 </button>
               </div>
               <Link
-                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}`}
-                onClick={(e) => e.stopPropagation()}
+                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}&productId=${product.id}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  trackEvent("customize_cta_click", {
+                    intent: "customize",
+                    productId: product.id,
+                    product: product.name,
+                    slug: product.slug,
+                    category: product.category,
+                    location: "product_card",
+                  });
+                }}
                 className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
                 title="Build a custom version with our team"
               >
