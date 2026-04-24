@@ -63,7 +63,7 @@
     --ak-teal: 180 89% 43%;
     --ak-navy: 222 47% 11%;
     --ak-dark: 220 43% 11%;
-    --ak-body: 215 25% 35%;
+    --ak-body: 222 35% 22%;
     --ak-section-alt: 216 100% 98%;
     --ak-border: 214 32% 91%;
 
@@ -120,7 +120,7 @@
 
     --ak-section-alt: 220 20% 9%;
     --ak-border: 220 16% 16%;
-    --ak-body: 215 20% 65%;
+    --ak-body: 213 30% 85%;
 
     --gradient-hero: linear-gradient(135deg, hsl(220 20% 7%) 0%, hsl(220 20% 9%) 100%);
 
@@ -181,7 +181,11 @@
   body {
     @apply bg-background text-foreground font-inter antialiased;
     color: hsl(var(--ak-body));
-    line-height: 1.7;
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Noise texture overlay */
