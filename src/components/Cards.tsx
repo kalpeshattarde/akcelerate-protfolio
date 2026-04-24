@@ -41,25 +41,6 @@ export function SolutionCard({ slug, title, description, icon }: SolutionCardPro
   );
 }
 
-interface ServiceCardProps {
-  slug: string;
-  title: string;
-  description: string;
-}
-
-export function ServiceCard({ slug, title, description }: ServiceCardProps) {
-  return (
-    <GlowCard className="glass-card p-7 group block">
-      <Link to={`/services/${slug}`} className="block">
-        <h3 className="font-poppins font-semibold text-lg mb-2">{title}</h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-4">{description}</p>
-        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-          Explore <ArrowRight className="w-4 h-4" />
-        </span>
-      </Link>
-    </GlowCard>
-  );
-}
 
 interface BlogCardProps {
   slug: string;

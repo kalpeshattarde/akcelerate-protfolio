@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -15,8 +15,6 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 // Lazy-loaded pages for code splitting
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
-const Services = lazy(() => import("./pages/Services"));
-const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
 const Solutions = lazy(() => import("./pages/Solutions"));
 const SolutionDetail = lazy(() => import("./pages/SolutionDetail"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
@@ -62,8 +60,8 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/services/:slug" element={<ServiceDetail />} />
+                  <Route path="/services" element={<Navigate to="/solutions" replace />} />
+                  <Route path="/services/:slug" element={<Navigate to="/solutions" replace />} />
                   <Route path="/solutions" element={<Solutions />} />
                   <Route path="/solutions/:slug" element={<SolutionDetail />} />
                   <Route path="/case-studies" element={<CaseStudies />} />
