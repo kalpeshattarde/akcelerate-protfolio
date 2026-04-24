@@ -27,10 +27,75 @@ export default function SolutionDetailPage() {
     );
   }
 
-  const related = solution.relatedSlugs.map(s => solutions.find(x => x.slug === s)).filter(Boolean);
+  // Canonical solution order (matches navbar + sitemap ordering).
+  const CANONICAL_ORDER = [
+    "automation-systems",
+    "ai-ml",
+    "automated-analytics",
+    "cloud-devops",
+    "website-dev",
+    "saas-dev",
+    "consulting",
+    "mvp-21day",
+  ];
+
+  // Build related list: keep only currently-registered slugs, dedupe,
+  // and back-fill from the canonical order so every page shows exactly 3.
+  const validSlugs = new Set(solutions.map((s) => s.slug));
+  const seen = new Set<string>([solution.slug]);
+  const orderedRelated: string[] = [];
+  for (const s of solution.relatedSlugs) {
+    if (validSlugs.has(s) && !seen.has(s)) {
+      seen.add(s);
+      orderedRelated.push(s);
+    }
+  }
+  for (const s of CANONICAL_ORDER) {
+    if (orderedRelated.length >= 3) break;
+    if (validSlugs.has(s) && !seen.has(s)) {
+      seen.add(s);
+      orderedRelated.push(s);
+    }
+  }
+  const related = orderedRelated
+    .slice(0, 3)
+    .map((s) => solutions.find((x) => x.slug === s))
+    .filter((x): x is NonNullable<typeof x> => Boolean(x));
+
   const cross = relatedToSolution(solution.slug);
 
+  // Per-solution FAQ derived from the data so every page ships a FAQPage
+  // schema. Generic enough to be safe; specific enough to be useful.
+  const solutionFaq = [
+    {
+      question: `What does AKcelerate's ${solution.title} include?`,
+      answer: `Our ${solution.title} engagement covers ${solution.features.slice(0, 4).join(", ")} and more, delivered end-to-end by a senior team.`,
+    },
+    {
+      question: `How long does a ${solution.shortTitle} project take?`,
+      answer: `Most ${solution.shortTitle} projects move from discovery to production in 3–8 weeks depending on scope. We share a fixed-timeline proposal after the free audit call.`,
+    },
+    {
+      question: `Which industries do you deliver ${solution.shortTitle} for?`,
+      answer: `We've shipped ${solution.shortTitle} work for ${solution.industries.join(", ")}.`,
+    },
+    {
+      question: `What outcomes can I expect from ${solution.title}?`,
+      answer: solution.benefits
+        .map((b) => `${b.title}: ${b.metric} ${b.metricLabel}.`)
+        .join(" "),
+    },
+  ];
+
   const solutionJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "AKcelerate",
+      url: "https://akcelerate.lovable.app",
+      logo: "https://akcelerate.lovable.app/images/logo-800x800.svg",
+      sameAs: ["https://www.linkedin.com/company/akcelerate"],
+    },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -56,6 +121,15 @@ export default function SolutionDetailPage() {
         "@type": "ListItem",
         position: i + 1,
         name: f,
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: solutionFaq.map((q) => ({
+        "@type": "Question",
+        name: q.question,
+        acceptedAnswer: { "@type": "Answer", text: q.answer },
       })),
     },
   ];
