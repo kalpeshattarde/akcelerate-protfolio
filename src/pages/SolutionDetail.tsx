@@ -6,7 +6,7 @@ import CTASection from "@/components/CTASection";
 import StatsRow from "@/components/StatsRow";
 import { SolutionCard } from "@/components/Cards";
 import { getSolution, solutions } from "@/data/solutions";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import RelatedLinks from "@/components/RelatedLinks";
 import { relatedToSolution } from "@/lib/relatedContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
