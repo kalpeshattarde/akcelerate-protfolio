@@ -1298,6 +1298,13 @@ h1, h2, h3 {
   position: relative;
   text-align: center;
   padding: 0.25rem 1rem;
+  min-width: 0;
+}
+.hero-stat-strip > * .text-\[11px\],
+.hero-stat-strip > * > div:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hero-stat-strip > * + *::before {
   content: '';
@@ -1311,8 +1318,20 @@ h1, h2, h3 {
   border-color: hsla(217,91%,60%,0.18);
 }
 @media (max-width: 640px) {
-  .hero-stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 0.75rem; }
-  .hero-stat-strip > *:nth-child(3)::before { display: none; }
+  .hero-stat-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 0.85rem;
+    padding: 0.9rem 0.35rem;
+  }
+  .hero-stat-strip > * { padding: 0.25rem 0.5rem; }
+  .hero-stat-strip > * .text-\[11px\],
+  .hero-stat-strip > * > div:last-child {
+    white-space: normal;
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  /* Hide the divider on the 1st column of each row (children 1 and 3) */
+  .hero-stat-strip > *:nth-child(odd)::before { display: none; }
 }
 
 /* Glow hairline divider between sections */
