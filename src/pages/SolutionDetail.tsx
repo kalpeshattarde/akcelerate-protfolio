@@ -138,7 +138,6 @@ export default function SolutionDetailPage() {
         </section>
       )}
 
-      <RelatedLinks label="Services" title="Specialized Services for This Solution" items={cross.services} kind="service" alt />
       <RelatedLinks label="Insights" title="Further Reading" items={cross.blog} kind="blog" />
       <CTASection
         title={`Ready to Get Started with ${solution.title}?`}

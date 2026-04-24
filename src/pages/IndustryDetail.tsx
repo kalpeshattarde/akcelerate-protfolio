@@ -87,7 +87,7 @@ export default function IndustryDetailPage() {
         </div>
       </section>
 
-      <RelatedLinks label="Services" title={`Services for ${industry.name}`} items={relatedServices} kind="service" alt />
+      
       <RelatedLinks label="Solutions" title="Recommended Solutions" items={relatedSolutions} kind="solution" />
       <RelatedLinks label="Insights" title="Industry Articles" items={relatedBlog} kind="blog" alt />
 

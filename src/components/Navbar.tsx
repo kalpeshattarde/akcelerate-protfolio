@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Wrench, CheckSquare, Truck, Zap, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchModal from "./SearchModal";
 
@@ -276,7 +276,7 @@ export default function Navbar() {
               {[
                 { to: "/", label: "Home" },
                 { to: "/solutions", label: "Solutions" },
-                { to: "/services", label: "Services" },
+                
                 { to: "/industries", label: "Industries" },
                 { to: "/case-studies", label: "Case Studies" },
                 { to: "/insights", label: "Insights" },
