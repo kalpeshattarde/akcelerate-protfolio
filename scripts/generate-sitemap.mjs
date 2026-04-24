@@ -43,7 +43,6 @@ const staticRoutes = [
 
 const urls = [
   ...staticRoutes.map(r => ({ loc: r, priority: r === "/" ? 1.0 : 0.7 })),
-  ...services.map(s => ({ loc: `/services/${s}`, priority: 0.8 })),
   ...solutions.map(s => ({ loc: `/solutions/${s}`, priority: 0.8 })),
   ...industries.map(s => ({ loc: `/industries/${s}`, priority: 0.7 })),
   ...blog.map(s => ({ loc: `/blog/${s}`, priority: 0.6 })),
