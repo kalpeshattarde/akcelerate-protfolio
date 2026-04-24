@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { isTestMode } from "@/lib/testMode";
 
 function parseStatValue(val: string): { prefix: string; number: number; decimals: number; suffix: string } {
   const match = val.match(/^([^\d]*?)([\d.]+)(.*)$/);
@@ -21,6 +22,12 @@ export function useCountUp(
   useEffect(() => {
     if (!trigger) return;
     setDone(false);
+
+    if (isTestMode()) {
+      setValue(target);
+      setDone(true);
+      return;
+    }
 
     const startTime = performance.now();
     const animate = (now: number) => {

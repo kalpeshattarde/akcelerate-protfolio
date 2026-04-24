@@ -1,5 +1,6 @@
 import { motion, useInView, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
 import { ReactNode, useEffect, useRef } from "react";
+import { isTestMode } from "@/lib/testMode";
 
 /* ───────────── Reveal ───────────── */
 export function Reveal({
@@ -15,13 +16,14 @@ export function Reveal({
   y?: number;
   once?: boolean;
 }) {
+  const test = isTestMode();
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={test ? false : { opacity: 0, y }}
+      whileInView={test ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={test ? { duration: 0 } : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -49,13 +51,15 @@ export function Stagger({
   className?: string;
   amount?: number;
 }) {
+  const test = isTestMode();
   return (
     <motion.div
       className={className}
       variants={staggerVariants}
-      initial="hidden"
+      initial={test ? "show" : "hidden"}
       whileInView="show"
       viewport={{ once: true, amount }}
+      transition={test ? { duration: 0 } : undefined}
     >
       {children}
     </motion.div>
@@ -181,6 +185,12 @@ export function Counter({
 
   useEffect(() => {
     if (!inView || !ref.current) return;
+    const formatted = (val: number) =>
+      prefix + val.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + suffix;
+    if (isTestMode()) {
+      ref.current.textContent = formatted(to);
+      return;
+    }
     const start = performance.now();
     const from = 0;
     let raf = 0;
@@ -188,9 +198,7 @@ export function Counter({
       const t = Math.min(1, (now - start) / (duration * 1000));
       const eased = 1 - Math.pow(1 - t, 3);
       const value = from + (to - from) * eased;
-      if (ref.current)
-        ref.current.textContent =
-          prefix + value.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + suffix;
+      if (ref.current) ref.current.textContent = formatted(value);
       if (t < 1) raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);

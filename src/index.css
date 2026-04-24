@@ -136,13 +136,26 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217 91% 60%;
-  }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+/* ═══════════ TEST MODE — disable animations for visual regression ═══════════ */
+html[data-test-mode="1"],
+html[data-test-mode="1"] *,
+html[data-test-mode="1"] *::before,
+html[data-test-mode="1"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0ms !important;
+  scroll-behavior: auto !important;
+}
+/* Force reveal/scroll-in elements visible */
+html[data-test-mode="1"] .reveal,
+html[data-test-mode="1"] .reveal-item {
+  opacity: 1 !important;
+  transform: none !important;
+}
 
   /* ── Global accessibility: visible keyboard focus ring ── */
   *:focus-visible {
