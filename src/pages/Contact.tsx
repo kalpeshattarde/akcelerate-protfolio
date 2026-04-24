@@ -1,11 +1,49 @@
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { HeroPage } from "@/components/Hero";
 import SEOHead from "@/components/SEOHead";
 import CTASection from "@/components/CTASection";
 import { ContactForm } from "@/components/Forms";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { RevealSection } from "@/hooks/useScrollReveal";
+import { PRODUCTS } from "@/data/products";
+import CustomizeSummary from "@/components/products/CustomizeSummary";
+import CustomizationBrief from "@/components/products/CustomizationBrief";
+import { trackEvent } from "@/lib/analytics";
 
 export default function ContactPage() {
+  const [searchParams] = useSearchParams();
+  const intent = searchParams.get("intent");
+  const productNameParam = searchParams.get("product") ?? "";
+  const productIdParam = searchParams.get("productId") ?? "";
+  const isCustomize = intent === "customize";
+
+  // Match by id first, then by exact name (decoded by useSearchParams)
+  const product = useMemo(() => {
+    if (!isCustomize) return null;
+    return (
+      PRODUCTS.find((p) => p.id === productIdParam) ||
+      PRODUCTS.find((p) => p.name === productNameParam) ||
+      null
+    );
+  }, [isCustomize, productIdParam, productNameParam]);
+
+  const [mode, setMode] = useState<"quick" | "brief">(isCustomize ? "brief" : "quick");
+
+  useEffect(() => {
+    if (isCustomize) {
+      trackEvent("contact_customize_landing", {
+        product: product?.name ?? productNameParam,
+        productId: product?.id ?? productIdParam,
+        matched: !!product,
+      });
+    }
+  }, [isCustomize, product, productNameParam, productIdParam]);
+
+  const prefillMessage = product
+    ? `Hi AKcelerate team,\n\nI'd like a customized version of "${product.name}" for my business.\n\nWhat I'm looking to tailor:\n• Branding & domain\n• Industry-specific workflows\n• Integrations with our existing tools\n\nPlease share next steps, timeline and pricing for a custom build.\n\nThanks!`
+    : "";
+
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -36,19 +74,34 @@ export default function ContactPage() {
       "https://www.instagram.com/akceleratehq/",
     ],
   };
+
   return (
     <>
       <SEOHead
-        title="Contact"
-        description="Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours."
+        title={isCustomize ? `Customize ${product?.name ?? "your SaaS"}` : "Contact"}
+        description={
+          isCustomize
+            ? `Request a customized version of ${product?.name ?? "an AKcelerate prototype"} for your business.`
+            : "Get in touch with AKcelerate. Tell us about your project and we'll respond within 24 hours."
+        }
         path="/contact"
         jsonLd={localBusinessJsonLd}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]}
       />
       <HeroPage
-        label="Contact"
-        title={<>Let's Build Something <span className="gradient-text">Great Together</span></>}
-        description="Tell us about your project and we'll get back to you within 24 hours."
+        label={isCustomize ? "Customize" : "Contact"}
+        title={
+          isCustomize ? (
+            <>Build a <span className="gradient-text">Custom SaaS</span> with Us</>
+          ) : (
+            <>Let's Build Something <span className="gradient-text">Great Together</span></>
+          )
+        }
+        description={
+          isCustomize
+            ? "Tell us how you want this prototype tailored — we'll scope it within 24 hours."
+            : "Tell us about your project and we'll get back to you within 24 hours."
+        }
       />
 
       <section className="py-20 lg:py-28">
@@ -91,7 +144,35 @@ export default function ContactPage() {
               </div>
             </RevealSection>
             <RevealSection delay={200}>
-              <ContactForm />
+              {isCustomize && product && <CustomizeSummary product={product} />}
+
+              {isCustomize && (
+                <div className="inline-flex items-center gap-1 p-1 mb-4 rounded-full border border-border bg-muted/40">
+                  <button
+                    type="button"
+                    onClick={() => setMode("brief")}
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${mode === "brief" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    Customization Brief
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMode("quick")}
+                    className={`px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${mode === "quick" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    Quick Message
+                  </button>
+                </div>
+              )}
+
+              {isCustomize && mode === "brief" ? (
+                <CustomizationBrief
+                  productName={product?.name ?? productNameParam ?? "Custom SaaS"}
+                  productId={product?.id}
+                />
+              ) : (
+                <ContactForm defaultMessage={prefillMessage} />
+              )}
             </RevealSection>
           </div>
         </div>
