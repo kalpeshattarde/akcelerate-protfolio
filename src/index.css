@@ -179,7 +179,8 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
     color: hsl(var(--ak-body));
     font-weight: 400;
     line-height: 1.65;
@@ -208,6 +209,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-poppins;
+    font-family: var(--font-heading, 'Poppins', system-ui, sans-serif);
     color: hsl(var(--ak-navy));
     letter-spacing: -0.02em;
   }
