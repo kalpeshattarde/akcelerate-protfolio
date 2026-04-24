@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Flame, ArrowRight, PackageSearch } from "lucide-react";
 import type { Product } from "@/data/products";
@@ -12,10 +12,38 @@ interface TopSellingSectionProps {
   isPurchased: (id: string) => boolean;
   onPurchase?: (id: string) => void;
   onAddToCart?: (id: string) => void;
-  /** When true, render skeleton placeholders. */
+  /** Render skeleton placeholders. */
   loading?: boolean;
   /** Hide the "View all" link (used on the dedicated page). */
   hideViewAll?: boolean;
+}
+
+// Module-level set so impressions are deduped across renders, route transitions,
+// and even unmount/remount of the section within the same page session.
+const SESSION_KEY = "ak-top-selling-pageview";
+const firedImpressions = new Set<string>();
+
+function getPageviewId(): string {
+  try {
+    let id = sessionStorage.getItem(SESSION_KEY);
+    if (!id) {
+      id = `pv_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+      sessionStorage.setItem(SESSION_KEY, id);
+    }
+    return id;
+  } catch {
+    return "pv_default";
+  }
+}
+
+if (typeof window !== "undefined") {
+  // Reset the dedupe set when the user fully reloads (new pageview id).
+  // SPA navigation reuses the same session id so cards aren't re-counted.
+  window.addEventListener("pageshow", (e) => {
+    if ((e as PageTransitionEvent).persisted) {
+      firedImpressions.clear();
+    }
+  });
 }
 
 function CardSkeleton() {
@@ -45,24 +73,26 @@ export default function TopSellingSection({
   loading = false,
   hideViewAll = false,
 }: TopSellingSectionProps) {
-  const trackedRef = useRef<Set<string>>(new Set());
+  // Always exactly 3
+  const top = products.slice(0, 3);
 
-  // Fire impression events once per product card per page load
+  // Fire impression events once per (pageview × productId × rank)
   useEffect(() => {
-    if (loading || products.length === 0) return;
-    products.slice(0, 3).forEach((p, idx) => {
-      const key = `${p.id}:${idx + 1}`;
-      if (trackedRef.current.has(key)) return;
-      trackedRef.current.add(key);
+    if (loading || top.length === 0) return;
+    const pv = getPageviewId();
+    top.forEach((p, idx) => {
+      const rank = idx + 1;
+      const key = `${pv}:${p.id}:${rank}`;
+      if (firedImpressions.has(key)) return;
+      firedImpressions.add(key);
       trackEvent("top_selling_impression", {
         productId: p.id,
         product: p.name,
-        rank: idx + 1,
+        rank,
+        pageviewId: pv,
       });
     });
-  }, [products, loading]);
-
-  const top = products.slice(0, 3);
+  }, [top, loading]);
 
   return (
     <section className="mb-12" aria-labelledby="top-selling-heading">
@@ -107,26 +137,29 @@ export default function TopSellingSection({
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {top.map((p, idx) => (
-            <div
-              key={p.id}
-              onClick={() =>
-                trackEvent("top_selling_card_click", {
-                  productId: p.id,
-                  product: p.name,
-                  rank: idx + 1,
-                })
-              }
-            >
-              <ProductCard
-                product={p}
-                currency={currency}
-                isPurchased={isPurchased(p.id)}
-                onPurchase={onPurchase}
-                onAddToCart={onAddToCart}
-              />
-            </div>
-          ))}
+          {top.map((p, idx) => {
+            const rank = idx + 1;
+            return (
+              <div
+                key={p.id}
+                onClickCapture={() =>
+                  trackEvent("top_selling_card_click", {
+                    productId: p.id,
+                    product: p.name,
+                    rank,
+                  })
+                }
+              >
+                <ProductCard
+                  product={p}
+                  currency={currency}
+                  isPurchased={isPurchased(p.id)}
+                  onPurchase={onPurchase}
+                  onAddToCart={onAddToCart}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </section>

@@ -29,7 +29,7 @@ import type { Product } from "@/data/products";
 
 export default function Products() {
   const { currency } = useGeoDetection();
-  const { topSelling, mobileApps, webSaas, isPurchased, purchase, products, grantAllAccess, purchased } = useProducts();
+  const { topSelling, topSellingLoading, mobileApps, webSaas, isPurchased, purchase, products, grantAllAccess, purchased } = useProducts();
   const wishlist = useWishlist();
   const cart = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -239,7 +239,7 @@ export default function Products() {
         {/* A/B variant: catalog-early renders Top Selling + full catalog right after Solution */}
         {orderVariant === "catalog-early" && (
           <>
-            <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+            <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} loading={topSellingLoading} />
             {catalogBlock}
           </>
         )}
@@ -255,7 +255,7 @@ export default function Products() {
 
         {/* 8. TOP SELLING (control only — catalog-early already rendered it above) */}
         {orderVariant === "control" && (
-          <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} />
+          <TopSellingSection products={topSelling} currency={currency} isPurchased={isPurchased} onPurchase={handleBuy} onAddToCart={handleAddToCartSilent} loading={topSellingLoading} />
         )}
 
         {/* PRODUCT CATALOG (only render here for control variant) */}

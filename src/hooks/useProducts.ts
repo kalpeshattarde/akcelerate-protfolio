@@ -1,10 +1,14 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { supabase } from "@/integrations/supabase/client";
-import { PRODUCTS } from "@/data/products";
+import { PRODUCTS, type Product } from "@/data/products";
 import { BUNDLE_THRESHOLD } from "@/hooks/useCart";
 import { applyProductOverrides } from "@/lib/productOverrides";
-import { readTopSellingCache, writeTopSellingCache } from "@/lib/topSellingCache";
+import {
+  readTopSellingCache,
+  writeTopSellingCache,
+  readTopSellingRank,
+} from "@/lib/topSellingCache";
 
 function getLocalPurchased(): string[] {
   try {
@@ -28,9 +32,11 @@ export function useProducts() {
   useEffect(() => {
     const refresh = () => setOverridesTick(t => t + 1);
     window.addEventListener("ak-products-updated", refresh);
+    window.addEventListener("ak-top-selling-updated", refresh);
     window.addEventListener("storage", refresh);
     return () => {
       window.removeEventListener("ak-products-updated", refresh);
+      window.removeEventListener("ak-top-selling-updated", refresh);
       window.removeEventListener("storage", refresh);
     };
   }, []);
@@ -104,32 +110,63 @@ export function useProducts() {
   const products = applyProductOverrides(PRODUCTS);
   void overridesTick;
 
-  // Compute the top 3 sellers from the catalog, then cache the IDs (5 min TTL)
-  // so repeat visits hydrate the section instantly.
-  const topSelling = useMemo(() => {
-    const computed = products
-      .filter(p => p.topSelling)
-      .sort((a, b) => b.salesCount - a.salesCount)
-      .slice(0, 3);
+  // Compute the top 3 sellers from the catalog. Strategy:
+  //   1. If admin has set an explicit rank order, use that (filtered to existing products).
+  //   2. Otherwise sort by salesCount desc among `topSelling` products.
+  //   3. Cache the resulting IDs (5 min TTL) so navigation between pages hydrates
+  //      instantly with no flicker.
+  const topSelling = useMemo<Product[]>(() => {
+    const manualRank = readTopSellingRank();
+    let computed: Product[] = [];
+
+    if (manualRank.length > 0) {
+      computed = manualRank
+        .map(id => products.find(p => p.id === id))
+        .filter((p): p is Product => Boolean(p))
+        .slice(0, 3);
+    }
+
+    if (computed.length < 3) {
+      const fillers = products
+        .filter(p => p.topSelling && !computed.find(c => c.id === p.id))
+        .sort((a, b) => b.salesCount - a.salesCount);
+      while (computed.length < 3 && fillers.length > 0) {
+        computed.push(fillers.shift()!);
+      }
+    }
 
     if (computed.length > 0) {
       writeTopSellingCache(computed.map(p => p.id));
       return computed;
     }
 
-    // Fallback: try the cached IDs (e.g. while overrides are still loading)
+    // Last-resort fallback: cached IDs from a previous render
     const cachedIds = readTopSellingCache();
     if (cachedIds && cachedIds.length > 0) {
       return cachedIds
         .map(id => products.find(p => p.id === id))
-        .filter((p): p is typeof products[number] => Boolean(p))
+        .filter((p): p is Product => Boolean(p))
         .slice(0, 3);
     }
     return computed;
   }, [products]);
 
+  // Loading flag — true only when we have neither computed products nor a cache hit
+  const topSellingLoading = topSelling.length === 0 && readTopSellingCache() === null;
+
   const mobileApps = products.filter(p => p.category === "mobile-app");
   const webSaas = products.filter(p => p.category === "web-saas");
 
-  return { products, topSelling, mobileApps, webSaas, isPurchased, purchase, purchased, allAccess, grantAllAccess };
+  return {
+    products,
+    topSelling,
+    topSellingLoading,
+    mobileApps,
+    webSaas,
+    isPurchased,
+    purchase,
+    purchased,
+    allAccess,
+    grantAllAccess,
+  };
 }

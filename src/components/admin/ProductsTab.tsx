@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductsCsvImport } from "./ProductsCsvImport";
+import TopSellingRankEditor from "./TopSellingRankEditor";
+import { clearTopSellingCache } from "@/lib/topSellingCache";
 
 type EditField = "price.usd" | "price.inr" | "category" | "topSelling";
 
@@ -81,6 +83,7 @@ export default function ProductsTab() {
 
   return (
     <div className="space-y-6">
+      <TopSellingRankEditor />
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-foreground">Product Catalog</h3>
         <div className="flex items-center gap-2">
@@ -148,6 +151,7 @@ export default function ProductsTab() {
                       type="button"
                       onClick={() => {
                         applyBulkPatch([p.id], { topSelling: !p.topSelling });
+                        clearTopSellingCache();
                       }}
                       className={`px-2 py-0.5 rounded-full text-xs font-medium transition-colors ${
                         p.topSelling
