@@ -133,56 +133,23 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             <div className="w-full py-2 rounded-lg text-center text-sm font-medium bg-green-500/10 text-green-600 border border-green-500/20">
               ✓ Purchased
             </div>
-          ) : cartQuantity > 0 ? (
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary border border-primary/20">
-                  <ShoppingCart className="w-3.5 h-3.5" /> In Cart
-                </div>
-                <Link
-                  to={`/products/${product.slug}`}
-                  className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
-                  title="View details"
-                >
-                  <Eye className="w-4 h-4 text-muted-foreground" />
-                </Link>
-              </div>
-              <Link
-                to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}&productId=${product.id}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  trackEvent("customize_cta_click", {
-                    intent: "customize",
-                    productId: product.id,
-                    product: product.name,
-                    slug: product.slug,
-                    category: product.category,
-                    location: "product_card_in_cart",
-                  });
-                }}
-                className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
-                title="Request a customized version"
-              >
-                <Wand2 className="w-3.5 h-3.5" /> Customize for My Business
-              </Link>
-            </div>
           ) : (
-            <div className="space-y-2">
-              <div className="flex gap-2">
+            <div className="grid grid-cols-3 gap-2">
+              {cartQuantity > 0 ? (
+                <div className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary/10 text-primary border border-primary/20 min-w-0">
+                  <ShoppingCart className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">In Cart</span>
+                </div>
+              ) : (
                 <button
                   onClick={(e) => { e.preventDefault(); onPurchase?.(product.id); }}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors min-w-0"
+                  title="Buy now"
                 >
-                  <Zap className="w-3.5 h-3.5" /> Buy Now
+                  <Zap className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">Buy Now</span>
                 </button>
-                <button
-                  onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
-                  className="flex items-center justify-center px-3 py-2 rounded-lg text-sm border border-border hover:bg-muted transition-colors"
-                  title="Add to cart"
-                >
-                  <ShoppingCart className="w-4 h-4 text-muted-foreground" />
-                </button>
-              </div>
+              )}
               <Link
                 to={`/contact?intent=customize&product=${encodeURIComponent(product.name)}&productId=${product.id}`}
                 onClick={(e) => {
@@ -193,14 +160,23 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
                     product: product.name,
                     slug: product.slug,
                     category: product.category,
-                    location: "product_card",
+                    location: cartQuantity > 0 ? "product_card_in_cart" : "product_card",
                   });
                 }}
-                className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity shadow-sm min-w-0"
                 title="Build a custom version with our team"
               >
-                <Wand2 className="w-3.5 h-3.5" /> Customize for My Business
+                <Wand2 className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="truncate">Customize</span>
               </Link>
+              <button
+                onClick={(e) => { e.preventDefault(); onAddToCart?.(product.id); }}
+                className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-sm font-medium border border-border hover:bg-muted transition-colors min-w-0"
+                title={cartQuantity > 0 ? "Add another to cart" : "Add to cart"}
+              >
+                <ShoppingCart className="w-3.5 h-3.5 flex-shrink-0 text-muted-foreground" />
+                <span className="truncate text-muted-foreground">Cart{cartQuantity > 0 ? ` (${cartQuantity})` : ""}</span>
+              </button>
             </div>
           )}
         </div>
