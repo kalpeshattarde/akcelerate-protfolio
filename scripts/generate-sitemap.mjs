@@ -18,7 +18,6 @@ function slugsFromFile(relPath, pattern) {
 }
 
 const slugRe = /slug:\s*["']([a-z0-9-]+)["']/g;
-const services = slugsFromFile("src/data/services.ts", new RegExp(slugRe.source, "g"));
 const solutions = slugsFromFile("src/data/solutions.ts", new RegExp(slugRe.source, "g"));
 const blog = slugsFromFile("src/data/blog.ts", new RegExp(slugRe.source, "g"));
 const products = slugsFromFile("src/data/products.ts", new RegExp(slugRe.source, "g"));
