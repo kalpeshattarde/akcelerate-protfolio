@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { ArrowRight, TrendingUp, Shield, Zap, BarChart3, Users, Globe, Play } from "lucide-react";
@@ -10,9 +11,7 @@ import { generalFAQ } from "@/data/faq";
 import { industries } from "@/data/industries";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { AnimatedStat } from "@/hooks/useCountUp";
-import HeroDashboard from "@/components/HeroDashboard";
 import MagneticButton from "@/components/MagneticButton";
-import MeshBackground from "@/components/motion/MeshBackground";
 import { Magnetic } from "@/components/motion/MotionPrimitives";
 import PersonalizedPicks from "@/components/products/PersonalizedPicks";
 import WhatWeBuild from "@/components/home/WhatWeBuild";
@@ -20,6 +19,12 @@ import AIAgentsSection from "@/components/home/AIAgentsSection";
 import AutomationShowcase from "@/components/home/AutomationShowcase";
 import CustomAISection from "@/components/home/CustomAISection";
 import BuildersClub from "@/components/home/BuildersClub";
+import TrustStrip from "@/components/home/TrustStrip";
+import FounderCard from "@/components/home/FounderCard";
+
+// Lazy-load heavy below-the-fold-ish hero visuals to protect LCP
+const HeroDashboard = lazy(() => import("@/components/HeroDashboard"));
+const MeshBackground = lazy(() => import("@/components/motion/MeshBackground"));
 
 const heroStats = [
   { value: "21 Days", label: "MVP Delivery" },
@@ -87,14 +92,14 @@ export default function HomePage() {
   return (
     <>
       <SEOHead
-        title="AI Product Studio + Automation Engine + Marketplace"
-        description="AKcelerate ships AI MVPs in 21 days, builds n8n automations & AI agents, and runs a SaaS template marketplace. AI Product Studio for founders, businesses & enterprises."
+        title="AI MVP Development in 21 Days"
+        description="AKcelerate ships production-grade AI MVPs in 21 days, builds n8n automations & custom AI agents, and runs a 40+ SaaS template marketplace. Book a free AI audit →"
         path="/"
         jsonLd={reviewsJsonLd}
       />
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="relative min-h-screen flex items-center pt-32 pb-16 overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <MeshBackground />
+        <Suspense fallback={null}><MeshBackground /></Suspense>
         <div className="absolute inset-0 hero-grid-bg" />
         {[
           { size: 4, color: "rgba(37,99,235,0.7)", left: "12%", top: "75%", dur: "6s", delay: "0s" },
@@ -144,7 +149,9 @@ export default function HomePage() {
             </div>
 
             <div className="animated-border">
-              <HeroDashboard />
+              <Suspense fallback={<div className="aspect-video rounded-xl bg-muted/30 animate-pulse" />}>
+                <HeroDashboard />
+              </Suspense>
             </div>
           </div>
         </div>
