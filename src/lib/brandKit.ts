@@ -165,29 +165,55 @@ function setFavicon(url: string | null) {
   link.href = url;
 }
 
+const STYLE_TAG_ID = "ak-brand-kit-vars";
+
+function injectBrandStyles(kit: BrandKit) {
+  if (typeof document === "undefined") return;
+  let tag = document.getElementById(STYLE_TAG_ID) as HTMLStyleElement | null;
+  if (!tag) {
+    tag = document.createElement("style");
+    tag.id = STYLE_TAG_ID;
+    document.head.appendChild(tag);
+  }
+  // Use a stylesheet (not inline style) so .dark class can override :root
+  // and either theme stays consistent when toggled.
+  tag.textContent = `
+:root {
+  --primary: ${kit.colors.primary};
+  --ring: ${kit.colors.primary};
+  --ak-primary: ${kit.colors.primary};
+  --accent: ${kit.colors.accent};
+  --ak-accent: ${kit.colors.accent};
+  --background: ${kit.colors.background};
+  --foreground: ${kit.colors.foreground};
+  --ak-navy: ${kit.colors.foreground};
+  --card: ${kit.colors.background};
+  --card-foreground: ${kit.colors.foreground};
+  --popover: ${kit.colors.background};
+  --popover-foreground: ${kit.colors.foreground};
+  --font-heading: '${kit.typography.heading}', system-ui, sans-serif;
+  --font-body: '${kit.typography.body}', system-ui, sans-serif;
+}
+.dark {
+  --primary: ${kit.colors.primary};
+  --ring: ${kit.colors.primary};
+  --ak-primary: ${kit.colors.primary};
+  --accent: ${kit.colors.accent};
+  --ak-accent: ${kit.colors.accent};
+  --background: ${kit.colors.backgroundDark};
+  --foreground: ${kit.colors.foregroundDark};
+  --card: ${kit.colors.backgroundDark};
+  --card-foreground: ${kit.colors.foregroundDark};
+  --popover: ${kit.colors.backgroundDark};
+  --popover-foreground: ${kit.colors.foregroundDark};
+}
+`;
+}
+
 export function applyBrandKit(kit: BrandKit): void {
   if (typeof document === "undefined") return;
-  const root = document.documentElement;
-
-  // Colors → CSS vars (HSL space-separated, used as hsl(var(--…)))
-  root.style.setProperty("--primary", kit.colors.primary);
-  root.style.setProperty("--ring", kit.colors.primary);
-  root.style.setProperty("--ak-primary", kit.colors.primary);
-  root.style.setProperty("--accent", kit.colors.accent);
-  root.style.setProperty("--ak-accent", kit.colors.accent);
-  // Background/foreground only override in light mode (dark mode keeps its own scheme)
-  if (!root.classList.contains("dark")) {
-    root.style.setProperty("--background", kit.colors.background);
-    root.style.setProperty("--foreground", kit.colors.foreground);
-    root.style.setProperty("--ak-navy", kit.colors.foreground);
-  }
-
-  // Typography
-  root.style.setProperty("--font-heading", `'${kit.typography.heading}', system-ui, sans-serif`);
-  root.style.setProperty("--font-body", `'${kit.typography.body}', system-ui, sans-serif`);
+  injectBrandStyles(kit);
   loadGoogleFont(kit.typography.heading, kit.typography.body, kit.typography.weights);
-
-  // Favicon
   setFavicon(kit.logos.favicon);
 }
 
