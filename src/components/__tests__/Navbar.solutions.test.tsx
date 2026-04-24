@@ -4,23 +4,23 @@ import { MemoryRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { solutions } from "@/data/solutions";
 
-// Mock Clerk — Navbar uses <SignedIn>/<SignedOut>/<UserButton>/useUser only
-// for the auth area, which is not under test here.
-vi.mock("@clerk/clerk-react", () => ({
-  SignedIn: () => null,
-  SignedOut: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  UserButton: () => null,
-  useUser: () => ({ user: null }),
-}));
+// Hoist-safe mocks (vi.mock is hoisted above imports).
+vi.mock("@clerk/clerk-react", () => {
+  const Passthrough = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+  return {
+    SignedIn: () => null,
+    SignedOut: Passthrough,
+    UserButton: () => null,
+    useUser: () => ({ user: null, isLoaded: true, isSignedIn: false }),
+    ClerkProvider: Passthrough,
+  };
+});
 
-// Mock SearchModal (it imports heavy data and isn't part of this test).
-vi.mock("@/components/SearchModal", () => ({
-  default: () => null,
-}));
+vi.mock("@/components/SearchModal", () => ({ default: () => null }));
 
-import Navbar from "@/components/Navbar";
+// Imported AFTER mocks so Navbar resolves the mocked Clerk module.
+const { default: Navbar } = await import("@/components/Navbar");
 
-// Routes registered in src/App.tsx for the Solutions section.
 const REGISTERED_SOLUTION_ROUTES = new Set<string>([
   "/solutions",
   ...solutions.map((s) => `/solutions/${s.slug}`),
@@ -40,7 +40,7 @@ describe("Navbar — Solutions mega menu", () => {
   it("every dropdown link points at a route registered in App.tsx", () => {
     renderAt("/");
 
-    // Open the dropdown by hovering its container
+    // Open dropdown
     const trigger = screen.getAllByRole("link", { name: /^Solutions/i })[0];
     fireEvent.mouseEnter(trigger.parentElement as HTMLElement);
 
