@@ -108,18 +108,18 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-poppins font-semibold text-foreground mb-4 text-sm tracking-wide">Resources</h4>
+            <h4 className="font-poppins font-semibold text-foreground mb-4 text-sm tracking-wide">Studio</h4>
             <div className="space-y-2">
               {[
+                { to: "/ai-agents", label: "AI Agents" },
+                { to: "/automations", label: "Automations" },
+                { to: "/build-mvp", label: "21-Day MVP" },
+                { to: "/solutions/mlops", label: "Custom AI" },
                 { to: "/pricing", label: "Pricing" },
                 { to: "/products", label: "SaaS Prototypes" },
                 { to: "/resources", label: "Resources" },
                 { to: "/gallery", label: "Gallery" },
-                { to: "/insights", label: "Insights" },
                 { to: "/free-audit", label: "Free Audit" },
-                { to: "/wishlist", label: "Wishlist" },
-                { to: "/my-purchases", label: "My Purchases" },
-                { to: "/guide", label: "Guide" },
               ].map(l => (
                 <Link key={l.to} to={l.to} className="block text-sm text-muted-foreground hover:text-accent transition-colors">{l.label}</Link>
               ))}

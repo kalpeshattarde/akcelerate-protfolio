@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
-import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, Moon, Sun, Activity, Layers, Radio, Monitor, BarChart3, LayoutDashboard, Cloud, Settings, Users, Factory, FileText, Lightbulb, LogIn, Search, ShoppingBag, Heart, BookOpen, Bot, Workflow, Rocket } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchModal from "./SearchModal";
 
@@ -60,6 +60,9 @@ function MegaDropdown({
 }
 
 const solutionLinks = [
+  { to: "/solutions/ai-agents", title: "AI Agents", desc: "Sales, support & internal copilots", icon: Bot },
+  { to: "/solutions/automation-systems", title: "Automation Systems", desc: "n8n, CRM, email & API workflows", icon: Workflow },
+  { to: "/solutions/mvp-21day", title: "21-Day MVP", desc: "Idea to live AI MVP in 21 days", icon: Rocket },
   { to: "/solutions/business-automation", title: "Business Automation", desc: "RPA, workflows & sales pipelines", icon: Layers },
   { to: "/solutions/ai-ml", title: "AI / ML Solutions", desc: "ML models, NLP & generative AI", icon: Activity },
   { to: "/solutions/business-consulting", title: "Business Consulting", desc: "AI strategy & digital transformation", icon: Radio },
@@ -183,7 +186,7 @@ export default function Navbar() {
             <MegaDropdown label="Solutions" to="/solutions" active={location.pathname.startsWith("/solutions")} width={340}>
               <Link to="/solutions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><LayoutDashboard className="w-4 h-4 text-primary" /></div>
-                <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all 8 areas</div></div>
+                <div><div className="text-sm font-medium text-foreground">All Solutions</div><div className="text-xs text-muted-foreground">Overview of all solution areas</div></div>
               </Link>
               <div className="border-t border-border my-1" />
               {solutionLinks.map(s => (
@@ -276,7 +279,9 @@ export default function Navbar() {
               {[
                 { to: "/", label: "Home" },
                 { to: "/solutions", label: "Solutions" },
-                
+                { to: "/ai-agents", label: "AI Agents" },
+                { to: "/automations", label: "Automations" },
+                { to: "/build-mvp", label: "Build MVP" },
                 { to: "/industries", label: "Industries" },
                 { to: "/case-studies", label: "Case Studies" },
                 { to: "/insights", label: "Insights" },

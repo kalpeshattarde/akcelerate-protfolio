@@ -1,115 +1,114 @@
-# SEO + Marketing Upgrade — Add Missing Sections from Reference Site
+# AKcelerate Hybrid Studio Expansion
 
-Adopt the high-converting elements from the reference (21-day MVP, AI Agents service, n8n automations, Custom AI, Builders Community) into AKcelerate's existing brand system (Poppins/Inter, #2563EB primary, #06B6D4 accent, glass cards, gradient text). No copying of competitor copy verbatim — rewrite with AKcelerate voice and stats.
+The site already has strong foundations (WhatWeBuild, AIAgentsSection, AutomationShowcase, CustomAISection, BuildersClub, 21-day MVP hero, intent-aware Contact links). This plan **extends** those without removing or duplicating.
 
----
+## 1. Global Positioning Update
 
-## 1. Homepage Hero — Add "21-Day MVP" Positioning Layer
+- **Tagline shift**: "AI-Powered MVPs in 21 Days" → secondary line "AI Product Studio · Automation Engine · Marketplace"
+- Update `<SEOHead>` title/description on `Index.tsx`, `About.tsx`, `Solutions.tsx` to reflect the hybrid positioning.
+- Update hero badge in `Index.tsx` to: "AI Product Studio + Automation + Marketplace".
+- Keep the 21-day MVP H1 (it converts) but add a secondary subtitle line.
 
-**File:** `src/pages/Index.tsx` (HERO section)
+## 2. Three New Landing Routes
 
-- Add a small badge above the H1: **"AI-Powered MVPs in 21 Days"** (using existing `.hero-badge` style).
-- Keep current H1 ("Increase Revenue & Profit…") but add a secondary line under the subtitle: *"From concept to launch — full-stack apps, n8n automations, and custom AI. Fast, focused, and ROI-driven."*
-- Add a third hero stat tile row item: **"21-Day MVP"** alongside existing stats.
-- No layout breakage — re-uses `hero-stat-card` and `Magnetic` button wrappers.
+Create dedicated pages reusing existing section components:
 
----
+| Route | Purpose | Reuses |
+|---|---|---|
+| `/ai-agents` | Agents-as-a-Service deep dive | `AIAgentsSection`, new pricing block, FAQ, CTA |
+| `/automations` | n8n + workflow automation | `AutomationShowcase`, use cases, FAQ |
+| `/build-mvp` | 21-day MVP service page | Process timeline from Index, deliverables, pricing |
 
-## 2. New Section — "What We Build" (4-tile capability grid)
+Each page:
+- `HeroPage` header + `SEOHead` with `Service`-equivalent `WebPage` + `FAQPage` JSON-LD (no `@type:Service` per existing constraint)
+- Problem → Approach → Deliverables → CTA structure
+- Add to `App.tsx` lazy routes, `Navbar` mobile menu, `sitemap.xml`, and `scripts/generate-sitemap.mjs`
 
-**File:** `src/components/home/WhatWeBuild.tsx` (new) + import in `src/pages/Index.tsx` after Process section.
+## 3. Solutions Data Extension
 
-Four glass cards with icons + bullets + "Get a Quote →" link to `/contact?intent=quote&service=<slug>`:
+Add **3 new entries** to `src/data/solutions.ts` (the canonical service module after services.ts removal):
 
-| Tile | Icon | Bullets | CTA target |
-|---|---|---|---|
-| Websites & Landing Pages | Globe | Responsive · SEO-ready · Fast performance | `/contact?service=websites` |
-| MVP App Development | Rocket | 21-day delivery · Full-stack · Launch-ready | `/contact?service=mvp` |
-| n8n Automations | Workflow | Workflows · AI integrations · No-code + code | `/contact?service=automation` |
-| Custom AI | Brain | RAG · Fine-tuning · Production-ready | `/contact?service=custom-ai` |
+- `ai-agents` — AI Agents as a Service (sales, support, internal copilots)
+- `automation-systems` — n8n, API workflows, CRM/email automation
+- `mvp-21day` — 21-Day MVP Build System
 
-Uses `RevealGrid` + `glass-card` + brand gradient hover states (matches existing benefits section pattern).
+Each follows the existing `Solution` interface (features, benefits, process, industries, relatedSlugs). Add icons + update `solutionLinks` in `Navbar.tsx` mega menu and `solutionBreadcrumbs.ts` mapping.
 
----
+## 4. Marketplace Upgrade
 
-## 3. New Section — "AI Agents as a Service"
+Extend `src/data/products.ts` schema:
+- Add optional `category` field with values: `ai-agent | automation | saas-mvp | template`
+- Add optional `tags: string[]` (e.g. `["AI", "automation", "SaaS"]`)
+- Add optional `useCases: string[]` shown on `ProductDetail.tsx`
 
-**File:** `src/components/home/AIAgentsSection.tsx` (new) + import in `src/pages/Index.tsx` before Industries section.
+UI changes:
+- `CatalogSection.tsx` / `ProductsSubNav.tsx` — add category filter chips
+- `ProductCard.tsx` — render colored tag pills
+- `ProductDetail.tsx` — new "Use Cases" section before pricing
+- `BundleProgressBar.tsx` already exists — verify "5+ for bundle discount" copy matches `appConfig.ts` (already does)
 
-Two-column layout (matches existing hero grid):
-- **Left:** Heading "AI Agents That Think, Act & Execute", description, two grouped feature lists ("What AI agents can do" / "Where they automate"), CTA → `/contact?intent=ai-agents`.
-- **Right:** Animated dashboard-style card showing agent flow (re-use `ak-dark-card` styling from process dashboard).
-- Integration row: pill chips for "CRMs · Databases · SaaS Tools · Messaging · n8n".
+## 5. Intent-Based Personalization
 
----
+Extend `src/hooks/usePersonalization.ts`:
+- Add `intent` detection from URL params (`?intent=founder|business|enterprise`) persisted to localStorage
+- Return `recommendedProductCategory`, `heroVariant`, `ctaLabel` per intent:
+  - **Founder** → MVP content, "Build My MVP" CTA
+  - **Business owner** → Automation content, "Automate My Business" CTA
+  - **Enterprise** → Consulting content, "Book Strategy Call" CTA
+- Wire into `Index.tsx` hero subtitle + `PersonalizedPicks` filtering
 
-## 4. New Section — "Automate Everything That Slows You Down"
+Add a small intent picker on the hero (3 chips: "I'm a Founder / Business Owner / Enterprise") that updates state instantly without reload.
 
-**File:** `src/components/home/AutomationShowcase.tsx` (new) + import after AI Agents section.
+## 6. Admin AI Generators
 
-4-card grid (Instagram Content · AI Video Generation · Voice Agent · Custom n8n Workflows) — each with bullets and **"Set Up My Automation →"** CTA → `/contact?intent=automation&type=<slug>`.
+`AdGeneratorTab.tsx` already exists. Add two siblings under `src/components/admin/`:
+- `OfferGeneratorTab.tsx` — generates promo offers (headline + discount + urgency)
+- `LandingPageGeneratorTab.tsx` — generates hero copy + 3 feature blocks + CTA for a given product
 
-Re-uses `glass-card` + `feature-icon` + `gradient-text` tokens.
+All three use a shared edge function `supabase/functions/generate-marketing/index.ts` calling Lovable AI (`google/gemini-3-flash-preview`) with tool-calling for structured output. Wire tabs into `Admin.tsx`.
 
----
+Reuses existing `LOVABLE_API_KEY` (Lovable Cloud already enabled).
 
-## 5. New Section — "Custom AI That Knows Your Business"
+## 7. Footer + Navigation Wiring
 
-**File:** `src/components/home/CustomAISection.tsx` (new) + import after Automation Showcase.
+- Add new routes to mobile menu in `Navbar.tsx`
+- Add a "Studio" footer column in `Footer.tsx`: AI Agents · Automations · Build MVP · Custom AI
+- Update `Solutions` mega menu to include the 3 new solution slugs
+- Update `Navbar.solutions.test.tsx` to validate new links
 
-5-card grid (RAG · Model Fine-Tuning · AI Training Pipelines · Voice Agents · Custom AI Dashboard) with **"Build This For Me →"** CTA → `/contact?intent=custom-ai&capability=<slug>`.
+## 8. SEO / Schema / Sitemap
 
----
+- Update `Index.tsx` `ItemList` JSON-LD to include the 3 new solution entries
+- Add new routes to `public/sitemap.xml` and `scripts/generate-sitemap.mjs`
+- Each new landing page gets `WebPage` + `FAQPage` JSON-LD (no `Service`/`serviceType` per `check-no-services.mjs` guard)
+- Re-run `npm run prebuild` mentally — all new content uses `WebPage`/`ItemList`/`ListItem`
 
-## 6. New Section — "AKcelerate Builders Club" (Community)
+## What stays untouched
 
-**File:** `src/components/home/BuildersClub.tsx` (new) + import before final CTA section.
+- Auth (Clerk), Stripe/Razorpay, Admin shell, existing manufacturing benefits/tech sections, all `/solutions/*` detail pages, Lovable Cloud edge functions
 
-- Two-column dark gradient block (matches dark CTA style):
-  - **Left:** Heading "Join the AKcelerate Builders Community", curriculum chips (n8n · RAG · Fine-tuning · AI Video · Voice Agents · Landing Pages), countdown stub ("Next session: every Sunday 9 PM IST").
-  - **Right:** Two CTAs — *Join WhatsApp Channel* (external link placeholder) + *Register for Cohort* (→ `/contact?intent=cohort`).
-- "Join 500+ AI Builders" social proof tagline.
+## Files Touched
 
----
+**Create**:
+- `src/pages/AIAgents.tsx`, `src/pages/Automations.tsx`, `src/pages/BuildMVP.tsx`
+- `src/components/admin/OfferGeneratorTab.tsx`, `src/components/admin/LandingPageGeneratorTab.tsx`
+- `src/lib/intentDetection.ts`
+- `supabase/functions/generate-marketing/index.ts`
 
-## 7. SEO Enhancements (Senior SEO Engineer hat)
+**Modify**:
+- `src/pages/Index.tsx` (hero subtitle, intent chips, JSON-LD)
+- `src/data/solutions.ts` (3 new solutions)
+- `src/data/products.ts` + `src/hooks/useProducts.ts` (category/tags/useCases)
+- `src/components/Navbar.tsx`, `src/components/Footer.tsx`
+- `src/components/products/ProductCard.tsx`, `CatalogSection.tsx`, `pages/products/ProductDetail.tsx`
+- `src/hooks/usePersonalization.ts`
+- `src/lib/solutionBreadcrumbs.ts`
+- `src/pages/admin/Admin.tsx`
+- `src/App.tsx`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`
+- `src/components/__tests__/Navbar.solutions.test.tsx`
 
-- **Index.tsx `<SEOHead>`:** Update title to *"AI MVPs in 21 Days · AI Consulting & Data Solutions | AKcelerate"* and description to include keywords: *21-day MVP, AI agents, n8n automation, RAG, custom AI, data analytics*.
-- **Add `Service` JSON-LD** schema array (in `reviewsJsonLd` graph) covering 4 service tiles for rich-result eligibility.
-- **Add `FAQPage` JSON-LD** in addition to existing FAQ accordion (currently rendered visually only) — improves SERP real-estate.
-- **Add `BreadcrumbList` JSON-LD** to Index (single root crumb) and verify `Breadcrumbs.tsx` is used on detail pages.
-- **`public/sitemap.xml`:** add `/top-selling` route (currently missing) and bump `lastmod`. Update `scripts/generate-sitemap.mjs` to auto-include it.
-- **`public/robots.txt`:** confirm sitemap line points to canonical domain.
-- **`index.html`:** add Open Graph + Twitter card meta defaults (`og:type=website`, `og:image=/images/akcelerate-og.svg`, `twitter:card=summary_large_image`) so `SEOHead` overrides page-by-page but root has good defaults.
-- **Internal linking:** ensure each new section's CTA links into Contact with tracked params (already aligned with existing `?intent=...&product=...` analytics convention).
+## Open Questions (optional)
 
----
-
-## 8. Analytics Wiring
-
-In each new CTA, fire `analytics.track` events:
-- `home_service_tile_click` `{ service }`
-- `home_ai_agents_cta_click`
-- `home_automation_cta_click` `{ type }`
-- `home_custom_ai_cta_click` `{ capability }`
-- `home_builders_club_cta_click` `{ destination }`
-
-Reuses existing `src/lib/analytics.ts` patterns.
-
----
-
-## Technical Notes
-
-- All new components are presentational, no new dependencies, no backend changes, no migrations.
-- All copy is original AKcelerate voice — not copied verbatim from reference.
-- All sections wrapped in `RevealSection` / `RevealGrid` for consistent scroll-in animations.
-- Mobile-first responsive: grids collapse to 1 col `< md`, 2 col `md`, 4 col `lg`.
-- Estimated new files: 5 components. Modified files: `Index.tsx`, `index.html`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`.
-
----
-
-## Out of Scope (ask if you want these added)
-
-- Live WhatsApp/cohort countdown logic (currently a static stub).
-- Founder/personal-brand block (you already have `/founder`).
-- Pricing-table redesign for the 4 new service tiles (can be a follow-up).
+1. Should the intent chips persist across sessions, or reset each visit?
+2. For new landing pages — do you want pricing tables embedded or just CTA → Contact?
+3. Should the AI generators write results back to the DB (e.g. saved campaigns) or just display copy-to-clipboard?
