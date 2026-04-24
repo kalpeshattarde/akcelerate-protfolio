@@ -37,6 +37,12 @@ export default function ProductCard({ product, isPurchased, cartQuantity = 0, is
             {product.badge}
           </div>
         )}
+        {/* Scarcity / FOMO badge — fires when sales count is meaningful */}
+        {!product.badge && product.salesCount >= 8 && (
+          <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500 text-white shadow-md flex items-center gap-1">
+            🔥 {product.salesCount}+ sold
+          </div>
+        )}
         {bundleActive && cartQuantity > 0 && !isPurchased && (
           <div className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-amber-500/90 text-white shadow-lg" style={{ marginTop: product.badge ? "28px" : 0 }}>
             ✨ Pro Bundle rate applied
