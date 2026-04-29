@@ -43,17 +43,10 @@ export function useAdminAuth() {
 }
 
 function AdminAuthProvider({ children }: { children: ReactNode }) {
-  const [authenticated, setAuthenticated] = useState(() => {
-    try { return sessionStorage.getItem(ADMIN_PASS_KEY) === "true"; } catch { return false; }
-  });
-
-  const [role, setRole] = useState<AdminRole>(() => {
-    try { return (sessionStorage.getItem(ADMIN_ROLE_KEY) as AdminRole) || "editor"; } catch { return "editor"; }
-  });
-
-  const [currentUser, setCurrentUser] = useState<string>(() => {
-    try { return sessionStorage.getItem(ADMIN_USER_KEY) || ""; } catch { return ""; }
-  });
+  // Demo mode: auto-authenticate as super_admin so all admin features are accessible.
+  const [authenticated, setAuthenticated] = useState(true);
+  const [role, setRole] = useState<AdminRole>("super_admin");
+  const [currentUser, setCurrentUser] = useState<string>("admin");
 
   const login = (username: string, password: string): boolean => {
     // Credentials validated via environment variables or fallback demo accounts
@@ -181,9 +174,8 @@ function AdminLoginForm() {
 }
 
 function AdminGateInner({ children }: AdminLoginGateProps) {
-  const { authenticated } = useAdminAuth();
-  if (authenticated) return <>{children}</>;
-  return <AdminLoginForm />;
+  // Demo mode: admin authentication bypassed.
+  return <>{children}</>;
 }
 
 export default function AdminLoginGate({ children }: AdminLoginGateProps) {
