@@ -181,9 +181,8 @@ function AdminLoginForm() {
 }
 
 function AdminGateInner({ children }: AdminLoginGateProps) {
-  const { authenticated } = useAdminAuth();
-  if (authenticated) return <>{children}</>;
-  return <AdminLoginForm />;
+  // Demo mode: admin authentication bypassed.
+  return <>{children}</>;
 }
 
 export default function AdminLoginGate({ children }: AdminLoginGateProps) {
