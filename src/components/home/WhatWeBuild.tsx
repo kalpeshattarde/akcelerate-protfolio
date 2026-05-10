@@ -34,6 +34,20 @@ const tiles = [
     desc: "RAG pipelines, model fine-tuning, and AI trained on your data.",
     bullets: ["RAG & fine-tuning", "Production-ready"],
   },
+  {
+    slug: "ai-agents",
+    icon: Bot,
+    title: "AI Agents",
+    desc: "Autonomous agents that handle support, sales, and ops 24/7.",
+    bullets: ["24/7 autonomous", "CRM & API integration"],
+  },
+  {
+    slug: "automations",
+    icon: Zap,
+    title: "Business Automation",
+    desc: "End-to-end workflow design, CRM automations, and smart notifications.",
+    bullets: ["Workflow design", "CRM automation"],
+  },
 ];
 
 export default function WhatWeBuild() {
