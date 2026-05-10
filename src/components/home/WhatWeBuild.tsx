@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles } from "lucide-react";
+import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles, Bot, Zap } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { trackEvent } from "@/lib/analytics";
@@ -33,6 +33,20 @@ const tiles = [
     title: "Custom AI",
     desc: "RAG pipelines, model fine-tuning, and AI trained on your data.",
     bullets: ["RAG & fine-tuning", "Production-ready"],
+  },
+  {
+    slug: "ai-agents",
+    icon: Bot,
+    title: "AI Agents",
+    desc: "Autonomous agents that handle support, sales, and ops 24/7.",
+    bullets: ["24/7 autonomous", "CRM & API integration"],
+  },
+  {
+    slug: "automations",
+    icon: Zap,
+    title: "Business Automation",
+    desc: "End-to-end workflow design, CRM automations, and smart notifications.",
+    bullets: ["Workflow design", "CRM automation"],
   },
 ];
 
