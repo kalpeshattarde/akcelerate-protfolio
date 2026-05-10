@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles } from "lucide-react";
+import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles, Bot, Zap } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { trackEvent } from "@/lib/analytics";
