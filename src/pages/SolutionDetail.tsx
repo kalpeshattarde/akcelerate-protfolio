@@ -31,6 +31,8 @@ export default function SolutionDetailPage() {
   // Canonical solution order (matches navbar + sitemap ordering).
   const CANONICAL_ORDER = [
     "automation-systems",
+    "ai-agents",
+    "business-automation",
     "ai-ml",
     "automated-analytics",
     "cloud-devops",
