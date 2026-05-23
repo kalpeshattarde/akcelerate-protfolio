@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles, Bot, Zap } from "lucide-react";
+import { Globe, Rocket, Workflow, Brain, ArrowRight, Sparkles, Bot, Zap, PhoneCall, Database } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RevealSection, RevealGrid } from "@/hooks/useScrollReveal";
 import { trackEvent } from "@/lib/analytics";
@@ -47,6 +47,20 @@ const tiles = [
     title: "Business Automation",
     desc: "End-to-end workflow design, CRM automations, and smart notifications.",
     bullets: ["Workflow design", "CRM automation"],
+  },
+  {
+    slug: "voice-agents",
+    icon: PhoneCall,
+    title: "Voice AI Agents",
+    desc: "Inbound and outbound voice agents for booking, qualification, and support.",
+    bullets: ["Realtime voice", "CRM-aware"],
+  },
+  {
+    slug: "rag-knowledge",
+    icon: Database,
+    title: "RAG Knowledge Bases",
+    desc: "Searchable AI knowledge layer trained on your docs, tickets, and SOPs.",
+    bullets: ["Vector search", "Source-cited answers"],
   },
 ];
 
